@@ -1,0 +1,74 @@
+
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>修改密码</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+ <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/amazeui.switch.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<div class="am-g">
+         <div class="app-head">
+      <a href="" class="logo"></a>
+      <div class="user-position">
+        <span class="wel-txt"></span>
+                                    </div>
+    </div>
+    <div class="app-tit"><span class="mark">修改密码</span></div>
+    <div class="safe-center">
+      <form action="http://bb2.ksls.com.cn/login/save_change_pwd" class="am-form" data-am-validator method="post">
+        <fieldset>
+          <div class="am-form-group">
+            <label for="doc-vld-name-2">旧密码：</label>
+            <input type="password" id="doc-vld-name-2"  name="passwd"  placeholder="输入旧密码" required/>
+          </div>
+          <div class="am-form-group">
+            <label for="doc-vld-pwd-1">新密码：</label>
+            <input type="password" id="doc-vld-pwd-1" name="new_passwd" minlength="6" placeholder="输入新密码(至少6位)" required/>
+          </div>
+          <div class="am-form-group">
+            <label for="doc-vld-pwd-2">再次确认密码：</label>
+            <input type="password" id="doc-vld-pwd-2" placeholder="再次确认新密码" required/>
+          </div>
+          <button class="am-btn" type="submit">提交</button>
+        </fieldset>
+      </form>
+    </div>
+    <!-- 侧滑菜单 -->
+      <div class="amz-toolbar" id="amz-toolbar">
+      <!-- 菜单 -->
+      <!-- 左侧侧滑菜单 -->
+        <nav data-am-widget="menu" class="am-menu  am-menu-offcanvas1" data-am-menu-offcanvas>
+<a href="javascript:void(0)" class="am-icon-btn am-menu-toggle am-icon-bars"></a>
+<div class="am-offcanvas">
+  <div class="am-offcanvas-bar">
+    <div class="amz-sidebar">
+      <ul class="am-menu-nav am-avg-sm-1">
+        <li class="">
+            <a href="http://bb2.ksls.com.cn/user" class="">个人中心</a>
+          </li>
+                    
+                                                  <li class="am-nav-header">安全中心</li>
+          <li class="">
+            <a href="http://bb2.ksls.com.cn/login/change_pwd" class="">修改密码</a>
+          </li>
+          <li class="">
+            <a href="http://bb2.ksls.com.cn/login" class="">切换账号</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+      </div>
+</div>
+</body>
+</html>

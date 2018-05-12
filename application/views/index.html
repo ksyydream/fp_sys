@@ -1,0 +1,141 @@
+
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>用户中心</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/amazeui.switch.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<div class="am-g">
+        <div class="app-head">
+       <a href="" class="logo"></a>
+      <div class="user-position">
+        <span class="wel-txt">杨洋123</span>
+                    <a class="am-badge am-badge-success am-round">外联经理</a>  </div>
+    </div>
+    <form method="post" action="http://bb2.ksls.com.cn/user/wdbb">
+    <input type="hidden" name="status" />
+    <ul class="admin-content-list">
+      <li>
+        <div class="am-txt-fl">
+          <a href="javascript:get_search('');" class="am-text-success">
+            <span class="am-icon-btn am-icon-file-text"></span>
+            <br />
+            赎楼<br />
+            1单
+          </a>
+        </div>
+        <div class="am-txt-fr">
+          一周提交<em class="am-text-success">0</em>单<br />
+          一月提交<em class="am-text-success">1</em>单
+        </div>
+      </li>
+      <li>
+        <div class="am-txt-fl">
+          <a href="javascript:get_search('3');" class="am-text-warning">
+            <span class="am-icon-btn am-icon-slideshare"></span>
+            <br />
+            按揭贴现<br />
+            0单
+          </a>
+        </div>
+        <div class="am-txt-fr">
+          一周提交<em class="am-text-warning">0</em>单<br />
+          一月提交<em class="am-text-warning">0</em>单
+        </div>
+      </li>
+      <li>
+        <div class="am-txt-fl">
+          <a href="javascript:get_search('5');" class="am-text-danger">
+            <span class="am-icon-btn am-icon-check-circle"></span>
+            <br />
+            税金贷<br />
+            0单
+          </a>
+        </div>
+        <div class="am-txt-fr">
+          一周提交<em class="am-text-danger">0</em>单<br />
+          一周提交<em class="am-text-danger">0</em>单
+        </div>
+      </li>
+      <li>
+        <div class="am-txt-fl">
+          <a href="javascript:get_search('5');" class="am-text-danger">
+            <span class="am-icon-btn am-icon-check-circle"></span>
+            <br />
+            业务贷<br />
+            0单
+          </a>
+        </div>
+        <div class="am-txt-fr">
+          一周提交<em class="am-text-danger">0</em>单<br />
+          一周提交<em class="am-text-danger">0</em>单
+        </div>
+      </li>
+          <li>
+        <div class="am-txt-fl">
+          <a href="javascript:get_search('5');" class="am-text-danger">
+            <span class="am-icon-btn am-icon-check-circle"></span>
+            <br />
+            权证单<br />
+            0单
+          </a>
+        </div>
+        <div class="am-txt-fr">
+          一周提交<em class="am-text-danger">0</em>单<br />
+          一周提交<em class="am-text-danger">0</em>单
+        </div>
+      </li>
+    </ul>
+    </form>
+     <div class="amz-toolbar" id="amz-toolbar">
+      <!-- 左侧侧滑菜单 -->
+      <nav data-am-widget="menu" class="am-menu  am-menu-offcanvas1" data-am-menu-offcanvas>
+<a href="javascript:void(0)" class="am-icon-btn am-menu-toggle am-icon-bars"></a>
+<div class="am-offcanvas">
+  <div class="am-offcanvas-bar">
+    <div class="amz-sidebar">
+      <ul class="am-menu-nav am-avg-sm-1">
+         <li class="am-nav-header">操作中心</li>
+        <li class="">
+            <a href="index.html" class="">首页</a>
+          </li>
+          <li class="">
+            <a href="add_company.html" class="">新增公司</a><!-- 渠道 -->
+          </li>
+          <li class="">
+            <a href="qy_company.html" class="">签约公司</a><!-- 渠道 -->
+          </li>
+                                        <li class="am-nav-header">安全中心</li>
+          <li class="">
+            <a href="http://bb2.ksls.com.cn/login/change_pwd" class="">修改密码</a>
+          </li>
+          <li class="">
+            <a href="http://bb2.ksls.com.cn/login" class="">切换账号</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div> 
+</nav>
+    </div>
+</div>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/amazeui.min.js"></script>
+<script>
+function get_search(status){
+  $("[name='status']").val(status);
+  $("form").submit();
+}
+</script>
+</body>
+</html>
