@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>房猫房地产管理系统</title>
+    <meta name="keywords" content="房猫-前台-首页" />
+    <meta name="description" content="房猫-前台-首页" />
+    <link href="/static/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/static/js/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css">
+    <!--[if IE 6]><script>document.execCommand("BackgroundImageCache", false, true)</script><![endif]-->
+</head>
+<body>
+    <div class="doc index">
+        {{include file='header.html'}}
+        <div class="wraper clearfix">
+            <div class="index_logo"><a href="/"><img src="/static/images/index/index_logo.png" alt=""></a></div>
+            <ul class="index-nav" id ="slide01_control">
+                <li class="current">我的桌面</li>
+                <li>店秘台</li>
+                <li>服务窗口</li>
+                <li>经纪人学院</li>
+                <li>业务工具</li>
+                <li>经纪人江湖</li>
+                <li>我的房猫</li>
+            </ul>
+            <div id="slide01">
+            <div class="content" style="display: block;">
+                <div class="convenient-btns">
+                    {{if $login_user_id}}
+                    <a href="javascript:" class="settingbtn" id="Jsettingbtn"></a>
+                    {{/if}}
+                    <div class="tableshortcut" id="Jtableshortcut"></div>
+                    <div class="s-cardsetting" id="JsCardsetting" style="display: none;">
+                        <div class="s-cardsetting-wrap">
+                            <form method="post" action="/index/set_icon" id="iconConfigForm">
+                                <div class="s-cardsetting-left" id="JsCardsettingLeft">
+                                    <h3>已添加板块</h3>
+                                    <div style="float:left;width:78px;text-align:center;margin-top:13px;border:1px solid #cdcdcd;height:24px;line-height:24px;">我的桌面</div>
+                                    <div class="s-cardsetting-content sui-componentWrap"></div>
+                                </div>
+                            </form>
+                            <div class="s-cardsetting-right" id="JsCardsettingRight"><h3>未订阅频道</h3>
+                                <div class="s-cardsetting-content sui-componentWrap"></div>
+                            </div>
+                            <a href="javascript:" class="okBtn" id="icon_mytable">确认</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-th">
+                        新闻与活动
+                    {{if $login_user_id}}
+                    {{if in_array(6,$position_id)}}
+                    <a href="/news/news_list/" class="add-news-btn">+ 新增</a>
+                    {{/if}}
+                    {{/if}}
+                </div>
+                <div class="new-tb">
+                    {{foreach from=$news_list.res_list key=key item=item}}
+                        <dl n_id="{{$item.id}}" class="new-box {{if $key%2==0}}fl{{else}}fr{{/if}}">
+                            <dt><img src="/uploadfiles/news/{{$item.pic}}" width="155" height="110"/></dt>
+                            <dd><span class="s-tit">{{$item.title|truncate:25:"...":true}}</span><p>{{$item.content|strip_tags|strip|default:$item.title|truncate:60:"...":true}}</p>
+                            </dd>
+                        </dl>
+                    {{/foreach}}
+                    <div class="clear"></div>
+                    <div class="pages" style="float:right">
+                        {{$pager}}
+                    </div>
+                </div>
+            </div>
+                <div class="content">
+                    <div class="convenient-btns">
+                        <div class="tableshortcut othershortcut ">
+                            <a href="javascript:void(0);" class="a-btns" url="/activity/list_activity"><img src="/static/images/index/index_nav1.jpg" alt=""></a>
+                            <!--<a href="javascript:void(0);" class="a-btns" url="/"><img src="/static/images/index/index_nav2.jpg" alt=""></a>-->
+                            <!--<a href="javascript:void(0);" class="a-btns" url="/"><img src="/static/images/index/index_nav3.jpg" alt=""></a>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="convenient-btns">
+                        <div class="tableshortcut othershortcut ">
+                            <a href="javascript:void(0);" class="a-btns" url="/appointment/book_room"><img src="/static/images/index/index_nav4.jpg" alt=""></a>
+                            <a href="javascript:void(0);" class="a-btns" url="/agenda/list_agenda"><img src="/static/images/index/index_nav5.jpg" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="convenient-btns">
+                        <div class="tableshortcut othershortcut ">
+                            <a href="javascript:void(0);" class="a-btns" url="/document/list_doc"><img src="/static/images/index/index_nav6.jpg" alt=""></a>
+                            <a href="javascript:void(0);" class="a-btns" url="/video/list_video"><img src="/static/images/index/index_nav7.jpg" alt=""></a>
+                            <a href="javascript:void(0);" class="a-btns" url="/examination/unit_examination"><img src="/static/images/index/index_nav8.jpg" alt=""></a>
+                            <a href="javascript:void(0);" class="a-btns" url="/examination/self_examination"><img src="/static/images/index/index_nav9.jpg" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="convenient-btns">
+                        <div class="tableshortcut othershortcut">
+                            <a href="javascript:void(0);" class="a-btns" url="/hire/hire_list"><img src="/static/images/index/index_nav17.jpg" alt=""></a>
+                            <a href="javascript:void(0);" class="a-btns" url="/calculate/tax_calculate"><img src="/static/images/index/index_nav11.jpg" alt=""></a>
+                           <!-- <a href="javascript:void(0);" class="a-btns" url="/"><img src="/static/images/index/index_nav10.jpg" alt=""></a>
+                            <a href="javascript:void(0);" class="a-btns" url="/"><img src="/static/images/index/index_nav12.jpg" alt=""></a>
+                            <a href="javascript:void(0);" class="a-btns" url="/"><img src="/static/images/index/index_nav13.jpg" alt=""></a>-->
+                         </div>
+
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="convenient-btns">
+                        <div class="tableshortcut othershortcut ">
+                            <a href="javascript:void(0);" class="a-btns" url="/activity/list_ranking"><img src="/static/images/index/index_nav14.jpg" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="convenient-btns">
+                        <div class="tableshortcut othershortcut ">
+                           <!-- <a href="javascript:void(0);" class="a-btns" url="/"><img src="/static/images/index/index_nav15.jpg" alt=""></a>
+                            <a href="javascript:void(0);" class="a-btns" url="/"><img src="/static/images/index/index_nav16.jpg" alt=""></a>-->
+                            <a href="javascript:void(0);" class="a-btns" url="/account/recharge_list"><img src="/static/images/index/index_nav18.jpg" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+          </div>
+            {{include file='footer.html'}}
+        </div>
+    </div>
+    <div class="login-div" id="Jloginpop" style="display:none; cursor: default">
+        <a href="javascript:" class="pop-close-btn"></a>
+        <p class="p-txt">欢迎登录</p>
+        <form class="login-form">
+            <div class="input-div">
+                <span><em class="input-icon input-tel"></em>| </span><input type="text" name="username" id="username" placeholder="手机号" />
+            </div>
+            <div class="input-div">
+                <span><em class="input-icon input-pwd"></em>| </span><input type="password" name="password" id="password" placeholder="密码"  />
+            </div>
+            <p class="isremeberpsd"><label><input type="checkbox" name="password" id="cb_pass"> 记住密码</label></p>
+            <a href="javascript:void(0);" class="sub-btn" id="btn_login">登 录</a>
+        </form>
+        <p class="tips" id="login_error" style="display:none"><em></em>手机或密码不对，请重新输入！</p>
+        <p class="tips" id="login_error2" style="display:none"><em></em>人员离职,账户停用</p>
+        <p class="tips" id="login_error3" style="display:none"><em></em>服务暂停</p>
+    </div>
+    <!--新闻弹框-->
+    <div class="newspop" id="newspop" style="display: none;">
+        <a href="javascript:" class="pop-close-btn newspop-btn"></a>
+        <div class="popcontent"></div>
+    </div>
+    <script type="text/javascript" src="/static/js/jquery-ui/jquery-ui.js"></script>
+    <script type="text/javascript" src="/static/js/dpl-jquery.slide.js"></script>
+    <script type="text/javascript" src="/static/js/layer/layer.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            new Slide({
+                target: $('#slide01 .content' ),
+                control: $('#slide01_control li' )
+            });
+            //桌面快捷按钮初始化
+            var tableBtnsnum = {{$icon_count|default:0}};
+            var hasChooseBtns = [], leftHtmls = rightHtmls = "", prepareShortCutBtns= JSON.parse('{{$icon_data}}');
+            var tableshortcut="";
+            for(var i=0;prepareShortCutBtns.length>tableBtnsnum?i<tableBtnsnum:i<prepareShortCutBtns.length;i++){
+                tableshortcut+='<a href="javascript:void(0);" data-rel="'+prepareShortCutBtns[i].name+'"  class="a-btns" url="'+prepareShortCutBtns[i].url+'"><img src="/static/images/index/'+prepareShortCutBtns[i].img+'" alt="" width="115" height="112"></a>';
+                leftHtmls+= '<div class="s-mod-item ui-icon-trash" data-id="'+i+'"> <div class="s-mod-icon"></div><div class="s-mod-title">'+prepareShortCutBtns[i].name+'</div><input type="hidden" name="icon_id[]" value="'+prepareShortCutBtns[i].id+'"></div>';
+            }
+            if(prepareShortCutBtns.length>tableBtnsnum){
+                for(var j=tableBtnsnum;j<prepareShortCutBtns.length;j++)
+                    rightHtmls+= '<div class="s-mod-item ui-icon-refresh" data-id="'+j+'"> <div class="s-mod-icon"></div><div class="s-mod-title">'+prepareShortCutBtns[j].name+'</div><input type="hidden" name="icon_id[]" value="'+prepareShortCutBtns[j].id+'"></div>';
+            }
+            $("#Jtableshortcut").append(tableshortcut);
+            $("#JsCardsettingLeft .s-cardsetting-content").append(leftHtmls);
+            $("#JsCardsettingRight .s-cardsetting-content").append(rightHtmls);
+            actionDrag();
+            $("#Jsettingbtn").toggle(function(){
+                $("#JsCardsetting").show();
+            },function () {
+                $("#JsCardsetting").hide();
+                resetBtns();
+            });
+            //快捷方式设置完成，关闭弹框时
+            function resetBtns(){
+                var dataidId ="",
+                tableshortcut="";
+                for(var i=0; i<$("#JsCardsettingLeft .s-mod-item").length;i++) {
+                    dataidId = $("#JsCardsettingLeft .s-mod-item").eq(i).attr("data-id");
+                    tableshortcut+='<a href="javascript:void(0);" data-rel="'+prepareShortCutBtns[dataidId].name+'"  class="a-btns" url="'+prepareShortCutBtns[dataidId].url+'"><img src="/static/images/index/'+prepareShortCutBtns[dataidId].img+'" alt=""  width="115" height="112"></a>';
+                }
+                $("#Jtableshortcut").html(tableshortcut);
+            }
+
+            $(".a-btns").click(function() {
+                redirect_url = $(this).attr('url');
+                //var result = checkAuth();
+                var data_ = Date.parse(new Date());
+                $.getJSON('/index/check_login/'+data_,function (data) {
+                    if(data < 1) {
+                        {{if $login_user_id}}
+                        layer.msg('账户已在异地登陆,请退出后重新登陆')
+                        {{else}}
+                        $.blockUI({ message: $('#Jloginpop'), css:{ background: 'none',top:'100px', border: 'none',width:'410px', height:'410px'}, overlayCSS: {cursor:'default'}});
+                        {{/if}}
+
+                    } else {
+                        if(data==2){
+                            if(redirect_url=="/appointment/book_room" || redirect_url=="/agenda/list_agenda"){
+                                window.location = redirect_url;
+                            }else{
+                                layer.msg('如需使用此服务,请先购买')
+                            }
+                        }else {
+                                window.location = redirect_url;
+                        }
+
+                    }
+                })
+
+            });
+        });
+
+        //按钮拖动
+         function actionDrag() {
+            var $sCardsettingLeft = $("#JsCardsettingLeft"), $sCardsettingRight = $("#JsCardsettingRight");
+
+            $(".s-mod-item", $sCardsettingLeft).draggable({
+                revert: "invalid",
+                containment: ".s-cardsetting",
+                helper: "clone",
+                cursor: "move"
+            });
+            $sCardsettingRight.droppable({
+                accept: "#JsCardsettingLeft .s-mod-item",
+                drop: function (event, ui) {
+                    deleteItems(ui.draggable);
+                }
+            });
+            $(".s-mod-item", $sCardsettingRight).draggable({
+                revert: "invalid",
+                containment: ".s-cardsetting",
+                helper: "clone",
+                cursor: "move"
+            });
+            $sCardsettingLeft.droppable({
+                accept: "#JsCardsettingRight .s-mod-item",
+                drop: function (event, ui) {
+                    recycleItems(ui.draggable);
+                }
+            });
+
+            function deleteItems( $item ) {
+                $item.fadeOut(function() {
+                    var $list = $( ".s-cardsetting-content", $sCardsettingRight ).length ? $( ".s-cardsetting-content", $sCardsettingRight ) : $( "<div class='s-cardsetting-content ui-helper-reset'/>" ).appendTo( $sCardsettingRight );
+                    $item.removeClass("ui-icon-trash").addClass("ui-icon-refresh");
+                    $item.appendTo( $list ).fadeIn();
+                });
+            }
+            function recycleItems( $item ) {
+                $item.fadeOut(function() {
+                    var $list = $( ".s-cardsetting-content", $sCardsettingLeft ).length ? $( ".s-cardsetting-content", $sCardsettingLeft ) : $( "<div class='s-cardsetting-content ui-helper-reset'/>" ).appendTo( $sCardsettingLeft );
+                    $item.removeClass("ui-icon-refresh").addClass("ui-icon-trash");
+                    $item.appendTo( $list ).fadeIn();
+                });
+            }
+            $( ".s-cardsetting-content > .s-mod-item" ).click(function( event ) {
+                var $item = $( this ), $target = $( event.target );
+                if ($item .is( ".ui-icon-trash" ) ) {
+                    deleteItems( $item );
+                } else if ( $item.is( ".ui-icon-refresh" ) ) {
+                    recycleItems( $item );
+                }
+                return false;
+            });
+        }
+        //新闻弹框
+        $('.new-box').click(function(){
+            $.get('/news/view_news/' + $(this).attr('n_id'), function(html) {
+                $('.popcontent').html(html);
+                $.blockUI({ message: $('#newspop'),
+                    css:{ background: 'none',
+                        top:'8%',left:'50%',
+                        border: 'none',
+                        marginLeft:'-500px',
+                        width:'1000px',
+                        position:'absolute',cursor:'default'},
+                    overlayCSS: {cursor:'default'}});
+                $('.newspop-btn').css('right',parseInt((parseInt($(window).width())-1000)/2-$('.newspop-btn').width()));
+            });
+        });
+        var storeuser = {
+            set: function(key,user,val) {
+                store.set(key, { usern:user, passw:val, time:new Date().getTime() })
+            },
+            get: function(key) {
+                var info = store.get(key)
+                if (!info) { return null }
+                if (new Date().getTime() - info.time > 86400000) { return null }
+                return info
+            }
+        }
+        if(storeuser.get('user')){
+            var info = storeuser.get('user')
+            $("#username").val(info.usern);
+            $("#password").val(info.passw);
+        }else{
+            $("#username").val('');
+            $("#password").val('');
+            store.remove('user');
+        }
+        var redirect_url = "/";
+        $("#btn_login").click(function() {
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var data_ = Date.parse(new Date());
+            $.post('/index/login', {username: username, password: password,datayy:data_}, function(data) {
+                if(data == 1) {
+                    if($("#cb_pass").is(':checked')){
+                        storeuser.set('user',username,password)
+                    }else{
+                        store.remove('user');
+                    }
+                    $.getJSON('/index/check_login/'+data_,function (data) {
+                            if(data==2){
+                                if(redirect_url=="/appointment/book_room" || redirect_url=="/agenda/list_agenda"){
+                                    window.location = redirect_url;
+                                }else{
+                                    window.location = '/';
+                                }
+                            }else {
+                                    window.location = redirect_url;
+                            }
+                    })
+                } else if(data == 2) {
+                    $("#login_error").hide();
+                    $("#login_error2").show();
+                    $("#login_error3").hide();
+                    $("#username").val("");
+                    $("#password").val("");
+                }else if(data == 3) {
+                    $("#login_error").hide();
+                    $("#login_error2").hide();
+                    $("#login_error3").show();
+                    $("#username").val("");
+                    $("#password").val("");
+                } else{
+                    $("#login_error").show();
+                    $("#login_error2").hide();
+                    $("#login_error3").hide();
+                    $("#username").val("");
+                    $("#password").val("");
+                }
+            });
+        });
+
+        function checkAuth() {
+           // alert('one');
+            return $.ajax({
+                url: "/index/check_login",
+                async: false
+            }).responseText;
+        }
+
+        //关闭弹框
+        $(".pop-close-btn").click(function(){
+            $.unblockUI();
+        });
+
+        $("#icon_mytable").click(function() {
+            $("#iconConfigForm").submit();
+        });
+     </script>
+</body>
+</html>
+
+

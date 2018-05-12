@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>房猫房地产管理系统</title>
+    <meta name="keywords" content="测试" />
+    <meta name="description" content="测试" />
+    <link href="/static/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="doc">
+    {{include file='header.html'}}
+    <div class="wraper clearfix">
+        <div class="wrap-left">
+            <span class="logo"><img src="/static/images/logo.jpg" alt="" width="130" height="35"></span>
+            <div class="nav-left">
+                <ul class="nav-left-ul">
+                    <li><a href="/"><em class="home"></em>回到首页</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="wrap-right">
+            <div class="search-wrap">
+            </div>
+            <div class="schedule-wrap upload-document-wrap">
+                <p class="tab-tit">页面开发调试</p>
+                <form  id="save_form" method="post">
+                    <div class="publish-document-main">
+                        <table cellspadding="0" colspadding="0" border="0" class="account-table">
+                            <tr>
+                                <td>
+                                   小区名称: <em class="roomtips-book-pos"></em><input type="text" x="1" id="xiaoqu1" class="unbook-btn" readonly>
+                                    小区编号 :<input id="xiaoid1" type="text" >
+                                    乡镇编号:<input id="town1" type="text" >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    小区名称: <em class="roomtips-book-pos"></em><input type="text" x="2" id="xiaoqu2" class="unbook-btn" readonly>
+                                    小区编号 :<input id="xiaoid2" type="text" >
+                                    乡镇编号:<input id="town2" type="text" >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    小区名称: <em class="roomtips-book-pos"></em><input type="text" x="3" id="xiaoqu3" class="unbook-btn" readonly>
+                                    小区编号 :<input id="xiaoid3" type="text" >
+                                    乡镇编号:<input id="town3" type="text" >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    小区名称: <em class="roomtips-book-pos"></em><input type="text" x="4" id="xiaoqu4" class="unbook-btn" readonly>
+                                    小区编号 :<input id="xiaoid4" type="text" >
+                                    乡镇编号:<input id="town4" type="text" >
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+{{include file='footer.html'}}
+</body>
+</html>
+<div class="manage-showroom"></div>
+<script type="text/javascript" src="/static/js/jquery.poshytip.min.js"></script>
+<script src="/static/js/bootstrap-typeahead.js"></script>
+<script src="/static/js/underscore-min.js"></script>
+<script type="text/javascript" src="/static/js/layer/layer.js"></script>
+<script>
+    $(function(){
+        $('.unbook-btn').click(function(e){
+            $('.roomtips-book-pos').poshytip('hide');
+            $(this).siblings('.roomtips-book-pos').poshytip('show');
+            e.stopPropagation();
+        });
+
+        $('.roomtips-book-pos').poshytip({
+            className: 'manage-showroom',
+            content:function(updateCallback) {
+                var x = $(this).parent().find(".unbook-btn").attr('x');
+                return $.ajax({
+                    url : '/account/choice_xiao',
+                    data: { x: x },
+                    cache : false,
+                    async : false,
+                    type : "POST"
+                }).responseText;
+            },
+            showOn:'none',
+            alignTo:'target',
+            alignX:'center',
+            offsetY:5
+        });
+        $(document).click(function(){
+            $('.roomtips-book-pos').poshytip('hide');
+            $('.unbook-btn').removeClass('on');
+        });
+        $(".manage-showroom").click(function(e){
+            e.stopPropagation();
+        });
+    })
+</script>

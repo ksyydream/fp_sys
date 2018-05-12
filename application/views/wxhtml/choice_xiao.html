@@ -1,0 +1,63 @@
+<form method="post"  id="choice_xiao">
+<div class="r-tit">选择小区<span class="s-bor"></span></div>
+
+    <input id="product_search" type="text" data-provide="typeahead">
+    <input id="pid" type="hidden">
+</form>
+<script>
+    $(function(){
+        $.getJSON("{{site_url url='account/getcommpay'}}",function (data) {
+            // Workaround for bug in mouse item selection
+            $.fn.typeahead.Constructor.prototype.blur = function () {
+                var that = this;
+                setTimeout(function () { that.hide() }, 250);
+            };
+
+            var products = data;
+
+            var that = this;
+
+            $('#product_search').typeahead({
+                source: function (query, process) {
+                    var results = _.map(products, function (product) {
+                        return product.name + "";
+                    });
+                    process(results);
+                },
+                items:8,
+                matcher: function (item) {
+                    return true;
+                },
+
+                highlighter: function (name) {
+                    var product = _.find(products, function (p) {
+                        return p.name == name;
+                    });
+                    return product.name;
+                },
+
+                updater: function (name) {
+                    var product = _.find(products, function (p) {
+                        return p.name == name;
+                    });
+                    that.setSelectedProduct(product);
+                    return product.name;
+                }
+
+            });
+
+            this.setSelectedProduct = function (product) {
+                $('#xiaoqu{{$id}}').val(product.name);
+                $("#xiaoid{{$id}}").val(product.id)
+                $("#town{{$id}}").val(product.towns_id)
+                $('.roomtips-book-pos').poshytip('hide');
+                $('.unbook-btn').removeClass('on');
+
+               // $('#pid').val(product.id)
+            }
+
+
+        })
+
+    })
+</script>

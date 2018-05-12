@@ -1,0 +1,136 @@
+
+<script type="text/javascript" src="/static/js/jquery-1.7.2.min.js"></script>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>房猫房地产管理系统</title>
+    <meta name="keywords" content="房猫-前台-首页" />
+    <meta name="description" content="房猫-前台-首页" />
+    <link href="/static/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/static/js/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css">
+    <!--[if IE 6]><script>document.execCommand("BackgroundImageCache", false, true)</script><![endif]-->
+</head>
+<style>
+    .yy_div{
+        margin-top: 1px;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .yy_div ul li{
+        list-style: none;
+        float: left;
+    }
+
+</style>
+<!-- content start -->
+<div class="admin-content">
+    <div class="am-cf am-padding">
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">门店地图</strong> /
+            <small>显示</small>
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="am-g">
+
+        <div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
+
+        </div>
+        <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
+            <form class="am-form am-form-horizontal" method="post" action="{{site_url url='/map/map_show'}}">
+                <input value="{{$data.md_key}}" id="md_key" name="md_key" type="text">
+                <input type="submit" class="search-btn" value="">
+
+            </form>
+            <div class="am-form-group">
+                <label class="am-u-sm-2 am-form-label">百度地址</label>
+                <div class="am-u-sm-10" id="allmap" style="height:500px;">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=7b92b3afff29988b6d4dbf9a00698ed8"></script>
+
+<script>
+    $(function() {
+
+    });
+    var markerArr = [
+        {{foreach from=$data.items item=item}}
+    { title: "名称：{{$item.name}}", point: "{{$item.lng}},{{$item.lat}}", address: "{{$item.dir}}", tel: "{{$item.phone}}" },
+    {{/foreach}}
+    ];
+
+    function showinfo(marker,info){
+        marker.addEventListener("mouseover", function () {
+            this.openInfoWindow(info);
+        });
+    }
+
+    function map_init() {
+        var map = new BMap.Map("allmap"); // 创建Map实例
+        var point = new BMap.Point(120.958039, 31.347014); //地图中心点，昆山市 高铁南站
+        map.centerAndZoom(point, 13); // 初始化地图,设置中心点坐标和地图级别。
+        map.enableScrollWheelZoom(true); //启用滚轮放大缩小
+        //向地图中添加缩放控件
+        var ctrlNav = new window.BMap.NavigationControl({
+            anchor: BMAP_ANCHOR_TOP_LEFT,
+            type: BMAP_NAVIGATION_CONTROL_LARGE
+        });
+        map.addControl(ctrlNav);
+
+        //向地图中添加缩略图控件
+        var ctrlOve = new window.BMap.OverviewMapControl({
+            anchor: BMAP_ANCHOR_BOTTOM_RIGHT,
+            isOpen: 1
+        });
+        map.addControl(ctrlOve);
+
+        //向地图中添加比例尺控件
+        var ctrlSca = new window.BMap.ScaleControl({
+            anchor: BMAP_ANCHOR_BOTTOM_LEFT
+        });
+        map.addControl(ctrlSca);
+        var point = new Array(); //存放标注点经纬信息的数组
+        var marker = new Array(); //存放标注点对象的数组
+        var info = new Array(); //存放提示信息窗口对象的数组
+        for (var i = 0; i < markerArr.length; i++) {
+            var p0 = markerArr[i].point.split(",")[0]; //
+            var p1 = markerArr[i].point.split(",")[1]; //按照原数组的point格式将地图点坐标的经纬度分别提出来
+            point[i] = new window.BMap.Point(p0, p1); //循环生成新的地图点
+            marker[i] = new window.BMap.Marker(point[i]); //按照地图点坐标生成标记
+            map.addOverlay(marker[i]);
+            marker[i].setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+            var label = new window.BMap.Label(markerArr[i].title, { offset: new window.BMap.Size(20, -10) });
+            marker[i].setLabel(label);
+            info[i] = new window.BMap.InfoWindow("<p style=’font-size:12px;lineheight:1.8em;’>" + markerArr[i].title + "</br>地址：" + markerArr[i].address + "</br> 电话：" + markerArr[i].tel + "</br></p>"); // 创建信息窗口对象
+            showinfo(marker[i],info[i])
+        }
+
+       /* marker[0].addEventListener("mouseover", function () {
+            this.openInfoWindow(info[0]);
+        });
+        marker[1].addEventListener("mouseover", function () {
+            this.openInfoWindow(info[1]);
+        });
+        marker[2].addEventListener("mouseover", function () {
+            this.openInfoWindow(info[2]);
+        });*/
+    }
+    //异步调用百度js
+    function map_load() {
+        var load = document.createElement("script");
+        load.src = "http://api.map.baidu.com/api?v=1.4&callback=map_init";
+        document.body.appendChild(load);
+    }
+    window.onload = map_load;
+    //window.onload = map_init;
+</script>
+
+<!-- content end -->

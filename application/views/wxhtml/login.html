@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable = no' name='viewport'/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>会员登录 -房猫经纪人触屏版</title>
+</head>
+<style>html, body {
+background-color: #eee;
+color: #333;
+font-size: 14px;
+-webkit-text-size-adjust: none;
+}</style>
+<body>
+<div id="tbh5v0" class="login">
+    <header class="c-nav">
+            <div class="c-nav-w">
+              <div class="c-nav-s">
+              </div>
+              <div class="c-nav-c">
+                <span class="omit">用户登录</span>
+              </div>
+              <div class="c-nav-e">
+                
+              </div>
+            </div>
+        </header>
+     
+<section class="innercontent">
+    {{if $data.user_info}}
+    <a class="c-btn c-btn-aw" href="/wxserver/jsapi_wxpay2">测试充值0.01元</a>
+    <span class="omit">公司名称:{{$data.user_info.name}}</span>
+    <span class="omit">用户姓名:{{$data.user_info.rel_name}}</span>
+    <span class="omit">职级:{{$data.user_info.role_name}}</span>
+    <span class="omit">公司账户余额:{{$data.user_info.sum}}元</span>
+
+    {{/if}}
+
+            <form method="post" class="c-form login-form" id="J_Register" action="/wxserver/save_openid">
+                {{if $data.res == -1}}账号登陆失败{{/if}}
+                {{if $data.res == 1}}绑定成功{{/if}}
+                {{if $data.res == 2}}人员离职,绑定失败{{/if}}
+                {{if $data.res == 3}}公司服务暂停,绑定失败{{/if}}
+                {{if $data.res == 4}}写入失败{{/if}}
+
+                <fieldset>
+                    <div class="field username">
+                        <div class="c-form-search st">
+                            <input type="text" id="J_UserNameTxt" placeholder="账号/手机" value="" class="c-f-text" name="username"/><span></span></button>
+                        </div>
+                        <div class="tips"></div>
+                    </div>
+                    <div class="field pwd">
+                        <div class="ptxt st">
+                            <input id="J_PassWordTxt" type="password"  name="password"value="" placeholder="密码" class="c-f-text"/>
+                            
+                        </div>
+                         <div class="tips"></div>
+                    </div>
+
+                    <div class="field identifyCode">
+                        
+                        <div class="tips"></div>
+                    </div>
+
+                    <div class="field submit-btn">
+                        <input type="submit" class="c-btn-orange" value="登录"/>
+                        </div>
+                        
+<div class="field login-option">
+                        <span class="reg-find-pwd">
+           
+                                                        <!--<a href="forget_password.html" class="forget-pwd" target="_top" data-spm-anchor-id="0.0.0.0">修改密码</a>
+                                                    --></span>
+                    </div>
+
+                </fieldset>
+            </form>
+</section>
+
+<div id="J_um_mob" class="none"><img src="https://ynuf.alipay.com/dc.htm?token=Ta60f9f1944e56061da6f416d6d8e92a91416549443927&amp;jsInfo=1360%7C667%7C1360%7C728%7C-%7C-%7C-%7C-%7C-%7C-%7C-" width="0" height="0" frameborder="0"></div>
+<script type="text/javascript">
+
+</script>
+
+
+    </div>
+
+</body>
+</html>

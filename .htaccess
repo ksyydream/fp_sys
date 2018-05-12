@@ -1,0 +1,34 @@
+<IfModule mod_rewrite.c>
+<Files ~ "^.(htaccess|htpasswd)$">
+deny from all
+</Files>
+
+#Options -Indexes
+Options +FollowSymLinks
+
+#允许解析文件中的SSI指令
+Options +Includes
+
+#定义404，500错误页面
+#ErrorDocument 404 /404.htm
+#ErrorDocument 500 /404.htm
+
+#定义目录索引页面
+DirectoryIndex index.php
+order deny,allow
+
+RewriteEngine on
+
+AddType video/ogg .ogv
+AddType video/mp4 .mp4
+AddType video/webm .webm
+AddType video/x-flv .flv
+
+#去掉链接地址中index.php字符串
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond $1 !^(index.php|test.php|test_ui.php|images|touch|robots\.txt)
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+
+</IfModule>
