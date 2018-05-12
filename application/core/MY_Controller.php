@@ -43,19 +43,6 @@ class MY_Controller extends CI_Controller
 				die('-1');
 			}
 		}
-		//如果是评估管理员 进入非index/manage/pg控制器, 就返回首页
-		if(!$this->session->userdata('login_user_id')){
-			$user_position_arr_ = array();
-			$user_position_arr_ =$this->session->userdata('login_position_id_array')?$this->session->userdata('login_position_id_array'):array();
-			if(in_array(11,$user_position_arr_)){
-				$class_arr_ = array("index","manage","pg");
-				$user_class = $this->router->class;
-				if(!in_array($user_class,$class_arr_)){
-					redirect(site_url('/'));
-					exit();
-				}
-			}
-		}
 
 		$this->cismarty->assign('login_user_id', $login_user_id > 0 ? true : false);
 		$this->cismarty->assign('login_user_name', $this->session->userdata('login_rel_name'));

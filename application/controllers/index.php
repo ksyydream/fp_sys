@@ -220,55 +220,5 @@ class Index extends MY_Controller {
         $this->user_model->set_cggg_msg();
     }
 
-    public function jinrong(){
-        if($this->input->post('username')){
-            $res = $this->user_model->ksls_2_login(1);
-            if($res == 1){
-                redirect(site_url('/finance/finance_list'));
-            }
-            $this->assign('flag', $res);
-        }else{
-            $this->assign('flag', 0);
-        }
-        $this->display('jinrong_index.html');
-    }
 
-    public function peixun(){
-        if($this->input->post('username')){
-            $res = $this->user_model->ksls_2_login(2);
-            if($res == 1){
-                redirect(site_url('/examination/mark_list'));
-            }
-            $this->assign('flag', $res);
-        }else{
-            $this->assign('flag', 0);
-        }
-        $this->display('peixun_index.html');
-    }
-
-    public function quanzheng(){
-        if($this->input->post('username')){
-            $res = $this->user_model->ksls_2_login(3);
-            if($res == 1){
-                redirect(site_url('/agenda/list_agenda'));
-            }
-            $this->assign('flag', $res);
-        }else{
-            $this->assign('flag', 0);
-        }
-        $this->display('quanzheng_index.html');
-    }
-
-    public function xingcheng(){
-        if($this->input->post('username')){
-            $res = $this->user_model->ksls_2_login(4);
-            if($res == 1){
-                redirect(site_url('/activity/list_activity'));
-            }
-            $this->assign('flag', $res);
-        }else{
-            $this->assign('flag', 0);
-        }
-        $this->display('xingcheng_index.html');
-    }
 }
