@@ -15,52 +15,11 @@ class Index extends MY_Controller {
     {
         parent::__construct();
         $this->load->model('user_model');
-        $this->load->model('news_model');
     }
 
-    function _remap($method,$params = array()) {
-        if(!$this->session->userdata('login_user_id')) {
 
-        } else {
-            if($method == 'jinrong' || $method == 'peixun' || $method == 'quanzheng' || $method == 'xingcheng'){
-                if($this->session->userdata('login_flag') == 1){
-                    redirect(site_url('/finance/finance_list'));
-                    exit();
-                }
-                if($this->session->userdata('login_flag') == 2){
-                    redirect(site_url('/examination/mark_list'));
-                    exit();
-                }
-                if($this->session->userdata('login_flag') == 3){
-                    redirect(site_url('/agenda/list_agenda'));
-                    exit();
-                }
-                if($this->session->userdata('login_flag') == 4){
-                    redirect(site_url('/activity/list_activity'));
-                    exit();
-                }
-            }
-
-        }
-        return call_user_func_array(array($this, $method), $params);
-    }
     public function index() {
-        if($this->session->userdata('login_flag') == 1){
-            redirect(site_url('/finance/finance_list'));
-            exit();
-        }
-        if($this->session->userdata('login_flag') == 2){
-            redirect(site_url('/examination/mark_list'));
-            exit();
-        }
-        if($this->session->userdata('login_flag') == 3){
-            redirect(site_url('/agenda/list_agenda'));
-            exit();
-        }
-        if($this->session->userdata('login_flag') == 4){
-            redirect(site_url('/activity/list_activity'));
-            exit();
-        }
+       echo "Welcome";
     }
 
 /*

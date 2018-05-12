@@ -80,7 +80,7 @@ $autoload['helper'] = array('url','form');
 |
 */
 
-$autoload['config'] = array('diydata');
+$autoload['config'] = array('diydata','wxpay_config');
 
 
 /*
