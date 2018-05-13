@@ -23,11 +23,11 @@
     </div>
     <section data-am-widget="accordion" class="am-accordion am-accordion-default"
     data-am-accordion='{}'>
-
+        {{foreach from=$data.res_list item=item}}
           <dl class="am-accordion-item">
         <dt class="am-accordion-title">
           <div class="fl">
-            <span><i class="am-icon-users"></i>一一房产</span>
+            <span><i class="am-icon-users"></i>{{$item.c_company_name}}</span>
           </div>
           <div class="fr">
             <span><i class="am-icon-angle-down"></i></span>
@@ -46,8 +46,12 @@
           
         </dd>
       </dl>
-      
-        </section>
+        {{/foreach}}
+    </section>
+    {{include file='public/pagination.html'}}
+    <form class="am-form" method="get" action="">
+
+    </form>
     <div class="amz-toolbar" id="amz-toolbar">
       <!-- 菜单 -->
       <!-- 左侧侧滑菜单 -->

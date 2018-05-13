@@ -133,3 +133,10 @@
 /*新增渠道*/
 .add-com-tit{text-align: center; font-size: 2rem;font-weight: bold;}
 .add-com-div{padding:0 2rem;}
+
+.pages{ text-align: center;margin-top:10px;}
+.pages a,.pages .current{border:1px solid #e4e7e9; background: #fff; height: 28px; width:28px; line-height: 28px; display: inline-block; text-align: center;}
+.pages a{color: #000;margin:0 2px;}
+.pages a:hover{background: #f77d20; color:#fff;text-decoration: none;}
+.pages .prev,.pages .next{width:60px; height:28px;}
+.pages .current{ background: #f77d20;color:#fff;border:1px solid #f77d20;}

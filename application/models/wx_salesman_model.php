@@ -101,4 +101,42 @@ class Wx_salesman_model extends MY_Model
             return $id;
         }
     }
+
+    public function customer_list(){
+        $per_page = 1;//每页显示多少调数据
+        $this->db->select('count(1) num');
+        $this->db->from('user');
+        /*
+        $this->db->group_start();
+        $this->db->where('', $this->session->userdata('b_id'));
+        $this->db->or_where('create_id', $this->session->userdata('b_id'));
+        $this->db->group_end();
+        */
+
+        $this->db->where('parent_id', $this->session->userdata('wx_user_id'));
+        $this->db->where('role_id', -1);
+        $rs_total = $this->db->get()->row();
+        //总记录数
+        $total_rows = $rs_total->num;
+        $total_page = ceil($total_rows/$per_page); //总页数
+        $pageNum = $this->uri->segment(3) ? $this->uri->segment(3) : 1;//当前页
+
+        if($pageNum > $total_page & $total_rows > 0 || $pageNum <1){
+            echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'><script>alert('页码错误');history.back();</script>";
+            exit();
+        }
+        $data['total_rows'] = $total_rows;
+        $data['total_page'] = $total_page;
+        $data['pageNum'] = $pageNum;
+
+        //list
+        $this->db->select('a.*');
+        $this->db->from('user a');
+        $this->db->where('a.parent_id', $this->session->userdata('wx_user_id'));
+        $this->db->where('a.role_id', -1);
+        $this->db->limit($per_page, ($pageNum - 1) * $per_page );
+        $this->db->order_by('a.id','desc');
+        $data['res_list'] = $this->db->get()->result_array();
+        return $data;
+    }
 }

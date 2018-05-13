@@ -99,6 +99,11 @@ class Wx_salesman extends Wx_controller {
         $this->display('salesman/add_company.html');
     }
 
+    public function edit_customer($id) {
+
+        $this->display('salesman/add_company.html');
+    }
+
     public function save_customer() {
         $rs = $this->wx_salesman_model->save_customer();
         if($rs == 1){
@@ -113,6 +118,9 @@ class Wx_salesman extends Wx_controller {
     }
 
     public function customer_list() {
+        $data = $this->wx_salesman_model->customer_list();
+        $this->assign('data',$data);
+        $this->assign('pagination_url','/wx_salesman/customer_list/');
         $this->display('salesman/qy_company.html');
     }
 
