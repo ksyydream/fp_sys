@@ -45,16 +45,9 @@ class Wx_controller extends MY_Controller
             $res = $this->sys_model->check_openid($openid);
         }
         if($this->session->userdata('wx_user_id')){
-            if($this->session->userdata('wx_role_id') > 0){
-                $this->cismarty->assign('rel_name',$this->session->userdata('wx_rel_name'));
-                $this->cismarty->assign('role_id',$this->session->userdata('wx_role_id'));
-                $this->cismarty->assign('role_name',$this->session->userdata('wx_role_name'));
-            }else{
-                $this->cismarty->assign('rel_name',$this->session->userdata('c_rel_name'));
-                $this->cismarty->assign('role_id',$this->session->userdata('wx_role_id'));
-                $this->cismarty->assign('role_name', "渠道客户");
-            }
-
+            $this->cismarty->assign('rel_name',$this->session->userdata('wx_rel_name'));
+            $this->cismarty->assign('role_id',$this->session->userdata('wx_role_id'));
+            $this->cismarty->assign('role_name',$this->session->userdata('wx_role_name'));
         }
 
     }
