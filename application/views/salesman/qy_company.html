@@ -36,12 +36,12 @@
         <dd class="am-accordion-bd am-collapse">
           <!-- 规避 Collapase 处理有 padding 的折叠内容计算计算有误问题， 加一个容器 -->
           <div class="am-accordion-content">
-             <p>联系人：萧萧</p>
-             <p>联系人手机：13000000000</p>
-             <p>公司邀请码：287</p>
-             <p>公司登录ID：月亮宫</p>
-             <p>公司固话：</p>
-             <button type="button" class="am-btn am-btn-secondary" data-am-modal="{target: '#my-popup-edit-1265'}"><i class="am-icon-cog"></i>编辑</button>
+             <p>联系人：{{$item.c_rel_name}}</p>
+             <p>联系人手机：{{$item.c_tel}}</p>
+             <p>所属业务员：{{$item.p_rel_name}}</p>
+             <p>公司登录ID：{{$item.username}}</p>
+             <p>公司固话：{{$item.c_mobile}}</p>
+             <a type="button" class="am-btn am-btn-secondary" href="/wx_salesman/edit_customer/{{$item.id}}"><i class="am-icon-cog"></i>编辑</a>
           </div>
           
         </dd>
