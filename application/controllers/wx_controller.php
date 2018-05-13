@@ -8,7 +8,7 @@
 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Wx_controller extends CI_Controller
+class Wx_controller extends MY_Controller
 {
     protected $wxconfig = array();
     public function __construct()
@@ -43,6 +43,18 @@ class Wx_controller extends CI_Controller
             $openid = 'oelDRwGhG9Nf_4b9kZu0sVNKdLg0';
             $this->session->set_userdata('openid', $openid);
             $res = $this->sys_model->check_openid($openid);
+        }
+        if($this->session->userdata('wx_user_id')){
+            if($this->session->userdata('wx_role_id') > 0){
+                $this->cismarty->assign('rel_name',$this->session->userdata('wx_rel_name'));
+                $this->cismarty->assign('role_id',$this->session->userdata('wx_role_id'));
+                $this->cismarty->assign('role_name',$this->session->userdata('wx_role_name'));
+            }else{
+                $this->cismarty->assign('rel_name',$this->session->userdata('c_rel_name'));
+                $this->cismarty->assign('role_id',$this->session->userdata('wx_role_id'));
+                $this->cismarty->assign('role_name', "渠道客户");
+            }
+
         }
 
     }

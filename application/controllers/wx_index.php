@@ -38,7 +38,7 @@ class Wx_index extends Wx_controller {
     public function submit_login(){
         $rs = $this->wx_index_model->submit_login();
         if($rs == '1'){
-            $this->show_message('登陆成功',site_url('wx_index/index'));
+            $this->show_message('登陆成功',site_url('wx_salesman/index'));
         }else if($rs == '-1'){
             $this->show_message('登陆失败！');
         }else{

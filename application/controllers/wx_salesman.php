@@ -23,7 +23,11 @@ class Wx_salesman extends Wx_controller {
 
 
     public function index() {
-        $this->display('salesman/index');
+        $this->display('salesman/index.html');
+    }
+
+    public function change_pwd() {
+        $this->display('salesman/change_pwd.html');
     }
 
 }
