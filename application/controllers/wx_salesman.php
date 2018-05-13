@@ -100,7 +100,11 @@ class Wx_salesman extends Wx_controller {
     }
 
     public function edit_customer($id) {
-
+        $customer = $this->wx_salesman_model->get_customer($id);
+        if(!$customer){
+            $this->show_message('未找到渠道公司信息！');
+        }
+        $this->assign('customer',$customer);
         $this->display('salesman/add_company.html');
     }
 

@@ -102,8 +102,18 @@ class Wx_salesman_model extends MY_Model
         }
     }
 
+    public function get_customer($id){
+        $this->db->select('a.*,b.rel_name p_rel_name');
+        $this->db->from('user a');
+        $this->db->join('user b','a.parent_id = b.id','left');
+        $this->db->where('a.parent_id', $this->session->userdata('wx_user_id'));
+        $this->db->where('a.role_id', -1);
+        $this->db->where('id', $id);
+        return $this->db->get()->row_array();
+    }
+
     public function customer_list(){
-        $per_page = 1;//每页显示多少调数据
+        $per_page = 10;//每页显示多少调数据
         $this->db->select('count(1) num');
         $this->db->from('user');
         /*
