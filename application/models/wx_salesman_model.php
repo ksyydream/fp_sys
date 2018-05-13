@@ -108,7 +108,7 @@ class Wx_salesman_model extends MY_Model
         $this->db->join('user b','a.parent_id = b.id','left');
         $this->db->where('a.parent_id', $this->session->userdata('wx_user_id'));
         $this->db->where('a.role_id', -1);
-        $this->db->where('id', $id);
+        $this->db->where('a.id', $id);
         return $this->db->get()->row_array();
     }
 

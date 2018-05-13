@@ -41,7 +41,7 @@ class Wx_controller extends MY_Controller
                 $res = $this->sys_model->check_openid($this->session->userdata('openid'));
             }
         }else{
-            $openid = 'oelDRwGhG9Nf_4b9kZu0sVNKdLg0';
+            $openid = 'oFzKgwbFEyC40jU6bS_HQ5sxM4X8';
             $this->session->set_userdata('openid', $openid);
             $res = $this->sys_model->check_openid($openid);
         }
