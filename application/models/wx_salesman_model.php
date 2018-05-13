@@ -28,4 +28,77 @@ class Wx_salesman_model extends MY_Model
         else
             return false;
     }
+
+    public function save_customer() {
+        $data = array(
+            'c_company_name' => $this->input->post('c_company_name'),
+            'c_rel_name' => $this->input->post('c_rel_name'),
+            'c_path' => $this->input->post('c_path'),
+            'c_tel' => $this->input->post('c_tel'),
+            'c_mobile' => $this->input->post('c_mobile'),
+            'c_lat' => $this->input->post('c_lat'),
+            'c_lng' => $this->input->post('c_lng'),
+            'parent_id' => $this->session->userdata('wx_user_id'),
+            'c_b_lat' => $this->input->post('c_b_lat'),
+            'c_b_lng' => $this->input->post('c_b_lng'),
+            'company_id' => $this->session->userdata('wx_company_id'),
+            'role_id' => -1,
+            'flag' => 1
+        );
+        if(!$data['c_company_name'] || !$data['c_rel_name'] || !$data['c_path'] || !$data['c_tel'] || !$data['c_mobile'] || !$data['c_lat'] || !$data['c_lng']){
+            return -2;
+        }
+        if($id = $this->input->post('id')){
+            $check_ = $this->db->select()->from('user')->where(array('id' => $id, 'parent_id' => $this->session->userdata('wx_user_id'), 'flag' => 1))->get()->row();
+            if($check_){
+                unset($data['parent_id']);
+                unset($data['company_id']);
+                $this->db->where('id' ,$id)->update('user',$data);
+            }else{
+                return -2;
+            }
+
+        }else{
+
+            $data['password'] = sha1('888888');
+            $data['username'] = $this->get_username($this->session->userdata('wx_company_id'));
+            if($data['username'] == -1){
+                return -3;
+            }
+            $this->db->insert('user' ,$data);
+        }
+        return 1;
+    }
+
+    public function get_username($company_id){
+        $company = $this->db->select()->from('company')->where('id', $company_id)->get()->row_array();
+        if(!$company){
+            return -1;
+        }
+        $this->db->select('count(1) num');
+        $this->db->from('user');
+        $this->db->where('id', $company_id);
+        $this->db->where('role_id', -1);
+        $rs_total = $this->db->get()->row();
+        $total_rows = $rs_total->num;
+        $total_rows = $total_rows + 115;
+        $username_id = $this->check_super_id($total_rows);
+        if($username_id == -1){
+            return -1;
+        }
+        return $company['sx'] . sprintf('%04s', $username_id);
+    }
+
+    public function check_super_id($id){
+        if($id > 9999){
+            return -1;
+        }
+        $super_id = $this->db->select()->from('super_id')->where('super_uid',$id)->get()->row_array();
+        if($super_id){
+            $id++;
+            return $this->check_super_id($id);
+        }else{
+            return $id;
+        }
+    }
 }
