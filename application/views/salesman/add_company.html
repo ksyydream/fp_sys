@@ -71,7 +71,7 @@
                 class="am-close">&times;</span>
             </div>
             <iframe class="am-popup-bd" id="mapPage" style="height:700px;width:100%;margin-top: -15px;"
-                    frameborder=0 src="http://apis.map.qq.com/tools/locpicker?search=1&type=1&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp{{if $customer}}coord={{$customer.c_lat|default:''}},{{$customer.c_lng|default:''}}{{/if}}">
+                    frameborder=0 src="http://apis.map.qq.com/tools/locpicker?search=1&type=1&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp{{if $customer}}&coord={{$customer.c_lat|default:''}},{{$customer.c_lng|default:''}}{{/if}}">
 
             </iframe>
         </div>
