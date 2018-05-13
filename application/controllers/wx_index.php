@@ -27,6 +27,7 @@ class Wx_index extends Wx_controller {
 
     public function logout() {
         $this->wx_index_model->logout();
+        redirect('wx_index/index');
     }
 
     /**
