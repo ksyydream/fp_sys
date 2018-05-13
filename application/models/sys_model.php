@@ -44,6 +44,8 @@ class Sys_model extends MY_Model
             if($res==1)
                 return 1;
         }
+        $this->session->unset_userdata('wx_user_id');
+        $this->session->unset_userdata('wx_role_id');
         return -1;
     }
 

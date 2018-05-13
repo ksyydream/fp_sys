@@ -1,4 +1,23 @@
-{{include file='salesman/public/head.html'}}
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>密码修改</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="/assets/css/amazeui.switch.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/amazeui.min.js"></script>
+</head>
+<body>
+<div class="am-g">
+{{include file='public/head.html'}}
     <div class="app-tit"><span class="mark">修改密码</span></div>
     <div class="safe-center">
       <form action="http://bb2.ksls.com.cn/login/save_change_pwd" class="am-form" data-am-validator method="post">
@@ -23,7 +42,7 @@
       <div class="amz-toolbar" id="amz-toolbar">
       <!-- 菜单 -->
       <!-- 左侧侧滑菜单 -->
-          {{include file='salesman/public/menu.html'}}
+          {{include file='public/menu.html'}}
       </div>
 </div>
 </body>
