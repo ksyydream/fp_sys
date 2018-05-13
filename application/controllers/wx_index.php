@@ -19,7 +19,7 @@ class Wx_index extends Wx_controller {
 
 
     public function index() {
-       echo $this->session->userdata('openid');
+        $this->display('login.html');
     }
 
 

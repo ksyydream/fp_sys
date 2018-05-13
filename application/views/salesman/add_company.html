@@ -1,0 +1,38 @@
+{{include file='salesman/public/head.html'}}
+    <div class="amz-toolbar" id="amz-toolbar">
+      <!-- 菜单 -->
+      <!-- 左侧侧滑菜单 -->
+        {{include file='salesman/public/menu.html'}}
+    </div>
+     <div class="add-com-div">
+    <div class="am-popup-title add-com-tit">新增公司</div>
+    <form method="post" action="http://bb2.ksls.com.cn/wl_manager/save_company" class="am-form" data-am-validator>
+            <fieldset>
+              <div class="am-form-group">
+                <label for="doc-vld-name">公司名称：</label>
+                <input type="text" id="doc-vld-name" name="company_name" placeholder="输入公司名称" class="am-form-field" required/>
+              </div>
+              <div class="am-form-group">
+                <label for="doc-vld-name">公司对接经理：</label>
+                <input type="text" id="doc-vld-name" name="rel_name" placeholder="输入公司对接经理" class="am-form-field" required/>
+              </div>
+              <div class="am-form-group">
+                <label for="doc-vld-name">手机号码：</label>
+                <input type="number" id="doc-vld-name" name="username" placeholder="输入手机号码" class="am-form-field" pattern="^1\d{10}$" required/>
+              </div>
+              <div class="am-form-group">
+                <label for="doc-vld-name">公司地址：</label>
+                <input type="text" id="doc-vld-name" name="address" placeholder="输入公司地址" class="am-form-field" />
+              </div>
+              <div class="am-form-group">
+                <label for="doc-vld-name">联系固话：</label>
+                <input type="text" id="doc-vld-name" name="tel" placeholder="输入联系固话" class="am-form-field" />
+              </div>
+              <button class="am-btn" type="submit">提交</button>
+            </fieldset>
+          </form>
+</div>
+
+</div>
+</body>
+</html>

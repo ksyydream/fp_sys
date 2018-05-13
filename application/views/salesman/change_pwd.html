@@ -1,0 +1,30 @@
+{{include file='salesman/public/head.html'}}
+    <div class="app-tit"><span class="mark">修改密码</span></div>
+    <div class="safe-center">
+      <form action="http://bb2.ksls.com.cn/login/save_change_pwd" class="am-form" data-am-validator method="post">
+        <fieldset>
+          <div class="am-form-group">
+            <label for="doc-vld-name-2">旧密码：</label>
+            <input type="password" id="doc-vld-name-2"  name="passwd"  placeholder="输入旧密码" required/>
+          </div>
+          <div class="am-form-group">
+            <label for="doc-vld-pwd-1">新密码：</label>
+            <input type="password" id="doc-vld-pwd-1" name="new_passwd" minlength="6" placeholder="输入新密码(至少6位)" required/>
+          </div>
+          <div class="am-form-group">
+            <label for="doc-vld-pwd-2">再次确认密码：</label>
+            <input type="password" id="doc-vld-pwd-2" placeholder="再次确认新密码" required/>
+          </div>
+          <button class="am-btn" type="submit">提交</button>
+        </fieldset>
+      </form>
+    </div>
+    <!-- 侧滑菜单 -->
+      <div class="amz-toolbar" id="amz-toolbar">
+      <!-- 菜单 -->
+      <!-- 左侧侧滑菜单 -->
+          {{include file='salesman/public/menu.html'}}
+      </div>
+</div>
+</body>
+</html>
