@@ -36,8 +36,9 @@ class Wx_controller extends MY_Controller
                     $openid=$a_access_token["openid"];
                     $this->session->set_userdata('openid', $openid);
                     $res = $this->sys_model->check_openid($openid);
-
                 }
+            }else{
+                $res = $this->sys_model->check_openid($this->session->userdata('openid'));
             }
         }else{
             $openid = 'oelDRwGhG9Nf_4b9kZu0sVNKdLg0';
