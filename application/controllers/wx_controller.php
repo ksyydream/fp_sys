@@ -8,7 +8,7 @@
 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Wx_controller extends CI_Controller
+class Wx_controller extends MY_Controller
 {
     protected $wxconfig = array();
     public function __construct()
@@ -36,13 +36,19 @@ class Wx_controller extends CI_Controller
                     $openid=$a_access_token["openid"];
                     $this->session->set_userdata('openid', $openid);
                     $res = $this->sys_model->check_openid($openid);
-
                 }
+            }else{
+                $res = $this->sys_model->check_openid($this->session->userdata('openid'));
             }
         }else{
-            $openid = 'oelDRwGhG9Nf_4b9kZu0sVNKdLg0';
+            $openid = 'oFzKgwbFEyC40jU6bS_HQ5sxM4X8';
             $this->session->set_userdata('openid', $openid);
             $res = $this->sys_model->check_openid($openid);
+        }
+        if($this->session->userdata('wx_user_id')){
+            $this->cismarty->assign('rel_name',$this->session->userdata('wx_rel_name'));
+            $this->cismarty->assign('role_id',$this->session->userdata('wx_role_id'));
+            $this->cismarty->assign('role_name',$this->session->userdata('wx_role_name'));
         }
 
     }
@@ -73,50 +79,7 @@ class Wx_controller extends CI_Controller
     }
 
 
-    /**
-     * 提示信息
-     * @param varchar $message 提示信息
-     * @param varchar $url 跳转页面，如果为空则后退
-     * @param int $type 提示类型，1是自动关闭的提示框，2是错误提示框
-     **/
-    public function show_message($message,$url=null,$type=1){
-        if($url){
-            $js = "location.href='".$url."';";
-        }else{
-            $js = "history.back();";
-        }
 
-        if($type=='1'){
-            echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
-				<html xmlns='http://www.w3.org/1999/xhtml'>
-				<head>
-				<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no\">
-				<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-				<title>".$message."</title>
-				<script src='".base_url()."static/assets/js/jquery.min.js'></script>
-				<link rel='stylesheet' href='".base_url()."static/css/easydialog.css'>
-				</head>
-				<body>
-				<script src='".base_url()."static/js/easydialog.min.js'></script>
-				<script>
-				var callFn = function(){
-				  ".$js."
-				};
-				easyDialog.open({
-					container : {
-						content : '".$message."'
-					},
-					autoClose : 1200,
-					callback : callFn
-
-				});
-
-				</script>
-				</body>
-				</html>";
-        }
-        exit;
-    }
 
     public function buildWxData(){
         $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('secret')));

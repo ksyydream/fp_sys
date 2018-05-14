@@ -1,0 +1,148 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>新增公司</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="/assets/css/amazeui.switch.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/amazeui.min.js"></script>
+</head>
+<body>
+<div class="am-g">
+{{include file='public/head.html'}}
+    <div class="amz-toolbar" id="amz-toolbar">
+      <!-- 菜单 -->
+      <!-- 左侧侧滑菜单 -->
+        {{include file='public/menu.html'}}
+    </div>
+     <div class="add-com-div">
+    <div class="am-popup-title add-com-tit">新增公司</div>
+    <form id="save_form" method="post" action="/wx_salesman/save_customer" class="am-form" data-am-validator>
+        <input type="hidden" name="id" value="{{$customer.id|default:''}}">
+        <input type="hidden" name="c_b_lat" value="{{$customer.c_b_lat|default:''}}">
+        <input type="hidden" name="c_b_lng" value="{{$customer.c_b_lng|default:''}}">
+            <fieldset>
+              <div class="am-form-group">
+                <label for="c_company_name">公司名称：</label>
+                <input type="text" id="c_company_name" name="c_company_name" value="{{$customer.c_company_name|default:''}}" placeholder="输入公司名称" class="am-form-field" required/>
+              </div>
+              <div class="am-form-group">
+                <label for="c_rel_name">公司对接经理：</label>
+                <input type="text" id="c_rel_name" name="c_rel_name" value="{{$customer.c_rel_name|default:''}}" placeholder="输入公司对接经理" class="am-form-field" required/>
+              </div>
+              <div class="am-form-group">
+                <label for="c_tel">手机号码：</label>
+                <input type="number" id="c_tel" name="c_tel" value="{{$customer.c_tel|default:''}}" placeholder="输入手机号码" class="am-form-field" pattern="^1\d{10}$" required/>
+              </div>
+              <div class="am-form-group">
+                <label for="c_mobile">联系固话：</label>
+                <input type="text" id="c_mobile" name="c_mobile" value="{{$customer.c_mobile|default:''}}" placeholder="输入联系固话" class="am-form-field" />
+              </div>
+                <div class="am-input-group merchants_settled_map">
+                    <span class="merchants_settled_map_img"><img src="/assets/images/businesssettledin_icon_map.png"></span>
+                    <button type="button" class="am-btn am-btn-secondary am-btn-block" id="open_map">腾讯地图
+                    </button>
+                    <input  required  type="text" class="am-form-field am-u-sm-4" placeholder="请输入纬度" value="{{$customer.c_lat|default:''}}" id="data_lat" name="c_lat" readonly>
+                    <input  required type="text" class="am-form-field am-u-sm-4" placeholder="请输入经度" value="{{$customer.c_lng|default:''}}" id="data_lng" name="c_lng" readonly>
+                </div>
+                <div class="am-form-group">
+                    <label for="c_path">公司地址：</label>
+                    <input type="text" id="c_path" name="c_path" value="{{$customer.c_path|default:''}}" placeholder="输入公司地址" class="am-form-field" />
+                </div>
+              <button class="am-btn" id="save_btn" type="button">提交</button>
+            </fieldset>
+          </form>
+</div>
+    <!--腾讯地图-->
+
+    <div class="am-popup" id="baidu_map" style="display: none;">
+        <div class="am-popup-inner">
+            <div class="am-popup-hd">
+                <h4 class="am-popup-title">腾讯地图</h4>
+          <span data-am-modal-close
+                class="am-close">&times;</span>
+            </div>
+            <iframe class="am-popup-bd" id="mapPage" style="height:700px;width:100%;margin-top: -15px;"
+                    frameborder=0 src="http://apis.map.qq.com/tools/locpicker?search=1&type=1&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp{{if $customer}}&coord={{$customer.c_lat|default:''}},{{$customer.c_lng|default:''}}{{/if}}">
+
+            </iframe>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
+<script charset="utf-8" src="/assets/js/webuploader.min.js"></script>
+<script src="/assets/js/layer/layer.js"></script>
+<script>
+    $("#open_map").click(function(){
+        $("#baidu_map").modal();
+    });
+    function tx_to_baidu(lat,lng){
+        x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+        var x = lng, y = lat;
+        var z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * x_pi);
+        var theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * x_pi);
+        var point = new Array()
+        point['lng'] = z * Math.cos(theta) + 0.0065;
+        point['lat'] = z * Math.sin(theta) + 0.006;
+        $("[name='c_b_lat']").val(point['lat'])
+        $("[name='c_b_lng']").val(point['lng'])
+        return point;
+
+    }
+    window.addEventListener('message', function(event) {
+        // 接收位置信息，用户选择确认位置点后选点组件会触发该事件，回传用户的位置信息
+        var loc = event.data;
+        if (loc && loc.module == 'locationPicker') {//防止其他应用也会向该页面post信息，需判断module是否为'locationPicker'
+            $("[name='c_lat']").val(loc.latlng.lat)
+            $("[name='c_lng']").val(loc.latlng.lng)
+            $("[name='c_path']").val(loc.poiaddress)
+            tx_to_baidu(loc.latlng.lat,loc.latlng.lng);
+            $("#baidu_map").modal('close');
+        }
+    }, false);
+
+    $("#save_btn").click(function(){
+        if($.trim($("#c_company_name").val())==""){
+            $("#c_company_name").focus();
+            layer.msg('请输入公司名称!');
+            return false;
+        }
+        if($.trim($("#c_rel_name").val())==""){
+            $("#c_rel_name").focus();
+            layer.msg('请输入公司对接经理!');
+            return false;
+        }
+        if($.trim($("#c_tel").val())==""){
+            $("#c_tel").focus();
+            layer.msg('请输入输入手机号码!');
+            return false;
+        }
+        if($.trim($("#c_mobile").val())==""){
+            $("#c_mobile").focus();
+            layer.msg('请输入公司固定电话!');
+            return false;
+        }
+        if($.trim($("#data_lat").val())=="" || $.trim($("#data_lng").val())==""){
+            layer.msg('请设置公司经纬度!');
+            return false;
+        }
+
+        if($.trim($("#c_path").val())==""){
+            $("#c_path").focus();
+            layer.msg('请输入公司地址!');
+            return false;
+        }
+
+        $("#save_form").submit();
+    })
+</script>

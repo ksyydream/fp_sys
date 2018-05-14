@@ -44,6 +44,8 @@ class Sys_model extends MY_Model
             if($res==1)
                 return 1;
         }
+        $this->session->unset_userdata('wx_user_id');
+        $this->session->unset_userdata('wx_role_id');
         return -1;
     }
 
@@ -57,25 +59,22 @@ class Sys_model extends MY_Model
                 return 2;
             }
             $role_p = $this->db->select()->where('id',$res->role_id)->from('role')->get()->row();
-            $company_flag = $this->db->where('id',$res->company_id)->from('company')->get()->row_array();
-            if($role_p->permission_id !=1){
-                if($company_flag){
-                    if($company_flag['flag']==2 && $role_p->permission_id !=1){
-                        return 3;
-                    }
-                }else{
-                    return 3;
-                }
-            }
             $token = uniqid();
             $user_info['wx_token'] = $token;
             $user_info['wx_user_id'] = $res->id;
             $user_info['wx_username'] = $res->username;
             $user_info['wx_password'] = $res->password;
-            $user_info['wx_rel_name'] = $res->rel_name;
             $user_info['wx_role_id'] = $res->role_id;
-            $user_info['wx_role_name'] = $role_p->name;
-            $user_info['wx_permission_id'] = $role_p->permission_id;
+            if($res->role_id < 0){
+                $user_info['wx_rel_name'] = $res->c_company_name;
+                $user_info['wx_role_name'] = "渠道客户";
+                $user_info['wx_permission_id'] = 99;
+            }else{
+                $user_info['wx_rel_name'] = $res->rel_name;
+                $user_info['wx_role_name'] = $role_p->name;
+                $user_info['wx_permission_id'] = $role_p->permission_id;
+
+            }
             $user_info['wx_company_id'] = $res->company_id;
             $user_info['wx_user_pic'] = $res->pic;
             $this->session->set_userdata($user_info);

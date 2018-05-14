@@ -14,13 +14,30 @@ class Wx_index extends Wx_controller {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('user_model');
+        $this->load->model('wx_index_model');
+        if($this->session->userdata('wx_user_id')){
+            redirect('wx_salesman');//管理员
+        }
     }
 
 
     public function index() {
-       echo $this->session->userdata('openid');
+        $this->display('login.html');
     }
 
-
+    /**
+     * 登陆提交
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2018-05-13
+     */
+    public function submit_login(){
+        $rs = $this->wx_index_model->submit_login();
+        if($rs == '1'){
+            $this->show_message('登陆成功',site_url('wx_salesman/index'));
+        }else if($rs == '-1'){
+            $this->show_message('登陆失败！');
+        }else{
+            $this->show_message('登陆失败！');
+        }
+    }
 }

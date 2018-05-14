@@ -76,7 +76,7 @@
                 <dl>
                     <dt>是否主管：</dt>
                     <dd>
-                        <select name="is_manager" class="combox" id="selectFlag">
+                        <select name="is_manager" class="combox" id="selectmanager">
                             <option value="1" <?php if(!empty($is_manager)){if($is_manager==1){echo 'selected';}}else{echo 'selected';}?>>是</option>
                             <option value="-1" <?php if(!empty($is_manager)){if($is_manager==2){echo 'selected';}}?>>否</option>
                         </select>

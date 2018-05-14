@@ -80,31 +80,32 @@ class MY_Controller extends CI_Controller
     	}
     	return $subs;
     }
-    
-    /**
-     * 提示信息
-     * @param varchar $message 提示信息
-     * @param varchar $url 跳转页面，如果为空则后退
-     * @param int $type 提示类型，1是自动关闭的提示框，2是错误提示框
-     **/
-    public function show_message($message,$url=null,$type=1){
-    	if($url){
-    		$js = "location.href='".$url."';";
-    	}else{
-    		$js = "history.back();";
-    	}
-    
-    	if($type=='1'){
-    		echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+
+	/**
+	 * 提示信息
+	 * @param varchar $message 提示信息
+	 * @param varchar $url 跳转页面，如果为空则后退
+	 * @param int $type 提示类型，1是自动关闭的提示框，2是错误提示框
+	 **/
+	public function show_message($message,$url=null,$type=1){
+		if($url){
+			$js = "location.href='".$url."';";
+		}else{
+			$js = "history.back();";
+		}
+
+		if($type=='1'){
+			echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
 				<html xmlns='http://www.w3.org/1999/xhtml'>
 				<head>
+				<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no\">
 				<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
 				<title>".$message."</title>
-				<script src='".base_url()."js/jquery.min.js'></script>
-				<link rel='stylesheet' href='".base_url()."css/easydialog.css'>
+				<script src='".base_url()."assets/js/jquery.min.js'></script>
+				<link rel='stylesheet' href='".base_url()."assets/css/easydialog.css'>
 				</head>
 				<body>
-				<script src='".base_url()."js/easydialog.min.js'></script>
+				<script src='".base_url()."assets/js/easydialog.min.js'></script>
 				<script>
 				var callFn = function(){
 				  ".$js."
@@ -115,15 +116,15 @@ class MY_Controller extends CI_Controller
 					},
 					autoClose : 1200,
 					callback : callFn
-			
+
 				});
-    
+
 				</script>
 				</body>
 				</html>";
-    	}
-    	exit;
-    }
+		}
+		exit;
+	}
     
     /**
      * 中国正常GCJ02坐标---->百度地图BD09坐标

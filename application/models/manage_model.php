@@ -391,7 +391,7 @@ class Manage_model extends MY_Model
                LEFT JOIN user_position b on a.id = b.user_id
                LEFT JOIN user_subsidiary d on d.user_id = a.id
                LEFT JOIN role e on e.id = a.role_id
-              where  a.id > 0
+              where  a.role_id > 0
                ";
         if($this->session->userdata('permission_id')==1){
             $mysql.=" and e.permission_id >= ".$this->session->userdata('permission_id');
@@ -463,6 +463,7 @@ class Manage_model extends MY_Model
         $this->db->join('company b', 'a.company_id = b.id', 'left');
         $this->db->join('role d', 'a.role_id = d.id', 'left');
         $this->db->join('user_position e', 'a.id = e.user_id', 'left');
+        $this->db->where('a.role_id >', 0);
         if($this->session->userdata('permission_id') >= 2) {
             $this->db->where('a.company_id', $this->session->userdata('company_id'));
         }
