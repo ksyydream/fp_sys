@@ -265,6 +265,49 @@ class Manage extends MY_Controller {
 		}
 	}
 
+	/**
+	 *
+	 * ***************************************以下为风控卡,清单卡一级选项*******************************************************************
+	 */
+
+	public function list_product_first(){
+		$data = $this->manage_model->list_product_first();
+		$this->load->view('manage/list_product_first.php',$data);
+	}
+
+	public function add_product_first(){
+		$this->load->view('manage/add_product_first.php');
+	}
+
+	public function delete_product_first($id){
+		$rs = $this->manage_model->delete_product_first($id);
+		if ($rs === 1) {
+			form_submit_json("200", "操作成功", "list_product_first", "", "");
+		} else {
+			form_submit_json("300", $rs);
+		}
+	}
+
+	public function edit_product_first($id){
+		$data = $this->manage_model->get_product_first($id);
+		//die(var_dump($data));
+		$this->load->view('manage/add_product_first.php',$data);
+	}
+
+	public function save_product_first(){
+		$rs = $this->manage_model->save_product_first();
+		if ($rs === 1) {
+			form_submit_json("200", "操作成功", "list_product_first");
+		} else {
+			//form_submit_json("300", $rs);
+			form_submit_json("300", "颜色名称存在,不可新增或修改");
+		}
+	}
+	/**
+	 *
+	 * ***************************************以下为风控卡,清单卡一级选项*******************************************************************
+	 */
+
 	public function get_subsidiary_list($id) {
 		$data = $this->manage_model->get_subsidiary_list_by_company($id);
 		$subSidiary = array();
@@ -507,206 +550,29 @@ class Manage extends MY_Controller {
 	 * ***************************************以下为文档类别列表*******************************************************************
 	 */
 
-	public function list_forum_type()
-	{
 
-		$data = $this->manage_model->list_forum_type();
-		//die(var_dump($data));
-		$this->load->view('manage/list_forum_type.php',$data);
-	}
-
-	public function add_forum_type(){
-		$this->load->view('manage/add_forum_type.php');
-	}
-
-	public function save_forum_type(){
-		$rs = $this->manage_model->save_forum_type();
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_forum_type");
-		} else {
-			form_submit_json("300", $rs);
-		}
-	}
-
-	public function delete_forum_type($id){
-		$rs = $this->manage_model->delete_forum_type($id);
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_forum_type", "", "");
-		} else {
-			form_submit_json("300", $rs);
-		}
-	}
-
-	public function edit_forum_type($id){
-		$data = $this->manage_model->get_forum_type($id);
-		$this->load->view('manage/add_forum_type.php',$data);
-	}
-
-	public function list_ticket(){
-		$data = $this->manage_model->list_ticket();
-		$this->load->view('manage/list_ticket.php',$data);
-	}
-
-	public function edit_ticket($id){
-
-		$data = $this->manage_model->get_ticket($id);
-		$this->load->view('manage/edit_ticket.php',$data);
-	}
-
-	public function downdoc($id){
-
-		$this->manage_model->download($id);
-	}
-
-	public function delete_ticket($id){
-		$rs = $this->manage_model->delete_ticket($id);
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_ticket", "", "");
-		} else {
-			form_submit_json("300", $rs);
-		}
-	}
 	/**
 	 *
 	 * ***************************************以下为新闻列表*******************************************************************
 	 */
-	public function list_news()
-	{
-		$data = $this->manage_model->list_news();
-		$this->load->view('manage/list_news.php',$data);
-	}
 
-
-	public function delete_news($id){
-		$rs = $this->manage_model->delete_news($id);
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_news", "", "");
-		} else {
-			form_submit_json("300", $rs);
-		}
-	}
-
-	public function edit_news($id){
-		$data = $this->manage_model->get_news($id);
-		$this->load->view('manage/edit_news.php',$data);
-	}
-	/*public function save_ticket(){
-		$rs = $this->manage_model->save_ticket();
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_ticket");
-		} else {
-			form_submit_json("300", $rs);
-		}
-
-	}*/
 	/**
 	 *
 	 * ***************************************以下为试题列表*******************************************************************
 	 */
-	public function list_questions()
-	{
-		$data = $this->manage_model->list_questions();
-		$this->load->view('manage/list_questions.php',$data);
-	}
-
-
-	public function delete_questions($id){
-		$rs = $this->manage_model->delete_questions($id);
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_questions", "", "");
-		} else {
-			form_submit_json("300", $rs);
-		}
-	}
-
-	public function use_questions($id){
-		$rs = $this->manage_model->use_questions($id);
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_questions", "", "");
-		} else {
-			form_submit_json("300", $rs);
-		}
-	}
-
-	public function edit_questions($id){
-		$data = $this->manage_model->get_questions($id);
-		$this->load->view('manage/edit_questions.php',$data);
-	}
-	/*public function save_ticket(){
-		$rs = $this->manage_model->save_ticket();
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_ticket");
-		} else {
-			form_submit_json("300", $rs);
-		}
-	}*/
 
 	/**
 	 *
 	 * ***************************************以下为资金流水列表*******************************************************************
 	 */
-	public function list_sum_log(){
-		$data = $this->manage_model->list_sum_log();
-		$this->load->view('manage/list_sum_log.php',$data);
-	}
 
-	public function delete_sum_log($id){
-		$rs = $this->manage_model->delete_sum_log($id);
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_sum_log", "", "");
-		} else {
-			form_submit_json("300", $rs);
-		}
-	}
 
 	/**
 	 *
 	 * ***************************************以下为资金流水列表*******************************************************************
 	 */
-	public function list_agenda(){
-		$data = $this->manage_model->list_agenda();
-		$data['company_list'] = $this->manage_model->get_company_list_age();
-		$data['dbyh_list'] = $this->manage_model->get_dbyh_list();
-		$data['dbgh_list'] = $this->manage_model->get_dbgh_list();
-		if($this->input->post('company_id'))
-			$data['subsidiary_list'] = $this->manage_model->get_subsidiary_list_age($this->input->post('company_id'));
-		if($this->input->post('subsidiary_id'))
-			$data['user_list'] = $this->manage_model->get_user_list_by_subsidiary_age($this->input->post('subsidiary_id'));
 
-		$this->load->view('manage/list_agenda.php',$data);
-	}
 
-	public function delete_agenda($id) {
-		$ret = $this->manage_model->delete_agenda($id);
-		if($ret == 1) {
-			form_submit_json("200", "操作成功", 'list_agenda', '', '');
-		} else {
-			form_submit_json("300", "删除失败");
-		}
-	}
-
-	/**
-	 *
-	 * ***************************************以下为大成莲创列表*******************************************************************
-	 */
-	public function list_dclc(){
-		$data = $this->manage_model->list_dclc();
-		$this->load->view('manage/list_dclc.php',$data);
-	}
-
-	public function edit_dclc($id){
-		$data = $this->manage_model->edit_dclc($id);
-		$this->load->view('manage/edit_dclc.php',$data);
-	}
-
-	public function save_dclc(){
-		$res = $this->manage_model->save_dclc();
-		if($res == 1) {
-			form_submit_json("200", "操作成功", 'list_dclc');
-		} else {
-			form_submit_json("300", "删除失败");
-		}
-	}
 
 	/**
 	 *

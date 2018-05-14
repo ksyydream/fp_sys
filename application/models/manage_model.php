@@ -585,6 +585,97 @@ class Manage_model extends MY_Model
     public function get_position_list() {
         return $this->db->get_where('position', array('id >=' => 1))->result_array();
     }
+
+    /**
+     *
+     * ***************************************以下为风控卡,清单卡一级选项*******************************************************************
+     */
+
+
+    public function list_product_first(){
+        // 每页显示的记录条数，默认20条
+        $numPerPage = $this->input->post('numPerPage') ? $this->input->post('numPerPage') : 20;
+        $pageNum = $this->input->post('pageNum') ? $this->input->post('pageNum') : 1;
+
+        //获得总记录数
+        $this->db->select('count(1) as num');
+        $this->db->from('product_first');
+        if($this->input->post('first_name'))
+            $this->db->like('first_name',$this->input->post('first_name'));
+
+        $rs_total = $this->db->get()->row();
+        //总记录数
+        $data['countPage'] = $rs_total->num;
+
+        $data['first_name'] = $this->input->post('first_name')?$this->input->post('first_name'):null;
+        //list
+        $this->db->select();
+        $this->db->from('product_first');
+        if($this->input->post('first_name'))
+            $this->db->like('first_name',$this->input->post('first_name'));
+
+        $this->db->limit($numPerPage, ($pageNum - 1) * $numPerPage );
+        $this->db->order_by($this->input->post('orderField') ? $this->input->post('orderField') : 'id', $this->input->post('orderDirection') ? $this->input->post('orderDirection') : 'desc');
+        $data['res_list'] = $this->db->get()->result();
+        $data['pageNum'] = $pageNum;
+        $data['numPerPage'] = $numPerPage;
+        return $data;
+    }
+
+    public function save_product_first(){
+        //die(var_dump($this->input->post()));
+        $data = array(
+            "first_name"=>trim($this->input->post('first_name')),
+            "flag"=>$this->input->post('flag'),
+            "cdate"=>date('Y-m-d H:i:s')
+        );
+        if($data['first_name']=="")
+            return -2;
+        if($id = $this->input->post('id')){
+            unset($data['cdate']);
+            $row = $this->db->select()->from('product_first')->where('first_name',$data['first_name'])->where('id <>',$id)->get()->row();
+            if(!$row){
+                $this->db->where('id',$id)->update('product_first',$data);
+            }else {
+                return -1;
+            }
+        }else{
+            $row = $this->db->select()->from('product_first')->where('first_name',$data['first_name'])->get()->row();
+            if(!$row){
+                $this->db->insert('product_first',$data);
+            }else{
+                return -1;
+            }
+        }
+        return 1;
+    }
+
+    public function get_product_first($id){
+        $row = $this->db->select()->from('product_first')->where('id',$id)->get()->row_array();
+        return $row;
+    }
+
+    public function delete_product_first($id){
+        $row = $this->db->select()->from('product_first')->where('id',$id)->get()->row_array();
+        if(!$row)
+            return -1;
+        if($row['flag']==1){
+            $this->db->where('id',$id)->update('product_first',array('flag'=>-1));
+        }else{
+            $this->db->where('id',$id)->update('product_first',array('flag'=>1));
+        }
+        return 1;
+    }
+
+    public function get_first_list(){
+        $list = $this->db->from('product_first')->where('flag',1)->get()->result_array();
+        return $list;
+    }
+
+
+
+
+
     /**
      * 获取职务列表
      */
@@ -948,479 +1039,6 @@ class Manage_model extends MY_Model
         return $data;
     }
 
-    /**
-     * 获取资料类别列表
-     */
-    public function list_forum_type(){
-        // 每页显示的记录条数，默认20条
-        $numPerPage = $this->input->post('numPerPage') ? $this->input->post('numPerPage') : 20;
-        $pageNum = $this->input->post('pageNum') ? $this->input->post('pageNum') : 1;
-
-        //获得总记录数
-        $this->db->select('count(1) as num');
-        $this->db->from('forum_type');
-        $rs_total = $this->db->get()->row();
-        //总记录数
-        $data['countPage'] = $rs_total->num;
-
-        //list
-        $this->db->select('*');
-        $this->db->from('forum_type');
-        $this->db->limit($numPerPage, ($pageNum - 1) * $numPerPage );
-        $this->db->order_by($this->input->post('orderField') ? $this->input->post('orderField') : 'id', $this->input->post('orderDirection') ? $this->input->post('orderDirection') : 'asc');
-        $data['res_list'] = $this->db->get()->result();
-        $data['pageNum'] = $pageNum;
-        $data['numPerPage'] = $numPerPage;
-        return $data;
-    }
-
-    /**
-     * 保存资料类别
-     */
-    public function save_forum_type(){
-        $this->db->trans_start();
-        if($this->input->post('id')){//修改
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('forum_type', $this->input->post());
-        }else{//新增
-            $data = $this->input->post();
-            $this->db->insert('forum_type', $data);
-        }
-        $this->db->trans_complete();
-        if ($this->db->trans_status() === FALSE) {
-            return $this->db_error;
-        } else {
-            return 1;
-        }
-    }
-
-    /**
-     * 删除资料类别
-     */
-    public function delete_forum_type($id){
-        $rs = $this->db->delete('forum_type', array('id' => $id));
-        if($rs){
-            return 1;
-        }else{
-            return $this->db_error;
-        }
-    }
-
-    /**
-     * 获取资料类别详情
-     */
-    public function get_forum_type($id){
-        $this->db->select('*')->from('forum_type')->where('id', $id);
-        $data = $this->db->get()->row();
-        return $data;
-    }
-
-    public function list_ticket(){
-        // 每页显示的记录条数，默认20条
-        $numPerPage = $this->input->post('numPerPage') ? $this->input->post('numPerPage') : 20;
-        $pageNum = $this->input->post('pageNum') ? $this->input->post('pageNum') : 1;
-
-        //获得总记录数
-        $this->db->select('count(1) as num');
-        $this->db->from('ticket');
-
-        if($this->input->post('title'))
-            $this->db->like('title',$this->input->post('title'));
-        if($this->input->post('type'))
-            $this->db->where('type',$this->input->post('type'));
-
-        $rs_total = $this->db->get()->row();
-        //总记录数
-        $data['countPage'] = $rs_total->num;
-
-        $data['title'] = $this->input->post('title')?$this->input->post('title'):null;
-        $data['type'] = $this->input->post('type')?$this->input->post('type'):null;
-        //list
-        $this->db->select("a.*,b.name type_name");
-        $this->db->from('ticket a');
-        $this->db->join('forum_type b','a.type = b.id','inner');
-        if($this->input->post('title'))
-            $this->db->like('a.title',$this->input->post('title'));
-        if($this->input->post('type'))
-            $this->db->where('a.type',$this->input->post('type'));
-
-        $this->db->limit($numPerPage, ($pageNum - 1) * $numPerPage );
-        $this->db->order_by($this->input->post('orderField') ? $this->input->post('orderField') : 'id', $this->input->post('orderDirection') ? $this->input->post('orderDirection') : 'desc');
-        $data['res_list'] = $this->db->get()->result();
-        $data['type_list'] = $this->db->from('forum_type')->get()->result();
-        $data['pageNum'] = $pageNum;
-        $data['numPerPage'] = $numPerPage;
-        return $data;
-    }
-
-    public function delete_ticket($id){
-        $rs = $this->db->delete('ticket', array('id' => $id));
-        if($rs){
-            return 1;
-        }else{
-            return $this->db_error;
-        }
-    }
-
-    public function get_ticket($id){
-        $this->db->select('a.*,b.name type_name,c.rel_name user_name')->from('ticket a');
-        $this->db->join('forum_type b','a.type = b.id','left');
-        $this->db->join('user c','c.id = a.user_id','left');
-        $this->db->where('a.id',$id);
-        $data['head'] = $this->db->get()->row();
-        $data['id'] = $id;
-        //die(var_dump($data));
-        return $data;
-    }
-
-    public function download($id){
-
-        $this->load->helper('download');
-        $this->load->helper('file');
-        $data=$this->db->select()->from('ticket')->where('id',$id)->get()->row_array();
-        if ($data){
-            $string = read_file('./uploadfiles/doc/'.$data['file']);
-            //   $file_name='./uploadfiles/'.$data['url'];//需要下载的文件
-            force_download($data['oldfile'],$string);
-        }
-    }
-
-    public function list_news()
-    {
-        $numPerPage = $this->input->post('numPerPage') ? $this->input->post('numPerPage') : 20;
-        $pageNum = $this->input->post('pageNum') ? $this->input->post('pageNum') : 1;
-
-        //获得总记录数
-        $this->db->select('count(1) as num');
-        $this->db->from('news');
-
-        if($this->input->post('title'))
-            $this->db->like('title',$this->input->post('title'));
-
-        $rs_total = $this->db->get()->row();
-        //总记录数
-        $data['countPage'] = $rs_total->num;
-
-        $data['title'] = $this->input->post('title')?$this->input->post('title'):null;
-        //list
-        $this->db->select();
-        $this->db->from('news');
-        if($this->input->post('title'))
-            $this->db->like('title',$this->input->post('title'));
-
-        $this->db->limit($numPerPage, ($pageNum - 1) * $numPerPage );
-        $this->db->order_by($this->input->post('orderField') ? $this->input->post('orderField') : 'id', $this->input->post('orderDirection') ? $this->input->post('orderDirection') : 'desc');
-        $data['res_list'] = $this->db->get()->result();
-        $data['pageNum'] = $pageNum;
-        $data['numPerPage'] = $numPerPage;
-        return $data;
-    }
-
-    public function delete_news($id){
-        $rs = $this->db->delete('news', array('id' => $id));
-        if($rs){
-            return 1;
-        }else{
-            return $this->db_error;
-        }
-    }
-
-    public function get_news($id){
-        $this->db->select()->from('news');
-        $this->db->where('id',$id);
-        $data['head'] = $this->db->get()->row();
-        $data['id'] = $id;
-        //die(var_dump($data));
-        return $data;
-    }
-
-    public function list_questions()
-    {
-        $numPerPage = $this->input->post('numPerPage') ? $this->input->post('numPerPage') : 20;
-        $pageNum = $this->input->post('pageNum') ? $this->input->post('pageNum') : 1;
-
-        //获得总记录数
-        $this->db->select('count(1) as num');
-        $this->db->from('question');
-
-        if($this->input->post('title'))
-            $this->db->like('title',$this->input->post('title'));
-        if($this->input->post('style'))
-            $this->db->where('style',$this->input->post('style'));
-        if($this->input->post('type'))
-            $this->db->where('type_id',$this->input->post('type'));
-
-        $rs_total = $this->db->get()->row();
-        //总记录数
-        $data['countPage'] = $rs_total->num;
-
-        $data['title'] = $this->input->post('title')?$this->input->post('title'):null;
-        $data['style'] = $this->input->post('style')?$this->input->post('style'):null;
-        $data['type'] = $this->input->post('type')?$this->input->post('type'):null;
-        //list
-        $this->db->select('a.*,b.name');
-        $this->db->from('question a');
-        $this->db->join('question_type b','a.type_id = b.id','left');
-        if($this->input->post('a.title'))
-            $this->db->like('a.title',$this->input->post('title'));
-        if($this->input->post('style'))
-            $this->db->where('a.style',$this->input->post('style'));
-        if($this->input->post('type'))
-            $this->db->where('a.type_id',$this->input->post('type'));
-        $this->db->limit($numPerPage, ($pageNum - 1) * $numPerPage );
-        $this->db->order_by($this->input->post('orderField') ? $this->input->post('orderField') : 'a.id', $this->input->post('orderDirection') ? $this->input->post('orderDirection') : 'desc');
-        $data['res_list'] = $this->db->get()->result();
-        $data['type_list'] = $this->db->from('question_type')->get()->result();
-        $data['pageNum'] = $pageNum;
-        $data['numPerPage'] = $numPerPage;
-        return $data;
-    }
-
-    public function delete_questions($id){
-        $rs = $this->db->where('id',$id)->update('question', array('flag' => 2));
-        if($rs){
-            return 1;
-        }else{
-            return $this->db_error;
-        }
-    }
-
-    public function use_questions($id){
-        $rs = $this->db->where('id',$id)->update('question', array('flag' => 1));
-        if($rs){
-            return 1;
-        }else{
-            return $this->db_error;
-        }
-    }
-
-    public function get_questions($id){
-        $this->db->select('a.*,b.name')->from('question a');
-        $this->db->join('question_type b','a.type_id = b.id','left');
-        $this->db->where('a.id',$id);
-        $data['head'] = $this->db->get()->row();
-        $data['id'] = $id;
-        //die(var_dump($data));
-        return $data;
-    }
-
-    public function list_sum_log()
-    {
-        $numPerPage = $this->input->post('numPerPage') ? $this->input->post('numPerPage') : 20;
-        $pageNum = $this->input->post('pageNum') ? $this->input->post('pageNum') : 1;
-
-        //获得总记录数
-        $this->db->select('count(1) as num');
-        $this->db->from('sum_log a');
-        $this->db->join('company b','a.company_id = b.id','left');
-        $this->db->join('user c','a.user_id = c.id','left');
-
-        if($this->input->post('company'))
-            $this->db->like('b.name',trim($this->input->post('company')));
-        if($this->input->post('user'))
-            $this->db->like('c.rel_name',trim($this->input->post('user')));
-        if($this->input->post('demo'))
-            $this->db->like('a.demo',trim($this->input->post('demo')));
-        if($this->input->post('style'))
-            $this->db->where('a.style',$this->input->post('style'));
-        if($this->input->POST('start_date')) {
-            $this->db->where('a.created >=', date('Y-m-d H:i:s',strtotime($this->input->POST('start_date'))));
-        }
-        if($this->input->POST('end_date')) {
-            $this->db->where('a.created <=', date('Y-m-d H:i:s',strtotime('+1 day',strtotime($this->input->POST('end_date')))));
-        }
-        $rs_total = $this->db->get()->row();
-        //总记录数
-
-        $data['countPage'] = $rs_total->num;
-
-        $data['company'] = $this->input->post('company')?trim($this->input->post('company')):null;
-        $data['style'] = $this->input->post('style')?$this->input->post('style'):null;
-        $data['user'] = $this->input->post('user') ? trim($this->input->post('user')):null;
-        $data['demo'] = $this->input->post('demo') ? trim($this->input->post('demo')):null;
-        $data['start_date'] = $this->input->post('start_date') ? trim($this->input->post('start_date')):null;
-        $data['end_date'] = $this->input->post('end_date') ? trim($this->input->post('end_date')):null;
-        //list
-        $this->db->select('a.*,b.name,c.rel_name');
-        $this->db->from('sum_log a');
-        $this->db->join('company b','a.company_id = b.id','left');
-        $this->db->join('user c','a.user_id = c.id','left');
-
-        if($this->input->post('company'))
-            $this->db->like('b.name',trim($this->input->post('company')));
-        if($this->input->post('user'))
-            $this->db->like('c.rel_name',trim($this->input->post('user')));
-        if($this->input->post('demo'))
-            $this->db->like('a.demo',trim($this->input->post('demo')));
-        if($this->input->post('style'))
-            $this->db->where('a.style',$this->input->post('style'));
-        if($this->input->POST('start_date')) {
-            $this->db->where('a.created >=', date('Y-m-d H:i:s',strtotime($this->input->POST('start_date'))));
-        }
-        if($this->input->POST('end_date')) {
-            $this->db->where('a.created <=', date('Y-m-d H:i:s',strtotime('+1 day',strtotime($this->input->POST('end_date')))));
-        }
-        $this->db->limit($numPerPage, ($pageNum - 1) * $numPerPage );
-        $this->db->order_by($this->input->post('orderField') ? $this->input->post('orderField') : 'a.id', $this->input->post('orderDirection') ? $this->input->post('orderDirection') : 'desc');
-        $data['res_list'] = $this->db->get()->result();
-       // $data['type_list'] = $this->db->from('question_type')->get()->result();
-        $data['pageNum'] = $pageNum;
-        $data['numPerPage'] = $numPerPage;
-        return $data;
-    }
-
-    public function delete_sum_log($id){
-        $rs = $this->db->delete('sum_log', array('id' => $id));
-        if($rs){
-            return 1;
-        }else{
-            return $this->db_error;
-        }
-    }
-
-    public function list_agenda(){
-        $numPerPage = $this->input->post('numPerPage') ? $this->input->post('numPerPage') : 20;
-        $pageNum = $this->input->post('pageNum') ? $this->input->post('pageNum') : 1;
-
-        //获得总记录数
-        $this->db->select('count(distinct(a.id)) as num',false);
-        $this->db->from('agenda a');
-        $this->db->join('user b','a.user_id = b.id','inner');
-        $this->db->join('role c','c.id = b.role_id','inner');
-        $this->db->join('user_subsidiary d','d.user_id = b.id','inner');
-        if($this->input->post('user_id')){
-            $this->db->where('a.user_id',$this->input->post('user_id'));
-        }
-        if($this->input->post('status')){
-            $this->db->where('a.status',$this->input->post('status'));
-        }
-        if($this->input->post('course')){
-            $this->db->where('a.course',$this->input->post('course'));
-        }
-        if($this->input->post('num')){
-            $this->db->like('a.num',trim($this->input->post('num')));
-        }
-        if($this->input->post('xq_name')){
-            $this->db->like('a.xq_name',trim($this->input->post('xq_name')));
-        }
-        if($this->input->post('dbgh_id')){
-            $this->db->where('a.dbgh_id',$this->input->post('dbgh_id'));
-        }
-        if($this->input->post('dbyh_id')){
-            $this->db->where('a.dbyh_id',$this->input->post('dbyh_id'));
-        }
-        if($this->input->POST('company_id')) {
-            $this->db->where('b.company_id', $this->input->POST('company_id'));
-        }
-        if($this->input->POST('subsidiary_id')) {
-            $this->db->where_in('d.subsidiary_id', $this->input->POST('subsidiary_id'));
-        }
-        if($this->input->POST('user')) {
-            $this->db->where('b.id', $this->input->POST('user'));
-        }
-        if(!empty($subsidiary_id)) {
-            $this->db->where_in('d.subsidiary_id', $subsidiary_id);
-        }
-        if(!empty($company_id)) {
-            $this->db->where('b.company_id', $company_id);
-        }
-        if($this->input->POST('Cstart_date')) {
-            $this->db->where('a.cdate >=', $this->input->POST('Cstart_date'));
-        }
-        if($this->input->POST('Cend_date')) {
-            $this->db->where('a.cdate <=', $this->input->POST('Cend_date'));
-        }
-        if($this->input->POST('Estart_date')) {
-            $this->db->where('a.edate >=', $this->input->POST('Estart_date'));
-        }
-        if($this->input->POST('Eend_date')) {
-            $this->db->where('a.edate <=', $this->input->POST('Eend_date'));
-        }
-
-        $rs_total = $this->db->get()->row();
-        //总记录数
-
-        $data['countPage'] = $rs_total->num;
-
-        $data['company_id'] = $this->input->post('company_id')?$this->input->post('company_id'):null;
-        $data['subsidiary_id'] = $this->input->post('subsidiary_id')?$this->input->post('subsidiary_id'):null;
-        $data['user_id'] = $this->input->post('user_id')?$this->input->post('user_id'):null;
-        $data['dbgh_id'] = $this->input->post('dbgh_id')?$this->input->post('dbgh_id'):null;
-        $data['dbyh_id'] = $this->input->post('dbyh_id')?$this->input->post('dbyh_id'):null;
-        $data['course'] = $this->input->post('course')?$this->input->post('course'):null;
-        $data['status'] = $this->input->post('status')?$this->input->post('status'):null;
-        $data['num'] = $this->input->post('num') ? trim($this->input->post('num')):null;
-        $data['xq_name'] = $this->input->post('xq_name') ? trim($this->input->post('xq_name')):null;
-        $data['Cstart_date'] = $this->input->post('Cstart_date') ? $this->input->post('Cstart_date') :"";
-        $data['Cend_date'] = $this->input->post('Cend_date') ? $this->input->post('Cend_date') :"";
-        $data['Estart_date'] = $this->input->post('Estart_date') ? $this->input->post('Estart_date') :"";
-        $data['Eend_date'] = $this->input->post('Eend_date') ? $this->input->post('Eend_date') :"";
-        //list
-        $this->db->select('a.*,b.rel_name,f.name course_name,u1.rel_name gh_name,u1.tel gh_tel,u2.rel_name yh_name,u2.tel yh_tel');
-        $this->db->distinct('a.id');
-        $this->db->from('agenda a');
-        $this->db->join('user b','a.user_id = b.id','inner');
-        $this->db->join('user u1','a.dbgh_id = u1.id','left');
-        $this->db->join('user u2','a.dbyh_id = u2.id','left');
-        $this->db->join('role c','c.id = b.role_id','inner');
-        $this->db->join('user_subsidiary d','d.user_id = b.id','inner');
-        $this->db->join('course f','f.id = a.course','left');
-        if($this->input->post('user_id')){
-            $this->db->where('a.user_id',$this->input->post('user_id'));
-        }
-        if($this->input->post('status')){
-            $this->db->where('a.status',$this->input->post('status'));
-        }
-        if($this->input->post('course')){
-            $this->db->where('a.course',$this->input->post('course'));
-        }
-        if($this->input->post('num')){
-            $this->db->like('a.num',trim($this->input->post('num')));
-        }
-        if($this->input->post('xq_name')){
-            $this->db->like('a.xq_name',trim($this->input->post('xq_name')));
-        }
-        if($this->input->post('dbgh_id')){
-            $this->db->where('a.dbgh_id',$this->input->post('dbgh_id'));
-        }
-        if($this->input->post('dbyh_id')){
-            $this->db->where('a.dbyh_id',$this->input->post('dbyh_id'));
-        }
-        if($this->input->POST('company_id')) {
-            $this->db->where('b.company_id', $this->input->POST('company_id'));
-        }
-        if($this->input->POST('subsidiary_id')) {
-            $this->db->where_in('d.subsidiary_id', $this->input->POST('subsidiary_id'));
-        }
-        if($this->input->POST('user')) {
-            $this->db->where('b.id', $this->input->POST('user'));
-        }
-        if($this->input->POST('Cstart_date')) {
-            $this->db->where('a.cdate >=', $this->input->POST('Cstart_date'));
-        }
-        if($this->input->POST('Cend_date')) {
-            $this->db->where('a.cdate <=', $this->input->POST('Cend_date'));
-        }
-        if($this->input->POST('Estart_date')) {
-            $this->db->where('a.edate >=', $this->input->POST('Estart_date'));
-        }
-        if($this->input->POST('Eend_date')) {
-            $this->db->where('a.edate <=', $this->input->POST('Eend_date'));
-        }
-        $this->db->limit($numPerPage, ($pageNum - 1) * $numPerPage );
-        $this->db->order_by($this->input->post('orderField') ? $this->input->post('orderField') : 'a.id', $this->input->post('orderDirection') ? $this->input->post('orderDirection') : 'desc');
-        $data['res_list'] = $this->db->get()->result();
-        // $data['type_list'] = $this->db->from('question_type')->get()->result();
-        $data['pageNum'] = $pageNum;
-        $data['numPerPage'] = $numPerPage;
-        $data['course_list'] =  $this->db->select('*')->from('course')->get()->result_array();
-        return $data;
-    }
-
-    public function delete_agenda($id) {
-       return $this->db->where('id',$id)->update('agenda',array('flag'=>2));
-    }
-
     public function get_dbgh_list() {
         $this->db->select('a.id,a.rel_name');
         $this->db->from('user a');
@@ -1452,86 +1070,6 @@ class Manage_model extends MY_Model
         return $this->db->get()->result_array();
     }
 
-    public function list_dclc(){
-        $numPerPage = $this->input->post('numPerPage') ? $this->input->post('numPerPage') : 20;
-        $pageNum = $this->input->post('pageNum') ? $this->input->post('pageNum') : 1;
-
-        //获得总记录数
-        $this->db->select('count(1) as num');
-        $this->db->from('dclc');
-        if($this->input->post('mobile'))
-            $this->db->like('mobile',trim($this->input->post('mobile')));
-        if($this->input->post('username'))
-            $this->db->like('username',trim($this->input->post('username')));
-        if($this->input->post('demo'))
-            $this->db->like('demo',trim($this->input->post('demo')));
-        if($this->input->post('flag'))
-            $this->db->where('flag',$this->input->post('flag'));
-        if($this->input->POST('start_date')) {
-            $this->db->where('cdate >=', date('Y-m-d H:i:s',strtotime($this->input->POST('start_date'))));
-        }
-        if($this->input->POST('end_date')) {
-            $this->db->where('cdate <=', date('Y-m-d H:i:s',strtotime('+1 day',strtotime($this->input->POST('end_date')))));
-        }
-        $rs_total = $this->db->get()->row();
-        //总记录数
-
-        $data['countPage'] = $rs_total->num;
-
-        $data['mobile'] = $this->input->post('mobile')?trim($this->input->post('mobile')):null;
-        $data['username'] = $this->input->post('username')?$this->input->post('username'):null;
-        $data['flag'] = $this->input->post('flag') ? trim($this->input->post('flag')):null;
-        $data['demo'] = $this->input->post('demo') ? trim($this->input->post('demo')):null;
-        $data['start_date'] = $this->input->post('start_date') ? trim($this->input->post('start_date')):null;
-        $data['end_date'] = $this->input->post('end_date') ? trim($this->input->post('end_date')):null;
-        //list
-        $this->db->select();
-        $this->db->from('dclc');
-
-        if($this->input->post('mobile'))
-            $this->db->like('mobile',trim($this->input->post('mobile')));
-        if($this->input->post('username'))
-            $this->db->like('username',trim($this->input->post('username')));
-        if($this->input->post('demo'))
-            $this->db->like('demo',trim($this->input->post('demo')));
-        if($this->input->post('flag'))
-            $this->db->where('flag',$this->input->post('flag'));
-        if($this->input->POST('start_date')) {
-            $this->db->where('cdate >=', date('Y-m-d H:i:s',strtotime($this->input->POST('start_date'))));
-        }
-        if($this->input->POST('end_date')) {
-            $this->db->where('cdate <=', date('Y-m-d H:i:s',strtotime('+1 day',strtotime($this->input->POST('end_date')))));
-        }
-        $this->db->limit($numPerPage, ($pageNum - 1) * $numPerPage );
-        $this->db->order_by($this->input->post('orderField') ? $this->input->post('orderField') : 'id', $this->input->post('orderDirection') ? $this->input->post('orderDirection') : 'desc');
-        $data['res_list'] = $this->db->get()->result();
-        // $data['type_list'] = $this->db->from('question_type')->get()->result();
-        $data['pageNum'] = $pageNum;
-        $data['numPerPage'] = $numPerPage;
-        return $data;
-    }
-
-    public function edit_dclc($id){
-        $row = $this->db->select()->from('dclc')->where('id',$id)->get()->row_array();
-        return $row;
-    }
-
-    public function save_dclc(){
-        if(!$this->input->post('id')){
-            return -1;
-        }
-        $data = array(
-            'flag'=>$this->input->post('flag'),
-            'mark'=>$this->input->post('mark')
-        );
-        $res = $this->db->where('id',$this->input->post('id'))->update('dclc',$data);
-        if($res){
-            return 1;
-        }else{
-            return -1;
-        }
-
-    }
 
     public function list_pg(){
         $numPerPage = $this->input->post('numPerPage') ? $this->input->post('numPerPage') : 20;
