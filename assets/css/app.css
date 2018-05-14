@@ -3,7 +3,7 @@
 .app-head{margin-bottom: 1.5rem; height: 6rem;  background: #f5f5f5;}
 .app-head .logo{ float: left; width: 10rem; height: 3rem; background: url(../../assets/images/jf_login.png) no-repeat; background-size:100%;  margin: 1.8rem 0 0 2rem;}
 .user-position{margin-right:1rem;padding-top:2rem; float: right;}
-.am-accordion-default{box-shadow:none;}
+.am-accordion-default{box-shadow:none;}*:focus { outline: none; }
 
 .wel-txt{font-size: 1.8rem; color: #333; text-align: right; display:inline-block;}
 
