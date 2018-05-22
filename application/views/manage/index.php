@@ -98,6 +98,15 @@ $(function(){
 							<li><a href="<?php echo site_url('manage/list_user');?>" target="navTab" rel="list_user">用户列表</a></li>
 						</ul>
 					</div>
+						<div class="accordionHeader">
+							<h2><span>Folder</span>卡组设计</h2>
+						</div>
+						<div class="accordionContent">
+							<ul class="tree">
+								<li><a href="<?php echo site_url('manage/list_product_first');?>" target="navTab" rel="list_product_first">卡组一级类别</a></li>
+
+							</ul>
+						</div>
 					<?php endif;?>
 				</div>
 			</div>
