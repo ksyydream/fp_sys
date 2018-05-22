@@ -46,15 +46,21 @@
                 <label for="c_mobile">联系固话：</label>
                 <input type="text" id="c_mobile" name="c_mobile" value="{{$customer.c_mobile|default:''}}" placeholder="输入联系固话" class="am-form-field" />
               </div>
+
                 <div class="am-input-group merchants_settled_map">
-                    <span class="merchants_settled_map_img"><img src="/assets/images/businesssettledin_icon_map.png"></span>
-                    <button type="button" class="am-btn am-btn-secondary am-btn-block" id="open_map">腾讯地图
-                    </button>
-                    <input  required  type="text" class="am-form-field am-u-sm-4" placeholder="请输入纬度" value="{{$customer.c_lat|default:''}}" id="data_lat" name="c_lat" readonly>
-                    <input  required type="text" class="am-form-field am-u-sm-4" placeholder="请输入经度" value="{{$customer.c_lng|default:''}}" id="data_lng" name="c_lng" readonly>
-                </div>
+                  <label for="c_mobile">地图定位：</label>
+                    <div class="map-div">
+                      <div class="am-form-div"><input  required  type="text" class="am-form-field am-form-field2" placeholder="请输入纬度" value="{{$customer.c_lat|default:''}}" id="data_lat" name="c_lat" readonly>
+                      </div>
+                        <div class="am-form-div"> <input  required type="text" class="am-form-field" placeholder="请输入经度" value="{{$customer.c_lng|default:''}}" id="data_lng" name="c_lng" readonly>
+                    </div>
+                        <button type="button" class="am-btn am-btn-secondary am-btn-block" id="open_map">
+                            获取定位
+                        </button>
+                    </div>
+                    </div>
                 <div class="am-form-group">
-                    <label for="c_path">公司地址：</label>
+                    <label for="c_path">公司详细地址：</label>
                     <input type="text" id="c_path" name="c_path" value="{{$customer.c_path|default:''}}" placeholder="输入公司地址" class="am-form-field" />
                 </div>
               <button class="am-btn" id="save_btn" type="button">提交</button>
