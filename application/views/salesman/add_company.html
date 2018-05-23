@@ -63,6 +63,13 @@
                     <label for="c_path">公司详细地址：</label>
                     <input type="text" id="c_path" name="c_path" value="{{$customer.c_path|default:''}}" placeholder="输入公司地址" class="am-form-field" />
                 </div>
+
+                <div class="am-form-group">
+                    <label for="c_path">所属业务员：</label>
+                    <select>
+                        <option value="">-请选择-</option>
+                    </select>
+                </div>
               <button class="am-btn" id="save_btn" type="button">提交</button>
             </fieldset>
           </form>

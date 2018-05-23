@@ -7,9 +7,17 @@
  */
 class Wx_salesman_model extends MY_Model
 {
+    private $role_id = 0;
+    private $user_id = 0;
+    private $is_manager = 0;
+    private $company_id = 0;
     public function __construct()
     {
         parent::__construct();
+        $this->user_id = $this->session->userdata('wx_user_id') ? $this->session->userdata('wx_user_id') : -1;
+        $this->role_id = $this->session->userdata('wx_role_id') ? $this->session->userdata('wx_role_id') : -1;
+        $this->is_manager = $this->session->userdata('wx_is_manager') ? $this->session->userdata('wx_is_manager') : -1;
+        $this->company_id = $this->session->userdata('wx_company_id') ? $this->session->userdata('wx_company_id') : -1;
     }
 
     public function __destruct()
@@ -122,8 +130,10 @@ class Wx_salesman_model extends MY_Model
         $this->db->or_where('create_id', $this->session->userdata('b_id'));
         $this->db->group_end();
         */
-
-        $this->db->where('parent_id', $this->session->userdata('wx_user_id'));
+        $this->db->where('company_id', $this->company_id);
+        if($this->is_manager == 1){
+            $this->db->where('parent_id', $this->user_id);
+        }
         $this->db->where('role_id', -1);
         $rs_total = $this->db->get()->row();
         //总记录数
@@ -143,11 +153,23 @@ class Wx_salesman_model extends MY_Model
         $this->db->select('a.*,b.rel_name p_rel_name');
         $this->db->from('user a');
         $this->db->join('user b','a.parent_id = b.id','left');
-        $this->db->where('a.parent_id', $this->session->userdata('wx_user_id'));
+        $this->db->where('company_id', $this->company_id);
+        if($this->is_manager == 1){
+            $this->db->where('parent_id', $this->user_id);
+        }
         $this->db->where('a.role_id', -1);
         $this->db->limit($per_page, ($pageNum - 1) * $per_page );
         $this->db->order_by('a.id','desc');
         $data['res_list'] = $this->db->get()->result_array();
+        return $data;
+    }
+
+    public function get_ywy_list(){
+        $this->db->select();
+        $this->db->from('user');
+        $this->db->where('role_id', 7);
+        $this->db->where('company_id', $this->company_id);
+        $data = $this->db->get()->result_array();
         return $data;
     }
 }

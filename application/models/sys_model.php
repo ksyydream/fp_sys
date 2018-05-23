@@ -65,6 +65,7 @@ class Sys_model extends MY_Model
             $user_info['wx_username'] = $res->username;
             $user_info['wx_password'] = $res->password;
             $user_info['wx_role_id'] = $res->role_id;
+            $user_info['wx_is_manager'] = $res->is_manager;
             if($res->role_id < 0){
                 $user_info['wx_rel_name'] = $res->c_company_name;
                 $user_info['wx_role_name'] = "渠道客户";
