@@ -57,6 +57,10 @@ class Wx_salesman_model extends MY_Model
             return -2;
         }
         if($id = $this->input->post('id')){
+            //在修改时判断是否是主管,如果是主管就需要修改 渠道客户的所属业务员
+            if($this->is_manager == 1){
+                $data['parent_id'] = $this->input->post('parent_id');
+            }
             $check_ = $this->db->select()->from('user')->where(array('id' => $id, 'parent_id' => $this->session->userdata('wx_user_id'), 'flag' => 1))->get()->row();
             if($check_){
                 unset($data['parent_id']);
@@ -164,7 +168,7 @@ class Wx_salesman_model extends MY_Model
         return $data;
     }
 
-    public function get_ywy_list(){
+    public function get_user_7_list(){
         $this->db->select();
         $this->db->from('user');
         $this->db->where('role_id', 7);

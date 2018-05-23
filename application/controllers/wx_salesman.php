@@ -12,6 +12,7 @@ require_once "wx_controller.php";
 class Wx_salesman extends Wx_controller {
 
     private $role_id = 0;
+    private $is_manager = 0;
     public function __construct()
     {
         parent::__construct();
@@ -21,6 +22,8 @@ class Wx_salesman extends Wx_controller {
             redirect('wx_index');
         }
         $this->role_id = $this->session->userdata('wx_role_id');
+        $this->is_manager = $this->session->userdata('wx_is_manager') ? $this->session->userdata('wx_is_manager') : -1;
+        $this->assign('is_manager',$this->is_manager);
     }
 
     function _remap($method,$params = array()) {
@@ -104,6 +107,8 @@ class Wx_salesman extends Wx_controller {
         if(!$customer){
             $this->show_message('未找到渠道公司信息！');
         }
+        $user_7_list = $this->wx_salesman_model->get_user_7_list();
+        $this->assign('user_7_list',$user_7_list);
         $this->assign('customer',$customer);
         $this->display('salesman/add_company.html');
     }
