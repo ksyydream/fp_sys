@@ -57,14 +57,15 @@ class Wx_salesman_model extends MY_Model
             return -2;
         }
         if($id = $this->input->post('id')){
+            unset($data['parent_id']);
+            unset($data['flag']);
+            unset($data['company_id']);
             //在修改时判断是否是主管,如果是主管就需要修改 渠道客户的所属业务员
             if($this->is_manager == 1){
                 $data['parent_id'] = $this->input->post('parent_id');
             }
-            $check_ = $this->db->select()->from('user')->where(array('id' => $id, 'parent_id' => $this->session->userdata('wx_user_id'), 'flag' => 1))->get()->row();
-            if($check_){
-                unset($data['parent_id']);
-                unset($data['company_id']);
+            $check_ = $this->db->select()->from('user')->where(array('id' => $id, 'parent_id' => $this->user_id, 'flag' => 1))->get()->row();
+            if($check_ || $this->is_manager == 1){
                 $this->db->where('id' ,$id)->update('user',$data);
             }else{
                 return -2;
@@ -140,7 +141,7 @@ class Wx_salesman_model extends MY_Model
         $this->db->group_end();
         */
         $this->db->where('company_id', $this->company_id);
-        if($this->is_manager == 1){
+        if($this->is_manager != 1){
             $this->db->where('parent_id', $this->user_id);
         }
         $this->db->where('role_id', -1);
@@ -163,7 +164,7 @@ class Wx_salesman_model extends MY_Model
         $this->db->from('user a');
         $this->db->join('user b','a.parent_id = b.id','left');
         $this->db->where('a.company_id', $this->company_id);
-        if($this->is_manager == 1){
+        if($this->is_manager != 1){
             $this->db->where('a.parent_id', $this->user_id);
         }
         $this->db->where('a.role_id', -1);
