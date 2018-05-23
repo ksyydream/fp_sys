@@ -11,6 +11,7 @@ if (! defined('BASEPATH'))
  * @author		yaobin<645894453@qq.com>
  *        
  */
+
 class Manage_model extends MY_Model
 {
     public function __construct ()
