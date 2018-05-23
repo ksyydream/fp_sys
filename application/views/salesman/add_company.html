@@ -63,13 +63,13 @@
                     <label for="c_path">公司详细地址：</label>
                     <input type="text" id="c_path" name="c_path" value="{{$customer.c_path|default:''}}" placeholder="输入公司地址" class="am-form-field" />
                 </div>
-                {{if $is_manager == 1 && $customer && $role_id == 7}}
+                {{if $is_manager == 1 && $customer.id|default:'' != '' && $role_id == 7}}
                 <div class="am-form-group">
                     <label for="parent_id">所属业务员：</label>
                     <select id="parent_id" name="parent_id">
                         <option value="">-请选择-</option>
                         {{foreach from=$user_7_list item=item}}
-                        <option value="{{$item.id}}">{{$item.rel_name}}</option>
+                        <option value="{{$item.id}}" {{if $customer.parent_id == $item.id}}selected="selected"{{/if}}>{{$item.rel_name}}</option>
                         {{/foreach}}
                     </select>
                 </div>
