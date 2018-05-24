@@ -113,7 +113,8 @@
                 <th width="100">姓名</th>
                 <th>电话</th>
                 <th>所在公司</th>
-                <th>职级</th>
+                <th>组别</th>
+                <th>是否主管</th>
                 <th width="30">状态</th>
             </tr>
             </thead>
@@ -128,6 +129,12 @@
                         <td><?php echo $row->tel;?></td>
                         <td><?php echo $row->company_name;?></td>
                         <td><?php echo $row->role_name;?></td>
+                        <td><?php
+                            if($row->is_manager == 1){
+                                echo '是';
+                            }else{
+                                echo '否';
+                            }?></td>
                         <td><?php
                             if($row->flag == 1){
                                 echo '在职';
