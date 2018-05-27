@@ -7,10 +7,6 @@
  */
 class Wx_salesman_model extends MY_Model
 {
-    private $role_id = 0;
-    private $user_id = 0;
-    private $is_manager = 0;
-    private $company_id = 0;
     public function __construct()
     {
         parent::__construct();
@@ -67,6 +63,7 @@ class Wx_salesman_model extends MY_Model
             $check_ = $this->db->select()->from('user')->where(array('id' => $id, 'parent_id' => $this->user_id, 'flag' => 1))->get()->row();
             if($check_ || $this->is_manager == 1){
                 $this->db->where('id' ,$id)->update('user',$data);
+                $this->db->where('c_cust_id',$id)->update('user',array('parent_id' => $this->user_id));
             }else{
                 return -2;
             }

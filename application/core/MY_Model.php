@@ -12,7 +12,12 @@
 class MY_Model extends CI_Model{
 
     protected $db_error = "数据操作发生错误，请稍后再试-_-!";
-
+    public $role_id = 0;
+    public $user_id = 0;
+    public $is_manager = 0;
+    public $company_id = 0;
+    public $parent_id = -1;
+    public $c_cust_id = -1;
     /**
      * 构造函数
      *
@@ -22,7 +27,27 @@ class MY_Model extends CI_Model{
     {
         parent::__construct();
         $this->load->database();
-
+        $this->user_id = $this->session->userdata('wx_user_id') ? $this->session->userdata('wx_user_id') : -1;
+        if($this->user_id != -1){
+            $data = $this->get_user_info4wx($this->user_id);
+            if($data){
+                $this->role_id = $data['role_id'];
+                $this->is_manager = $data['is_manager'];
+                $this->company_id = $data['company_id'];
+                if($this->role_id == -1){
+                    $this->parent_id = $data['parent_id'];
+                    $this->c_cust_id = $this->user_id;
+                }
+                if($this->role_id == -2){
+                    $cust = $this->get_user_info4wx($data['c_cust_id']);
+                    $this->parent_id = $cust['parent_id'];
+                    $this->c_cust_id = $cust['id'];
+                }
+                if($this->role_id >= 1){
+                    $this->parent_id = $this->user_id;
+                }
+            }
+        }
     }
 
     /**
@@ -586,6 +611,11 @@ class MY_Model extends CI_Model{
             return -1;
         }
 
+    }
+
+    public function get_user_info4wx($id){
+        $data = $this->db->select()->from('user')->where('id',$id)->get()->row_array();
+        return $data;
     }
 }
 

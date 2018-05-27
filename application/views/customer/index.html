@@ -1,0 +1,108 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>首页</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="/assets/css/amazeui.switch.css">
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <script src="/assets/js/jquery.min.js"></script>
+  <script src="/assets/js/amazeui.min.js"></script>
+</head>
+<body>
+<div class="am-g">
+{{include file='public/head.html'}}
+    <form method="post" action="http://bb2.ksls.com.cn/user/wdbb">
+    <input type="hidden" name="status" />
+    <ul class="admin-content-list">
+      <li>
+        <div class="am-txt-fl">
+          <a href="javascript:get_search('');" class="am-text-success">
+            <span class="am-icon-btn am-icon-file-text"></span>
+            <br />
+            赎楼<br />
+            1单
+          </a>
+        </div>
+        <div class="am-txt-fr">
+          一周提交<em class="am-text-success">0</em>单<br />
+          一月提交<em class="am-text-success">1</em>单
+        </div>
+      </li>
+      <li>
+        <div class="am-txt-fl">
+          <a href="javascript:get_search('3');" class="am-text-warning">
+            <span class="am-icon-btn am-icon-slideshare"></span>
+            <br />
+            按揭贴现<br />
+            0单
+          </a>
+        </div>
+        <div class="am-txt-fr">
+          一周提交<em class="am-text-warning">0</em>单<br />
+          一月提交<em class="am-text-warning">0</em>单
+        </div>
+      </li>
+      <li>
+        <div class="am-txt-fl">
+          <a href="javascript:get_search('5');" class="am-text-danger">
+            <span class="am-icon-btn am-icon-check-circle"></span>
+            <br />
+            税金贷<br />
+            0单
+          </a>
+        </div>
+        <div class="am-txt-fr">
+          一周提交<em class="am-text-danger">0</em>单<br />
+          一周提交<em class="am-text-danger">0</em>单
+        </div>
+      </li>
+      <li>
+        <div class="am-txt-fl">
+          <a href="javascript:get_search('5');" class="am-text-danger">
+            <span class="am-icon-btn am-icon-check-circle"></span>
+            <br />
+            业务贷<br />
+            0单
+          </a>
+        </div>
+        <div class="am-txt-fr">
+          一周提交<em class="am-text-danger">0</em>单<br />
+          一周提交<em class="am-text-danger">0</em>单
+        </div>
+      </li>
+          <li>
+        <div class="am-txt-fl">
+          <a href="javascript:get_search('5');" class="am-text-danger">
+            <span class="am-icon-btn am-icon-check-circle"></span>
+            <br />
+            权证单<br />
+            0单
+          </a>
+        </div>
+        <div class="am-txt-fr">
+          一周提交<em class="am-text-danger">0</em>单<br />
+          一周提交<em class="am-text-danger">0</em>单
+        </div>
+      </li>
+    </ul>
+    </form>
+     <div class="amz-toolbar" id="amz-toolbar">
+      <!-- 左侧侧滑菜单 -->
+       {{include file='public/menu.html'}}
+    </div>
+</div>
+<script>
+function get_search(status){
+  $("[name='status']").val(status);
+  $("form").submit();
+}
+</script>
+</body>
+</html>

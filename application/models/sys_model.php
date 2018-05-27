@@ -58,6 +58,17 @@ class Sys_model extends MY_Model
             if($res->flag==2){
                 return 2;
             }
+            if($res->role_id == -2){
+                $this->db->from('user');
+                $this->db->where('id', $res->c_cust_id);
+                $cust = $this->db->get()->row();
+                if(!$cust){
+                    return 2;
+                }
+                if($cust->flag == 2){
+                    return 2;
+                }
+            }
             $role_p = $this->db->select()->where('id',$res->role_id)->from('role')->get()->row();
             $token = uniqid();
             $user_info['wx_token'] = $token;
@@ -67,7 +78,7 @@ class Sys_model extends MY_Model
             $user_info['wx_role_id'] = $res->role_id;
             $user_info['wx_is_manager'] = $res->is_manager;
             if($res->role_id < 0){
-                $user_info['wx_rel_name'] = $res->c_company_name;
+                $user_info['wx_rel_name'] = $res->c_rel_name;
                 $user_info['wx_role_name'] = "渠道客户";
                 $user_info['wx_permission_id'] = 99;
             }else{

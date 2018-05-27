@@ -15,8 +15,18 @@ class Wx_index extends Wx_controller {
     {
         parent::__construct();
         $this->load->model('wx_index_model');
-        if($this->session->userdata('wx_user_id')){
-            redirect('wx_salesman');//管理员
+        $this->load->model('wx_salesman_model');
+        $ignore_methods = array('logout', 'change_pwd', 'save_change_pwd', 'submit_login');
+        if($this->session->userdata('wx_user_id') && !in_array($this->uri->segment(2), $ignore_methods)){
+            if($this->session->userdata('wx_role_id') >= 1){
+                redirect('wx_salesman');
+                exit();
+            }
+            if($this->session->userdata('wx_role_id') <= -1){
+                redirect('wx_customer');
+                exit();
+            }
+            $this->logout();
         }
     }
 
@@ -38,6 +48,28 @@ class Wx_index extends Wx_controller {
             $this->show_message('登陆失败！');
         }else{
             $this->show_message('登陆失败！');
+        }
+    }
+
+    public function logout() {
+        $this->wx_index_model->logout();
+        redirect('wx_index/index');
+    }
+
+    public function change_pwd() {
+        $this->display('salesman/change_pwd.html');
+    }
+
+    public function save_change_pwd() {
+        if(sha1($this->input->post('passwd')) != $this->session->userdata('wx_password')){
+            $this->show_message('原密码错误！');
+        }else{
+            $rs = $this->wx_salesman_model->save_change_pwd();
+            if($rs){
+                $this->show_message('修改成功',site_url('wx_salesman/index'));
+            }else{
+                $this->show_message('修改失败！');
+            }
         }
     }
 }
