@@ -22,7 +22,7 @@ class Wx_salesman extends Wx_controller {
             redirect('wx_index');
         }
         $this->role_id = $this->session->userdata('wx_role_id');
-        if($this->role_id >= 1){
+        if($this->role_id <= -1){
             redirect('wx_customer');
         }
         $this->is_manager = $this->session->userdata('wx_is_manager') ? $this->session->userdata('wx_is_manager') : -1;
