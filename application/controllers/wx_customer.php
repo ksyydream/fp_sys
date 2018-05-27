@@ -71,4 +71,7 @@ class Wx_customer extends Wx_controller {
         }
     }
 
+    public function change_user_flag($id, $flag){
+        echo $this->wx_customer_model->change_user_flag($id, $flag);
+    }
 }

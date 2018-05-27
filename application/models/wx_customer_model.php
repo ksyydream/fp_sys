@@ -98,4 +98,14 @@ class Wx_customer_model extends MY_Model
         return $data;
     }
 
+    public function change_user_flag($id, $flag){
+        $this->db->where(array(
+            'company_id' => $this->company_id,
+            'c_cust_id' => $this->user_id,
+            'id' => $id
+        ));
+        $res = $this->db->update('user', array('flag'=>$flag));
+        return $res;
+    }
+
 }

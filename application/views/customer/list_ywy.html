@@ -37,6 +37,9 @@
               <p>登陆账号：&nbsp;&nbsp;&nbsp;{{$row.username}}</p>
              <p>手机号码：{{$row.c_tel}}<a href="tel:{{$row.c_tel}}" class="am-btn-call am-icon-phone"></a></p>
              <p>姓名：&nbsp;&nbsp;&nbsp;{{$row.c_rel_name}}</p>
+              {{if $row.flag == 1}}<button type="button" class="am-btn am-btn-danger" onclick="change_status({{$row.id}},2)"><i class="am-icon-cog"></i>禁用</button>{{/if}}
+              {{if $row.flag == 2}}<button type="button" class="am-btn am-btn-success" onclick="change_status({{$row.id}},1)"><i class="am-icon-cog"></i>启用</button>{{/if}}
+              &nbsp;
              <button type="button" class="am-btn am-btn-secondary" data-am-modal="{target: '#my-popup-editywy-{{$row.id}}'}"><i class="am-icon-cog"></i>编辑</button>
           </div>
         </dd>
@@ -128,9 +131,31 @@
 
 <script src="/assets/js/jquery.min.js"></script>
 <script src="/assets/js/amazeui.min.js"></script>
+    <script src="/assets/js/layer/layer.js"></script>
 <script>
 function get_search(page){
 	location.href = "{{site_url url='wx_customer/list_ywy'}}/"+page;
+}
+function change_status(id,status){
+    var msg = '';
+    if(status == 1)
+        msg = '你，确定要启用该用户吗？';
+    if(status == 2)
+        msg = '你，确定要禁用该用户吗？';
+    layer.confirm(msg, {
+        btn: ['继续','取消'], //按钮
+        area: ['200px', 'auto']
+    }, function(){
+        $.get('/wx_customer/change_user_flag/' + id + '/' + status, function(rs){
+            if(rs > 0){
+                location.reload();
+            }else{
+                $("#err_msg").html('添加失败');
+                $('#err-alert').modal();
+            }
+        })
+    }, function(){
+    });
 }
 </script>
 </body>
