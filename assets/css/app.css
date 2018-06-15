@@ -176,7 +176,7 @@ input:-ms-input-placeholder{color:#ccc;}
 .data-list{padding: 0 5px 30px;}
 .data-th,.data-tb{border-bottom: 1px solid #f0f0f0;display:flex; -webkit-display:flex; -webkit-align-items:center;align-items:center;-webkit-justify-content:center; justify-content:center;}
 .data-th li,.data-tb li{-webkit-box-flex:1; -webkit-flex:1;flex:1; display: block; text-align: center;padding: 10px 0;font-size: 1.5rem;}
-.data-tb {border:none;} .data-th .liPrice,.data-tb .liPrice{flex:1.5;}.data-th .listyle,.data-tb .listyle{flex:0.5;}
+.data-tb {border:none;} .data-th .liPrice,.data-tb .liPrice{-webkit-box-flex:1.5; -webkit-flex:1.5;flex:1.5;}.data-th .listyle,.data-tb .listyle{-webkit-box-flex:.5; -webkit-flex:.5;flex:.5;}
 .highPrice{color:#f0250f;}.dataPrice{margin-bottom: 2px;}
 .dataPrice .lp-s{margin-right: 5px;padding:2px 10px;width:55px; height: 24px; line-height: 24px; display: inline-block; background: #f0f0f0; border-radius: 30px;font-size: 12px;}
 .dataPrice .lp-s .lp-em{margin:7px 0 0 0; float: left; width:8px; height: 14px; overflow: hidden; background:url(../../assets/images/arrow2.png) no-repeat;  background-size: contain;}
