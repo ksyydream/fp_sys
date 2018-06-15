@@ -42,7 +42,7 @@ if (!defined('PHPEXCEL_ROOT')) {
  * @package    PHPExcel
  * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class IOFactory
+class PHPExcel_IOFactory
 {
 	/**
 	 * Search locations
@@ -77,7 +77,7 @@ class IOFactory
     /**
      *	Private constructor for PHPExcel_IOFactory
      */
-    public function __construct() { }
+    private function __construct() { }
 
     /**
      * Get search locations

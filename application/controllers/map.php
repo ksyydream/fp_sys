@@ -34,5 +34,17 @@ class Map extends CI_Controller
         $this->assign('data', $data);
         $this->display("map/map_main.html");
     }
+
+    public function index(){
+
+
+        $this->display("dby_test/excel.html");
+    }
+
+    public function upload_excel(){
+
+
+        $this->map_model->upload_excel();
+    }
 }
 

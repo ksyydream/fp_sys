@@ -1,0 +1,73 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>登录</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="/assets/css/amazeui.switch.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/amazeui.min.js"></script>
+</head>
+<body class="no-skin">
+
+<div class="main-container" id="main-container">
+
+
+
+    <div class="main-content">
+        <div class="main-content-inner">
+
+
+            <!-- /section:basics/content.breadcrumbs -->
+            <div class="page-content">
+
+
+                <!-- /section:settings.box -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form id="save_form" class="form-horizontal" enctype="multipart/form-data" method="post" action="/map/upload_excel">
+                            <div class="am-form-group">
+                                <label class="am-u-sm-2 am-form-label">文件</label>
+                                <div class="am-u-sm-10">
+                                    <input type="file" id="file" name="file">
+                                </div>
+                            </div>
+                            <div class="am-u-sm-9 am-u-sm-push-3">
+                                <button type="button" id="save_btn" class="am-btn am-btn-danger" id="doc-confirm-toggle">提交</button>
+                            </div>
+
+                    </form>
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+
+
+</div><!-- /.main-container -->
+
+
+
+
+</body>
+</html>
+<script>
+    $("#save_btn").click(function(){
+        var content = $("#file").val();
+        if(content == "" ) {
+            layer.msg('请选择文件', {icon: 2});
+            return;
+        }
+        $("#save_form").submit();
+    })
+
+</script>
