@@ -69,7 +69,7 @@ class Wx_index_model extends MY_Model
         $data['pageNum'] = $pageNum;
 
         //list
-        $this->db->select('a.xiaoqu,c.name wy_name,max(b_price) min_price,(max(b_price) * 1.15) max_price');
+        $this->db->select('a.xiaoqu,c.name wy_name,max(b_price) min_price,round(max(b_price) * 1.15,2) as max_price',false);
         $this->db->from('pg_xiaoqu a');
         $this->db->join('pg_area b','a.area_id = b.id','left');
         $this->db->join('pg_wy c','a.wy_id = c.id','left');
@@ -82,6 +82,7 @@ class Wx_index_model extends MY_Model
         $this->db->limit($per_page, ($pageNum - 1) * $per_page );
         $this->db->order_by('a.xiaoqu','desc');
         $data['res_list'] = $this->db->get()->result_array();
+
         return $data;
     }
 }
