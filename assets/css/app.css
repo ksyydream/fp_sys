@@ -162,7 +162,7 @@ a{text-decoration:none;} a:hover{text-decoration:none;}
 
 .footer{text-align: center;  position:absolute; bottom: 2rem; width:100%;}
 
-.searchForm{margin:40px 25px;height: 38px;background:#fafafa; border-radius: 35px; display: -webkit-flex; display: -webkit-box; display: -moz-box; display: -ms-flexbox;}
+.searchForm{margin:40px 25px 20px;height: 38px;background:#fafafa; border-radius: 35px; display: -webkit-flex; display: -webkit-box; display: -moz-box; display: -ms-flexbox;}
 .search-icon{margin:8px 25px; display:block;width:20px; height: 20px; background: url(../../assets/images/search.png) no-repeat;
  background-size: contain; }
 .text-area{margin-left:20px;-webkit-box-flex:1; -webkit-flex:1;flex:1;}
