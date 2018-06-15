@@ -18,7 +18,7 @@
     <form id="search_form" action="/wx_index/pg_list" method="get" class="searchForm">
     <!--   <div class="search-box"> -->
         <div class="text-area">
-            <input type="text" name="keyword" class="text" value="{{$data.keyword}}" />
+            <input type="text" name="keyword" class="text" value="{{$data.keyword}}"  placeholder="输入要查询的小区"  onclick="if(this.value==this.defaultValue){this.value='';}" onblur="if(this.value==''){this.value=this.defaultValue;}" />
         </div>
         <span id="search_btn" class="search-icon"></span>
     <!--   </div> -->
@@ -33,7 +33,7 @@
    </ul>
      {{foreach from=$data.res_list item=item}}
      <ul class="data-tb">
-         <li>{{$item.xiaoqu}}</li>
+         <li class="house">{{$item.xiaoqu}}</li>
          <li class="listyle">{{$item.wy_name}}</li>
          <li class="liPrice">
              <div class="dataPrice highPrice"><span class="lp-s hp-s"><em class="lp-em hp-em"></em>高评</span>{{$item.max_price}}</div>
@@ -48,7 +48,7 @@
 
  </div>
 
-    <div class="footer">苏州曼纳吉信息科技有限公司</div>
+    <!--<div class="footer">苏州曼纳吉信息科技有限公司</div>-->
 </div>
 </body>
 </html>
