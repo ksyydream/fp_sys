@@ -18,7 +18,7 @@
     <form id="search_form" action="/wx_index/pg_list" method="get" class="searchForm">
     <!--   <div class="search-box"> -->
         <div class="text-area">
-            <input type="text" name="keyword" class="text" value="" />
+            <input type="text" name="keyword" class="text" value="{{$data.keyword}}" />
         </div>
         <span id="search_btn" class="search-icon"></span>
     <!--   </div> -->
@@ -43,15 +43,7 @@
      </ul>
      {{/foreach}}
 
-    <ul class="data-tb">
-     <li>奥林苑</li>
-     <li class="listyle">高层</li>
-     <li class="liPrice">
-       <div class="dataPrice highPrice"><span class="lp-s hp-s"><em class="lp-em hp-em"></em>高评</span>13500</div>
-       <div class="dataPrice lowPrice"><span class="lp-s"><em class="lp-em"></em>低评</span>11500</div>
-     </li>
-     <li><a href="" class="taxMore">税费详情</a></li>
-   </ul>
+
 
  </div>
     {{include file='public/pagination.html'}}
