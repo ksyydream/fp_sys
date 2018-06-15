@@ -15,12 +15,12 @@
 </head>
 <body>
 <div class="am-g">
-    <form action="" class="searchForm">
+    <form id="search_form" action="/wx_index/pg_list" method="get" class="searchForm">
     <!--   <div class="search-box"> -->
         <div class="text-area">
-            <input type="text" name="keyword" class="text" value="星海花园"  onclick="if(this.value==this.defaultValue){this.value='';}" onblur="if(this.value==''){this.value=this.defaultValue;}"/>
+            <input type="text" name="keyword" class="text" value="" />
         </div>
-        <span class="search-icon"></span>
+        <span id="search_btn" class="search-icon"></span>
     <!--   </div> -->
  <!--      <span>取消</span> -->
     </form>
@@ -31,15 +31,18 @@
      <li class="liPrice">评估价（元）</li>
      <li>操作</li>
    </ul>
-   <ul class="data-tb">
-     <li>云山里花园</li>
-     <li class="listyle">高层</li>
-     <li class="liPrice">
-       <div class="dataPrice highPrice"><span class="lp-s hp-s"><em class="lp-em hp-em"></em>高评</span>13500</div>
-       <div class="dataPrice lowPrice"><span class="lp-s"><em class="lp-em"></em>低评</span>11500</div>
-     </li>
-     <li><a href="" class="taxMore">税费详情</a></li>
-   </ul>
+     {{foreach from=$data.res_list item=item}}
+     <ul class="data-tb">
+         <li>{{$item.xiaoqu}}</li>
+         <li class="listyle">{{$item.wy_name}}</li>
+         <li class="liPrice">
+             <div class="dataPrice highPrice"><span class="lp-s hp-s"><em class="lp-em hp-em"></em>高评</span>{{$item.max_price}}</div>
+             <div class="dataPrice lowPrice"><span class="lp-s"><em class="lp-em"></em>低评</span>{{$item.min_price}}</div>
+         </li>
+         <li><a href="" class="taxMore">税费详情</a></li>
+     </ul>
+     {{/foreach}}
+
     <ul class="data-tb">
      <li>奥林苑</li>
      <li class="listyle">高层</li>
@@ -49,27 +52,16 @@
      </li>
      <li><a href="" class="taxMore">税费详情</a></li>
    </ul>
-   <ul class="data-tb">
-     <li>柏庐广场</li>
-     <li class="listyle">高层</li>
-     <li class="liPrice">
-       <div class="dataPrice highPrice"><span class="lp-s hp-s"><em class="lp-em hp-em"></em>高评</span>13500</div>
-       <div class="dataPrice lowPrice"><span class="lp-s"><em class="lp-em"></em>低评</span>11500</div>
-     </li>
-     <li><a href="" class="taxMore">税费详情</a></li>
-   </ul>
-      <ul class="data-tb">
-     <li>淀山湖花园美苑</li>
-     <li class="listyle">高层</li>
-     <li class="liPrice">
-       <div class="dataPrice highPrice"><span class="lp-s hp-s"><em class="lp-em hp-em"></em>高评</span>13500</div>
-       <div class="dataPrice lowPrice"><span class="lp-s"><em class="lp-em"></em>低评</span>11500</div>
-     </li>
-     <li><a href="" class="taxMore">税费详情</a></li>
-   </ul>
- </div>
 
+ </div>
+    {{include file='public/pagination.html'}}
   <div class="footer">苏州曼纳吉信息科技有限公司</div>
 </div>
 </body>
 </html>
+<script src="/assets/js/jquery.min.js"></script>
+<script>
+    $("#search_btn").click(function () {
+        $("#search_form").submit();
+    })
+</script>

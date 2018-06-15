@@ -78,6 +78,9 @@ class Wx_index extends Wx_controller {
     }
 
     public function pg_list(){
+        $data = $this->wx_index_model->pg_list();
+        $this->assign('data',$data);
+        $this->assign('pagination_url','/wx_index/pg_list/');
         $this->display('estimate/estimate.html');
     }
 }

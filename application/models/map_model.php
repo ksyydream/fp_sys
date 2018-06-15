@@ -62,19 +62,39 @@ class Map_model extends MY_Model
         $highestRow = $sheet->getHighestRow(); // 取得总行数
 
         $this->db->trans_start();//--------开始事务
+        //$data = array();
         for ($row = 4; $row <= $highestRow; $row++) {
-            $info = trim((string)$sheet->getCellByColumnAndRow(4, $row)->getValue());
-            $info = str_replace(' ','',$info);
-            if($info == ""){
+            $area_ = trim((string)$sheet->getCellByColumnAndRow(2, $row)->getValue());
+            $wy_ = trim((string)$sheet->getCellByColumnAndRow(4, $row)->getValue());
+            $area_info = $this->db->select()->from('pg_area')->where('name', $area_)->get()->row_array();
+            $wy_info = $this->db->select()->from('pg_wy')->where('name', $wy_)->get()->row_array();
+            $data = array(
+                'jz_date' => trim((string)$sheet->getCellByColumnAndRow(1, $row)->getValue()),
+                'area_id' => $area_info ? $area_info['id'] : -1,
+                'xiaoqu' => trim((string)$sheet->getCellByColumnAndRow(3, $row)->getValue()),
+                'wy_id' => $wy_info ? $wy_info['id'] : -1,
+                'lc' => trim((string)$sheet->getCellByColumnAndRow(5, $row)->getValue()),
+                'zcs' => trim((string)$sheet->getCellByColumnAndRow(6, $row)->getValue()),
+                'jzmj' => trim((string)$sheet->getCellByColumnAndRow(7, $row)->getValue()),
+                'year' => trim((string)$sheet->getCellByColumnAndRow(8, $row)->getValue()),
+                'y_price' => trim((string)$sheet->getCellByColumnAndRow(9, $row)->getValue()),
+                'b_price' => trim((string)$sheet->getCellByColumnAndRow(10, $row)->getValue()),
+                'other_name' => trim((string)$sheet->getCellByColumnAndRow(11, $row)->getValue()),
+                "cdate"=>date('Y-m-d H:i:s')
+            );
+            if($data['xiaoqu'] == ""){
                 continue;
             }
-           $check_ = $this->db->select()->from('pg_wy')->where('name', $info)->get()->row();
-            if(!$check_){
-                $this->db->insert('pg_wy', array('name' => $info));
+            if($data['jzmj'] == ""){
+                unset($data['jzmj']);
             }
+            if($data['year'] == ""){
+                unset($data['year']);
+            }
+            $this->db->insert('pg_xiaoqu', $data);
         }
-        //$this->db->where('id >=', 1)->delete('car_ls_yy');
-        //$rs = $this->db->insert_batch('car_ls_yy', $data);
+
+        //$rs = $this->db->insert_batch('pg_xiaoqu', $data);
 
 
 
