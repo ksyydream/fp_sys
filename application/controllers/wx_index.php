@@ -16,7 +16,7 @@ class Wx_index extends Wx_controller {
         parent::__construct();
         $this->load->model('wx_index_model');
         $this->load->model('wx_salesman_model');
-        $ignore_methods = array('logout', 'change_pwd', 'save_change_pwd', 'submit_login','main','pg_list');
+        $ignore_methods = array('logout', 'change_pwd', 'save_change_pwd', 'submit_login','main','pg_list','calculator');
         if($this->session->userdata('wx_user_id') && !in_array($this->uri->segment(2), $ignore_methods)){
             if($this->session->userdata('wx_role_id') >= 1){
                 redirect('wx_salesman');
