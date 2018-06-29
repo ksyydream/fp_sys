@@ -84,8 +84,8 @@ class Wx_index extends Wx_controller {
         $this->display('estimate/estimate.html');
     }
        public function calculator(){
-            $data = $this->wx_index_model->calculator();
-            $this->assign('data',$data);
+//            $data = $this->wx_index_model->calculator();
+//            $this->assign('data',$data);
             $this->assign('pagination_url','/wx_index/calculator/');
             $this->display('estimate/calculator.html');
         }
