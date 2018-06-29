@@ -62,18 +62,20 @@
     </dl>
     <a href="javascript:" class="startCal">开始计算</a>
 
-
+<form action="/wx_index/calculator_res" method="get" id="get_form">
+  <!-- 首付 -->
+  <input type="hidden" value="" class="ipt-txt" id="shoufu" name="shoufu" pattern="[0-9]*">
+  <!-- 契税 -->
+  <input type="hidden" value="" class="ipt-txt" id="qishui" name="qishui" pattern="[0-9]*">
+  <!-- 营业税 -->
+  <input type="hidden" value="" class="ipt-txt" id="yyshui" name="yyshui" pattern="[0-9]*">
+  <!-- 个人所得税 -->
+  <input type="hidden" value="" class="ipt-txt" id="grsdshui" name="grsdshui" pattern="[0-9]*">
+  <!-- 税金总额 -->
+  <input type="hidden" value="" class="ipt-txt" id="sfhj" name="sfhj" pattern="[0-9]*">
+</form>
 <!-- 计算结果 -->
-<!-- 首付 -->
- <input type="hidden" value="" class="ipt-txt" id="shoufu" pattern="[0-9]*">
-<!-- 契税 -->
- <input type="hidden" value="" class="ipt-txt" id="qishui" pattern="[0-9]*">
-<!-- 营业税 -->
-<input type="hidden" value="" class="ipt-txt" id="yyshui" pattern="[0-9]*">
-<!-- 个人所得税 -->
-<input type="hidden" value="" class="ipt-txt" id="grsdshui" pattern="[0-9]*">
-<!-- 税金总额 -->
- <input type="hidden" value="" class="ipt-txt" id="sfhj" pattern="[0-9]*">
+
 
    <!--<dl class="dl-cal">-->
       <!--<dt>首付</dt>-->
@@ -432,7 +434,7 @@ $(".startCal").click(function(event) {
        $("#shoufu").val(shoufu);
       var totalPrice =(parseFloat($("#qishui").val())+parseFloat($("#yyshui").val())+parseFloat($("#grsdshui").val())).toFixed(2);
         $("#sfhj").val(totalPrice);
-
+$("#get_form").submit();
     }
 </script>
 </body>
