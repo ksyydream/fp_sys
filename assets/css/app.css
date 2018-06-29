@@ -183,3 +183,34 @@ input:-ms-input-placeholder{color:#ccc;}
 .dataPrice .lp-s .lp-em{margin:7px 0 0 0; float: left; width:8px; height: 14px; overflow: hidden; background:url(../../assets/images/arrow2.png) no-repeat;  background-size: contain;}
 .dataPrice .lp-s .hp-em{background:url(../../assets/images/arrow1.png) no-repeat;background-size: contain;}
 .taxMore{border:1px solid #85aef1; color: #85aef1; padding:5px;border-radius:10px;}
+
+/*计算器*/
+.calculator{margin-top: 2rem;}
+.dl-cal dt,.dl-cal dd{margin: 0; padding:1rem 0;font-weight: normal;}
+.dl-cal{padding:0 2rem; border-bottom:1px solid #f3f3f3;font-size:18px; line-height: 2.4rem;
+ display:flex; -webkit-display:flex; -webkit-align-items:center;align-items:center;-webkit-justify-content:center; justify-content:center;
+ position: relative;}
+.arrow:before{ position: absolute; content: " ";right:5px; top:35%;width:12px; height: 15px; float: right; background: url(../../assets/images/arrow3.png) no-repeat;background-size: contain;}
+.arrow1:before{top:40%;}
+.dl-cal dt{ flex:1;}.dl-cal dd{flex:2;text-align: right; color: #797d84; }
+.dl-cal .box-col{color:#babec0;}
+.dl-cal dd .ipt-txt{ float: left; text-align: right;color:#333; width:80%; height: 24px; line-height: 24px; font-size:18px; border:none; background: none;overflow: hidden;outline: none;}
+.dl-cal dd .s-txt{float: left; width: 20%; text-align: right;}
+
+.layer_fixed{width:100%;height: 100%; background-color:rgba(0,0,0,.5);z-index: 99; overflow: hidden;
+ position: fixed;top:0;}
+.bottom_layer{position: fixed; bottom:0;z-index: 100; text-align: center; width: 100%; background: #fff;
+ /*-webkit-transform:translateY(100%);-webkit-transition:all .2s ease;transform:translateY(100%);transition:all .2s ease;*/}
+.bottom_layer .title{ height: 5rem; line-height: 5rem; border-bottom: 1px solid #ccc; }
+.bottom_layer .cancle{position: absolute; color:#9c9fa1;right:1rem;font-size: 1.5rem; }
+.bottom_layer .title p{text-align: center; font-size: 1.8rem; font-weight: bold;}
+.bottom_layer .option_wrap{max-height: 12.5rem; overflow: scroll;}
+.bottom_layer li{height:5rem; line-height:5rem; text-align: center;border-bottom: 1px solid #ccc;
+ font-size: 1.5rem;}
+
+.startCal{ background: #4e8aea; font-size: 16px; color: #fff; display: block; margin: 1.5rem 10% 0;padding: 1rem 0; text-align: center; border-radius: 6px; width:80%; }
+
+.totalPrice{ text-align: center; color: #6998fa;font-size: 18px; padding: 1rem 0 2rem;}
+.totalPrice span{ font-size: 26px;}
+.tips{color: #d2d2d2;padding: 1rem 2rem 2rem;}
+.calculator-res .dl-cal dd .ipt-txt{color: #6998fa;}
