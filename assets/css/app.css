@@ -187,7 +187,7 @@ input:-ms-input-placeholder{color:#ccc;}
 /*计算器*/
 .calculator{margin-top: 2rem;}
 .dl-cal dt,.dl-cal dd{margin: 0; padding:1rem 0;font-weight: normal;}
-.dl-cal{padding:0 2rem; border-bottom:1px solid #f3f3f3;font-size:18px; line-height: 2.4rem;
+.dl-cal{padding:0 2rem; border-bottom:1px solid #f3f3f3;font-size:16px; line-height: 2.4rem;
  display:flex; -webkit-display:flex; -webkit-align-items:center;align-items:center;-webkit-justify-content:center; justify-content:center;
  position: relative;}
 .arrow:before{ position: absolute; content: " ";right:5px; top:35%;width:12px; height: 15px; float: right; background: url(../../assets/images/arrow3.png) no-repeat;background-size: contain;}
