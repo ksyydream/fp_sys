@@ -211,7 +211,7 @@ input:-ms-input-placeholder{color:#ccc;}
 .bottom_layer li{height:5rem; line-height:5rem; text-align: center;border-bottom: 1px solid #f3f3f3;
  font-size: 1.5rem;}
 
-.startCal,.startCal:link,.startCal:visited,.startCal:hover,.startCal:active{ background: #4e8aea; font-size: 16px; color: #fff; display: block; margin: 1.5rem 10% 0;padding: 1rem 0; text-align: center; border-radius: 6px; width:80%; }
+.startCal,.startCal:link,.startCal:visited,.startCal:hover,.startCal:active{ background: #4e8aea; font-size: 16px; color: #fff; display: block; margin: 1.5rem 10% 2rem;padding: 1rem 0; text-align: center; border-radius: 6px; width:80%; }
 
 .totalPrice{ text-align: center; color: #6998fa;font-size: 18px; padding: 1rem 0 2rem;}
 .totalPrice span{ font-size: 26px;}
