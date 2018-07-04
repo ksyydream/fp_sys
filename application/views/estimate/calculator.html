@@ -60,17 +60,9 @@
       <dt>卖房是否唯一住房</dt>
       <dd class="box-col choose seller" select-value="">请选择</dd>
     </dl>
-      <dl class="dl-cal">
-          <dt>每月应还款额</dt>
-          <dd><input type="number" value="" class="ipt-txt" id="myhke" pattern="[0-9]*">
-              <span class="s-txt">元</span>
-          </dd>
-      </dl>
-      <dl class="dl-cal">
-          <dt>总还款额</dt>
-          <dd><input type="number" value="" class="ipt-txt" id="sumall" pattern="[0-9]*">
-              <span class="s-txt">元</span>
-          </dd>
+      <dl class="dl-cal arrow">
+          <dt>按揭年数</dt>
+          <dd class="box-col mortgage" select-value="">请选择</dd>
       </dl>
     <a href="javascript:" class="startCal">开始计算</a>
 
@@ -85,9 +77,9 @@
     <input type="hidden" value="" class="ipt-txt" id="grsdshui" name="grsdshui" pattern="[0-9]*">
     <!-- 税金总额 -->
     <input type="hidden" value="" class="ipt-txt" id="sfhj" name="sfhj" pattern="[0-9]*">
-    <!-- 个人所得税 -->
+    <!-- 每月应还款额 -->
     <input type="hidden" value="" class="ipt-txt" id="myhke" name="myhke" pattern="[0-9]*">
-    <!-- 税金总额 -->
+    <!-- 总还款额 -->
     <input type="hidden" value="" class="ipt-txt" id="sumall" name="sumall" pattern="[0-9]*">
 </form>
 <!-- 计算结果 -->
