@@ -183,7 +183,8 @@ input:-ms-input-placeholder{color:#ccc;}
 .dataPrice .lp-s{margin-right: 5px;padding:2px 10px;width:55px; height: 24px; line-height: 20px; display: inline-block; background: #f0f0f0; border-radius: 30px;font-size: 12px;}
 .dataPrice .lp-s .lp-em{margin:5px 0 0 0; float: left; width:8px; height: 14px; overflow: hidden; background:url(../../assets/images/arrow2.png) no-repeat;  background-size: contain;}
 .dataPrice .lp-s .hp-em{background:url(../../assets/images/arrow1.png) no-repeat;background-size: contain;}
-.taxMore{border:1px solid #85aef1; color: #85aef1; padding:5px;border-radius:10px; font-size: 12px;}
+.taxMore{margin-bottom: 5px;padding:2px 10px; font-size: 12px; display:inline-block; border:1px solid #85aef1; color: #85aef1;border-radius:10px;}
+
 
 /*计算器*/
 .calculator{margin-top:1rem;}
