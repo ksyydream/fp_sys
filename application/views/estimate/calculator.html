@@ -60,6 +60,18 @@
       <dt>卖房是否唯一住房</dt>
       <dd class="box-col choose seller" select-value="">请选择</dd>
     </dl>
+      <dl class="dl-cal">
+          <dt>每月应还款额</dt>
+          <dd><input type="number" value="" class="ipt-txt" id="myhke" pattern="[0-9]*">
+              <span class="s-txt">元</span>
+          </dd>
+      </dl>
+      <dl class="dl-cal">
+          <dt>总还款额</dt>
+          <dd><input type="number" value="" class="ipt-txt" id="sumall" pattern="[0-9]*">
+              <span class="s-txt">元</span>
+          </dd>
+      </dl>
     <a href="javascript:" class="startCal">开始计算</a>
 
 <form action="/wx_index/calculator_res" method="get" id="get_form">
@@ -70,9 +82,13 @@
   <!-- 营业税 -->
   <input type="hidden" value="" class="ipt-txt" id="yyshui" name="yyshui" pattern="[0-9]*">
   <!-- 个人所得税 -->
-  <input type="hidden" value="" class="ipt-txt" id="grsdshui" name="grsdshui" pattern="[0-9]*">
-  <!-- 税金总额 -->
-  <input type="hidden" value="" class="ipt-txt" id="sfhj" name="sfhj" pattern="[0-9]*">
+    <input type="hidden" value="" class="ipt-txt" id="grsdshui" name="grsdshui" pattern="[0-9]*">
+    <!-- 税金总额 -->
+    <input type="hidden" value="" class="ipt-txt" id="sfhj" name="sfhj" pattern="[0-9]*">
+    <!-- 个人所得税 -->
+    <input type="hidden" value="" class="ipt-txt" id="myhke" name="myhke" pattern="[0-9]*">
+    <!-- 税金总额 -->
+    <input type="hidden" value="" class="ipt-txt" id="sumall" name="sumall" pattern="[0-9]*">
 </form>
 <!-- 计算结果 -->
 
@@ -191,6 +207,48 @@
     </div>
   </div>
 </div>
+
+    <!-- 按揭年数 -->
+    <div class="bottom_layer mortgage_layer" data-mark="bottom_layer" style="display:none;">
+        <div class="title">
+            <span class="cancle" data-act="bottom_cancle">取消</span>
+            <p data-mark="bottom_layer_title mortgage_layer_title">按揭年数</p>
+        </div>
+        <div class="option_wrap mortgage_wrap" data-mark="option_wrap">
+            <ul>
+                <li select-value="1">1年（12期）</li>
+                <li select-value="2">2年（24期）</li>
+                <li select-value="3">3年（36期）</li>
+                <li select-value="4">4年（48期）</li>
+                <li select-value="5">5年（60期）</li>
+                <li select-value="6">6年（72期）</li>
+                <li select-value="7">7年（84期）</li>
+                <li select-value="8">8年（96期）</li>
+                <li select-value="9">9年（108期）</li>
+                <li select-value="10">10年（120期）</li>
+                <li select-value="11">11年（132期）</li>
+                <li select-value="12">12年（144期）</li>
+                <li select-value="13">13年（156期）</li>
+                <li select-value="14">14年（168期）</li>
+                <li select-value="15">15年（180期）</li>
+                <li select-value="16">16年（192期）</li>
+                <li select-value="17">17年（204期）</li>
+                <li select-value="18">18年（216期）</li>
+                <li select-value="19">19年（228期）</li>
+                <li select-value="20">20年（240期）</li>
+                <li select-value="21">21年（252期）</li>
+                <li select-value="22">21年（264期）</li>
+                <li select-value="23">21年（276期）</li>
+                <li select-value="24">21年（288期）</li>
+                <li select-value="25">21年（300期）</li>
+                <li select-value="26">21年（312期）</li>
+                <li select-value="27">21年（324期）</li>
+                <li select-value="28">21年（336期）</li>
+                <li select-value="29">21年（348期）</li>
+                <li select-value="30">21年（360期）</li>
+            </ul>
+        </div>
+    </div>
 
 </div>
 
@@ -342,6 +400,11 @@ $(".startCal").click(function(event) {
      $('#your-modal').modal();
      return false;
     };
+    if(mortgage==""){
+        $(".am-modal-bd-warn").html("请选择按揭年数");
+        $('#your-modal').modal();
+        return false;
+    };
     //计算
      ex_total();
   
@@ -365,6 +428,7 @@ $(".startCal").click(function(event) {
         var seller =$(".seller").attr("select-value");//卖房是否唯一住房
 
         var lowPrice = pgprice.split("/")[0],highPrice =pgprice.split("/")[1];
+        var mortgage = $(".mortgage").attr("select-value"),rate = $(".rate").attr("select-value");
        // alert(loan);
          //房屋总价
        var housePrice = "";
@@ -434,8 +498,28 @@ $(".startCal").click(function(event) {
        $("#shoufu").val(shoufu);
       var totalPrice =(parseFloat($("#qishui").val())+parseFloat($("#yyshui").val())+parseFloat($("#grsdshui").val())).toFixed(2);
         $("#sfhj").val(totalPrice);
+        //等额本息  本金*月利率*（1+月利率）^还款月数/[(1+月利率)^还款月数-1]
+        var everyMoth = (housePrice-shoufu)*dklv/12*Math.pow((1+dklv/12),mortgage*12)/[Math.pow((1+dklv/12),mortgage*12)-1];
+        var sumall = (everyMoth*mortgage*12).toFixed(2);
+        $("#myhke").val(everyMoth.toFixed(2));
+        $("#sumall").val(sumall);
 $("#get_form").submit();
     }
+
+ $(".mortgage").click(function(){
+     $(".mortgage_wrap li").each(function(index, el) {
+         $(".layer_fixed").show();
+         $(".mortgage_layer").slideDown();
+     });
+ });
+
+ $(".mortgage_wrap li").click(function(event) {
+     $(".layer_fixed").hide();
+     $(".bottom_layer").slideUp();
+     $(".mortgage").html($(this).html());
+     $(".mortgage").attr('select-value', $(this).attr('select-value'));
+     $(".mortgage").css("color","#333");
+ });
 </script>
 </body>
 </html>
