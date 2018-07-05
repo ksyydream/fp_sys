@@ -64,6 +64,10 @@
           <dt>按揭年数</dt>
           <dd class="box-col mortgage" select-value="">请选择</dd>
       </dl>
+      <dl class="dl-cal arrow">
+          <dt>利率</dt>
+          <dd class="box-col rate" select-value="">请选择</dd>
+      </dl>
     <a href="javascript:" class="startCal">开始计算</a>
 
 <form action="/wx_index/calculator_res" method="get" id="get_form">
@@ -229,289 +233,356 @@
                 <li select-value="19">19年（228期）</li>
                 <li select-value="20">20年（240期）</li>
                 <li select-value="21">21年（252期）</li>
-                <li select-value="22">21年（264期）</li>
-                <li select-value="23">21年（276期）</li>
-                <li select-value="24">21年（288期）</li>
-                <li select-value="25">21年（300期）</li>
-                <li select-value="26">21年（312期）</li>
-                <li select-value="27">21年（324期）</li>
-                <li select-value="28">21年（336期）</li>
-                <li select-value="29">21年（348期）</li>
-                <li select-value="30">21年（360期）</li>
+                <li select-value="22">22年（264期）</li>
+                <li select-value="23">23年（276期）</li>
+                <li select-value="24">24年（288期）</li>
+                <li select-value="25">25年（300期）</li>
+                <li select-value="26">26年（312期）</li>
+                <li select-value="27">27年（324期）</li>
+                <li select-value="28">28年（336期）</li>
+                <li select-value="29">29年（348期）</li>
+                <li select-value="30">30年（360期）</li>
             </ul>
         </div>
     </div>
-
 </div>
-
+<!-- 利率弹框 -->
+<div class="am-popup" id="my-popup">
+    <div class="am-popup-inner">
+        <div class="am-popup-hd">
+            <h4 class="am-popup-title">房贷利率</h4>
+      <span data-am-modal-close
+            class="am-close">&times;</span>
+        </div>
+        <div class="am-popup-bd">
+            <div class="defined">
+                自定义利率<input type="number" value="" class="ipt-txt definedRate" placeholder="" >%
+                <a href="javascript:" class="rate-btn">确定</a>
+            </div>
+            <p class="rate-tips">或者选择常用利率</p>
+            <ul class="ul-rate">
+                <li data-rate="1">基准利率</li>
+                <li data-rate="0.7" class="">7折</li>
+                <li data-rate="0.85" class="">85折</li>
+                <li data-rate="0.88" class="">88折</li>
+                <li data-rate="0.9" class="">9折</li>
+                <li data-rate="0.95" class="">95折</li>
+                <li data-rate="1.05" class="">1.05倍</li>
+                <li data-rate="1.1" class="">1.1倍</li>
+                <li data-rate="1.2" class="">1.2倍</li>
+                <li data-rate="1.3" class="">1.3倍</li>
+            </ul>
+        </div>
+    </div>
+</div>
 <script src="/assets/js/jquery.min.js"></script>
 <script src="/assets/js/amazeui.min.js"></script>
 <script type="text/javascript">
- var c1 =[["计算模式"],["省税模式","ss"],["低首付模式","dsf"]];
- var year_limit=[["房屋购置年限"],["满5年","5"],["2-5年","2"],["不满2年","1"]];
- var buynum =[["买房家庭首次购房"],["首套","0"],["二套","1"],["二套以上","2"]];
- var ywdk =[["有无贷款"],["有","1"],["无","0"]];
- var salenum =[["卖房是否唯一住房"],["是","1"],["否","0"]];
-  $(".cancle").click(function(event) {
-    /* Act on the event */
-    $(".layer_fixed").hide();
-    $(".bottom_layer").slideUp();
-  });
-  $(".jsms").click(function(){
-      $(".jsms_wrap_layer_title").html(c1[0][0]);
-      $(".jsms_wrap li").each(function(index, el) {
-        $(el).attr("select-value",c1[index+1][1]);
-        $(el).html(c1[index+1][0]);
-          $(".layer_fixed").show();
-          $(".jsms_layer").slideDown();
-      });
-  });
+    var c1 =[["计算模式"],["省税模式","ss"],["低首付模式","dsf"]];
+    var year_limit=[["房屋购置年限"],["满5年","5"],["2-5年","2"],["不满2年","1"]];
+    var buynum =[["买房家庭首次购房"],["首套","0"],["二套","1"],["二套以上","2"]];
+    var ywdk =[["有无贷款"],["有","1"],["无","0"]];
+    var salenum =[["卖房是否唯一住房"],["是","1"],["否","0"]];
+    $(".cancle").click(function(event) {
+        /* Act on the event */
+        $(".layer_fixed").hide();
+        $(".bottom_layer").slideUp();
+    });
+    $(".jsms").click(function(){
+        $(".jsms_wrap_layer_title").html(c1[0][0]);
+        $(".jsms_wrap li").each(function(index, el) {
+            $(el).attr("select-value",c1[index+1][1]);
+            $(el).html(c1[index+1][0]);
+            $(".layer_fixed").show();
+            $(".jsms_layer").slideDown();
+        });
+    });
 
-   $(".limityear").click(function(event) {
-       $(".limityear_layer_title").html(year_limit[0][0]);
+    $(".limityear").click(function(event) {
+        $(".limityear_layer_title").html(year_limit[0][0]);
         $(".limityear_wrap li").each(function(index, el) {
-         $(el).html(year_limit[index+1][0]);
-           $(el).attr("select-value",year_limit[index+1][1]);
-          $(".layer_fixed").show();
-          $(".limityear_layer").slideDown();
-      });
+            $(el).html(year_limit[index+1][0]);
+            $(el).attr("select-value",year_limit[index+1][1]);
+            $(".layer_fixed").show();
+            $(".limityear_layer").slideDown();
+        });
     });
 
-   $(".buyer").click(function(event) {
-       $(".buy_layer_title").html(year_limit[0][0]);
+    $(".buyer").click(function(event) {
+        $(".buy_layer_title").html(year_limit[0][0]);
         $(".buy_wrap li").each(function(index, el) {
-         $(el).html(buynum[index+1][0]);
-           $(el).attr("select-value",buynum[index+1][1]);
-          $(".layer_fixed").show();
-          $(".buy_layer").slideDown();
-      });
+            $(el).html(buynum[index+1][0]);
+            $(el).attr("select-value",buynum[index+1][1]);
+            $(".layer_fixed").show();
+            $(".buy_layer").slideDown();
+        });
     });
 
-   $(".loan").click(function(event) {
-       $(".loan_layer_title").html(year_limit[0][0]);
+    $(".loan").click(function(event) {
+        $(".loan_layer_title").html(year_limit[0][0]);
         $(".loan_wrap li").each(function(index, el) {
-         $(el).html(ywdk[index+1][0]);
-           $(el).attr("select-value",ywdk[index+1][1]);
-          $(".layer_fixed").show();
-          $(".loan_layer").slideDown();
-      });
+            $(el).html(ywdk[index+1][0]);
+            $(el).attr("select-value",ywdk[index+1][1]);
+            $(".layer_fixed").show();
+            $(".loan_layer").slideDown();
+        });
     });
 
-     $(".seller").click(function(event) {
-       $(".sell_layer_title").html(year_limit[0][0]);
+    $(".seller").click(function(event) {
+        $(".sell_layer_title").html(year_limit[0][0]);
         $(".sell_wrap li").each(function(index, el) {
-         $(el).html(salenum[index+1][0]);
-           $(el).attr("select-value",salenum[index+1][1]);
-          $(".layer_fixed").show();
-          $(".sell_layer").slideDown();
-      });
+            $(el).html(salenum[index+1][0]);
+            $(el).attr("select-value",salenum[index+1][1]);
+            $(".layer_fixed").show();
+            $(".sell_layer").slideDown();
+        });
     });
     $(".jsms_wrap li").click(function(event) {
-      $(".layer_fixed").hide();
-      $(".bottom_layer").slideUp();
-       $(".jsms").html($(this).html());
-       $(".jsms").attr('select-value', $(this).attr('select-value'));
-       $(".jsms").css("color","#333");
+        $(".layer_fixed").hide();
+        $(".bottom_layer").slideUp();
+        $(".jsms").html($(this).html());
+        $(".jsms").attr('select-value', $(this).attr('select-value'));
+        $(".jsms").css("color","#333");
     });
 
-   $(".limityear_wrap li").click(function(event) {
-      $(".layer_fixed").hide();
-      $(".bottom_layer").slideUp();
-       $(".limityear").html($(this).html());
-       $(".limityear").attr('select-value', $(this).attr('select-value'));
-       $(".limityear").css("color","#333");
+    $(".limityear_wrap li").click(function(event) {
+        $(".layer_fixed").hide();
+        $(".bottom_layer").slideUp();
+        $(".limityear").html($(this).html());
+        $(".limityear").attr('select-value', $(this).attr('select-value'));
+        $(".limityear").css("color","#333");
     });
 
-   
-   $(".buy_layer li").click(function(event) {
-      $(".layer_fixed").hide();
-      $(".bottom_layer").slideUp();
-       $(".buyer").html($(this).html());
-       $(".buyer").attr('select-value', $(this).attr('select-value'));
-       $(".buyer").css("color","#333");
+
+    $(".buy_layer li").click(function(event) {
+        $(".layer_fixed").hide();
+        $(".bottom_layer").slideUp();
+        $(".buyer").html($(this).html());
+        $(".buyer").attr('select-value', $(this).attr('select-value'));
+        $(".buyer").css("color","#333");
     });
 
-   $(".loan_layer li").click(function(event) {
-      $(".layer_fixed").hide();
-      $(".bottom_layer").slideUp();
-       $(".loan").html($(this).html());
-       $(".loan").attr('select-value', $(this).attr('select-value'));
-       $(".loan").css("color","#333");
+    $(".loan_layer li").click(function(event) {
+        $(".layer_fixed").hide();
+        $(".bottom_layer").slideUp();
+        $(".loan").html($(this).html());
+        $(".loan").attr('select-value', $(this).attr('select-value'));
+        $(".loan").css("color","#333");
     });
 
-$(".sell_layer li").click(function(event) {
-      $(".layer_fixed").hide();
-      $(".sell_layer").slideUp();
-       $(".seller").html($(this).html());
-       $(".seller").attr('select-value', $(this).attr('select-value'));
-       $(".seller").css("color","#333");
+    $(".sell_layer li").click(function(event) {
+        $(".layer_fixed").hide();
+        $(".sell_layer").slideUp();
+        $(".seller").html($(this).html());
+        $(".seller").attr('select-value', $(this).attr('select-value'));
+        $(".seller").css("color","#333");
     });
-$(".startCal").click(function(event) {
-  /* Act on the event */
-  var jsms = $(".jsms").attr("select-value"),pgprice =$(".ipt-price").val(),area = $(".ipt-area").val(),glarea =$(".ipt-gl-area").val(),limityear = $(".limityear").attr("select-value"),buyer = $(".buyer").attr("select-value"),
-  loan = $(".loan").attr("select-value"),seller =$(".seller").attr("select-value"),mortgage = $(".mortgage").attr("select-value");
-  if(jsms==""){
-    $(".am-modal-bd-warn").html("请选择计算模式！");
-     $('#your-modal').modal();
-     return false;
-  };
+    $(".startCal").click(function(event) {
+        /* Act on the event */
+        var jsms = $(".jsms").attr("select-value"),pgprice =$(".ipt-price").val(),area = $(".ipt-area").val(),glarea =$(".ipt-gl-area").val(),limityear = $(".limityear").attr("select-value"),buyer = $(".buyer").attr("select-value"),
+                loan = $(".loan").attr("select-value"),seller =$(".seller").attr("select-value"),mortgage = $(".mortgage").attr("select-value"),rate = $(".rate").attr("select-value");
+        if(jsms==""){
+            $(".am-modal-bd-warn").html("请选择计算模式！");
+            $('#your-modal').modal();
+            return false;
+        };
 
-    if(pgprice==""){
-      $(".am-modal-bd-warn").html("请输入评估价");
-      $('#your-modal').modal();
-       return;
-    };
-    if(area==""){
-      $(".am-modal-bd-warn").html("请输入面积");
-      $('#your-modal').modal();
-       return;
-    };
-     if(glarea==""){
-      $(".am-modal-bd-warn").html("请输入阁楼面积,没有请输0");
-      $('#your-modal').modal();
-       return;
-    };
+        if(pgprice==""){
+            $(".am-modal-bd-warn").html("请输入评估价");
+            $('#your-modal').modal();
+            return;
+        };
+        if(area==""){
+            $(".am-modal-bd-warn").html("请输入面积");
+            $('#your-modal').modal();
+            return;
+        };
+        if(glarea==""){
+            $(".am-modal-bd-warn").html("请输入阁楼面积,没有请输0");
+            $('#your-modal').modal();
+            return;
+        };
 
-    if(limityear==""){
-     $(".am-modal-bd-warn").html("请选择房屋购置年限");
-     $('#your-modal').modal();
-     return false;
-    };
-    if(buyer==""){
-     $(".am-modal-bd-warn").html("请选择买房家庭首次购房");
-     $('#your-modal').modal();
-     return false;
-    };
+        if(limityear==""){
+            $(".am-modal-bd-warn").html("请选择房屋购置年限");
+            $('#your-modal').modal();
+            return false;
+        };
+        if(buyer==""){
+            $(".am-modal-bd-warn").html("请选择买房家庭首次购房");
+            $('#your-modal').modal();
+            return false;
+        };
         if(loan==""){
-     $(".am-modal-bd-warn").html("请选择有无贷款");
-     $('#your-modal').modal();
-     return false;
-    };
-     if(seller==""){
-     $(".am-modal-bd-warn").html("请选择卖房是否唯一住房");
-     $('#your-modal').modal();
-     return false;
-    };
-    if(mortgage==""){
-        $(".am-modal-bd-warn").html("请选择按揭年数");
-        $('#your-modal').modal();
-        return false;
-    };
-    //计算
-     ex_total();
-  
+            $(".am-modal-bd-warn").html("请选择有无贷款");
+            $('#your-modal').modal();
+            return false;
+        };
+        if(seller==""){
+            $(".am-modal-bd-warn").html("请选择卖房是否唯一住房");
+            $('#your-modal').modal();
+            return false;
+        };
 
-});
+        if(mortgage==""){
+            $(".am-modal-bd-warn").html("请选择按揭年数");
+            $('#your-modal').modal();
+            return false;
+        };
+        if(rate==""){
+            $(".am-modal-bd-warn").html("请选择贷款利率");
+            $('#your-modal').modal();
+            return false;
+        };
+        //计算
+        ex_total();
+
+
+    });
 
     function ex_total(){
 
-      //
-      // //房屋面积
-      // var houseArea  ="",glArea ="";
-      //
+        //
+        // //房屋面积
+        // var houseArea  ="",glArea ="";
+        //
 
-       var jsms =$(".jsms").attr("select-value");//计算模式
-       var pgprice =$(".ipt-price").val();//评估价
-       var area =parseFloat($(".ipt-area").val());//房屋面积
-       var glarea =parseFloat($(".ipt-gl-area").val());//阁楼面积
-       var limityear =parseFloat($(".limityear").attr("select-value"));//购置年限
-       var buyer = $(".buyer").attr("select-value");//买家家庭首次购买
+        var jsms =$(".jsms").attr("select-value");//计算模式
+        var pgprice =$(".ipt-price").val();//评估价
+        var area =parseFloat($(".ipt-area").val());//房屋面积
+        var glarea =parseFloat($(".ipt-gl-area").val());//阁楼面积
+        var limityear =parseFloat($(".limityear").attr("select-value"));//购置年限
+        var buyer = $(".buyer").attr("select-value");//买家家庭首次购买
         var loan = $(".loan").attr("select-value");//有无贷款
         var seller =$(".seller").attr("select-value");//卖房是否唯一住房
 
         var lowPrice = pgprice.split("/")[0],highPrice =pgprice.split("/")[1];
-        var mortgage = $(".mortgage").attr("select-value"),rate = $(".rate").attr("select-value");
-       // alert(loan);
-         //房屋总价
-       var housePrice = "";
-        var unitPrice ="";//选择计算模式后，设定的价格
-      //计算结果
-      var dklv ="";//贷款利率
-        var qishui = "";//契税
-        var yyshui ="";//营业税
-        var grsdshui = "";//个人所得税
-        var shoufu = "";//首付
-         if(jsms == "ss"){
+        var mortgage = $(".mortgage").attr("select-value"),rate = parseFloat($(".rate").attr("select-value")/100);
+        // alert(loan);
+        //房屋总价
+        var housePrice;
+        var unitPrice;//选择计算模式后，设定的价格
+        //计算结果
+        var dklv//税费利率
+        var qishui;//契税
+        var yyshui;//营业税
+        var grsdshui;//个人所得税
+        var shoufu;//首付
+        var loanbl//贷款比率
+        if(jsms == "ss"){
             housePrice = lowPrice*(area +glarea);
             unitPrice = lowPrice;
-         }
-         else if(jsms == "dsf"){
+        }
+        else if(jsms == "dsf"){
             housePrice = highPrice*(area +glarea);
             unitPrice = highPrice;
-         }
-         
+        }
+
         // alert(housePrice);
         //买家
         if(buyer == "0"){//买家首次购房
-          if(area<=90){//90平以内（含）
-            $("#qishui").val((housePrice*1/100).toFixed(2));//精确到小数点后两位
-          }else if(area >90){$("#qishui").val((housePrice*1.5/100).toFixed(2));}
-            if(loan == "1"){dklv = 0.5;}
-            else if(loan == "0"){dklv = 0.7;}
+            if(area<=90){//90平以内（含）
+                dklv =0.01;
+                $("#qishui").val((housePrice*dklv).toFixed(2));//精确到小数点后两位
+            }else if(area >90){dklv =0.015; $("#qishui").val((housePrice*dklv).toFixed(2));}
+            if(loan == "1"){loanbl = 0.2;}
+            else if(loan == "0"){loanbl = 0.7;}
         }else if(buyer == "1"){//买家二套购房
             if(area<=90){
-              $("#qishui").val((housePrice*1/100).toFixed(2));//精确到小数点后两位
-            }else if(area >90){$("#qishui").val((housePrice*1/100).toFixed(2));}//精确到小数点后两位
-            if(loan == "1"){dklv = 0.2;}
-            else if(loan == "0"){dklv = 0.5;}
+                dklv =0.01;
+                $("#qishui").val((housePrice*dklv).toFixed(2));//精确到小数点后两位
+            }else if(area >90){dklv =0.01;$("#qishui").val((housePrice*dklv).toFixed(2));}//精确到小数点后两位
+            if(loan == "1"){loanbl = 0.2;}
+            else if(loan == "0"){loanbl = 0.5;}
         }else if(buyer == "2"){
-            $("#qishui").val((housePrice*3/100).toFixed(2));
-            dklv = 0.2;
+            dklv = 0.03;
+            $("#qishui").val((housePrice*dklv).toFixed(2));
+            if(loan == "1"){loanbl = 0.2;}
+            else if(loan == "0"){loanbl = 0.5;}
         }
-    //卖家
+        //卖家
         if (seller=="1"){//卖家唯一住房
-          if(limityear ="1"){
-            $("#grsdshui").val((housePrice*1/100).toFixed(2));
-            $("#yyshui").val((housePrice*5.6/100).toFixed(2));
-          }else if(limityear ="2"){
-            $("#grsdshui").val((housePrice*1/100).toFixed(2));
-            $("#yyshui").val(0);
-          }
-          else if(limityear ="5"){
-             $("#grsdshui").val(0);
-             $("#yyshui").val(0);
-          }
+            if(limityear =="1"){
+
+                $("#grsdshui").val((housePrice*1/100).toFixed(2));
+                $("#yyshui").val((housePrice*5.6/100).toFixed(2));
+            }else if(limityear =="2"){
+                $("#grsdshui").val((housePrice*1/100).toFixed(2));
+                $("#yyshui").val(0);
+            }
+            else if(limityear =="5"){
+                $("#grsdshui").val(0);
+                $("#yyshui").val(0);
+            }
         }else if(seller=="0"){
             if(limityear =="1"){
-            $("#grsdshui").val((housePrice*1/100).toFixed(2));
-            $("#yyshui").val((housePrice*5.6/100).toFixed(2));
-          }else if(limityear =="2"){
-            $("#grsdshui").val((housePrice*1/100).toFixed(2));
-            $("#yyshui").val(0);
-          }
-          else if(limityear =="5"){
-              $("#grsdshui").val((housePrice*1/100).toFixed(2));
-             $("#yyshui").val(0);
-          }
+                $("#grsdshui").val((housePrice*1/100).toFixed(2));
+                $("#yyshui").val((housePrice*5.6/100).toFixed(2));
+            }else if(limityear =="2"){
+                $("#grsdshui").val((housePrice*1/100).toFixed(2));
+                $("#yyshui").val(0);
+            }
+            else if(limityear =="5"){
+                $("#grsdshui").val((housePrice*1/100).toFixed(2));
+                $("#yyshui").val(0);
+            }
 
         }
-     
-        shoufu = (housePrice - [(unitPrice * area + unitPrice * glarea * 0.5 ) * dklv]).toFixed(2);
-       $("#shoufu").val(shoufu);
-      var totalPrice =(parseFloat($("#qishui").val())+parseFloat($("#yyshui").val())+parseFloat($("#grsdshui").val())).toFixed(2);
+        // alert(rate);
+        shoufu = (housePrice - [(unitPrice * area + unitPrice * glarea * 0.5 ) * loanbl]).toFixed(2);
+        $("#shoufu").val(shoufu);
+        var totalPrice =(parseFloat($("#qishui").val())+parseFloat($("#yyshui").val())+parseFloat($("#grsdshui").val())).toFixed(2);
         $("#sfhj").val(totalPrice);
+        // alert(dklv);
         //等额本息  本金*月利率*（1+月利率）^还款月数/[(1+月利率)^还款月数-1]
-        var everyMoth = (housePrice-shoufu)*dklv/12*Math.pow((1+dklv/12),mortgage*12)/[Math.pow((1+dklv/12),mortgage*12)-1];
+        var everyMoth = (housePrice-shoufu)*rate/12*Math.pow((1+rate/12),mortgage*12)/[Math.pow((1+rate/12),mortgage*12)-1];
         var sumall = (everyMoth*mortgage*12).toFixed(2);
         $("#myhke").val(everyMoth.toFixed(2));
         $("#sumall").val(sumall);
-$("#get_form").submit();
+
+
     }
 
- $(".mortgage").click(function(){
-     $(".mortgage_wrap li").each(function(index, el) {
-         $(".layer_fixed").show();
-         $(".mortgage_layer").slideDown();
-     });
- });
 
- $(".mortgage_wrap li").click(function(event) {
-     $(".layer_fixed").hide();
-     $(".bottom_layer").slideUp();
-     $(".mortgage").html($(this).html());
-     $(".mortgage").attr('select-value', $(this).attr('select-value'));
-     $(".mortgage").css("color","#333");
- });
+    $(".cancle").click(function(event) {
+        /* Act on the event */
+        $(".layer_fixed").hide();
+        $(".bottom_layer").slideUp();
+    });
+    $(".mortgage").click(function(){
+        $(".mortgage_wrap li").each(function(index, el) {
+            $(".layer_fixed").show();
+            $(".mortgage_layer").slideDown();
+        });
+    });
+
+    $(".mortgage_wrap li").click(function(event) {
+        $(".layer_fixed").hide();
+        $(".bottom_layer").slideUp();
+        $(".mortgage").html($(this).html());
+        $(".mortgage").attr('select-value', $(this).attr('select-value'));
+        $(".mortgage").css("color","#333");
+    });
+    $(".rate").click(function(){
+        $('#my-popup').modal();
+    });
+    $(".rate-btn").click(function(event) {
+        if($(".definedRate").val()==""){
+            $(".definedRate").attr('placeholder', '请输入利率');
+        }
+        else{
+            $('#my-popup').modal('close');
+            $(".rate").attr('select-value', $(".definedRate").val()).html($(".definedRate").val()).css("color","#333");
+        }
+    });
+    var jzlv = 3.25,calculatorlv ;
+    $(".ul-rate li").click(function(event) {
+        $(".ul-rate li").removeClass('on');
+        $(this).addClass('on');
+        calculatorlv = (jzlv *parseFloat($(this).attr('data-rate'))).toFixed(2);
+        $(".rate").attr('select-value', calculatorlv).html(calculatorlv).css("color","#333");
+        $('#my-popup').modal('close');
+    });
 </script>
 </body>
 </html>
