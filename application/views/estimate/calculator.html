@@ -191,7 +191,6 @@
     </div>
   </div>
   <div class="layer_fixed" data-mark="layer_fixed"  style="display:none;"></div>
-  <!--<div class="footer">苏州曼纳吉信息科技有限公司</div>-->
 
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="your-modal">
   <div class="am-modal-dialog">
@@ -539,7 +538,7 @@
         var sumall = (everyMoth*mortgage*12).toFixed(2);
         $("#myhke").val(everyMoth.toFixed(2));
         $("#sumall").val(sumall);
-
+        $("#get_form").submit();
 
     }
 
@@ -583,6 +582,8 @@
         $(".rate").attr('select-value', calculatorlv).html(calculatorlv).css("color","#333");
         $('#my-popup').modal('close');
     });
+
+
 </script>
 </body>
 </html>
