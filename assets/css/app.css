@@ -197,7 +197,7 @@ input:-ms-input-placeholder{color:#ccc;}
 .dl-cal dt{ flex:1;}.dl-cal dd{flex:2;text-align: right; color: #797d84; }
 .dl-cal .box-col{color:#babec0;}
 .dl-cal dd .ipt-txt{ float: left; text-align: right;color:#333; width:80%; height: 24px; line-height: 24px; font-size:16px; border:none; background: none;overflow: hidden;outline: none;}
-.dl-cal dd .s-txt{float: left; width: 20%; text-align: right;}
+.dl-cal dd .s-txt{float: left; width: 17%; text-align: right; margin-left: 3%;}
 .dl-cal dd .ipt-txtleft{ text-align: left;}
 
 .layer_fixed{width:100%;height: 100%; background-color:rgba(0,0,0,.5);z-index: 99; overflow: hidden;
