@@ -18,7 +18,7 @@
     <form id="search_form" action="/wx_index/pg_list" method="get" class="searchForm">
     <!--   <div class="search-box"> -->
         <div class="text-area">
-            <input type="text" name="keyword" class="text" value="{{$data.keyword}}"  placeholder="输入要查询的小区"  onclick="if(this.value==this.defaultValue){this.value='';}" onblur="if(this.value==''){this.value=this.defaultValue;}" />
+            <input type="search" name="keyword" class="text" value="{{$data.keyword}}"  placeholder="输入要查询的小区"  onclick="if(this.value==this.defaultValue){this.value='';}" onblur="if(this.value==''){this.value=this.defaultValue;}" />
         </div>
         <span id="search_btn" class="search-icon"></span>
     <!--   </div> -->
