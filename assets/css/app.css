@@ -185,7 +185,6 @@ input:-ms-input-placeholder{color:#ccc;}
 .dataPrice .lp-s .hp-em{background:url(../../assets/images/arrow1.png) no-repeat;background-size: contain;}
 .taxMore{margin-bottom: 5px;padding:2px 10px; font-size: 12px; display:inline-block; border:1px solid #85aef1; color: #85aef1;border-radius:10px;}
 
-
 /*计算器*/
 .calculator{margin-top:1rem;}
 .dl-cal dt,.dl-cal dd{margin: 0; padding:1rem 0;font-weight: normal;}
