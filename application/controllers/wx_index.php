@@ -16,7 +16,7 @@ class Wx_index extends Wx_controller {
         parent::__construct();
         $this->load->model('wx_index_model');
         $this->load->model('wx_salesman_model');
-        $ignore_methods = array('logout', 'change_pwd', 'save_change_pwd', 'submit_login','main','pg_list','calculator','calculator_res');
+        $ignore_methods = array('logout', 'change_pwd', 'save_change_pwd', 'submit_login','main','pg_list','calculator','calculator_res','api_get_xiaoqu_list');
         if($this->session->userdata('wx_user_id') && !in_array($this->uri->segment(2), $ignore_methods)){
             if($this->session->userdata('wx_role_id') >= 1){
                 redirect('wx_salesman');
@@ -82,6 +82,11 @@ class Wx_index extends Wx_controller {
         $this->assign('data',$data);
         $this->assign('pagination_url','/wx_index/pg_list/');
         $this->display('estimate/estimate.html');
+    }
+
+    public function api_get_xiaoqu_list(){
+        $data = $this->wx_index_model->api_get_xiaoqu_list();
+        echo json_encode($data);
     }
        public function calculator($max_price = 0, $min_price = 0){
 //            $data = $this->wx_index_model->calculator();

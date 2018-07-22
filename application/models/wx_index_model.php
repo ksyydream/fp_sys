@@ -85,4 +85,22 @@ class Wx_index_model extends MY_Model
 
         return $data;
     }
+
+    public function api_get_xiaoqu_list(){
+        $data['keyword'] = trim($this->input->post('search_')) ? trim($this->input->post('search_')) : '';
+        $this->db->select('a.xiaoqu',false);
+        $this->db->from('pg_xiaoqu a');
+        $this->db->join('pg_area b','a.area_id = b.id','left');
+        $this->db->join('pg_wy c','a.wy_id = c.id','left');
+        if($data['keyword']){
+            $this->db->like('a.xiaoqu', $data['keyword']);
+        }else{
+            $this->db->where('a.id', -1);
+        }
+        $this->db->group_by('a.xiaoqu');
+        $this->db->order_by('a.xiaoqu','desc');
+        $data = $this->db->get()->result_array();
+
+        return $data;
+    }
 }
