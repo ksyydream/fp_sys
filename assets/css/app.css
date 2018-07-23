@@ -172,7 +172,7 @@ input:-ms-input-placeholder{color:#ccc;}
 /*.text-area .text{height: 20px; width:100%; margin-top:10px; border:none;*/
  /*-webkit-appearance:none;background: transparent;outline: none; color:#333;font-size:16px;}*/
 
-.data-list{padding: 0 5px 30px;}
+.data-list{padding: 40px 5px 30px;}
 .data-th{border-bottom: 1px solid #dedede;}
 .data-tb{border-bottom: 1px solid #f0f0f0;}
 .data-th,.data-tb{display:flex; -webkit-display:flex; -webkit-align-items:center;align-items:center;-webkit-justify-content:center; justify-content:center;}
@@ -234,12 +234,13 @@ input:-ms-input-placeholder{color:#ccc;}
 
 .am-popup-inner{padding-top:0;}
 
-.searchForm{/*margin:0 25px;*/padding:5px 10px;background:#efefef;  display: -webkit-flex; display: -webkit-box; display: -moz-box; display: -ms-flexbox;}
+.searchForm{/*margin:0 25px;*/padding:5px 10px;background:#efefef;  display: -webkit-flex; display: -webkit-box; display: -moz-box; display: -ms-flexbox;
+ position: fixed; width: 100%;}
 .text-area{ position: relative; background: #fff; height: 30px; line-height: 30px; border-radius: 3px; width: 90%;/*-webkit-box-flex:1; -webkit-flex:1;flex:1;*/}
 .text-area .text{ height: 30px; line-height: 30px;padding:0 10px;border:none;
  -webkit-appearance:none;background: transparent;outline: none; color:#333;font-size:14px;}
 .searchForm .am-close{padding:2px 0 0 10px; font-size: 14px; width: 100%; font-weight: normal; color: #4e8aea; opacity: 1;}
-.text-area:before{ display:block;width:15px; height: 15px; background: url(../../assets/images/search.png) no-repeat;
+.search-btn{ display:block;width:15px; height: 15px; background: url(../../assets/images/search.png) no-repeat;
  background-size: contain; content: ""; position: absolute; top:8px;right:10px;}
 
 .estimate-res{padding:30px;}
