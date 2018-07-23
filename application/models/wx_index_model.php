@@ -103,4 +103,18 @@ class Wx_index_model extends MY_Model
 
         return $data;
     }
+
+    public function get_zcs(){
+        $data['keyword'] = trim($this->input->post('search_')) ? trim($this->input->post('search_')) : '';
+        //$this->db->distinct('a.zcs');
+        $this->db->select('a.zcs,round(max(b_price)) min_price,round(max(b_price) * 1.15) as max_price',false);
+        $this->db->from('pg_xiaoqu a');
+        $this->db->join('pg_area b','a.area_id = b.id','left');
+        $this->db->join('pg_wy c','a.wy_id = c.id','left');
+        $this->db->where('a.xiaoqu', $data['keyword']);
+        $this->db->group_by('a.zcs');
+        $this->db->order_by('a.zcs','asc');
+        $data = $this->db->get()->result_array();
+        return $data;
+    }
 }

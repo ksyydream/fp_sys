@@ -27,8 +27,8 @@
     <div class="calculator">
         <dl class="dl-cal arrow">
             <dt>小区</dt>
-            <dd class="box-col choose house">
-                光大花园
+            <dd id="choose_" class="box-col choose house">
+                -请选择-
             </dd>
         </dl>
         <dl class="dl-cal">
@@ -39,7 +39,7 @@
         </dl>
         <dl class="dl-cal arrow">
             <dt>总楼层</dt>
-            <dd class="box-col choose floor" select-value="">请选择</dd>
+            <dd class="box-col choose floor" data-minprice="" data-maxprice="" select-value="">请选择</dd>
         </dl>
         <dl class="dl-cal">
             <dt>所在楼层</dt>
@@ -55,14 +55,8 @@
             <li class="listyle">楼层</li>
             <li class="liPrice">评估价（元）</li>
         </ul>
-        <ul class="data-tb">
-            <li class="house">奥林苑</li>
-            <li class="listyle">110㎡</li>
-            <li class="listyle">2层</li>
-            <li class="liPrice">
-                <div class="dataPrice highPrice"><span class="lp-s hp-s"><em class="lp-em hp-em"></em>高评</span><em id="hPrice">13500</em></div>
-                <div class="dataPrice lowPrice"><span class="lp-s"><em class="lp-em"></em>低评</span><em id="lPrice">11500</em></div>
-            </li>
+        <ul class="data-tb" id="show_jg">
+
         </ul>
         <a href="" class="taxMore">税费详情</a>
     </div>
@@ -73,10 +67,8 @@
             <p data-mark="bottom_layer_title loan_layer_title">总楼层</p>
         </div>
         <div class="option_wrap floor_wrap" data-mark="option_wrap">
-            <ul>
-                <li data-rate="6">6层</li>
-                <li data-rate="9">9层</li>
-                <li data-rate="12">12层</li>
+            <ul id="ul_wrap_">
+
             </ul>
         </div>
     </div>
@@ -89,24 +81,14 @@
                 </div> -->
             <div class="am-popup-bd">
                 <form action="" class="searchForm yy-kw-form">
-                    <div class="text-area">
+                    <div class="text-area" >
                         <input type="search" id="search_" class="text" value="" placeholder="搜索小区名"  onclick="if(this.value==this.defaultValue){this.value='';}" onblur="if(this.value==''){this.value=this.defaultValue;}"/>
-                        <a href="javascript:" class="search-btn"></a>
-                        <!--<div class="data-list">-->
-                            <!--<ul class="data-tb">-->
-                                <!--<li class="house">奥林苑</li>-->
-                            <!--</ul>-->
-                            <!--<ul class="data-tb">-->
-                                <!--<li class="house">奥林苑</li>-->
-                            <!--</ul>-->
-                        <!--</div>-->
+                        <a href="javascript:" id="search_btn" class="search-btn"></a>
                     </div>
                     <span data-am-modal-close class="am-close">取消</span>
                 </form>
-                <ul class="data-list">
-                    <li>光大花园</li>
-                    <li>光大花园</li>
-                    <li>光大花园</li>
+                <ul class="data-list" id="data-list">
+
                 </ul>
             </div>
         </div>
@@ -127,6 +109,7 @@
 </div>
 <script src="/assets/js/jquery.min.js"></script>
 <script src="/assets/js/amazeui.min.js"></script>
+<script src="/assets/js/layer/layer.js"></script>
 <script type="text/javascript">
     // var scroll = document.querySelector('.scroll');
     // var outerScroller = document.querySelector('.outerScroller');
@@ -145,13 +128,7 @@
         $(".layer_fixed").show();
         $(".floor_layer").slideDown();
     });
-    $(".floor_wrap li").click(function(event) {
-        $(".layer_fixed").hide();
-        $(".bottom_layer").slideUp();
-        $(".floor").html($(this).html());
-        $(".floor").attr('select-value', $(this).attr('select-value'));
-        $(".floor").css("color","#333");
-    });
+
 
     var esPrice = $(".estimatePrice").val();
     var hArea = parseFloat($(".houseArea").val());
@@ -178,8 +155,16 @@
             $('#your-modal').modal();
             return;
         }
+        var html_ = '';
+        html_ += ' <li class="house">' + $(".house").html() + '</li>' +
+                '<li class="listyle">' + $(".houseArea").val() + '㎡</li> ' +
+                '<li class="listyle">' + $(".floor").attr("select-value") + '层</li> ' +
+                '<li class="liPrice"> ' +
+                '<div class="dataPrice highPrice"><span class="lp-s hp-s"><em class="lp-em hp-em"></em>高评</span><em id="hPrice">' + $(".floor").attr("data-maxprice") + '</em></div> ' +
+                '<div class="dataPrice lowPrice"><span class="lp-s"><em class="lp-em"></em>低评</span><em id="lPrice">' + $(".floor").attr("data-minprice") + '</em></div></li>';
+        $("#show_jg").html(html_);
         //计算
-        ex_total();
+        //ex_total();
     });
 
     function ex_total(){
@@ -201,11 +186,53 @@
         $("#hPrice").val(esPrice*1.15);$("#lPrice").val(esPrice*1.05);
     }
 
-    container.on('submit', '.yy-kw-form', function(event){
-        event.preventDefault();
-        alert('asd');
-    })
 
+    $("#search_btn").click(function(){
+        var search_ = $.trim($("#search_").val());
+        if(search_ == ""){
+            $("#data-list").html('');
+            layer.msg('请至少输入两个字进行搜索!');
+        }else{
+            if(search_.replace(/[\u0391-\uFFE5]/g,"aa").length >= 2){
+                $.post('/wx_index/api_get_xiaoqu_list',{search_:search_},function(data){
+                    var html = '';
+                    var items = JSON.parse(data);
+                    for(var i in items) {
+                        var item = items[i];
+                        html += '<li>' + item.xiaoqu + '</li>';
+                    }
+                    $("#data-list").html(html);
+                    $("#data-list li").click(function(){
+                       var li_html =  $(this).html();
+                        $("#choose_").html(li_html);
+                        $.post('/wx_api/get_zcs',{search_:li_html},function(data2){
+                            var html2 = '';
+                            var items2 = JSON.parse(data2);
+                            for(var i2 in items2) {
+                                var item2 = items2[i2];
+                                html2 += '<li data-minprice="' + item2.min_price + '" data-maxprice="' + item2.max_price + '" data-rate="' + item2.zcs + '">' + item2.zcs + '层</li>';
+                            }
+                            $("#ul_wrap_").html(html2);
+                            $(".floor_wrap li").click(function(event) {
+                                $(".layer_fixed").hide();
+                                $(".bottom_layer").slideUp();
+                                $(".floor").html($(this).html());
+                                $(".floor").attr('select-value', $(this).attr('data-rate'));
+                                $(".floor").attr('data-minprice', $(this).attr('data-minprice'));
+                                $(".floor").attr('data-maxprice', $(this).attr('data-maxprice'));
+                                $(".floor").css("color","#333");
+                            });
+                            $("#my-popup").modal('close');
+                        })
+
+                    })
+                })
+
+            }else{
+                layer.msg('请至少输入两个字进行搜索!');
+            }
+        }
+    })
 </script>
 <!--<script src="/assets/js/jquery.min.js"></script>-->
 <!--<script>-->
