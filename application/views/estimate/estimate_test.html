@@ -130,9 +130,9 @@
     });
 
 
-    var esPrice = $(".estimatePrice").val();
-    var hArea = parseFloat($(".houseArea").val());
-    var floorRatio =Math.floor(parseFloat($(".floorCurrent").val())/parseFloat($(".floor").attr("select-value")));//楼层系数
+   // var esPrice = $(".estimatePrice").val();
+    //var hArea = parseFloat($(".houseArea").val());
+    //var floorRatio =Math.floor(parseFloat($(".floorCurrent").val())/parseFloat($(".floor").attr("select-value")));//楼层系数
     $(".startCal").click(function(event) {
         /* Act on the event */
         if($(".house").html()==""){
@@ -163,11 +163,15 @@
                 '<div class="dataPrice highPrice"><span class="lp-s hp-s"><em class="lp-em hp-em"></em>高评</span><em id="hPrice">' + $(".floor").attr("data-maxprice") + '</em></div> ' +
                 '<div class="dataPrice lowPrice"><span class="lp-s"><em class="lp-em"></em>低评</span><em id="lPrice">' + $(".floor").attr("data-minprice") + '</em></div></li>';
         $("#show_jg").html(html_);
+        $(".estimatePrice").val($(".floor").attr("data-minprice"))
         //计算
-        //ex_total();
+        ex_total();
     });
 
     function ex_total(){
+        var esPrice = $(".estimatePrice").val();
+        var hArea = parseFloat($(".houseArea").val());
+        var floorRatio =Math.floor(parseFloat($(".floorCurrent").val())/parseFloat($(".floor").attr("select-value")));//楼层系数
         if(hArea<=50)
         {esPrice =esPrice*0.98;}
         else if(hArea>50&&hArea<80){esPrice =esPrice*0.99;}
