@@ -170,6 +170,7 @@
 
     function ex_total(){
         var esPrice = $(".estimatePrice").val();
+        alert(esPrice);
         var hArea = parseFloat($(".houseArea").val());
         var floorRatio =Math.floor(parseFloat($(".floorCurrent").val())/parseFloat($(".floor").attr("select-value")));//楼层系数
         if(hArea<=50)
