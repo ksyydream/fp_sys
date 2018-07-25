@@ -231,14 +231,13 @@ input:-ms-input-placeholder{color:#ccc;}
 #my-popup li.on:before{ content: "√"; position: absolute; right: 40px; color:#cc0000; }
 .am-modal-no-btn .am-modal-dialog{border-radius: 5px;}.am-modal-bd{font-size: 14px;}
 
-
 .am-popup-inner{padding-top:0;}
 
 .searchForm{/*margin:0 25px;*/padding:5px 10px;background:#efefef;  display: -webkit-flex; display: -webkit-box; display: -moz-box; display: -ms-flexbox;
  position: fixed; width: 100%;}
 .text-area{ position: relative; background: #fff; height: 30px; line-height: 30px; border-radius: 3px; width: 90%;/*-webkit-box-flex:1; -webkit-flex:1;flex:1;*/}
 .text-area .text{ height: 26px; line-height: 26px;padding:2px 10px;border:none;
- -webkit-appearance:none;background: transparent;outline: none; color:#333;font-size:14px; width:100%; }
+ -webkit-appearance:none;background: transparent;outline: none; color:#333;font-size:14px; width:100%;}
 .searchForm .am-close{padding:2px 0 0 10px; font-size: 14px; width: 100%; font-weight: normal; color: #4e8aea; opacity: 1;}
 .search-btn{ display:block;width:15px; height: 15px; background: url(../../assets/images/search.png) no-repeat;
  background-size: contain; content: ""; position: absolute; top:8px;right:10px;}
