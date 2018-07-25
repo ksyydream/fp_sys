@@ -169,7 +169,7 @@
     });
     function ex_total(){
         var esPrice = $(".estimatePrice").val();
-        alert(esPrice);
+
         var hArea = parseFloat($(".houseArea").val());
         var floorRatio =Math.floor(parseFloat($(".floorCurrent").val())/parseFloat($(".floor").attr("select-value")));//楼层系数
         if(hArea<=50)
@@ -186,7 +186,7 @@
         }
         else if(parseFloat($(".floorCurrent").val())==parseFloat($(".floor").attr("select-value"))){
             esPrice =esPrice*0.94;
-        }
+        } // alert(esPrice);
         $("#hPrice").html( Math.ceil(esPrice*1.15));$("#lPrice").html( Math.ceil(esPrice*1.05));
     }
 
