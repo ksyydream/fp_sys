@@ -162,10 +162,12 @@
                 '<li class="liPrice"> ' +
                 '<div class="dataPrice highPrice"><span class="lp-s hp-s"><em class="lp-em hp-em"></em>高评</span><em id="hPrice">' + '</em></div> ' +
                 '<div class="dataPrice lowPrice"><span class="lp-s"><em class="lp-em"></em>低评</span><em id="lPrice">' +'</em></div></li>';
-        $("#show_jg").html(html_);
         $(".estimatePrice").val($(".floor").attr("data-minprice"))
-        //计算
         ex_total();
+        $("#show_jg").html(html_);
+
+        //计算
+
     });
     function ex_total(){
         var esPrice = $(".estimatePrice").val();
