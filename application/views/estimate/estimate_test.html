@@ -179,15 +179,15 @@
         else if(hArea>=80&&hArea<140){esPrice =esPrice*1.01;}
         else if(hArea>=140){esPrice =esPrice;}
         if(floorRatio<0.2){esPrice =esPrice*0.96;}
-        else if(floorRatio>=0.6 && floorRatio==1){
+        else if(floorRatio>=0.6){
             esPrice =esPrice*1.03;
         }
         else if(parseFloat($(".floorCurrent").val())==1){
             esPrice =esPrice*0.92;
         }
-        else if(parseFloat($(".floorCurrent").val())==parseFloat($(".floor").attr("select-value"))){
+        else if(floorRatio==1){
             esPrice =esPrice*0.94;
-        }  alert(esPrice);
+        } // alert(esPrice);
         $("#hPrice").html( Math.ceil(esPrice*1.15));$("#lPrice").html( Math.ceil(esPrice*1.05));
     }
 
