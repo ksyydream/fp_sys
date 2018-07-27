@@ -164,13 +164,16 @@
                 '<div class="dataPrice lowPrice"><span class="lp-s"><em class="lp-em"></em>低评</span><em id="lPrice">' +'</em></div></li>';
         $(".estimatePrice").val($(".floor").attr("data-minprice"));
         $("#show_jg").html(html_);
-        ex_total();
+        if(parseFloat($(".floorCurrent").val())>20){
+            $("#hPrice").html(esPrice*1.1*1.04);$("#lPrice").html(esPrice*1.1*1.06);
+        }
+        else{
+        $("#hPrice").html(esPrice);$("#lPrice").html(esPrice*1.08*1.08);}
         //计算
-
+       // ex_total();
     });
     function ex_total(){
         var esPrice = $(".estimatePrice").val();
-
         var hArea = parseFloat($(".houseArea").val());
         var floorRatio =Math.floor(parseFloat($(".floorCurrent").val())/parseFloat($(".floor").attr("select-value")));//楼层系数
         if(hArea<=50)
