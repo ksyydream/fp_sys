@@ -164,11 +164,7 @@
                 '<div class="dataPrice lowPrice"><span class="lp-s"><em class="lp-em"></em>低评</span><em id="lPrice">' +'</em></div></li>';
         $(".estimatePrice").val($(".floor").attr("data-minprice"));
         $("#show_jg").html(html_);
-        if(parseFloat($(".floorCurrent").val())>20){
-            $("#hPrice").html(esPrice*1.1*1.04);$("#lPrice").html(esPrice*1.1*1.06);
-        }
-        else{
-        $("#hPrice").html(esPrice);$("#lPrice").html(esPrice*1.08*1.08);}
+
         //计算
        // ex_total();
     });
@@ -177,22 +173,11 @@
         var esPrice = $(".estimatePrice").val();
         var hArea = parseFloat($(".houseArea").val());
         var floorRatio =Math.floor(parseFloat($(".floorCurrent").val())/parseFloat($(".floor").attr("select-value")));//楼层系数
-        if(hArea<=50)
-        {esPrice =esPrice*0.98;}
-        else if(hArea>50&&hArea<80){esPrice =esPrice*0.99;}
-        else if(hArea>=80&&hArea<140){esPrice =esPrice*1.01;}
-        else if(hArea>=140){esPrice =esPrice;}
-        if(floorRatio<0.2){esPrice =esPrice*0.96;}
-        else if(floorRatio>=0.6){
-            esPrice =esPrice*1.03;
+        if(parseFloat($(".floorCurrent").val())>20){
+            $("#hPrice").html(esPrice*1.1*1.04);$("#lPrice").html(esPrice*1.1*1.06);
         }
-        else if(parseFloat($(".floorCurrent").val())==1){
-            esPrice =esPrice*0.92;
-        }
-        else if(floorRatio==1){
-            esPrice =esPrice*0.94;
-        } // alert(esPrice);
-        $("#hPrice").html( Math.ceil(esPrice*1.15));$("#lPrice").html( Math.ceil(esPrice*1.05));
+        else{
+            $("#hPrice").html(esPrice);$("#lPrice").html(esPrice*1.08*1.08);}
     }
 
     $("#search_btn").click(function(){
