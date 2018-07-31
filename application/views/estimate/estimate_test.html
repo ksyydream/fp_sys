@@ -180,6 +180,17 @@
     }
 
     $("#search_btn").click(function(){
+        beginsearch();
+    })
+     $("#search_btn").on('keypress',function(e) {
+                   var keycode = e.keyCode;
+                  // var searchName = $(this).val();
+                   if(keycode=='13') {
+                       e.preventDefault();
+                       beginsearch();
+                   }
+            });
+    function  beginsearch() {
         var search_ = $.trim($("#search_").val());
         if(search_ == ""){
             $("#data-list").html('');
@@ -195,7 +206,7 @@
                     }
                     $("#data-list").html(html);
                     $("#data-list li").click(function(){
-                       var li_html =  $(this).html();
+                        var li_html =  $(this).html();
                         $("#choose_").html(li_html);
                         $.post('/wx_api/get_zcs',{search_:li_html},function(data2){
                             var html2 = '';
@@ -224,7 +235,7 @@
                 layer.msg('请至少输入两个字进行搜索!');
             }
         }
-    })
+    }
 </script>
 <!--<script src="/assets/js/jquery.min.js"></script>-->
 <!--<script>-->
