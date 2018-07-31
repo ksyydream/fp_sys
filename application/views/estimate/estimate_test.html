@@ -173,10 +173,10 @@
         var hArea = parseFloat($(".houseArea").val());
         var floorRatio =Math.floor(parseFloat($(".floorCurrent").val())/parseFloat($(".floor").attr("select-value")));//楼层系数
         if(parseFloat($(".floorCurrent").val())>20){
-            $("#lPrice").html(parseFloat(esPrice*1.1*1.04));$("#hPrice").html(parseFloat(esPrice*1.1*1.06));
+            $("#lPrice").html(Math.round(esPrice*1.1*1.04));$("#hPrice").html(Math.round(esPrice*1.1*1.06));
         }
         else{
-            $("#lPrice").html(esPrice);$("#hPrice").html(parseFloat(esPrice*1.08*1.08));}
+            $("#lPrice").html(esPrice);$("#hPrice").html(Math.round(esPrice*1.08*1.08));}
     }
 
     $("#search_btn").click(function(){
