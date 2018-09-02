@@ -153,7 +153,7 @@
     <div class="am-form-top">
       <form action="" class="am-form">
           <div class="am-form-group">
-          <input type="search" id="search_input" name="keywords" onchange="beginsearch()" class="am-search-input" placeholder="搜索小区名">
+          <input type="search" id="search_input" name="keywords" oninput="beginsearch()" class="am-search-input" placeholder="搜索小区名">
           <a href="javascript:" class="search-btn"></a>
           </div>
           <span data-am-modal-close class="am-close">取消</span>
@@ -197,10 +197,6 @@
     }).on('close.modal.amui', function() {
          $(".am-search-input").blur();
     });
-
-      $("#search_input").change(function(){
-          beginsearch();
-      })
 
   });
 
