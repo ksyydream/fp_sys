@@ -40,6 +40,7 @@ class Wx_controller extends MY_Controller
             }else{
                 $res = $this->sys_model->check_openid($this->session->userdata('openid'));
             }
+
         }else{
             $openid = 'oFzKgwbFEyC40jU6bS_HQ5sxM4X8';
             $this->session->set_userdata('openid', $openid);
@@ -89,6 +90,49 @@ class Wx_controller extends MY_Controller
         $this->cismarty->assign('wxtimestamp',$signPackage["timestamp"]);
         $this->cismarty->assign('wxnonceStr',$signPackage["nonceStr"]);
         $this->cismarty->assign('wxsignature',$signPackage["signature"]);
+    }
+
+    public function getUserInfoById($uid, $lang = 'en') {
+        $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('secret')));
+        $access_token = $this->wxjssdk_th->wxgetAccessToken();
+        $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$access_token&openid=$uid&lang=$lang";
+
+        $res = json_decode($this->request_post($url), true);
+        $check_ = $this->checkIsSuc($res);
+        if($check_){
+            return $res;
+        }else{
+            return null;
+        }
+    }
+
+    function request_post($url = '', $param = '')
+    {
+        if (empty($url) || empty($param)) {
+            return false;
+        }
+        $postUrl = $url;
+        $curlPost = $param;
+        $ch = curl_init(); //初始化curl
+        curl_setopt($ch, CURLOPT_URL, $postUrl); //抓取指定网页
+        curl_setopt($ch, CURLOPT_HEADER, 0); //设置header
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //要求结果为字符串且输出到屏幕上
+        curl_setopt($ch, CURLOPT_POST, 1); //post提交方式
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $curlPost);
+        $data = curl_exec($ch); //运行curl
+        curl_close($ch);
+        return $data;
+    }
+
+    public function checkIsSuc($res) {
+        $result = true;
+        if (is_string($res)) {
+            $res = json_decode($res, true);
+        }
+        if (isset($res['errcode']) && ( 0 !== (int) $res['errcode'])) {
+            $result = false;
+        }
+        return $result;
     }
 
 }
