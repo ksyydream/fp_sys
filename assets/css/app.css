@@ -55,7 +55,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-search-popup .am-form-top{padding:.4rem;background: #f4f4f8;}
 .am-search-popup .am-form{width:100%;height:2rem;}
 .am-search-popup .am-form-group{margin:0;float: left;border:none;width:88%; position: relative;}
-.am-search-popup .am-form .am-search-input{ font-size: .9rem;border:none; border-radius: 3px; padding:.6rem; }
+.am-search-popup .am-form .am-search-input{ font-size: .9rem;border:none; border-radius: 3px; padding:.4rem; }
 .am-search-popup .am-close{color:#f8ad35;font-weight: normal; font-size: .8rem; text-align: center; opacity: 1;width:12%;line-height: 2rem;height:2rem; float: left;}
 .am-search-popup .search-btn{ display:block;width:1rem; height: 1rem; background: url(../../assets/i/search.png) no-repeat; background-size: 100%;position: absolute; top:8px;right:10px;}
 .am-data-result{margin-left:.5rem;}
