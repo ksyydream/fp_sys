@@ -153,13 +153,13 @@
     <div class="am-form-top">
       <form action="" class="am-form">
           <div class="am-form-group">
-          <input type="search" name="keywords" class="am-search-input" placeholder="搜索小区名">
+          <input type="search" id="search_input" name="keywords" onchange="beginsearch()" class="am-search-input" placeholder="搜索小区名">
           <a href="javascript:" class="search-btn"></a>
           </div>
           <span data-am-modal-close class="am-close">取消</span>
       </form>
     </div>
-    <ul class="am-data-result">
+    <ul class="am-data-result" id="data-list">
       <li><span class="s-h-name on">奥林清华</span><span class="s-h-adress">吴中 塔院花园路23号</span></li>
       <li><span class="s-h-name">翰林苑</span><span class="s-h-adress">吴中 塔院花园路23号</span></li>
       <li><span class="s-h-name">格林花园</span><span class="s-h-adress">吴中 塔院花园路23号</span></li>
@@ -198,6 +198,11 @@
          $(".am-search-input").blur();
     });
 
+      $("#search_input").change(function(){
+          alert('123');
+          beginsearch();
+      })
+
   });
 
   function show_num(n) {
@@ -218,6 +223,31 @@
     }
   }
 
+function  beginsearch() {
+
+    var search_ = $.trim($("#search_input").val());
+    if(search_ == ""){
+        $("#data-list").html('');
+    }else{
+        if(search_.replace(/[\u0391-\uFFE5]/g,"aa").length >= 1){
+            $.post('/wx_index/api_get_xiaoqu_list',{search_:search_},function(data){
+                var html = '';
+                var items = JSON.parse(data);
+                for(var i in items) {
+                    var item = items[i];
+                    html += '<li><span class="s-h-name on">' + item.xiaoqu + '</span><span class="s-h-adress">' + item.xiaoqu + '</span></li>';
+                }
+                $("#data-list").html(html);
+                $("#data-list li").click(function(){
+
+                })
+            })
+
+        }else{
+            $("#data-list").html('');
+        }
+    }
+}
 
 </script>
 </body>

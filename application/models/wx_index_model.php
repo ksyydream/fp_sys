@@ -99,6 +99,7 @@ class Wx_index_model extends MY_Model
         }
         $this->db->group_by('a.xiaoqu');
         $this->db->order_by('a.xiaoqu','desc');
+        $this->db->limit(10, 0);
         $data = $this->db->get()->result_array();
 
         return $data;

@@ -182,21 +182,27 @@
     $("#search_btn").click(function(){
         beginsearch();
     })
+
+    $("#search_").change(function(){
+        //beginsearch();
+    })
+
      $("#search_").on('keypress',function(e) {
+         beginsearch();
                    var keycode = e.keyCode;
                   // var searchName = $(this).val();
                    if(keycode=='13') {
-                       e.preventDefault();
-                       beginsearch();
+                       //e.preventDefault();
+                       //beginsearch();
                    }
             });
     function  beginsearch() {
         var search_ = $.trim($("#search_").val());
         if(search_ == ""){
             $("#data-list").html('');
-            layer.msg('请至少输入两个字进行搜索!');
+            //layer.msg('请至少输入两个字进行搜索!');
         }else{
-            if(search_.replace(/[\u0391-\uFFE5]/g,"aa").length >= 2){
+            if(search_.replace(/[\u0391-\uFFE5]/g,"aa").length >= 1){
                 $.post('/wx_index/api_get_xiaoqu_list',{search_:search_},function(data){
                     var html = '';
                     var items = JSON.parse(data);
