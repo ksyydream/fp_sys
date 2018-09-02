@@ -77,7 +77,7 @@
      <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">小区</label>
       <div class="am-u-sm-9">
-        <a href="javascript:" data-am-modal="{target: '#my-popup'}" class="before-input">请输入</a>
+        <a href="javascript:" class="before-input" id="am-house-input">请输入</a>
         <i class="am-icon-chevron"></i>
       </div>
     </div>
@@ -149,7 +149,7 @@
       </div>
     </div> 
   <!-- 搜索弹框begin -->
-  <div class="am-popup am-search-box" id="my-popup">
+  <div class="am-search-popup"  id="my-popup">
     <div class="am-form-top">
       <form action="" class="am-form">
           <div class="am-form-group">
@@ -192,11 +192,11 @@
     }).on('close.collapse.amui', function() {
         $(".am-show-btn-p").html("继续填写，精准评估").addClass('am-hidden-btn-p')
     });
-  $('#my-popup').on('open.modal.amui', function() {
-        $(".am-search-input").focus();
-    }).on('close.modal.amui', function() {
-         $(".am-search-input").blur();
-    });
+      $("#am-house-input").click(function(event) {
+          $("#my-popup").show();$(".am-search-input").focus();
+      });$("#am-popup-close").click(function(event) {
+          $("#my-popup").hide();$(".am-search-input").blur();
+      });
 
   });
 
