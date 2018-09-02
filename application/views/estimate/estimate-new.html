@@ -1,0 +1,224 @@
+<!doctype html>
+<html class="no-js fixed-layout">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>我要评估</title>
+  <meta name="description" content="我要评估">
+  <meta name="keywords" content="index">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="icon" type="image/png" href="assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+  <link rel="stylesheet" href="assets/css/amazeui.css"/>
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <script type="text/javascript">
+    (function() {
+        var rem, dpr, time, doc = window.document,
+        docEl = doc.documentElement,
+        viewport = doc.querySelector('meta[name="viewport"]'),
+        zoomScale,
+        zoomScaleNum;
+        if (viewport) {            
+            zoomScale = viewport.getAttribute("content").match(/initial\-scale=(["']?)([\d\.]+)\1?/);
+            if(zoomScale){
+              zoomScaleNum = parseFloat(zoomScale[2]);
+              dpr = parseInt(1 / zoomScaleNum);
+            }
+        }
+        if (!dpr && !zoomScaleNum) {
+            var os = (window.navigator.appVersion.match(/android/gi), window.navigator.appVersion.match(/iphone/gi)),
+            dpr = window.devicePixelRatio;
+            dpr = os ? dpr >= 3 ? 3 : dpr >= 2 ? 2 : 1 : 1;
+            zoomScaleNum = 1 / dpr;
+        }
+        window.addEventListener("resize",
+            function() {
+                clearTimeout(time);
+                time = setTimeout(changeRem, 300);
+            },false);
+      //改变基准rem
+        function changeRem(){
+            var docWidth = docEl.getBoundingClientRect().width;
+            if(docWidth / dpr > 540){
+              docWidth = 540 * dpr;
+            }
+            //rem字号以320下的16px为基线进行等比缩放
+            rem = docWidth/320 * 16;
+            docEl.style.fontSize = rem + "px";
+        }
+        changeRem();
+    })();
+  </script> 
+  
+</head>
+<body>
+<div class="am-main">
+  <div class="am-price" id="my-scrollspy">
+    <!-- <div id="wave" class="wave"></div> -->
+    <div class="am-re-price">
+      <div class="am-re-price-inner">
+        <p class="am-house-p" id="am-price-num"><span class="am-house-num">-----</span><br />
+        元/㎡</p></div>
+    </div>
+    <div class="am-g">
+      <ul class="am-u-sm-9 am-u-sm-centered am-tags-ul">
+        <li><span class="am-house-tag am-htype">大户型</span>|</li> 
+        <li><span class="am-house-tag am-floor">高楼层</span>|</li>
+        <li><span class="am-house-tag am-hot">超热</span></li>   
+      </ul>
+   </div>
+  </div>
+  <div class="am-fast-estimate">
+  <form class="am-form am-form-horizontal">
+     <div class="am-form-group">
+      <label class="am-u-sm-3 am-form-label">小区</label>
+      <div class="am-u-sm-9">
+        <a href="javascript:" data-am-modal="{target: '#my-popup'}" class="before-input">请输入</a>
+        <i class="am-icon-chevron"></i>
+      </div>
+    </div>
+    <div class="am-form-group">
+      <label class="am-u-sm-3 am-form-label">物业类型</label>
+      <div class="am-u-sm-9 am-form-select">         
+        <a href="javascript:" class="before-input am-imitate-select"  data-am-modal="{target: '#my-actions-search'}">多层</a><i class="am-icon-chevron"></i>
+      </div>
+    </div>
+    <div class="am-form-group">
+      <label class="am-u-sm-3 am-form-label">坐落位置</label>
+      <div class="am-u-sm-9">
+        <p class="am-spec-input">长江北路2191号</p>
+      </div>
+    </div>
+    <div class="am-form-group">
+      <label class="am-u-sm-3 am-form-label">所属区域</label>
+      <div class="am-u-sm-9">
+        <p class="am-spec-input">玉山镇</p>
+      </div>
+    </div>
+  </form>
+  </div>
+
+  <div class="am-accurate-estimate" id="accordion">
+     <div id="collapse-nav" class="am-panel-collapse am-collapse">
+    <form class="am-form am-form-horizontal">
+     <div class="am-form-group">
+      <label  class="am-u-sm-3 am-form-label">建筑面积</label>
+      <div class="am-u-sm-9">
+        <input type="number" id="" value="" placeholder="请输入">
+      </div>
+    </div>
+    <div class="am-form-group">
+      <label  class="am-u-sm-3 am-form-label">所在楼层</label>
+      <div class="am-u-sm-9">
+        <input type="number" id="" value="" placeholder="请输入">
+      </div>
+    </div>
+    <div class="am-form-group">
+      <label class="am-u-sm-3 am-form-label">总楼层</label>
+      <div class="am-u-sm-9">
+        <input type="number" id="" value="" placeholder="请输入">
+      </div>
+    </div>
+  </form>
+</div>
+    <div class="am-show-btn" data-am-collapse="{target: '#collapse-nav'}">
+      <p class="am-u-sm-6 am-u-sm-centered am-show-btn-p am-hidden-btn-p">继续填写，精准评估</p></div>
+   <div class="am-accu-btns">
+     <div class="am-u-sm-12 am-u-sm-centered">  
+      <a class="am-btn am-btn-danger" href="" id="am-">立即估价</a><a class="am-btn am-btn1 am-btn-danger" href="">税费清单</a>
+    </div> 
+   </div>
+
+  </div>
+   <!-- 物业类型select模拟 -->
+     <div class="am-modal-actions" id="my-actions-search">
+      <div class="am-modal-actions-group">
+        <div class="imitate-select-div">  
+          <a href="javascript:" class="am-imitate-btn" data-am-modal-close>取消</a>
+          <ul class="ul-imitate-select">
+            <li>多层</li>
+            <li>小高层</li>
+            <li>高层</li>
+            <li>别墅</li>
+          </ul>
+        </div>
+      </div>
+    </div> 
+  <!-- 搜索弹框begin -->
+  <div class="am-popup am-search-box" id="my-popup">
+    <div class="am-form-top">
+      <form action="" class="am-form">
+          <div class="am-form-group">
+          <input type="search" name="keywords" class="am-search-input" placeholder="搜索小区名">
+          <a href="javascript:" class="search-btn"></a>
+          </div>
+          <span data-am-modal-close class="am-close">取消</span>
+      </form>
+    </div>
+    <ul class="am-data-result">
+      <li><span class="s-h-name on">奥林清华</span><span class="s-h-adress">吴中 塔院花园路23号</span></li>
+      <li><span class="s-h-name">翰林苑</span><span class="s-h-adress">吴中 塔院花园路23号</span></li>
+      <li><span class="s-h-name">格林花园</span><span class="s-h-adress">吴中 塔院花园路23号</span></li>
+    </ul>
+</div>
+<!-- 搜索弹框end -->
+   <p class="am-ftr">中国•昆山 萧林中路2191号昆山楼市•房猫服务中心<br />苏州曼纳吉信息科技有限公司</p>
+  <div class="am-menu am-g-fixed am-g-menu">
+    <div class="am-u-sm-6"><a href="" class="am-btn-home"><img src="assets/i/home.jpg" alt=""></a></div>
+    <div class="am-u-sm-6"><a href="" class="am-btn-home"><img src="assets/i/user.jpg" alt=""></a></div>
+  </div>
+</div>
+<script src="assets/js/jquery-1.7.1.js"></script>
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/animateBackground-plugin.js"></script>
+<script type="text/javascript">
+
+//评估价数字滚动效果
+  $(function () {
+    show_num("12345");
+    // $('#my-scrollspy').scrollspy();
+    $('#my-scrollspy').on('inview.scrollspy.amui', function() {      
+      //alert(2);
+    }).on('outview.scrollspy.amui', function() {
+      //console.log('离开视口');
+      //alert(1);
+    });
+     $('#collapse-nav').on('open.collapse.amui', function() {
+        $(".am-show-btn-p").html("暂时不填了").removeClass('am-hidden-btn-p')
+    }).on('close.collapse.amui', function() {
+        $(".am-show-btn-p").html("继续填写，精准评估").addClass('am-hidden-btn-p')
+    });
+  $('#my-popup').on('open.modal.amui', function() {
+        $(".am-search-input").focus();
+    }).on('close.modal.amui', function() {
+         $(".am-search-input").blur();
+    });
+
+  });
+
+  function show_num(n) {
+     $(".am-house-num").html("");
+    var it = $(".am-house-num i");
+    var len = String(n).length;
+    for (var i = 0; i < len; i++) {
+      if (it.length <= i) {
+        $(".am-house-num").append("<i></i>");
+      }
+      var num = String(n).charAt(i);
+      var y = -parseInt(num) * 30;
+      var obj = $(".am-house-num i").eq(i);
+      obj.animate({
+        backgroundPosition: '(0 ' + String(y) + 'px)'
+      }, 'slow', 'swing', function () { }
+      );
+    }
+  }
+
+
+</script>
+</body>
+</html>
