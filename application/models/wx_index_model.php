@@ -88,7 +88,7 @@ class Wx_index_model extends MY_Model
 
     public function api_get_xiaoqu_list(){
         $data['keyword'] = trim($this->input->post('search_')) ? trim($this->input->post('search_')) : '';
-        $this->db->select("b.name,(case 
+        $this->db->select("b.id,b.name,(case 
     when b.other_name = '' then b.name else b.other_name END) as other_name",false);
         $this->db->from('fp_xiaoqu_price a');
         $this->db->join('fp_xiaoqu b','a.xiaoqu_id = b.id','left');
@@ -100,9 +100,22 @@ class Wx_index_model extends MY_Model
         }else{
             $this->db->where('a.id', -1);
         }
-        $this->db->group_by('b.name,b.other_name');
+        $this->db->group_by('b.id,b.name,b.other_name');
         $this->db->order_by('b.name','desc');
         $this->db->limit(10, 0);
+        $data = $this->db->get()->result_array();
+
+        return $data;
+    }
+
+    public function api_get_xiaoqu_info(){
+        $xiaoqu_id = trim($this->input->post('xiaoqu_id')) ? trim($this->input->post('xiaoqu_id')) : '';
+        $this->db->select("b.name,b.address,a.price,c.wy,d.area",false);
+        $this->db->from('fp_xiaoqu_price a');
+        $this->db->join('fp_xiaoqu b','a.xiaoqu_id = b.id','left');
+        $this->db->join('fp_wy c','a.wy_id = c.id','left');
+        $this->db->join('fp_area d','b.area_id = d.id','left');
+        $this->db->where('b.id',$xiaoqu_id);
         $data = $this->db->get()->result_array();
 
         return $data;

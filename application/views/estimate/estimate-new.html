@@ -89,13 +89,13 @@
     <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">坐落位置</label>
       <div class="am-u-sm-9">
-        <p class="am-spec-input">长江北路2191号</p>
+        <p class="am-spec-input" id="yy_address">长江北路2191号</p>
       </div>
     </div>
     <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">所属区域</label>
       <div class="am-u-sm-9">
-        <p class="am-spec-input">玉山镇</p>
+        <p class="am-spec-input" id="yy_area">玉山镇</p>
       </div>
     </div>
   </form>
@@ -159,9 +159,7 @@
       </form>
     </div>
     <ul class="am-data-result" id="data-list">
-      <li><span class="s-h-name on">奥林清华</span><span class="s-h-adress">吴中 塔院花园路23号</span></li>
-      <li><span class="s-h-name">翰林苑</span><span class="s-h-adress">吴中 塔院花园路23号</span></li>
-      <li><span class="s-h-name">格林花园</span><span class="s-h-adress">吴中 塔院花园路23号</span></li>
+
     </ul>
 </div>
 <!-- 搜索弹框end -->
@@ -229,12 +227,9 @@ function  beginsearch() {
                 var items = JSON.parse(data);
                 for(var i in items) {
                     var item = items[i];
-                    html += '<li><span class="s-h-name on">' + item.name + '</span><span class="s-h-adress">' + item.other_name + '</span></li>';
+                    html += '<li onclick="choose_xiaoqu(' + item.id + ')"><span class="s-h-name on">' + item.name + '</span><span class="s-h-adress">' + item.other_name + '</span></li>';
                 }
                 $("#data-list").html(html);
-                $("#data-list li").click(function(){
-
-                })
             })
 
         }else{
@@ -243,6 +238,21 @@ function  beginsearch() {
     }
 }
 
+function choose_xiaoqu(id) {
+    $.post('/wx_api/api_get_xiaoqu_info',{xiaoqu_id:id},function(data){
+        var html = '';
+        var items = JSON.parse(data);
+        for(var i in items) {
+            var item = items[i];
+            if(i == 0){
+                $("#yy_address").html(item.address);
+                $("#yy_area").html(item.area);
+                $("#am-house-input").html(item.name);
+            }
+        }
+        $("#my-popup").hide();$(".am-search-input").blur();
+    })
+}
 </script>
 </body>
 </html>
