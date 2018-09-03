@@ -63,35 +63,52 @@ class Map_model extends MY_Model
 
         $this->db->trans_start();//--------开始事务
         //$data = array();
-        for ($row = 4; $row <= $highestRow; $row++) {
+        $old_xiaoqu = '';
+        $old_area = '';
+        for ($row = 2; $row <= $highestRow; $row++) {
+            $xiaoqu_name = trim((string)$sheet->getCellByColumnAndRow(1, $row)->getValue());
             $area_ = trim((string)$sheet->getCellByColumnAndRow(2, $row)->getValue());
+            if (!$xiaoqu_name) {
+                $xiaoqu_name = $old_xiaoqu;
+                $area_ = $old_area;
+            } else {
+                $old_xiaoqu = $xiaoqu_name;
+                $old_area = $area_;
+            }
+            $address = trim((string)$sheet->getCellByColumnAndRow(3, $row)->getValue());
             $wy_ = trim((string)$sheet->getCellByColumnAndRow(4, $row)->getValue());
-            $area_info = $this->db->select()->from('pg_area')->where('name', $area_)->get()->row_array();
-            $wy_info = $this->db->select()->from('pg_wy')->where('name', $wy_)->get()->row_array();
+            $pg_price_ = trim((string)$sheet->getCellByColumnAndRow(5, $row)->getValue());
+            $other_name = trim((string)$sheet->getCellByColumnAndRow(6, $row)->getValue());
+            $area_info = $this->db->select()->from('fp_area')->where('area', $area_)->get()->row_array();
             $data = array(
-                'jz_date' => trim((string)$sheet->getCellByColumnAndRow(1, $row)->getValue()),
-                'area_id' => $area_info ? $area_info['id'] : -1,
-                'xiaoqu' => trim((string)$sheet->getCellByColumnAndRow(3, $row)->getValue()),
-                'wy_id' => $wy_info ? $wy_info['id'] : -1,
-                'lc' => trim((string)$sheet->getCellByColumnAndRow(5, $row)->getValue()),
-                'zcs' => trim((string)$sheet->getCellByColumnAndRow(6, $row)->getValue()),
-                'jzmj' => trim((string)$sheet->getCellByColumnAndRow(7, $row)->getValue()),
-                'year' => trim((string)$sheet->getCellByColumnAndRow(8, $row)->getValue()),
-                'y_price' => trim((string)$sheet->getCellByColumnAndRow(9, $row)->getValue()),
-                'b_price' => trim((string)$sheet->getCellByColumnAndRow(10, $row)->getValue()),
-                'other_name' => trim((string)$sheet->getCellByColumnAndRow(11, $row)->getValue()),
-                "cdate"=>date('Y-m-d H:i:s')
+                'name' => $xiaoqu_name,
+                'address' => $address,
+                'other_name' => $other_name,
+                'area_id' => $area_info['id']
             );
-            if($data['xiaoqu'] == ""){
+            if($data['name'] == ''){
                 continue;
             }
-            if($data['jzmj'] == ""){
-                unset($data['jzmj']);
+            $check_xiaoqu = $this->db->select()->from('fp_xiaoqu')->where('name', $xiaoqu_name)->get()->row_array();
+            if (!$check_xiaoqu) {
+                $this->db->insert('fp_xiaoqu', $data);
+                $check_xiaoqu['id'] = $this->db->insert_id();
             }
-            if($data['year'] == ""){
-                unset($data['year']);
+            $wy_info = $this->db->select()->from('fp_wy')->where('wy', $wy_)->get()->row_array();
+            if ($wy_info){
+                $check_price = $this->db->select()->from('fp_xiaoqu_price')
+                    ->where(array('xiaoqu_id' => $check_xiaoqu['id'], 'wy_id' => $wy_info['id']))
+                    ->get()->row_array();
+                if (!$check_price) {
+                    $insert_data = array(
+                        'xiaoqu_id' => $check_xiaoqu['id'],
+                        'wy_id' => $wy_info['id'],
+                        'price' => $pg_price_
+                    );
+                    $this->db->insert('fp_xiaoqu_price', $insert_data);
+                }
             }
-            $this->db->insert('pg_xiaoqu', $data);
+
         }
 
         //$rs = $this->db->insert_batch('pg_xiaoqu', $data);
@@ -102,7 +119,7 @@ class Map_model extends MY_Model
         if ($this->db->trans_status() === FALSE) {
             echo "导入异常";
         } else {
-            echo "成功删除".$change_row."条园区信息<br/>";
+            echo "成功导入".$change_row."小区信息<br/>";
         }
     }
 }

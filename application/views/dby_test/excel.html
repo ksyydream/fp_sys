@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>登录</title>
+    <title>导入</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                             <div class="am-u-sm-9 am-u-sm-push-3">
-                                <button type="button" id="save_btn" class="am-btn am-btn-danger" id="doc-confirm-toggle">提交</button>
+                                <button type="button" id="save_btn" class="am-btn am-btn-danger" id="doc-confirm-toggle">小区导入</button>
                             </div>
 
                     </form>
@@ -67,6 +67,17 @@
             layer.msg('请选择文件', {icon: 2});
             return;
         }
+        $("#save_form").attr('action','/map/upload_excel');
+        $("#save_form").submit();
+    })
+
+    $("#save_info_btn").click(function(){
+        var content = $("#file").val();
+        if(content == "" ) {
+            layer.msg('请选择文件', {icon: 2});
+            return;
+        }
+        $("#save_form").attr('action','/map/upload_excel');
         $("#save_form").submit();
     })
 
