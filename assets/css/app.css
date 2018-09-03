@@ -6,7 +6,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-menu .am-u-sm-6{text-align: center;}
 
 .am-price{padding-top:.5rem;height: 9.2rem; background: #fff url(../../assets/i/wave_bg.png) no-repeat left bottom; background-size: 100%;}
-.am-ftr{text-align: center; color: #a7a7a7; font-size: .5rem; clear:both;margin: 1.5rem 0 4rem; }
+.am-ftr{text-align: center; color: #a7a7a7; font-size: .5rem; clear:both;margin: 1rem 0 4rem; }
 .am-re-price{width:7rem; height: 7rem; background: #fff;border-radius: 50%;margin:0 auto .4rem;padding: .25rem;}
 .am-re-price-inner{width:6.5rem; height: 6.5rem;border:4px solid #ffb700;border-radius: 50%; display: block;margin:0 auto;
     text-align: center; }
