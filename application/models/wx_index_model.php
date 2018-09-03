@@ -88,17 +88,20 @@ class Wx_index_model extends MY_Model
 
     public function api_get_xiaoqu_list(){
         $data['keyword'] = trim($this->input->post('search_')) ? trim($this->input->post('search_')) : '';
-        $this->db->select('a.xiaoqu',false);
-        $this->db->from('pg_xiaoqu a');
-        $this->db->join('pg_area b','a.area_id = b.id','left');
-        $this->db->join('pg_wy c','a.wy_id = c.id','left');
+        $this->db->select("b.name,(case 
+    when b.other_name = '' then b.name else b.other_name END) as other_name",false);
+        $this->db->from('fp_xiaoqu_price a');
+        $this->db->join('fp_xiaoqu b','a.xiaoqu_id = b.id','left');
         if($data['keyword']){
-            $this->db->like('a.xiaoqu', $data['keyword']);
+           // $this->db->group_start();
+            $this->db->like('b.name', $data['keyword']);
+            $this->db->or_like('b.other_name', $data['keyword']);
+           // $this->db->group_end();
         }else{
             $this->db->where('a.id', -1);
         }
-        $this->db->group_by('a.xiaoqu');
-        $this->db->order_by('a.xiaoqu','desc');
+        $this->db->group_by('b.name,b.other_name');
+        $this->db->order_by('b.name','desc');
         $this->db->limit(10, 0);
         $data = $this->db->get()->result_array();
 
