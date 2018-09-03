@@ -12,7 +12,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
     text-align: center; }
 .am-house-num{ color: #666;  font-weight: bold;font-size: 1.6rem; }
 #am-price-num .am-house-num i {width: 17px;height: 23px;display: inline-block;
-    background: url(../../assets/i/number_01.png) no-repeat; background-position: 0 0; text-indent: -999em;}
+    background: url(../../assets/i/number_001.svg) no-repeat; background-position: 0 0; text-indent: -999em;}
 
 .am-house-p{margin-top:2.2rem; font-size: .8rem;line-height: 1rem;}
 .am-price .am-u-sm-9{padding-left: 1.5rem;}
@@ -33,7 +33,8 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-form .am-form-label{margin:0;padding:0 0 0 .8rem;font-weight: normal; height:2.3rem;line-height: 2.3rem; font-size: .93rem;}
 
 .am-form input[type=button],.am-form input[type=text],.am-form input[type=number],.am-form .am-spec-input,.am-form select
-{border:none;background:none;outline:none; text-align: right; width:100%;font-size: .93rem;padding:.6rem;}
+{padding:.6rem;border:none;background:none;outline:none; text-align: right; width:100%;font-size: .93rem;}
+.am-form .am-spec-input{padding:0 0 0 .6rem; line-height: 2.3rem;}
 
 .am-form select {padding:0;}
 .am-form select option{font-size: .93rem;}
@@ -55,7 +56,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-search-popup .am-form-top{padding:.4rem;background: #f4f4f8;}
 .am-search-popup .am-form{width:100%;height:2rem;}
 .am-search-popup .am-form-group{margin:0;float: left;border:none;width:88%; position: relative;}
-.am-search-popup .am-form .am-search-input{ font-size: .9rem;border:none; border-radius: 3px; padding:.4rem; }
+.am-search-popup .am-form .am-search-input{ font-size: .9rem;border:none; border-radius: 3px;padding:.4rem; }
 .am-search-popup .am-close{color:#f8ad35;font-weight: normal; font-size: .8rem; text-align: center; opacity: 1;width:12%;line-height: 2rem;height:2rem; float: left;}
 .am-search-popup .search-btn{ display:block;width:1rem; height: 1rem; background: url(../../assets/i/search.png) no-repeat; background-size: 100%;position: absolute; top:8px;right:10px;}
 .am-data-result{margin-left:.5rem;}
