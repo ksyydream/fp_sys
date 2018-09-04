@@ -94,12 +94,11 @@ class Wx_controller extends MY_Controller
         $this->cismarty->assign('wxsignature',$signPackage["signature"]);
     }
 
-    public function getUserInfoById($uid, $lang = 'en') {
+    public function getUserInfoById($uid, $lang = 'zh_CN') {
         $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('appsecret')));
         $access_token = $this->wxjssdk_th->wxgetAccessToken();
-        var_dump($access_token);
         $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$access_token&openid=$uid&lang=$lang";
-
+        var_dump($url);
         $res = json_decode($this->request_post($url), true);
         die(var_dump($res));
         $check_ = $this->checkIsSuc($res);
