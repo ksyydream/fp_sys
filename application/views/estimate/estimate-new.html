@@ -180,14 +180,6 @@
 
 //评估价数字滚动效果
   $(function () {
-    //show_num("12345");
-    // $('#my-scrollspy').scrollspy();
-    $('#my-scrollspy').on('inview.scrollspy.amui', function() {      
-      //alert(2);
-    }).on('outview.scrollspy.amui', function() {
-      //console.log('离开视口');
-      //alert(1);
-    });
      $('#collapse-nav').on('open.collapse.amui', function() {
         $(".am-show-btn-p").html("暂时不填了").removeClass('am-hidden-btn-p')
     }).on('close.collapse.amui', function() {
