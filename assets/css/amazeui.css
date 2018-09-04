@@ -9210,9 +9210,9 @@ TODO:
       -ms-transform: translateY(100%);
           transform: translateY(100%);
 }
-.am-modal-actions-group {
+/*.am-modal-actions-group {
   margin: 10px;
-}
+}*/
 .am-modal-actions-group .am-list {
   margin: 0;
   border-radius: 0;
