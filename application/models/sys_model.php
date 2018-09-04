@@ -94,4 +94,49 @@ class Sys_model extends MY_Model
         }
         return 0;
     }
+
+    public function check_person(){
+        $openid = $this->session->userdata('openid');
+        $check_ = $this->db->select()->from('fp_wx_user')->where('openid', $openid)->get()->row_array();
+        if($check_)
+            return true;
+        return false;
+    }
+
+    public function save_person($person_info){
+        $openid = $this->session->userdata('openid');
+        if($check_ = $this->check_person()){
+            return -1;
+        }
+        $insert_data = array(
+            'openid' => $openid,
+            'subscribe' => $person_info['subscribe'],
+            'nickname' => $person_info['nickname'],
+            'sex' => $person_info['sex'],
+            'language' => $person_info['language'],
+            'city' => $person_info['city'],
+            'province' => $person_info['province'],
+            'country' => $person_info['country'],
+            'head_img' => $this->download($person_info['headimgurl']),
+            'subscribe_scene' => $person_info['subscribe_scene'],
+            'cdate' => date('Y-m-d H:i:s',time())
+        );
+        $this->db->insert('fp_wx_user', $insert_data);
+    }
+
+    public function download($url)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        $file = curl_exec($ch);
+        curl_close($ch);
+        $file_name = date('YmdHis').rand(1000,9999).'.jpg';
+        $targetName = './uploadfiles/head/'.$file_name;
+        $resource = fopen($targetName, 'a');
+        fwrite($resource, $file);
+        fclose($resource);
+        return $file_name;
+    }
 }
