@@ -98,9 +98,7 @@ class Wx_controller extends MY_Controller
         $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('appsecret')));
         $access_token = $this->wxjssdk_th->wxgetAccessToken();
         $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$access_token&openid=$uid&lang=$lang";
-        var_dump($url);
         $res = json_decode($this->request_post($url), true);
-        die(var_dump($res));
         $check_ = $this->checkIsSuc($res);
         if($check_){
             return $res;
@@ -111,9 +109,6 @@ class Wx_controller extends MY_Controller
 
     function request_post($url = '', $param = '')
     {
-        if (empty($url) || empty($param)) {
-            return false;
-        }
         $postUrl = $url;
         $curlPost = $param;
         $ch = curl_init(); //初始化curl
