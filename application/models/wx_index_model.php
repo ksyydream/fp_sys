@@ -188,6 +188,7 @@ class Wx_index_model extends MY_Model
             }
             $res_data['price'] *= $mj_info['ratio']; //乘以面积系数
         }
+        $res_data['price'] = floor($res_data['price']);
         return $res_data;
 
 
