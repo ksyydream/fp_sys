@@ -12,7 +12,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
     text-align: center; }
 .am-house-num{ color: #666;  font-weight: bold;font-size: 1.6rem; }
 #am-price-num .am-house-num i {width: 17px;height: 23px;display: inline-block;
-    background: url(../../assets/i/number_001.png) no-repeat; background-position: 0 0; text-indent: -999em;}
+    background: url(../../assets/i/number_001.svg) no-repeat; background-position: 0 0; text-indent: -999em;}
 
 .am-house-p{margin-top:2.2rem; font-size: .8rem;line-height: 1rem;}
 .am-price .am-u-sm-9{padding-left: 1.5rem;}
