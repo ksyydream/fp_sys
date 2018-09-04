@@ -46,6 +46,7 @@ class Wx_controller extends MY_Controller
             $this->session->set_userdata('openid', $openid);
             $res = $this->sys_model->check_openid($openid);
         }
+        $res = $this->getUserInfoById($this->session->userdata('openid'));
         if($this->session->userdata('wx_user_id')){
             $this->cismarty->assign('rel_name',$this->session->userdata('wx_rel_name'));
             $this->cismarty->assign('role_id',$this->session->userdata('wx_role_id'));
