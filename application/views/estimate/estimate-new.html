@@ -125,8 +125,6 @@
   </form>
          <input type="hidden" id="yy_min_c" value="">
          <input type="hidden" id="yy_max_c" value="">
-         <input type="hidden" id="yy_area_ratio" value="">
-         <input type="hidden" id="yy_price" value="">
          <input type="hidden" id="yy_flag" value="">
          <input type="hidden" id="yy_price_id" value="">
 </div>
@@ -210,14 +208,21 @@
           $(this).val($(this).val().replace(/[^0-9]/g, ''));
       }).css("ime-mode", "disabled"); //CSS设置输入法不可用
       $("#jisuan_btn").click(function () {
-          if($("#am-house-input").html() == "请输入" || $("#yy_area_ratio").val() == "" || $("#yy_price").val() == ""){
+          if($("#am-house-input").html() == "请输入" || $("#yy_price_id").val() == ""){
               layer.msg('请先选择小区');
               return false;
           }
+          var id_ = $.trim($("#yy_price_id").val());
            if($(".am-show-btn-p").hasClass('am-hidden-btn-p')){
-              var price_show = parseFloat($("#yy_area_ratio").val()) * parseFloat($("#yy_price").val());
-              price_show = parseInt(price_show);
-               show_num(price_show);
+               $.post('/wx_api/api_get_price4jq',{status:1,price_id:id_},function(data){
+                   var items = JSON.parse(data);
+                   if(items.success){
+                       show_num(items.price);
+                   }else{
+                       layer.msg(items.err_msg);
+                       return false;
+                   }
+               })
            }else{
                 var min_c_ = parseInt($("#yy_min_c").val());
                 var max_c_ = parseInt($("#yy_max_c").val());
@@ -249,16 +254,14 @@
                    layer.msg('总楼层不规范');
                    return false;
                }
-               var id_ = $.trim($("#yy_price_id").val());
-               $.post('/wx_api/api_get_price4jq',{price_id:id_, mianji:mianji_,zlc:zlc_,szlc:szlc_},function(data){
-                   if(data== -1 || data== -2){
-                       layer.msg('输入的数据不规范！');
-                       return false;
-                   }else{
-                       var items = JSON.parse(data);
+               $.post('/wx_api/api_get_price4jq',{status:2,price_id:id_, mianji:mianji_,zlc:zlc_,szlc:szlc_},function(data){
+                   var items = JSON.parse(data);
+                   if(items.success){
                        show_num(items.price);
+                   }else{
+                       layer.msg(items.err_msg);
+                       return false;
                    }
-
                })
            }
       })
@@ -316,8 +319,6 @@ function choose_xiaoqu(id) {
                 $("#yy_area").html(item.area);
                 $("#am-house-input").html(item.name);
                 $("#yy_wy").html(item.wy);
-                $("#yy_area_ratio").val(item.area_ratio);
-                $("#yy_price").val(item.price);
                 $("#yy_max_c").val(item.max_c);
                 $("#yy_min_c").val(item.min_c);
                 $("#yy_price_id").val(item.id);
