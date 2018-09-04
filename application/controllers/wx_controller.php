@@ -97,9 +97,11 @@ class Wx_controller extends MY_Controller
     public function getUserInfoById($uid, $lang = 'en') {
         $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('appsecret')));
         $access_token = $this->wxjssdk_th->wxgetAccessToken();
+        var_dump($access_token);
         $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$access_token&openid=$uid&lang=$lang";
 
         $res = json_decode($this->request_post($url), true);
+        die(var_dump($res));
         $check_ = $this->checkIsSuc($res);
         if($check_){
             return $res;
