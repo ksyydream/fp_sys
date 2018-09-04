@@ -50,7 +50,7 @@ class Wxjssdk_th {
             //测试
             //return $this->wxhttpGet($url);
             //测试
-            die(var_dump($url));
+            //die(var_dump($url));
             $res = json_decode($this->wxhttpGet($url));
             $access_token = $res->access_token;
             if ($access_token) {

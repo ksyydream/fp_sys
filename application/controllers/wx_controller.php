@@ -84,7 +84,7 @@ class Wx_controller extends MY_Controller
 
 
     public function buildWxData(){
-        $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('secret')));
+        $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('appsecret')));
         $signPackage = $this->wxjssdk_th->wxgetSignPackage();
         //变量
         $this->cismarty->assign('wxappId',$signPackage["appId"]);
@@ -94,7 +94,7 @@ class Wx_controller extends MY_Controller
     }
 
     public function getUserInfoById($uid, $lang = 'en') {
-        $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('secret')));
+        $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('appsecret')));
         $access_token = $this->wxjssdk_th->wxgetAccessToken();
         $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$access_token&openid=$uid&lang=$lang";
 
