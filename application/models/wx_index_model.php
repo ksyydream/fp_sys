@@ -110,7 +110,7 @@ class Wx_index_model extends MY_Model
 
     public function api_get_xiaoqu_info(){
         $xiaoqu_id = trim($this->input->post('xiaoqu_id')) ? trim($this->input->post('xiaoqu_id')) : '';
-        $this->db->select("b.name,b.address,a.price,c.wy,d.area",false);
+        $this->db->select("b.name,b.address,a.price,c.wy,d.area,c.flag,c.min_c,c.max_c",false);
         $this->db->from('fp_xiaoqu_price a');
         $this->db->join('fp_xiaoqu b','a.xiaoqu_id = b.id','left');
         $this->db->join('fp_wy c','a.wy_id = c.id','left');

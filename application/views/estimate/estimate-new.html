@@ -107,22 +107,24 @@
      <div class="am-form-group">
       <label  class="am-u-sm-3 am-form-label">建筑面积</label>
       <div class="am-u-sm-9">
-        <input type="number" id="" value="" placeholder="请输入">
+        <input type="number" id="yy_mianji" value="" placeholder="请输入">
       </div>
     </div>
-    <div class="am-form-group">
+    <div class="am-form-group" id="yy_szlc_div">
       <label  class="am-u-sm-3 am-form-label">所在楼层</label>
       <div class="am-u-sm-9">
-        <input type="number" id="" value="" placeholder="请输入">
+        <input type="number" id="yy_szlc" value="" placeholder="请输入">
       </div>
     </div>
     <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">总楼层</label>
       <div class="am-u-sm-9">
-        <input type="number" id="" value="" placeholder="请输入">
+        <input type="number" id="yy_zlc" value="" placeholder="请输入">
       </div>
     </div>
   </form>
+         <input type="hidden" id="yy_min_c" value="">
+         <input type="hidden" id="yy_max_c" value="">
 </div>
     <div class="am-show-btn" data-am-collapse="{target: '#collapse-nav'}">
       <p class="am-u-sm-6 am-u-sm-centered am-show-btn-p am-hidden-btn-p">继续填写，精准评估</p></div>
@@ -173,7 +175,7 @@
 
 //评估价数字滚动效果
   $(function () {
-    show_num("12345");
+    //show_num("12345");
     // $('#my-scrollspy').scrollspy();
     $('#my-scrollspy').on('inview.scrollspy.amui', function() {      
       //alert(2);
@@ -247,11 +249,25 @@ function choose_xiaoqu(id) {
                 $("#am-house-input").html(item.name);
                 $("#yy_wy").html(item.wy);
             }
-            html += '<li>' + item.wy +'</li>'
+            html += '<li onclick="choose_wy(\'' + item.flag + '\',\'' + item.min_c + '\',\'' + item.max_c + '\',\'' + item.wy + '\')" >' + item.wy +'</li>'
         }
         $("#wy_list").html(html);
         $("#my-popup").hide();$(".am-search-input").blur();
     })
+}
+
+function choose_wy(flag,min_c,max_c,wy){
+    $("#yy_szlc").val('');
+    alert(flag);
+      if(flag == '2'){
+          $("#yy_szlc_div").hide();
+      }else{
+          $("#yy_szlc_div").show();
+      }
+     $("#yy_wy").html(wy);
+      $("#yy_max_c").val(max_c);
+    $("#yy_max_c").val(min_c);
+    $("#my-actions-search").modal('close');
 }
 </script>
 </body>
