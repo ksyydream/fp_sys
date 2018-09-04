@@ -326,7 +326,7 @@ function choose_xiaoqu(id) {
                 $("#yy_area_ratio").val(item.area_ratio);
                 $("#yy_price").val(item.price);
                 $("#yy_max_c").val(item.max_c);
-                $("#yy_max_c").val(item.min_c);
+                $("#yy_min_c").val(item.min_c);
                 $("#yy_price_id").val(item.id);
                 $("#yy_flag").html(item.flag);
                 if(item.flag == 2){
@@ -352,7 +352,7 @@ function choose_wy(flag,min_c,max_c,wy,id){
     $("#yy_flag").html(flag);
      $("#yy_wy").html(wy);
       $("#yy_max_c").val(max_c);
-    $("#yy_max_c").val(min_c);
+    $("#yy_min_c").val(min_c);
     $("#yy_price_id").val(id);
     $("#my-actions-search").modal('close');
 }
