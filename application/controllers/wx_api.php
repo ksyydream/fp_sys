@@ -29,5 +29,10 @@ class Wx_api extends CI_controller {
             echo json_encode($data);
         }
     }
-
+    public function api_get_price4jq(){
+        if($this->session->userdata('openid')){
+            $data = $this->wx_index_model->api_get_price4jq();
+            echo json_encode($data);
+        }
+    }
 }

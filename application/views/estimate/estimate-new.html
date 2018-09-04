@@ -107,30 +107,34 @@
      <div class="am-form-group">
       <label  class="am-u-sm-3 am-form-label">建筑面积</label>
       <div class="am-u-sm-9">
-        <input type="number" id="yy_mianji" value="" placeholder="请输入">
+        <input type="text" id="yy_mianji" value="" placeholder="请输入">
       </div>
     </div>
     <div class="am-form-group" id="yy_szlc_div">
       <label  class="am-u-sm-3 am-form-label">所在楼层</label>
       <div class="am-u-sm-9">
-        <input type="number" id="yy_szlc" value="" placeholder="请输入">
+        <input type="text" class="phone4js" id="yy_szlc" value="" placeholder="请输入">
       </div>
     </div>
     <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">总楼层</label>
       <div class="am-u-sm-9">
-        <input type="number" id="yy_zlc" value="" placeholder="请输入">
+        <input type="number" class="phone4js" id="yy_zlc" value="" placeholder="请输入">
       </div>
     </div>
   </form>
          <input type="hidden" id="yy_min_c" value="">
          <input type="hidden" id="yy_max_c" value="">
+         <input type="hidden" id="yy_area_ratio" value="">
+         <input type="hidden" id="yy_price" value="">
+         <input type="hidden" id="yy_flag" value="">
+         <input type="hidden" id="yy_price_id" value="">
 </div>
     <div class="am-show-btn" data-am-collapse="{target: '#collapse-nav'}">
       <p class="am-u-sm-6 am-u-sm-centered am-show-btn-p am-hidden-btn-p">继续填写，精准评估</p></div>
    <div class="am-accu-btns">
      <div class="am-u-sm-12 am-u-sm-centered">  
-      <a class="am-btn am-btn-danger" href="" id="am-">立即估价</a><a class="am-btn am-btn1 am-btn-danger" href="">税费清单</a>
+      <a class="am-btn am-btn-danger" href="javascript:" id="jisuan_btn">立即估价</a><a class="am-btn am-btn1 am-btn-danger" href="">税费清单</a>
     </div> 
    </div>
 
@@ -171,6 +175,7 @@
 <script src="/assets/js/jquery-1.7.1.js"></script>
 <script src="/assets/js/amazeui.min.js"></script>
 <script src="/assets/js/animateBackground-plugin.js"></script>
+<script src="/assets/js/layer/layer.js"></script>
 <script type="text/javascript">
 
 //评估价数字滚动效果
@@ -193,7 +198,77 @@
       });$("#am-popup-close").click(function(event) {
           $("#my-popup").hide();$(".am-search-input").blur();
       });
+      $("#yy_mianji").keyup(function () {
+          $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+          if(!/^[0-9]+(.[0-9]{0,2})?$/.test($(this).val())) {$(this).val('');}
+      }).blur(function(){
+          $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+          if(!/^[0-9]+(.[0-9]{0,2})?$/.test($(this).val())) {$(this).val('');}
+      }).bind("paste", function () {  //CTR+V事件处理
+          $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+          if(!/^[0-9]+(.[0-9]{0,2})?$/.test($(this).val())) {$(this).val('');}
+      }).css("ime-mode", "disabled"); //CSS设置输入法不可用
+      $(".phone4js").keyup(function () {
+          $(this).val($(this).val().replace(/[^0-9]/g, ''));
+      }).blur(function(){
+          $(this).val($(this).val().replace(/[^0-9]/g, ''));
+      }).bind("paste", function () {  //CTR+V事件处理
+          $(this).val($(this).val().replace(/[^0-9]/g, ''));
+      }).css("ime-mode", "disabled"); //CSS设置输入法不可用
+      $("#jisuan_btn").click(function () {
 
+          if($("#am-house-input").html() == "请输入" || $("#yy_area_ratio").val() == "" || $("#yy_price").val() == ""){
+              layer.msg('请先选择小区');
+              return false;
+          }
+           if($(".am-show-btn-p").hasClass('am-hidden-btn-p')){
+              var price_show = parseFloat($("#yy_area_ratio").val()) * parseFloat($("#yy_price").val());
+              price_show = parseInt(price_show);
+               show_num(price_show);
+           }else{
+                var min_c_ = parseInt($("#yy_min_c").val());
+                var max_c_ = parseInt($("#yy_max_c").val());
+                var flag_ = $("#yy_flag").val();
+                var mianji_ = $.trim($("#yy_mianji").val());
+                if(mianji_ == ""){
+                    layer.msg('请先输入面积');
+                    return false;
+                }
+               var szlc_ = $.trim($("#yy_szlc").val());
+                if(flag_ == '1'){
+                    if(szlc_ == ""){
+                        layer.msg('请先输入所在楼层');
+                        return false;
+                    }
+                    szlc_ = parseInt(szlc_);
+                    if(szlc_ > max_c_){
+                        layer.msg('所在楼层不规范');
+                        return false;
+                    }
+                }
+               var zlc_ = $.trim($("#yy_zlc").val());
+               if(zlc_ == ""){
+                   layer.msg('请先输入总楼层');
+                   return false;
+               }
+               zlc_ = parseInt(zlc_);
+               if(zlc_ > max_c_ || zlc_ < min_c_){
+                   layer.msg('总楼层不规范');
+                   return false;
+               }
+               var id_ = $.trim($("#yy_price_id").val());
+               $.post('/wx_api/api_get_price4jq',{price_id:id_, mianji:mianji_,zlc:zlc_,szlc:szlc_},function(data){
+                   if(data== -1 || data== -2){
+                       layer.msg('输入的数据不规范！');
+                       return false;
+                   }else{
+                       var items = JSON.parse(data);
+                       show_num(items.price);
+                   }
+
+               })
+           }
+      })
   });
 
   function show_num(n) {
@@ -248,25 +323,37 @@ function choose_xiaoqu(id) {
                 $("#yy_area").html(item.area);
                 $("#am-house-input").html(item.name);
                 $("#yy_wy").html(item.wy);
+                $("#yy_area_ratio").val(item.area_ratio);
+                $("#yy_price").val(item.price);
+                $("#yy_max_c").val(item.max_c);
+                $("#yy_max_c").val(item.min_c);
+                $("#yy_price_id").val(item.id);
+                $("#yy_flag").html(item.flag);
+                if(item.flag == 2){
+                    $("#yy_szlc_div").hide();
+                }else{
+                    $("#yy_szlc_div").show();
+                }
             }
-            html += '<li onclick="choose_wy(\'' + item.flag + '\',\'' + item.min_c + '\',\'' + item.max_c + '\',\'' + item.wy + '\')" >' + item.wy +'</li>'
+            html += '<li onclick="choose_wy(\'' + item.flag + '\',\'' + item.min_c + '\',\'' + item.max_c + '\',\'' + item.wy + '\',\'' + item.id + '\')" >' + item.wy +'</li>'
         }
         $("#wy_list").html(html);
         $("#my-popup").hide();$(".am-search-input").blur();
     })
 }
 
-function choose_wy(flag,min_c,max_c,wy){
+function choose_wy(flag,min_c,max_c,wy,id){
     $("#yy_szlc").val('');
-    alert(flag);
       if(flag == '2'){
           $("#yy_szlc_div").hide();
       }else{
           $("#yy_szlc_div").show();
       }
+    $("#yy_flag").html(flag);
      $("#yy_wy").html(wy);
       $("#yy_max_c").val(max_c);
     $("#yy_max_c").val(min_c);
+    $("#yy_price_id").val(id);
     $("#my-actions-search").modal('close');
 }
 </script>

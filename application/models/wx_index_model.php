@@ -110,7 +110,7 @@ class Wx_index_model extends MY_Model
 
     public function api_get_xiaoqu_info(){
         $xiaoqu_id = trim($this->input->post('xiaoqu_id')) ? trim($this->input->post('xiaoqu_id')) : '';
-        $this->db->select("b.name,b.address,a.price,c.wy,d.area,c.flag,c.min_c,c.max_c",false);
+        $this->db->select("a.id,b.name,b.address,a.price,c.wy,d.area,c.flag,c.min_c,c.max_c,d.area_ratio",false);
         $this->db->from('fp_xiaoqu_price a');
         $this->db->join('fp_xiaoqu b','a.xiaoqu_id = b.id','left');
         $this->db->join('fp_wy c','a.wy_id = c.id','left');
@@ -119,6 +119,78 @@ class Wx_index_model extends MY_Model
         $data = $this->db->get()->result_array();
 
         return $data;
+    }
+
+    public function api_get_price4jq(){
+        $price_id = $this->input->post('price_id');
+        if(!$price_id){
+            return -1;
+        }
+        $mianji = $this->input->post('mianji');
+        if(!$mianji){
+            return -1;
+        }
+        $zlc = $this->input->post('zlc');
+        if(!$zlc){
+            return -1;
+        }
+        $price_info = $this->db->select('a.*,c.area_ratio,c.hot,d.flag,d.ratio,d.mm_ratio,d.min_c,d.max_c')->from('fp_xiaoqu_price a')
+            ->join('fp_xiaoqu b','a.xiaoqu_id = b.id','inner')
+            ->join('fp_area c','c.id = b.area_id','inner')
+            ->join('fp_wy d','d.id = a.wy_id','inner')
+            ->where('a.id', $price_id)->get()->row_array();
+        if(!$price_info){
+            return -1;
+        }
+        $res_data['flag'] = $price_info['flag']; //物业类型
+        $res_data['hot'] = $price_info['hot']; //区域热度
+        $res_data['price'] = $price_info['price']; //基准评估价
+        $res_data['price'] *= $price_info['area_ratio']; //乘以区域系数
+        $res_data['price'] *= $price_info['ratio']; //乘以物业类型系数，因为除了别墅该系数均是1，所以可以直接乘
+        //判断是否是别墅
+        if($price_info['flag'] == 1){
+            $szlc = $this->input->post('szlc');
+            if(!$szlc){
+                return -1;
+            }
+            if($zlc > $price_info['max_c'] || $zlc < $price_info['min_c']){
+                return -2;
+            }
+            if($szlc > $price_info['max_c']){
+                return -2;
+            }
+            //楼层系数
+            if($szlc == 1 || $szlc == $zlc){
+                $res_data['price'] *= $price_info['mm_ratio']; //乘以顶底楼系数
+            }else{
+                $xs_ = $szlc / $zlc;
+                $xs_ = floor($xs_);
+                $lc_info = $this->db->select()->from('fp_ratio')
+                    ->where(array(
+                        'min_c <=' => $xs_,
+                        'max_c >=' => $xs_,
+                        'class' => 1
+                    ))->get()->row_array();
+                if(!$lc_info){
+                    return -2;
+                }
+                $res_data['price'] *= $lc_info['ratio']; //乘以楼层系数
+            }
+            //面积系数
+            $mj_info = $this->db->select()->from('fp_ratio')
+                ->where(array(
+                    'min_c <=' => $mianji,
+                    'max_c >=' => $mianji,
+                    'class' => 2
+                ))->get()->row_array();
+            if(!$mj_info){
+                return -2;
+            }
+            $res_data['price'] *= $mj_info['ratio']; //乘以面积系数
+        }
+        return $res_data;
+
+
     }
 
     public function get_zcs(){
