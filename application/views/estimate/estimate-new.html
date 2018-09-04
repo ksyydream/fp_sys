@@ -180,11 +180,13 @@
 
 //评估价数字滚动效果
   $(function () {
-     $('#collapse-nav').on('open.collapse.amui', function() {
-        $(".am-show-btn-p").html("暂时不填了").removeClass('am-hidden-btn-p')
-    }).on('close.collapse.amui', function() {
-        $(".am-show-btn-p").html("继续填写，精准评估").addClass('am-hidden-btn-p')
-    });
+      $('#collapse-nav').on('open.collapse.amui', function() {
+          $(".am-show-btn-p").html("暂时不填了").removeClass('am-hidden-btn-p');
+          $(".am-show-btn").css({"border-top":"1px solid #e5e5e5"});
+      }).on('close.collapse.amui', function() {
+          $(".am-show-btn-p").html("继续填写，精准评估").addClass('am-hidden-btn-p');
+          $(".am-show-btn").css({"border-top":"none"});
+      });
       $("#am-house-input").click(function(event) {
           $("#my-popup").show();$(".am-search-input").focus();
       });$("#am-popup-close").click(function(event) {
@@ -208,7 +210,6 @@
           $(this).val($(this).val().replace(/[^0-9]/g, ''));
       }).css("ime-mode", "disabled"); //CSS设置输入法不可用
       $("#jisuan_btn").click(function () {
-
           if($("#am-house-input").html() == "请输入" || $("#yy_area_ratio").val() == "" || $("#yy_price").val() == ""){
               layer.msg('请先选择小区');
               return false;
