@@ -122,6 +122,7 @@ class Sys_model extends MY_Model
             'cdate' => date('Y-m-d H:i:s',time())
         );
         $this->db->insert('fp_wx_user', $insert_data);
+        return 1;
     }
 
     public function download($url)
