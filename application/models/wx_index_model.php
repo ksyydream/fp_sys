@@ -255,6 +255,7 @@ class Wx_index_model extends MY_Model
             }
             $check_pg = $this->db->select()->from('fp_pg_log')->where($insert_data)->get()->row_array();
             $insert_data['price_log'] = $price_log;
+            $insert_data['flag'] = $price_info['flag'];
             $insert_data['price_id'] = $price_id;
             $insert_data['cdate'] = date('Y-m-d H:i:s',time());
             if($check_pg){

@@ -143,6 +143,12 @@ class Wx_index extends Wx_controller {
         }
     }
 
+    public function person_pg_history(){
+        $data = $this->sys_model->person_info();
+        $this->assign('data',$data);
+        $this->display('estimate/user-history.html');
+    }
+
     public function api_get_xiaoqu_list(){
         $data = $this->wx_index_model->api_get_xiaoqu_list();
         echo json_encode($data);
