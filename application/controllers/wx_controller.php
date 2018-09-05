@@ -159,10 +159,23 @@ class Wx_controller extends MY_Controller
         @$post_data->expire_seconds = 2592000;
         @$post_data->action_name = $action_name;
         @$post_data->action_info->scene->scene_str = 'person_info';
-        $ticket_data = json_decode($this->request_post($url, $post_data));
+        $ticket_data = json_decode($this->post($url, $post_data));
         $ticket = $ticket_data->ticket;
         $img_url = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=".urlencode($ticket);
         return $img_url;
+    }
+
+    private function post($url, $post_data, $timeout = 300){
+        $options = array(
+            'http' => array(
+                'method' => 'POST',
+                'header' => 'Content-type:application/json;encoding=utf-8',
+                'content' => urldecode(json_encode($post_data)),
+                'timeout' => $timeout
+            )
+        );
+        $context = stream_context_create($options);
+        return file_get_contents($url, false, $context);
     }
 
 }
