@@ -76,7 +76,8 @@
      <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">小区</label>
       <div class="am-u-sm-9">
-        <a href="javascript:" class="before-input" id="am-house-input">请输入</a>
+        <!--<a href="javascript:" class="before-input" id="am-house-input">请输入</a>-->
+        <input type="text" value="" placeholder="请输入" class="ip-txt" id="am-house-input">
         <i class="am-icon-chevron"></i>
       </div>
     </div>
@@ -107,19 +108,19 @@
      <div class="am-form-group">
       <label  class="am-u-sm-3 am-form-label">建筑面积</label>
       <div class="am-u-sm-9">
-        <input type="text" id="yy_mianji" value="" placeholder="请输入">
+        <input type="text" class="ip-txt" id="yy_mianji" value="" placeholder="请输入"><i>㎡</i>
       </div>
     </div>
     <div class="am-form-group" id="yy_szlc_div">
       <label  class="am-u-sm-3 am-form-label">所在楼层</label>
       <div class="am-u-sm-9">
-        <input type="text" class="phone4js" id="yy_szlc" value="" placeholder="请输入">
+        <input type="text" class="ip-txt phone4js" id="yy_szlc" value="" placeholder="请输入"><i>层</i>
       </div>
     </div>
     <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">总楼层</label>
       <div class="am-u-sm-9">
-        <input type="number" class="phone4js" id="yy_zlc" value="" placeholder="请输入">
+        <input type="number" class="ip-txt phone4js" id="yy_zlc" value="" placeholder="请输入"><i>层</i>
       </div>
     </div>
   </form>
@@ -208,7 +209,7 @@
           $(this).val($(this).val().replace(/[^0-9]/g, ''));
       }).css("ime-mode", "disabled"); //CSS设置输入法不可用
       $("#jisuan_btn").click(function () {
-          if($("#am-house-input").html() == "请输入" || $("#yy_price_id").val() == ""){
+          if($("#am-house-input").val() == "请输入" || $("#yy_price_id").val() == ""){
               layer.msg('请先选择小区');
               return false;
           }
@@ -319,7 +320,7 @@ function choose_xiaoqu(id) {
             if(i == 0){
                 $("#yy_address").html(item.address);
                 $("#yy_area").html(item.area);
-                $("#am-house-input").html(item.name);
+                $("#am-house-input").val(item.name);
                 $("#yy_wy").html(item.wy);
                 $("#yy_max_c").val(item.max_c);
                 $("#yy_min_c").val(item.min_c);

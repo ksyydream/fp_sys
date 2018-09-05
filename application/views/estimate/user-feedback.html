@@ -1,19 +1,18 @@
 <!doctype html>
-<html class="no-js fixed-layout">
+<html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>我要评估</title>
-  <meta name="description" content="我要评估">
+  <title>修改用户信息</title>
+  <meta name="description" content="我的">
   <meta name="keywords" content="index">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp" />
   <link rel="icon" type="image/png" href="/assets/i/favicon.png">
   <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
   <meta name="apple-mobile-web-app-title" content="Amaze UI" />
   <link rel="stylesheet" href="/assets/css/amazeui.css"/>
-  <link rel="stylesheet" href="/assets/css/admin.css">
   <link rel="stylesheet" href="/assets/css/app.css">
   <script type="text/javascript">
     (function() {
@@ -56,23 +55,27 @@
   
 </head>
 <body>
-  <div class="am-slider am-slider-default"  data-am-flexslider="{ directionNav: false}" id="my-slider">
-    <ul class="am-slides">
-      <li><img src="http://s.amazeui.org/media/i/demos/bing-1.jpg" /></li>
-      <li><img src="http://s.amazeui.org/media/i/demos/bing-2.jpg" /></li>
-    </ul>
-  </div>
-   <div class="am-g am-index-btns">
-    <div class="am-u-sm-12 am-u-ind-btns">
-      <div class="am-indbtn-left">
-        <a href=""><img src="/assets/i/pinggu.jpg" alt=""></a>
-        <a href=""><img src="/assets/i/jinrong.jpg" alt=""></a>
-      </div>
-      <div class="am-indbtn-right">
-        <a href=""><img src="/assets/i/quanzheng.jpg" alt=""></a>
-        <a href=""><img src="/assets/i/zhixun.jpg" alt=""></a>
-      </div>
+<div class="am-main">
+  <form class="am-form">
+    <div class="am-form-group am-edit-user-info">
+      <label for="doc-ipt-1">手机号码</label>
+      <input type="text" class="am-edit-txt" id="doc-ipt-1">
     </div>
+    <div class="am-form-group am-edit-user-info">
+      <label for="doc-ipt-1">反馈意见</label>
+      <textarea name="" id="" rows="5" class="am-textarea"></textarea>
+    </div>
+    <div class="am-accu-btns">
+      <div class="am-u-sm-12 am-u-sm-centered">  
+        <a class="am-btn am-btn-danger am-btn-save" href="">提交反馈意见</a>
+      </div> 
+    </div>
+ </form>
+<!-- 搜索弹框end -->
+  <div class="am-menu am-g-fixed am-g-menu">
+    <div class="am-u-sm-6"><a href="" class="am-btn-home"><img src="/assets/i/home.jpg" alt=""></a></div>
+    <div class="am-u-sm-6"><a href="" class="am-btn-home"><img src="/assets/i/user_over.jpg" alt=""></a></div>
   </div>
+</div>
 </body>
 </html>
