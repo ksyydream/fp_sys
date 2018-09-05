@@ -22,12 +22,10 @@ class Wx_index extends Wx_controller {
             'save_change_pwd',
             'submit_login',
             'main',
-            'pg_list',
             'calculator',
             'calculator_res',
             'api_get_xiaoqu_list',
             'person_info',
-            'pg_list_test',
             'pg_list_new');
         if($this->session->userdata('wx_user_id') && !in_array($this->uri->segment(2), $ignore_methods)){
             if($this->session->userdata('wx_role_id') >= 1){
@@ -87,17 +85,6 @@ class Wx_index extends Wx_controller {
 
     public function main(){
         $this->display('index.html');
-    }
-
-    public function pg_list(){
-        $data = $this->wx_index_model->pg_list();
-        $this->assign('data',$data);
-        $this->assign('pagination_url','/wx_index/pg_list/');
-        $this->display('estimate/estimate.html');
-    }
-
-    public function pg_list_test(){
-        $this->display('estimate/estimate_test.html');
     }
 
     public function pg_list_new(){
