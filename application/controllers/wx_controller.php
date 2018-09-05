@@ -21,22 +21,15 @@ class Wx_controller extends MY_Controller
         $this->wxconfig['appsecret']=$this->config->item('appsecret');
         //var_dump($this->wxconfig);
         if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
-            if(!$this->session->userdata('openid')){
-                $this->get_openid();
-            }else{
-                $res = $this->sys_model->check_openid($this->session->userdata('openid'));
-            }
+            $this->get_openid();
         }else{
             $openid = 'oFzKgwbFEyC40jU6bS_HQ5sxM4X8';
             $this->session->set_userdata('openid', $openid);
-            $res = $this->sys_model->check_openid($openid);
         }
+        $res = $this->sys_model->check_openid($this->session->userdata('openid'));
         if(!$check_person_check = $this->sys_model->check_person()){
             $person_info = $this->getUserInfoById($this->session->userdata('openid'));
             if($person_info){
-                if($person_info['subscribe'] != 1){
-                    $this->get_openid();
-                }
                 $this->sys_model->save_person($person_info);
             }
         }
@@ -55,6 +48,7 @@ class Wx_controller extends MY_Controller
      * @date 2017-12-27
      */
     public function get_openid(){
+        if(!$this->session->userdata('openid')){
             $appid = $this->wxconfig['appid'];
             $secret = $this->wxconfig['appsecret'];
             if(empty($_GET['code'])){
@@ -68,8 +62,8 @@ class Wx_controller extends MY_Controller
                 $access_token=$a_access_token["access_token"];//虽然这里 也获取了一个access_token,但是和获取用户详情,还有发送模板信息所使用的access_token不同
                 $openid=$a_access_token["openid"];
                 $this->session->set_userdata('openid', $openid);
-                $res = $this->sys_model->check_openid($openid);
             }
+        }
     }
 
     //重载smarty方法assign
@@ -116,6 +110,12 @@ class Wx_controller extends MY_Controller
         $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$access_token&openid=$uid&lang=$lang";
         $res = json_decode($this->request_post($url), true);
         $check_ = $this->checkIsSuc($res);
+        if($check_['subscribe'] != 1){
+            $img_url = $this->get_or_create_ticket($access_token);
+            $this->cismarty->assign('img_url',$img_url);
+            $this->cismarty->display('estimate/wx_guanzhu.html');
+            exit();
+        }
         if($check_){
             return $res;
         }else{
@@ -147,6 +147,17 @@ class Wx_controller extends MY_Controller
             $result = false;
         }
         return $result;
+    }
+
+    private function get_or_create_ticket($access_token,$action_name = 'QR_LIMIT_STR_SCENE') {
+        $url = 'https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=' . $access_token;
+        @$post_data->expire_seconds = 2592000;
+        @$post_data->action_name = $action_name;
+        @$post_data->action_info->scene->scene_str = 'person_info';
+        $ticket_data = json_decode($this->post($url, $post_data));
+        $ticket = $ticket_data->ticket;
+        $img_url = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=".urlencode($ticket);
+        return $img_url;
     }
 
 }
