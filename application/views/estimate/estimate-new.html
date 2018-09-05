@@ -218,6 +218,7 @@
                    var items = JSON.parse(data);
                    if(items.success){
                        show_num(items.price);
+                       location.href="#my-scrollspy";
                    }else{
                        layer.msg(items.err_msg);
                        return false;
@@ -258,6 +259,7 @@
                    var items = JSON.parse(data);
                    if(items.success){
                        show_num(items.price);
+                       location.href="#my-scrollspy";
                    }else{
                        layer.msg(items.err_msg);
                        return false;
