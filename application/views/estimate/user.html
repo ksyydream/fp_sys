@@ -66,21 +66,21 @@
         <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label am-userin-label am-userin-name">姓名</label>
             <div class="am-u-sm-9">
-                <a href="user-name.html" class="before-input">待完善</a>
+                <a href="/wx_index/person_name" class="before-input">{{$data.true_name|default:'待完善'}}</a>
                 <i class="am-icon-chevron"></i>
             </div>
         </div>
         <div class="am-form-group">
             <label class="am-u-sm-4 am-form-label am-userin-label am-userin-tel">手机号码</label>
             <div class="am-u-sm-8">
-                <a href="user-tel.html" class="before-input">待完善</a>
+                <a href="/wx_index/person_tel" class="before-input">{{$data.true_mobile|default:'待完善'}}</a>
                 <i class="am-icon-chevron"></i>
             </div>
         </div>
         <div class="am-form-group">
             <label class="am-u-sm-4 am-form-label am-userin-label am-userin-company">所属公司</label>
             <div class="am-u-sm-8">
-                <a href="user-company.html" class="before-input">待完善</a>
+                <a href="/wx_index/person_company" class="before-input">{{$data.true_company|default:'待完善'}}</a>
                 <i class="am-icon-chevron"></i>
             </div>
         </div>

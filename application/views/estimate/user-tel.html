@@ -56,14 +56,14 @@
 </head>
 <body>
 <div class="am-main">
-  <form class="am-form">
+  <form class="am-form" method="post" action="/wx_index/save_person_tel" id="save_form" >
     <div class="am-form-group am-edit-user-info">
       <label for="doc-ipt-1">手机号码</label>
-      <input type="number" class="am-edit-txt" id="doc-ipt-1">
+      <input type="number" class="am-edit-txt phone4js" name="true_mobile" id="doc-ipt-1"  value="{{$data.true_mobile|default:''}}">
     </div>
     <div class="am-accu-btns">
       <div class="am-u-sm-12 am-u-sm-centered">  
-        <a class="am-btn am-btn-danger am-btn-save" href="">保存</a>
+        <a class="am-btn am-btn-danger am-btn-save" id="save_a" href="javascript:;">保存</a>
       </div> 
     </div>
  </form>
@@ -75,3 +75,22 @@
 </div>
 </body>
 </html>
+<script src="/assets/js/jquery-1.7.1.js"></script>
+<script src="/assets/js/layer/layer.js"></script>
+<script type="text/javascript">
+    $(".phone4js").keyup(function () {
+        $(this).val($(this).val().replace(/[^0-9]/g, ''));
+    }).blur(function(){
+        $(this).val($(this).val().replace(/[^0-9]/g, ''));
+    }).bind("paste", function () {  //CTR+V事件处理
+        $(this).val($(this).val().replace(/[^0-9]/g, ''));
+    }).css("ime-mode", "disabled"); //CSS设置输入法不可用
+    $("#save_a").click(function(){
+        var name = $.trim($("#doc-ipt-1").val());
+        if(name == ""){
+            layer.msg("请完善电话后保存!");
+            return false;
+        }
+        $("#save_form").submit();
+    })
+</script>

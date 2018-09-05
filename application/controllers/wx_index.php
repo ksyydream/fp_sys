@@ -98,6 +98,41 @@ class Wx_index extends Wx_controller {
         $this->display('estimate/user.html');
     }
 
+    public function person_name(){
+        $data = $this->sys_model->person_info();
+        $this->assign('data',$data);
+        $this->display('estimate/user-name.html');
+    }
+
+    public function save_person_name(){
+        $res = $this->wx_index_model->save_person_name();
+        if($res){
+            redirect('wx_index/person_info');
+        }else{
+            $this->show_message('保存失败！');
+        }
+    }
+
+    public function person_tel(){
+        $data = $this->sys_model->person_info();
+        $this->assign('data',$data);
+        $this->display('estimate/user-tel.html');
+    }
+
+    public function save_person_tel(){
+        $res = $this->wx_index_model->save_person_tel();
+        if($res){
+            redirect('wx_index/person_info');
+        }else{
+            $this->show_message('保存失败！');
+        }
+    }
+
+    public function person_company(){
+        $data = $this->sys_model->person_info();
+        $this->assign('data',$data);
+        $this->display('estimate/user-company.html');
+    }
 
     public function api_get_xiaoqu_list(){
         $data = $this->wx_index_model->api_get_xiaoqu_list();

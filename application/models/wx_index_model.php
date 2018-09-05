@@ -266,4 +266,34 @@ class Wx_index_model extends MY_Model
         }
         return -1;
     }
+
+    public function save_person_name(){
+        $openid = $this->session->userdata('openid');
+        $check_ = $this->db->select()->from('fp_wx_user')->where('openid', $openid)->get()->row_array();
+        if($check_){
+            if($true_name = $this->input->post('true_name')){
+                $res = $this->db->where('id', $check_['id'])->update('fp_wx_user', array('true_name' => $true_name));
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    public function save_person_tel(){
+        $openid = $this->session->userdata('openid');
+        $check_ = $this->db->select()->from('fp_wx_user')->where('openid', $openid)->get()->row_array();
+        if($check_){
+            if($true_mobile = $this->input->post('true_mobile')){
+                $res = $this->db->where('id', $check_['id'])->update('fp_wx_user', array('true_mobile' => $true_mobile));
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
 }
