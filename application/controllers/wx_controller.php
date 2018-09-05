@@ -26,19 +26,24 @@ class Wx_controller extends MY_Controller
             $openid = 'oFzKgwbFEyC40jU6bS_HQ5sxM4X8';
             $this->session->set_userdata('openid', $openid);
         }
-        $res = $this->sys_model->check_openid($this->session->userdata('openid'));
-        if(!$check_person_check = $this->sys_model->check_person()){
-            $person_info = $this->getUserInfoById($this->session->userdata('openid'));
-            if($person_info){
-                $this->sys_model->save_person($person_info);
-            }
-        }
-
         if($this->session->userdata('wx_user_id')){
             $this->cismarty->assign('rel_name',$this->session->userdata('wx_rel_name'));
             $this->cismarty->assign('role_id',$this->session->userdata('wx_role_id'));
             $this->cismarty->assign('role_name',$this->session->userdata('wx_role_name'));
         }
+
+        $res = $this->sys_model->check_openid($this->session->userdata('openid'));
+        if(!$check_person_check = $this->sys_model->check_person()){
+            $person_info = $this->getUserInfoById($this->session->userdata('openid'));
+            if($person_info){
+                $s_p = $this->sys_model->save_person($person_info);
+                if($person_info['qr_scene_str'] == 'person_info' && $s_p == 1){
+                    redirect('wx_index/person_info');
+                }
+            }
+        }
+
+
 
     }
 
