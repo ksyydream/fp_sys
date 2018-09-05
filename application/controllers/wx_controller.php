@@ -46,7 +46,7 @@ class Wx_controller extends MY_Controller
                 }
                 $s_p = $this->sys_model->save_person($person_info);
                 if($person_info['qr_scene_str'] == 'person_info' && $s_p == 1){
-                    redirect('wx_index/person_info');
+                    //redirect('wx_index/person_info');
                 }
             }else{
                 $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('appsecret')));
