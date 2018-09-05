@@ -134,6 +134,15 @@ class Wx_index extends Wx_controller {
         $this->display('estimate/user-company.html');
     }
 
+    public function save_person_company(){
+        $res = $this->wx_index_model->save_person_company();
+        if($res){
+            redirect('wx_index/person_info');
+        }else{
+            $this->show_message('保存失败！');
+        }
+    }
+
     public function api_get_xiaoqu_list(){
         $data = $this->wx_index_model->api_get_xiaoqu_list();
         echo json_encode($data);

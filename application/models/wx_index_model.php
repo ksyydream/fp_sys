@@ -296,4 +296,19 @@ class Wx_index_model extends MY_Model
             return false;
         }
     }
+
+    public function save_person_company(){
+        $openid = $this->session->userdata('openid');
+        $check_ = $this->db->select()->from('fp_wx_user')->where('openid', $openid)->get()->row_array();
+        if($check_){
+            if($true_company = $this->input->post('true_company')){
+                $res = $this->db->where('id', $check_['id'])->update('fp_wx_user', array('true_company' => $true_company));
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
 }
