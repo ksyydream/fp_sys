@@ -103,6 +103,12 @@ class Sys_model extends MY_Model
         return false;
     }
 
+    public function person_info(){
+        $openid = $this->session->userdata('openid');
+        $check_ = $this->db->select()->from('fp_wx_user')->where('openid', $openid)->get()->row_array();
+        return $check_;
+    }
+
     public function save_person($person_info){
         $openid = $this->session->userdata('openid');
         if($check_ = $this->check_person()){
