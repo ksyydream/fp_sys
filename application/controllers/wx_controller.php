@@ -20,7 +20,7 @@ class Wx_controller extends MY_Controller
         $this->wxconfig['appid']=$this->config->item('appid');
         $this->wxconfig['appsecret']=$this->config->item('appsecret');
         //var_dump($this->wxconfig);
-        if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
+        //if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
             if(!$this->session->userdata('openid')){
                 $appid = $this->wxconfig['appid'];
                 $secret = $this->wxconfig['appsecret'];
@@ -41,11 +41,11 @@ class Wx_controller extends MY_Controller
                 $res = $this->sys_model->check_openid($this->session->userdata('openid'));
             }
 
-        }else{
-            $openid = 'oFzKgwbFEyC40jU6bS_HQ5sxM4X8';
-            $this->session->set_userdata('openid', $openid);
-            $res = $this->sys_model->check_openid($openid);
-        }
+        //}else{
+            //$openid = 'oFzKgwbFEyC40jU6bS_HQ5sxM4X8';
+            //$this->session->set_userdata('openid', $openid);
+            //$res = $this->sys_model->check_openid($openid);
+        //}
         if(!$check_person_check = $this->sys_model->check_person()){
             $person_info = $this->getUserInfoById($this->session->userdata('openid'));
             if($person_info){
