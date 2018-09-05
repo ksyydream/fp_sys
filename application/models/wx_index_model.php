@@ -217,26 +217,53 @@ class Wx_index_model extends MY_Model
         }
 
         $res_data['price'] = floor($res_data['price']);
+        //die(var_dump($res_data['price']));
         $res_data['success'] = true;
+        $this->save_pg_log($status,$price_id,$res_data['price'],$this->input->post('mianji'),$this->input->post('zlc'),$this->input->post('szlc'));
         return $res_data;
-
-
-
-
-
     }
 
-    public function get_zcs(){
-        $data['keyword'] = trim($this->input->post('search_')) ? trim($this->input->post('search_')) : '';
-        //$this->db->distinct('a.zcs');
-        $this->db->select('a.zcs,round(max(b_price)) min_price,round(max(b_price) * 1.15) as max_price',false);
-        $this->db->from('pg_xiaoqu a');
-        $this->db->join('pg_area b','a.area_id = b.id','left');
-        $this->db->join('pg_wy c','a.wy_id = c.id','left');
-        $this->db->where('a.xiaoqu', $data['keyword']);
-        $this->db->group_by('a.zcs');
-        $this->db->order_by('a.zcs','asc');
-        $data = $this->db->get()->result_array();
-        return $data;
+    public function save_pg_log($status,$price_id,$price_log,$mianji = null, $zlc = null, $szlc = null){
+        $openid = $this->session->userdata('openid');
+        $check_ = $this->db->select()->from('fp_wx_user')->where('openid', $openid)->get()->row_array();
+        $price_info = $this->db->select('b.*,c.area,d.flag,d.wy')->from('fp_xiaoqu_price a')
+            ->join('fp_xiaoqu b','a.xiaoqu_id = b.id','inner')
+            ->join('fp_area c','c.id = b.area_id','inner')
+            ->join('fp_wy d','d.id = a.wy_id','inner')
+            ->where('a.id', $price_id)->get()->row_array();
+        if($check_ && $price_info){
+            $insert_data = array(
+                'name' => $price_info['name'],
+                'other_name' => $price_info['other_name'],
+                'address' => $price_info['address'],
+                'wy' => $price_info['wy'],
+                'area' => $price_info['area'],
+                'wx_id' => $check_['id'],
+                'status' => $status
+            );
+            switch ($status){
+                case 1:
+
+                    break;
+                case 2:
+                    $insert_data['mianji'] = $mianji;
+                    $insert_data['zlc'] = $zlc;
+                    $insert_data['szlc'] = $szlc;
+                    break;
+                default:
+                    return -1;
+            }
+            $check_pg = $this->db->select()->from('fp_pg_log')->where($insert_data)->get()->row_array();
+            $insert_data['price_log'] = $price_log;
+            $insert_data['price_id'] = $price_id;
+            $insert_data['cdate'] = date('Y-m-d H:i:s',time());
+            if($check_pg){
+                $this->db->where('id',$check_pg['id'])->update('fp_pg_log', $insert_data);
+            }else{
+                $this->db->insert('fp_pg_log', $insert_data);
+            }
+            return 1;
+        }
+        return -1;
     }
 }

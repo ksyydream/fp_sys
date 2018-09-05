@@ -14,6 +14,7 @@ class Wx_api extends CI_controller {
     public function __construct()
     {
         parent::__construct();
+        ini_set('date.timezone','Asia/Shanghai');
         $this->load->model('wx_index_model');
 
     }

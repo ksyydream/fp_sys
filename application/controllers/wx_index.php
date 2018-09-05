@@ -28,7 +28,7 @@ class Wx_index extends Wx_controller {
             'person_info',
             'pg_list_new');
         if($this->session->userdata('wx_user_id') && !in_array($this->uri->segment(2), $ignore_methods)){
-            if($this->session->userdata('wx_role_id') >= 1){
+            /*if($this->session->userdata('wx_role_id') >= 1){
                 redirect('wx_salesman');
                 exit();
             }
@@ -37,6 +37,7 @@ class Wx_index extends Wx_controller {
                 exit();
             }
             $this->logout();
+            */
         }
     }
 
@@ -101,6 +102,8 @@ class Wx_index extends Wx_controller {
         $data = $this->wx_index_model->api_get_xiaoqu_list();
         echo json_encode($data);
     }
+
+
        public function calculator($max_price = 0, $min_price = 0){
 //            $data = $this->wx_index_model->calculator();
 //            $this->assign('data',$data);
