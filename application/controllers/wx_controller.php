@@ -36,10 +36,25 @@ class Wx_controller extends MY_Controller
         if(!$check_person_check = $this->sys_model->check_person()){
             $person_info = $this->getUserInfoById($this->session->userdata('openid'));
             if($person_info){
+                if($person_info['subscribe'] != 1){
+                    $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('appsecret')));
+                    $access_token = $this->wxjssdk_th->wxgetAccessToken();
+                    $img_url = $this->get_or_create_ticket($access_token);
+                    $this->cismarty->assign('img_url',$img_url);
+                    $this->cismarty->display('estimate/wx_guanzhu.html');
+                    exit();
+                }
                 $s_p = $this->sys_model->save_person($person_info);
                 if($person_info['qr_scene_str'] == 'person_info' && $s_p == 1){
                     redirect('wx_index/person_info');
                 }
+            }else{
+                $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('appsecret')));
+                $access_token = $this->wxjssdk_th->wxgetAccessToken();
+                $img_url = $this->get_or_create_ticket($access_token);
+                $this->cismarty->assign('img_url',$img_url);
+                $this->cismarty->display('estimate/wx_guanzhu.html');
+                exit();
             }
         }
 
@@ -115,13 +130,7 @@ class Wx_controller extends MY_Controller
         $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$access_token&openid=$uid&lang=$lang";
         $res = json_decode($this->request_post($url), true);
         $check_ = $this->checkIsSuc($res);
-        die(var_dump($check_));
-        if($check_['subscribe'] != 1){
-            $img_url = $this->get_or_create_ticket($access_token);
-            $this->cismarty->assign('img_url',$img_url);
-            $this->cismarty->display('estimate/wx_guanzhu.html');
-            exit();
-        }
+
         if($check_){
             return $res;
         }else{
