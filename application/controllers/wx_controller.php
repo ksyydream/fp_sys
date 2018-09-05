@@ -115,6 +115,7 @@ class Wx_controller extends MY_Controller
         $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$access_token&openid=$uid&lang=$lang";
         $res = json_decode($this->request_post($url), true);
         $check_ = $this->checkIsSuc($res);
+        die(var_dump($check_));
         if($check_['subscribe'] != 1){
             $img_url = $this->get_or_create_ticket($access_token);
             $this->cismarty->assign('img_url',$img_url);
