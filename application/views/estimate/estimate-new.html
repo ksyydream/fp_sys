@@ -326,6 +326,9 @@ function choose_xiaoqu(id) {
                 $("#yy_min_c").val(item.min_c);
                 $("#yy_price_id").val(item.id);
                 $("#yy_flag").html(item.flag);
+                $("#yy_mianji").val('');
+                $("#yy_zlc").val('');
+                $("#yy_szlc").val('');
                 if(item.flag == 2){
                     $("#yy_szlc_div").hide();
                 }else{
@@ -351,6 +354,9 @@ function choose_wy(flag,min_c,max_c,wy,id){
       $("#yy_max_c").val(max_c);
     $("#yy_min_c").val(min_c);
     $("#yy_price_id").val(id);
+    $("#yy_mianji").val('');
+    $("#yy_zlc").val('');
+    $("#yy_szlc").val('');
     $("#my-actions-search").modal('close');
 }
 </script>
