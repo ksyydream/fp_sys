@@ -96,17 +96,11 @@
 <script type="text/x-handlebars-template" id="tpi-list-item">
     {{#each this}}
     <li><a href="user-detail.html"><div class="am-u-sm-8">
-        <span class="am-h-name">光大花园-多层</span>
+        <span class="am-h-name">{{name}}-{{wy}}</span>
         <span class="am-h-pgstyle">快评 精评</span>
     </div>
         <div class="am-u-sm-4 am-form-label">2018/09/04</div>
         <i class="am-icon-chevron"></i></a></li>
-
-    <!--<li class="am-list-item-desced" data-id="{{id}}">-->
-       <!--<a href="{{alt}}" class="am-list-item-hd" target="_blank">{{title}}</a>-->
-
-      <!--<div class="am-list-item-text">{{content}}</div>-->
-    <!--</li>-->
     {{/each}}
 </script>
 <script type="text/javascript">
@@ -124,7 +118,7 @@
             this.total = null;
 
             this.getURL = function(params) {
-                var queries = ['callback=?'];
+                var queries = [];
                 for (var key in  params) {
                     if (key !== 'start') {
                         queries.push(key + '=' + params[key]);
@@ -238,9 +232,7 @@
                 api: '/wx_index/get_pg_log_list',
                 params: {
                     start: 0,
-                    type: 'music',
-                    count: 10,
-                    loc: 'beijing'
+                    count: 8
                 }
             });
             app.init();
