@@ -91,6 +91,11 @@
             layer.msg("请完善电话后保存!");
             return false;
         }
+        var ret = /^1\d{10}$/;
+        if(!ret.test(name)){
+            layer.msg('请输入规范的手机号码!', {icon: 2});
+            return false;
+        }
         $("#save_form").submit();
     })
 </script>

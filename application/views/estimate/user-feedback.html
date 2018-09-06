@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>修改用户信息</title>
+  <title>意见反馈</title>
   <meta name="description" content="我的">
   <meta name="keywords" content="index">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
@@ -56,18 +56,18 @@
 </head>
 <body>
 <div class="am-main">
-  <form class="am-form">
+  <form class="am-form"  method="post" action="/wx_index/save_person_opinion" id="save_form" >
     <div class="am-form-group am-edit-user-info">
       <label for="doc-ipt-1">手机号码</label>
-      <input type="text" class="am-edit-txt" id="doc-ipt-1">
+      <input type="text" name="moblie" value="{{$data.true_mobile|default:''}}" class="am-edit-txt phone4js" id="doc-ipt-1">
     </div>
     <div class="am-form-group am-edit-user-info">
       <label for="doc-ipt-1">反馈意见</label>
-      <textarea name="" id="" rows="5" class="am-textarea"></textarea>
+      <textarea name="remark" id="remark" rows="5" class="am-textarea"></textarea>
     </div>
     <div class="am-accu-btns">
       <div class="am-u-sm-12 am-u-sm-centered">  
-        <a class="am-btn am-btn-danger am-btn-save" href="">提交反馈意见</a>
+        <a class="am-btn am-btn-danger am-btn-save" id="save_a" href="javascript:;">提交反馈意见</a>
       </div> 
     </div>
  </form>
@@ -79,3 +79,32 @@
 </div>
 </body>
 </html>
+<script src="/assets/js/jquery-1.7.1.js"></script>
+<script src="/assets/js/layer/layer.js"></script>
+<script type="text/javascript">
+    $(".phone4js").keyup(function () {
+        $(this).val($(this).val().replace(/[^0-9]/g, ''));
+    }).blur(function(){
+        $(this).val($(this).val().replace(/[^0-9]/g, ''));
+    }).bind("paste", function () {  //CTR+V事件处理
+        $(this).val($(this).val().replace(/[^0-9]/g, ''));
+    }).css("ime-mode", "disabled"); //CSS设置输入法不可用
+    $("#save_a").click(function(){
+        var name = $.trim($("#doc-ipt-1").val());
+        if(name == ""){
+            layer.msg("请完善电话后提交!");
+            return false;
+        }
+        var ret = /^1\d{10}$/;
+        if(!ret.test(name)){
+            layer.msg('请输入规范的手机号码!', {icon: 2});
+            return false;
+        }
+        var remark = $.trim($("#remark").val());
+        if(remark == ""){
+            layer.msg("请完善意见后提交!");
+            return false;
+        }
+        $("#save_form").submit();
+    })
+</script>
