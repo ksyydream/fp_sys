@@ -169,6 +169,11 @@ class Wx_index extends Wx_controller {
         echo json_encode($data);
     }
 
+    public function get_pg_log_list(){
+        $data = $this->wx_index_model->get_pg_log_list();
+        echo json_encode($data);
+    }
+
 
        public function calculator($max_price = 0, $min_price = 0){
 //            $data = $this->wx_index_model->calculator();

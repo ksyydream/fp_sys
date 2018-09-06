@@ -332,4 +332,26 @@ class Wx_index_model extends MY_Model
             return false;
         }
     }
+
+    public function get_pg_log_list(){
+        $openid = $this->session->userdata('openid');
+        $check_ = $this->db->select()->from('fp_wx_user')->where('openid', $openid)->get()->row_array();
+        $data['start'] = isset($_GET['start']) ? $_GET['start'] : '';
+        $data['count'] = isset($_GET['count']) ? $_GET['count'] : '';
+
+        $this->db->select('count(1) num');
+        $this->db->from('fp_pg_log');
+        $this->db->where('wx_id', $check_['id']);
+        $rs_total = $this->db->get()->row();
+        //总记录数
+        $data['total'] = $rs_total->num;
+        //list
+        $this->db->select("");
+        $this->db->from("fp_pg_log");
+        $this->db->where('wx_id', $check_['id']);
+        $this->db->limit($data['count'], $data['start'] );
+        $this->db->order_by('cdate','desc');
+        $data['events'] = $this->db->get()->result_array();
+        return $data;
+    }
 }
