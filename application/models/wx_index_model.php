@@ -312,4 +312,24 @@ class Wx_index_model extends MY_Model
             return false;
         }
     }
+
+    public function save_person_opinion(){
+        $openid = $this->session->userdata('openid');
+        $check_ = $this->db->select()->from('fp_wx_user')->where('openid', $openid)->get()->row_array();
+        if($check_){
+            if($moblie = $this->input->post('moblie') && $remark = $this->input->post('remark')){
+                $this->db->insert('fp_opinion',array(
+                    'mobile' => $moblie,
+                    'remark' => $remark,
+                    'cdate' => date('Y-m-d H:i:s',time()),
+                    'wx_id' => $check_['id']
+                ));
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
 }
