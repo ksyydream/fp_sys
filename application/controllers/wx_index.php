@@ -143,6 +143,21 @@ class Wx_index extends Wx_controller {
         }
     }
 
+    public function person_feedback(){
+        $data = $this->sys_model->person_info();
+        $this->assign('data',$data);
+        $this->display('estimate/user-feedback.html');
+    }
+
+    public function save_person_opinion(){
+        $res = $this->wx_index_model->save_person_opinion();
+        if($res){
+            $this->show_message('提交成功',site_url('wx_index/person_info'));
+        }else{
+            $this->show_message('保存失败！');
+        }
+    }
+
     public function person_pg_history(){
         $data = $this->sys_model->person_info();
         $this->assign('data',$data);
