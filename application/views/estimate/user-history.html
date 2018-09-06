@@ -1,80 +1,256 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>历史查询记录</title>
-  <meta name="description" content="历史查询记录">
-  <meta name="keywords" content="index">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="icon" type="image/png" href="/assets/i/favicon.png">
-  <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
-  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-  <link rel="stylesheet" href="/assets/css/amazeui.css"/>
-  <link rel="stylesheet" href="/assets/css/app.css">
-  <script type="text/javascript">
-    (function() {
-        var rem, dpr, time, doc = window.document,
-        docEl = doc.documentElement,
-        viewport = doc.querySelector('meta[name="viewport"]'),
-        zoomScale,
-        zoomScaleNum;
-        if (viewport) {            
-            zoomScale = viewport.getAttribute("content").match(/initial\-scale=(["']?)([\d\.]+)\1?/);
-            if(zoomScale){
-              zoomScaleNum = parseFloat(zoomScale[2]);
-              dpr = parseInt(1 / zoomScaleNum);
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>历史查询记录</title>
+    <meta name="description" content="历史查询记录">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="icon" type="image/png" href="/assets/i/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <link rel="stylesheet" href="/assets/css/amazeui.css"/>
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <script type="text/javascript">
+        (function() {
+            var rem, dpr, time, doc = window.document,
+                    docEl = doc.documentElement,
+                    viewport = doc.querySelector('meta[name="viewport"]'),
+                    zoomScale,
+                    zoomScaleNum;
+            if (viewport) {
+                zoomScale = viewport.getAttribute("content").match(/initial\-scale=(["']?)([\d\.]+)\1?/);
+                if(zoomScale){
+                    zoomScaleNum = parseFloat(zoomScale[2]);
+                    dpr = parseInt(1 / zoomScaleNum);
+                }
             }
-        }
-        if (!dpr && !zoomScaleNum) {
-            var os = (window.navigator.appVersion.match(/android/gi), window.navigator.appVersion.match(/iphone/gi)),
-            dpr = window.devicePixelRatio;
-            dpr = os ? dpr >= 3 ? 3 : dpr >= 2 ? 2 : 1 : 1;
-            zoomScaleNum = 1 / dpr;
-        }
-        window.addEventListener("resize",
-            function() {
-                clearTimeout(time);
-                time = setTimeout(changeRem, 300);
-            },false);
-      //改变基准rem
-        function changeRem(){
-            var docWidth = docEl.getBoundingClientRect().width;
-            if(docWidth / dpr > 540){
-              docWidth = 540 * dpr;
+            if (!dpr && !zoomScaleNum) {
+                var os = (window.navigator.appVersion.match(/android/gi), window.navigator.appVersion.match(/iphone/gi)),
+                        dpr = window.devicePixelRatio;
+                dpr = os ? dpr >= 3 ? 3 : dpr >= 2 ? 2 : 1 : 1;
+                zoomScaleNum = 1 / dpr;
             }
-            //rem字号以320下的16px为基线进行等比缩放
-            rem = docWidth/320 * 16;
-            docEl.style.fontSize = rem + "px";
-        }
-        changeRem();
-    })();
-  </script> 
-  
+            window.addEventListener("resize",
+                    function() {
+                        clearTimeout(time);
+                        time = setTimeout(changeRem, 300);
+                    },false);
+            //改变基准rem
+            function changeRem(){
+                var docWidth = docEl.getBoundingClientRect().width;
+                if(docWidth / dpr > 540){
+                    docWidth = 540 * dpr;
+                }
+                //rem字号以320下的16px为基线进行等比缩放
+                rem = docWidth/320 * 16;
+                docEl.style.fontSize = rem + "px";
+            }
+            changeRem();
+        })();
+    </script>
+
 </head>
 <body>
 <div class="am-main">
-  <ul class="am-data-history am-form">
-    <li><a href="user-detail.html"><div class="am-u-sm-8">
-      <span class="am-h-name">光大花园-多层</span>
-      <span class="am-h-pgstyle">快评 精评</span>
+    <div id="wrapper" data-am-widget="list_news" class="am-list-news am-list-news-default">
+        <div class="am-list-news-bd">
+            <div class="pull-action loading" id="pull-down">
+      <span class="am-icon-arrow-down pull-label"
+            id="pull-down-label"> 下拉刷新</span>
+                <span class="am-icon-spinner am-icon-spin"></span>
+            </div>
+            <ul class="am-data-history am-form" id="events-list">
+                <li><a href="user-detail.html"><div class="am-u-sm-8">
+                    <span class="am-h-name">光大花园-多层</span>
+                    <span class="am-h-pgstyle">快评 精评</span>
+                </div>
+                    <div class="am-u-sm-4 am-form-label">2018/09/04</div>
+                    <i class="am-icon-chevron"></i></a></li>
+                <li><div class="am-u-sm-8">
+                    <span class="am-h-name">光大花园-多层</span>
+                    <span class="am-h-pgstyle">快评 精评</span>
+                </div>
+                    <div class="am-u-sm-4 am-form-label">2018/09/04</div>
+                    <i class="am-icon-chevron"></i></li>
+            </ul>
+            <div class="pull-action" id="pull-up">
+      <span class="am-icon-arrow-down pull-label"
+            id="pull-up-label"> 上拉加载更多</span>
+                <span class="am-icon-spinner am-icon-spin"></span>
+            </div>
+        </div>
     </div>
-    <div class="am-u-sm-4 am-form-label">2018/09/04</div>
-    <i class="am-icon-chevron"></i></a></li>
-    <li><a href="user-detail.html"><div class="am-u-sm-8">
-      <span class="am-h-name">光大花园-多层</span>
-      <span class="am-h-pgstyle">快评 精评</span>
+    <!-- 搜索弹框end -->
+    <div class="am-menu am-g-fixed am-g-menu">
+        <div class="am-u-sm-6"><a href="" class="am-btn-home"><img src="assets/i/home.jpg" alt=""></a></div>
+        <div class="am-u-sm-6"><a href="" class="am-btn-home"><img src="assets/i/user_over.jpg" alt=""></a></div>
     </div>
-    <div class="am-u-sm-4 am-form-label">2018/09/04</div>
-    <i class="am-icon-chevron"></i></a></li>
-  </ul>
-<!-- 搜索弹框end -->
-  <div class="am-menu am-g-fixed am-g-menu">
-    <div class="am-u-sm-6"><a href="" class="am-btn-home"><img src="/assets/i/home.jpg" alt=""></a></div>
-    <div class="am-u-sm-6"><a href="/wx_index/person_info" class="am-btn-home"><img src="/assets/i/user_over.jpg" alt=""></a></div>
-  </div>
 </div>
+<script src="/assets/js/jquery-1.7.1.js"></script>
+<script src="/assets/js/handlebars.min.js"></script>
+<script src="/assets/js/amazeui.js"></script>
+<script type="text/x-handlebars-template" id="tpi-list-item">
+    {{#each this}}
+    <li><a href="user-detail.html"><div class="am-u-sm-8">
+        <span class="am-h-name">光大花园-多层</span>
+        <span class="am-h-pgstyle">快评 精评</span>
+    </div>
+        <div class="am-u-sm-4 am-form-label">2018/09/04</div>
+        <i class="am-icon-chevron"></i></a></li>
+
+    <!--<li class="am-list-item-desced" data-id="{{id}}">-->
+       <!--<a href="{{alt}}" class="am-list-item-hd" target="_blank">{{title}}</a>-->
+
+      <!--<div class="am-list-item-text">{{content}}</div>-->
+    <!--</li>-->
+    {{/each}}
+</script>
+<script type="text/javascript">
+    (function($) {
+        var EventsList = function(element, options) {
+            var $main = $('#wrapper');
+            var $list = $main.find('#events-list');
+            var $pullDown = $main.find('#pull-down');
+            var $pullDownLabel = $main.find('#pull-down-label');
+            var $pullUp = $main.find('#pull-up');
+            var topOffset = -$pullDown.outerHeight();
+
+            this.compiler = Handlebars.compile($('#tpi-list-item').html());
+            this.prev = this.next = this.start = options.params.start;
+            this.total = null;
+
+            this.getURL = function(params) {
+                var queries = ['callback=?'];
+                for (var key in  params) {
+                    if (key !== 'start') {
+                        queries.push(key + '=' + params[key]);
+                    }
+                }
+                queries.push('start=');
+                return options.api + '?' + queries.join('&');
+            };
+
+            this.renderList = function(start, type) {
+                var _this = this;
+                var $el = $pullDown;
+
+                if (type === 'load') {
+                    $el = $pullUp;
+                }
+
+                $.getJSON(this.URL + start).then(function(data) {
+                    console.log(data);
+                    _this.total = data.total;
+                    var html = _this.compiler(data.events);
+                    if (type === 'refresh') {
+                        $list.children('li').first().before(html);
+                    } else if (type === 'load') {
+                        $list.append(html);
+                    } else {
+                        $list.html(html);
+                    }
+
+                    // refresh iScroll
+                    setTimeout(function() {
+                        _this.iScroll.refresh();
+                    }, 100);
+                }, function() {
+                    console.log('Error...')
+                }).always(function() {
+                    _this.resetLoading($el);
+                    if (type !== 'load') {
+                        _this.iScroll.scrollTo(0, topOffset, 800, $.AMUI.iScroll.utils.circular);
+                    }
+                });
+            };
+
+            this.setLoading = function($el) {
+                $el.addClass('loading');
+            };
+
+            this.resetLoading = function($el) {
+                $el.removeClass('loading');
+            };
+
+            this.init = function() {
+                var myScroll = this.iScroll = new $.AMUI.iScroll('#wrapper', {
+                    click: true
+                });
+                // myScroll.scrollTo(0, topOffset);
+                var _this = this;
+                var pullFormTop = false;
+                var pullStart;
+
+                this.URL = this.getURL(options.params);
+                this.renderList(options.params.start);
+
+                myScroll.on('scrollStart', function() {
+                    if (this.y >= topOffset) {
+                        pullFormTop = true;
+                    }
+
+                    pullStart = this.y;
+                    // console.log(this);
+                });
+
+                myScroll.on('scrollEnd', function() {
+                    if (pullFormTop && this.directionY === -1) {
+                        _this.handlePullDown();
+                    }
+                    pullFormTop = false;
+
+                    // pull up to load more
+                    if (pullStart === this.y && (this.directionY === 1)) {
+                        _this.handlePullUp();
+                    }
+                });
+            };
+
+            this.handlePullDown = function() {
+                console.log('handle pull down');
+                if (this.prev > 0) {
+                    this.setLoading($pullDown);
+                    this.prev -= options.params.count;
+                    this.renderList(this.prev, 'refresh');
+                } else {
+                    console.log('别刷了，没有了');
+                }
+            };
+
+            this.handlePullUp = function() {
+                console.log('handle pull up');
+                if (this.next < this.total) {
+                    this.setLoading($pullUp);
+                    this.next += options.params.count;
+                    this.renderList(this.next, 'load');
+                } else {
+                    console.log(this.next);
+                    // this.iScroll.scrollTo(0, topOffset);
+                }
+            }
+        };
+        $(function() {
+            var app = new EventsList(null, {
+                api: 'https://api.douban.com/v2/event/list',
+                params: {
+                    start: 100,
+                    type: 'music',
+                    count: 10,
+                    loc: 'beijing'
+                }
+            });
+            app.init();
+        });
+        document.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, false);
+    })(window.jQuery);
+
+
+</script>
 </body>
 </html>
