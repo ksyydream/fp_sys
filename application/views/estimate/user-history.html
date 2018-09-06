@@ -65,18 +65,7 @@
                 <span class="am-icon-spinner am-icon-spin"></span>
             </div>
             <ul class="am-data-history am-form" id="events-list">
-                <li><a href="user-detail.html"><div class="am-u-sm-8">
-                    <span class="am-h-name">光大花园-多层</span>
-                    <span class="am-h-pgstyle">快评 精评</span>
-                </div>
-                    <div class="am-u-sm-4 am-form-label">2018/09/04</div>
-                    <i class="am-icon-chevron"></i></a></li>
-                <li><div class="am-u-sm-8">
-                    <span class="am-h-name">光大花园-多层</span>
-                    <span class="am-h-pgstyle">快评 精评</span>
-                </div>
-                    <div class="am-u-sm-4 am-form-label">2018/09/04</div>
-                    <i class="am-icon-chevron"></i></li>
+
             </ul>
             <div class="pull-action" id="pull-up">
       <span class="am-icon-arrow-down pull-label"
@@ -98,9 +87,9 @@
     {{#each this}}
     <li><a href="user-detail.html"><div class="am-u-sm-8">
         <span class="am-h-name">{{name}}-{{wy}}</span>
-        <span class="am-h-pgstyle">快评 精评</span>
+        <span class="am-h-pgstyle">{{status_name}}</span>
     </div>
-        <div class="am-u-sm-4 am-form-label">2018/09/04</div>
+        <div class="am-u-sm-4 am-form-label">{{cdate_day}}</div>
         <i class="am-icon-chevron"></i></a></li>
     {{/each}}
 </script>

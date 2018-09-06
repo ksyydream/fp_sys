@@ -341,14 +341,17 @@ class Wx_index_model extends MY_Model
 
         $this->db->select('count(1) num');
         $this->db->from('fp_pg_log');
-        //$this->db->where('wx_id', $check_['id']);
+        $this->db->where('wx_id', $check_['id']);
         $rs_total = $this->db->get()->row();
         //总记录数
         $data['total'] = $rs_total->num;
         //list
-        $this->db->select("");
+        $this->db->select("id,wy,name,case status
+when 1 then '快评'
+else '精评'
+end as status_name,DATE_FORMAT(cdate,'%Y/%m/%d') cdate_day",false);
         $this->db->from("fp_pg_log");
-        //$this->db->where('wx_id', $check_['id']);
+        $this->db->where('wx_id', $check_['id']);
         $this->db->limit($data['count'], $data['start']);
         $this->db->order_by('cdate','desc');
         $data['events'] = $this->db->get()->result_array();
