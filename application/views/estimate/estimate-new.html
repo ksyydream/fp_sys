@@ -63,13 +63,18 @@
         <p class="am-house-p" id="am-price-num"><span class="am-house-num">-----</span><br />
         元/㎡</p></div>
     </div>
-    <div class="am-g">
-      <ul class="am-u-sm-9 am-u-sm-centered am-tags-ul">
-        <li><span class="am-house-tag am-htype">大户型</span>|</li> 
-        <li><span class="am-house-tag am-floor">高楼层</span>|</li>
-        <li><span class="am-house-tag am-hot">超热</span></li>   
-      </ul>
-   </div>
+      <div class="am-float-tag am-float-tag1">
+          <em class="am-em-tag em-hty-tag3">大户型</em>
+          <!-- 大 am-hty-tag1 中 am-hty-tag2 小am-hty-tag3  -->
+      </div>
+      <div class="am-float-tag am-float-tag2">
+          <em class="am-em-tag em-floor-tag4">中层</em>
+          <!-- 底5  低3 中1 高2 顶4 -->
+      </div>
+      <div class="am-float-tag am-float-tag3">
+          <em class="am-em-tag em-hot-tag3">热度</em>
+          <!-- 热2 一般3  冷1 -->
+      </div>
   </div>
   <div class="am-fast-estimate">
   <form class="am-form am-form-horizontal">
@@ -218,8 +223,8 @@
                $.post('/wx_api/api_get_price4jq',{status:1,price_id:id_},function(data){
                    var items = JSON.parse(data);
                    if(items.success){
-                       show_num(items.price);
                        location.href="#my-scrollspy";
+                       show_num(items.price);
                    }else{
                        layer.msg(items.err_msg);
                        return false;
@@ -270,23 +275,30 @@
       })
   });
 
-  function show_num(n) {
-     $(".am-house-num").html("");
+function show_num(n,a) {
+    $(".am-house-num").html("");
     var it = $(".am-house-num i");
     var len = String(n).length;
     for (var i = 0; i < len; i++) {
-      if (it.length <= i) {
-        $(".am-house-num").append("<i></i>");
-      }
-      var num = String(n).charAt(i);
-      var y = -parseInt(num) * 30;
-      var obj = $(".am-house-num i").eq(i);
-      obj.animate({
-        backgroundPosition: '(0 ' + String(y) + 'px)'
-      }, 'slow', 'swing', function () { }
-      );
+        if (it.length <= i) {
+            $(".am-house-num").append("<i></i>");
+        }
+        var num = String(n).charAt(i);
+        var y = -parseInt(num) * 30;
+        var obj = $(".am-house-num i").eq(i);
+        obj.animate({
+            backgroundPosition: '(0 ' + String(y) + 'px)'
+        }, 'slow', 'swing', function () {
+            if($(".am-house-num i").is(":animated")&&a==0){//精准评估
+                $(".am-re-price").animate({top:'27%'},'slow','swing',function(){
+                    $(".am-float-tag").fadeIn();
+                });}
+            else if($(".am-house-num i").is(":animated")&&a==1){//快评
+                $(".am-re-price").animate({top:'18%'},'slow','swing',function(){
+                    $(".am-float-tag").fadeOut();});}
+        });
     }
-  }
+}
 
 function  beginsearch() {
 
