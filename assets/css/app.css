@@ -90,7 +90,9 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-hidden-btn-p:after{transform:rotate(180deg);top:.4rem;}
 .am-accu-btns{padding:1rem 0 0; background: #f4f4f8;}
 .am-accu-btns .am-u-sm-12{ height: 2.3rem;}
-.am-accu-btns .am-btn{padding:0; height: 2.3rem; line-height: 2.3rem; font-size: .82rem; background: #f8ad35;border:none; width:48%; float: left;}
+.am-accu-btns .am-btn{margin:0 auto;padding:0; height: 2.3rem;
+    line-height: 2.3rem; font-size: .82rem; background: #f8ad35;border:none; width:48%;  display: block;}
+.am-accu-btns .am-fleft{float: left;}
 .am-accu-btns .am-btn1{float: right; background: #fff; color: #666;}
 .am-accu-btns .am-btn1:visited{color: #666;}
 .am-accurate-estimate .am-u-sm-10{padding: 0;}
@@ -145,6 +147,14 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-data-history .am-icon-chevron{top:1.3rem;}
 #wrapper {position: absolute; top:0;bottom: 0; overflow: hidden; margin: 0; width: 100%; padding: 0 8px;background-color: #f8f8f8;}
 .pull-action { text-align: center; height: 45px; line-height: 45px;color: #999; font-size: 1rem;}
-.pull-action .am-icon-spin {display: none;}
-.pull-action.loading .am-icon-spin {display: block;}
+.pull-action .am-icon-spin {display: none;}.pull-action.loading .am-icon-spin {display: block;}
 .pull-action.loading .pull-label {display: none;}
+
+/*历史记录详情页*/
+.am-fast-price{background: #fff;font-size: .9rem;}
+.am-fast-price:first-child{margin-bottom:1rem;}
+.am-f-p-inner{border-bottom: 1px solid #e5e5e5;padding: 0 0 1rem .8rem;}
+.am-f-p-inner .am-f-p-num{ font-size: 2.5rem; font-weight: bold;}
+.am-f-p-inner i{ margin-left: .5rem; font-size: .7rem;font-style: normal; color: #333;}
+.am-f-p-num{font-size: .9rem;}
+.am-f-p-inner .f-p-tag{margin-left: .5rem;padding:0 .3rem;color:#999; border:1px solid #999; border-radius:10px; display:inline-block;}
