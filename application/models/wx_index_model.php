@@ -226,7 +226,7 @@ class Wx_index_model extends MY_Model
     public function save_pg_log($status,$price_id,$price_log,$mianji = null, $zlc = null, $szlc = null){
         $openid = $this->session->userdata('openid');
         $check_ = $this->db->select()->from('fp_wx_user')->where('openid', $openid)->get()->row_array();
-        $price_info = $this->db->select('b.*,c.area,d.flag,d.wy')->from('fp_xiaoqu_price a')
+        $price_info = $this->db->select('b.*,c.area,d.flag,d.wy,a.price,c.area_ratio')->from('fp_xiaoqu_price a')
             ->join('fp_xiaoqu b','a.xiaoqu_id = b.id','inner')
             ->join('fp_area c','c.id = b.area_id','inner')
             ->join('fp_wy d','d.id = a.wy_id','inner')
@@ -254,6 +254,7 @@ class Wx_index_model extends MY_Model
                     return -1;
             }
             $check_pg = $this->db->select()->from('fp_pg_log')->where($insert_data)->get()->row_array();
+            $insert_data['price_1'] = $price_info['price'] * $price_info['area_ratio'];
             $insert_data['price_log'] = $price_log;
             $insert_data['flag'] = $price_info['flag'];
             $insert_data['price_id'] = $price_id;
@@ -355,6 +356,13 @@ end as status_name,DATE_FORMAT(cdate,'%Y/%m/%d') cdate_day",false);
         $this->db->limit($data['count'], $data['start']);
         $this->db->order_by('cdate','desc');
         $data['events'] = $this->db->get()->result_array();
+        return $data;
+    }
+
+    public function person_pg_histroy_detail($id){
+        $openid = $this->session->userdata('openid');
+        $check_ = $this->db->select()->from('fp_wx_user')->where('openid', $openid)->get()->row_array();
+        $data = $this->db->select()->from('fp_pg_log')->where(array('id' => $id , 'wx_id' => $check_['id']))->get()->row_array();
         return $data;
     }
 }

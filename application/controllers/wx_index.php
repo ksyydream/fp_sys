@@ -174,8 +174,10 @@ class Wx_index extends Wx_controller {
     }
 
     public function person_pg_histroy_detail($id){
-        //$data = $this->sys_model->person_pg_histroy_detail($id);
-        //$this->assign('data',$data);
+        $data = $this->wx_index_model->person_pg_histroy_detail($id);
+        if(!$data)
+            $this->show_message('未找到记录',site_url('wx_index/person_info'));
+        $this->assign('data',$data);
         $this->display('estimate/user-history-detail.html');
     }
 
