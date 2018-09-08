@@ -95,13 +95,13 @@
     <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">坐落位置</label>
       <div class="am-u-sm-9">
-        <p class="am-spec-input" id="yy_address">长江北路2191号</p>
+        <p class="am-spec-input" id="yy_address"></p>
       </div>
     </div>
     <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">所属区域</label>
       <div class="am-u-sm-9">
-        <p class="am-spec-input" id="yy_area">玉山镇</p>
+        <p class="am-spec-input" id="yy_area"></p>
       </div>
     </div>
   </form>
@@ -224,7 +224,8 @@
                    var items = JSON.parse(data);
                    if(items.success){
                        location.href="#my-scrollspy";
-                       show_num(items.price);
+                       show_num(items.price,1);
+
                    }else{
                        layer.msg(items.err_msg);
                        return false;
@@ -264,7 +265,20 @@
                $.post('/wx_api/api_get_price4jq',{status:2,price_id:id_, mianji:mianji_,zlc:zlc_,szlc:szlc_},function(data){
                    var items = JSON.parse(data);
                    if(items.success){
-                       show_num(items.price);
+                       show_num(items.price,0);
+                       var div_tag3 = $('.am-float-tag3').eq(0);
+                       var div_tag2 = $('.am-float-tag2').eq(0);
+                       var div_tag1 = $('.am-float-tag1').eq(0);
+                       div_tag3.find('em').attr('class','am-em-tag ' + items.hot_class);
+                       if(items.flag == 1){
+                           div_tag1.show();
+                           div_tag1.find('em').attr('class','am-em-tag ' + items.lc_class);
+                           div_tag1.find('em').eq(0).html(items.lc_name);
+                       }else{
+                           div_tag1.hide();
+                       }
+                       div_tag2.find('em').attr('class','am-em-tag ' + items.mj_class);
+                       div_tag2.find('em').eq(0).html(items.mj_name);
                        location.href="#my-scrollspy";
                    }else{
                        layer.msg(items.err_msg);

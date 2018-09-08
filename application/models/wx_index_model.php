@@ -136,7 +136,7 @@ class Wx_index_model extends MY_Model
             $res_data['err_msg'] = '请先选择小区';
             return $res_data;
         }
-        $price_info = $this->db->select('a.*,c.area_ratio,c.hot,d.flag,d.ratio,d.mm_ratio,d.min_c,d.max_c')->from('fp_xiaoqu_price a')
+        $price_info = $this->db->select('a.*,c.area_ratio,c.hot_class,c.hot,d.flag,d.ratio,d.mm_ratio,d.min_c,d.max_c')->from('fp_xiaoqu_price a')
             ->join('fp_xiaoqu b','a.xiaoqu_id = b.id','inner')
             ->join('fp_area c','c.id = b.area_id','inner')
             ->join('fp_wy d','d.id = a.wy_id','inner')
@@ -149,6 +149,7 @@ class Wx_index_model extends MY_Model
         $res_data['price'] *= $price_info['area_ratio']; //乘以区域系数
         $res_data['flag'] = $price_info['flag']; //物业类型
         $res_data['hot'] = $price_info['hot']; //区域热度
+        $res_data['hot_class'] = $price_info['hot_class']; //区域热度
         switch ($status){
             case 1:
 
@@ -182,6 +183,14 @@ class Wx_index_model extends MY_Model
                     //楼层系数
                     if($szlc == 1 || $szlc == $zlc){
                         $res_data['price'] *= $price_info['mm_ratio']; //乘以顶底楼系数
+                        if($szlc == 1){
+                            $res_data['lc_class'] = 'em-floor-tag5';
+                            $res_data['lc_name'] = '底层';
+                        }
+                        if($szlc == $zlc){
+                            $res_data['lc_class'] = 'em-floor-tag4';
+                            $res_data['lc_name'] = '顶层';
+                        }
                     }else{
                         $xs_ = $szlc / $zlc;
                         $xs_ = floor($xs_);
@@ -196,6 +205,8 @@ class Wx_index_model extends MY_Model
                             return $res_data;
                         }
                         $res_data['price'] *= $lc_info['ratio']; //乘以楼层系数
+                        $res_data['lc_class'] = $lc_info['class_name'];
+                        $res_data['lc_name'] = $lc_info['remark'];
                     }
                     //面积系数
                     $mj_info = $this->db->select()->from('fp_ratio')
@@ -208,7 +219,11 @@ class Wx_index_model extends MY_Model
                         $res_data['err_msg'] = '面积信息异常!';
                         return $res_data;
                     }
+                    $res_data['mj_class'] = $mj_info['class_name'];
+                    $res_data['mj_name'] = $mj_info['remark'];
                     $res_data['price'] *= $mj_info['ratio']; //乘以面积系数
+
+
                 }
                 break;
             default:
@@ -248,7 +263,7 @@ class Wx_index_model extends MY_Model
                 case 2:
                     $insert_data['mianji'] = $mianji;
                     $insert_data['zlc'] = $zlc;
-                    $insert_data['szlc'] = $szlc;
+                    $insert_data['szlc'] = $szlc ? $szlc : -1;
                     break;
                 default:
                     return -1;

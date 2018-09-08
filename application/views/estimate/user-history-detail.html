@@ -58,62 +58,67 @@
 <div class="am-main">
   <div class="am-fast-price">
      <div class="am-f-p-inner">
-      <span class="am-f-p-num">1200</span><i>元/㎡</i><br />
+      <span class="am-f-p-num">{{$data.price_1}}</span><i>元/㎡</i><br />
       <span class="f-p-tag">快速评估</span>
     </div>
       <div class="am-form am-form-horizontal">
      <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">小区</label>
       <div class="am-u-sm-9">
-       <p class="am-spec-input">阳光新天地</p>
+       <p class="am-spec-input">{{$data.name}}</p>
       </div>
     </div>
     <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">物业类型</label>
       <div class="am-u-sm-9 am-form-select">         
-        <p class="am-spec-input">多层</p>
+        <p class="am-spec-input">{{$data.name}}</p>
       </div>
     </div>
     <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">坐落位置</label>
       <div class="am-u-sm-9">
-        <p class="am-spec-input">长江北路2191号</p>
+        <p class="am-spec-input">{{$data.addresss}}</p>
       </div>
     </div>
     <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">所属区域</label>
       <div class="am-u-sm-9">
-        <p class="am-spec-input">玉山镇</p>
+        <p class="am-spec-input">{{$data.area}}</p>
       </div>
     </div>
   </div>
   </div>
+    {{if $data.status == 2}}
     <div class="am-fast-price">
-     <div class="am-f-p-inner">
-      <span class="am-f-p-num">1200</span><i>元/㎡</i><br />
-      <span class="f-p-tag">精准评估</span>
+        <div class="am-f-p-inner">
+            <span class="am-f-p-num">{{$data.price_log}}</span><i>元/㎡</i><br />
+            <span class="f-p-tag">精准评估</span>
+        </div>
+        <div class="am-form am-form-horizontal">
+            <div class="am-form-group">
+                <label class="am-u-sm-3 am-form-label">建筑面积</label>
+                <div class="am-u-sm-9">
+                    <p class="am-spec-input">{{$data.mianji}}㎡</p>
+                </div>
+            </div>
+            {{if $data.flag == 1}}
+            <div class="am-form-group">
+                <label class="am-u-sm-3 am-form-label">所在楼层</label>
+                <div class="am-u-sm-9">
+                    <p class="am-spec-input">{{$data.szlc}}层</p>
+                </div>
+            </div>
+            {{/if}}
+            <div class="am-form-group">
+                <label class="am-u-sm-3 am-form-label">总楼层</label>
+                <div class="am-u-sm-9">
+                    <p class="am-spec-input">{{$data.zlc}}层</p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="am-form am-form-horizontal">
-         <div class="am-form-group">
-          <label class="am-u-sm-3 am-form-label">建筑面积</label>
-          <div class="am-u-sm-9">
-            <p class="am-spec-input">102㎡</p>
-          </div>
-        </div>
-        <div class="am-form-group">
-          <label class="am-u-sm-3 am-form-label">所在楼层</label>
-          <div class="am-u-sm-9">
-           <p class="am-spec-input">3层</p>
-          </div>
-        </div>
-        <div class="am-form-group">
-          <label class="am-u-sm-3 am-form-label">总楼层</label>
-          <div class="am-u-sm-9">
-            <p class="am-spec-input">6层</p>
-          </div>
-        </div>
-      </div>
-  </div>
+    {{/if}}
+
    <div class="am-accu-btns">
   <div class="am-u-sm-12 am-u-sm-centered">  
       <a class="am-btn am-btn-danger am-fleft" href="/wx_index/pg_list_new">重新评估</a>
