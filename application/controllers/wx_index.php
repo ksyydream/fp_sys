@@ -173,6 +173,11 @@ class Wx_index extends Wx_controller {
         echo json_encode($data);
     }
 
+    public function person_pg_histroy_detail($id){
+        //$data = $this->sys_model->person_pg_histroy_detail($id);
+        //$this->assign('data',$data);
+        $this->display('estimate/user-history-detail.html');
+    }
 
        public function calculator($max_price = 0, $min_price = 0){
 //            $data = $this->wx_index_model->calculator();
