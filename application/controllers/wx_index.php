@@ -181,11 +181,10 @@ class Wx_index extends Wx_controller {
         $this->display('estimate/user-history-detail.html');
     }
 
-       public function calculator($max_price = 0, $min_price = 0){
+       public function calculator($pg_price = 0){
 //            $data = $this->wx_index_model->calculator();
 //            $this->assign('data',$data);
-           $this->assign('max_price',$max_price);
-           $this->assign('min_price',$min_price);
+           $this->assign('pg_price',$pg_price);
             $this->assign('pagination_url','/wx_index/calculator/');
             $this->display('estimate/calculator.html');
         }

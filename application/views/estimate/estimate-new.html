@@ -133,12 +133,13 @@
          <input type="hidden" id="yy_max_c" value="">
          <input type="hidden" id="yy_flag" value="">
          <input type="hidden" id="yy_price_id" value="">
+         <input type="hidden" id="pg_price" value="">
 </div>
     <div class="am-show-btn" data-am-collapse="{target: '#collapse-nav'}">
       <p class="am-u-sm-6 am-u-sm-centered am-show-btn-p am-hidden-btn-p">继续填写，精准评估</p></div>
    <div class="am-accu-btns">
      <div class="am-u-sm-12 am-u-sm-centered">  
-      <a class="am-btn am-btn-danger am-fleft" href="javascript:" id="jisuan_btn">立即估价</a><a class="am-btn am-btn1 am-btn-danger" href="">税费清单</a>
+      <a class="am-btn am-btn-danger am-fleft" href="javascript:" id="jisuan_btn">立即估价</a><a class="am-btn am-btn1 am-btn-danger" href="javascript:;" id="sf_btn">税费清单</a>
     </div> 
    </div>
 
@@ -290,6 +291,7 @@
   });
 
 function show_num(n,a) {
+    $("#pg_price").val(n);
     $(".am-house-num").html("");
     var it = $(".am-house-num i");
     var len = String(n).length;
@@ -385,6 +387,11 @@ function choose_wy(flag,min_c,max_c,wy,id){
     $("#yy_szlc").val('');
     $("#my-actions-search").modal('close');
 }
+
+    $('#sf_btn').click(function(){
+        var price_ = $("#pg_price").val();
+        window.location.href = '/wx_index/calculator/' + price_;
+    })
 </script>
 </body>
 </html>

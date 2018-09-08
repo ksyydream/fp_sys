@@ -71,13 +71,13 @@
     <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">物业类型</label>
       <div class="am-u-sm-9 am-form-select">         
-        <p class="am-spec-input">{{$data.name}}</p>
+        <p class="am-spec-input">{{$data.wy}}</p>
       </div>
     </div>
     <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">坐落位置</label>
       <div class="am-u-sm-9">
-        <p class="am-spec-input">{{$data.addresss}}</p>
+        <p class="am-spec-input">{{$data.address}}</p>
       </div>
     </div>
     <div class="am-form-group">
@@ -91,7 +91,7 @@
     {{if $data.status == 2}}
     <div class="am-fast-price">
         <div class="am-f-p-inner">
-            <span class="am-f-p-num">{{$data.price_log}}</span><i>元/㎡</i><br />
+            <span class="am-f-p-num">{{$data.price_jp}}</span><i>元/㎡</i><br />
             <span class="f-p-tag">精准评估</span>
         </div>
         <div class="am-form am-form-horizontal">
@@ -122,7 +122,7 @@
    <div class="am-accu-btns">
   <div class="am-u-sm-12 am-u-sm-centered">  
       <a class="am-btn am-btn-danger am-fleft" href="/wx_index/pg_list_new">重新评估</a>
-      <a class="am-btn am-btn1 am-btn-danger" href="">税费清单</a>
+      <a class="am-btn am-btn1 am-btn-danger" href="/wx_index/calculator/{{if $data.status == 2}}{{$data.price_jp}}{{else}}{{$data.price_kp}}{{/if}}">税费清单</a>
     </div>
   </div> 
 <!-- 搜索弹框end -->

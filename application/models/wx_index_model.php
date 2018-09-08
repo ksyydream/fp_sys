@@ -377,7 +377,7 @@ end as status_name,DATE_FORMAT(cdate,'%Y/%m/%d') cdate_day",false);
     public function person_pg_histroy_detail($id){
         $openid = $this->session->userdata('openid');
         $check_ = $this->db->select()->from('fp_wx_user')->where('openid', $openid)->get()->row_array();
-        $data = $this->db->select()->from('fp_pg_log')->where(array('id' => $id , 'wx_id' => $check_['id']))->get()->row_array();
+        $data = $this->db->select('*,round(price_1) as price_kp,round(price_log) as price_jp')->from('fp_pg_log')->where(array('id' => $id , 'wx_id' => $check_['id']))->get()->row_array();
         return $data;
     }
 }
