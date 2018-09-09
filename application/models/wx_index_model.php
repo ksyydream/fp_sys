@@ -94,13 +94,13 @@ class Wx_index_model extends MY_Model
         $this->db->join('fp_xiaoqu b','a.xiaoqu_id = b.id','left');
         if($data['keyword']){
            // $this->db->group_start();
-            $this->db->like('b.name', $data['keyword']);
-            $this->db->or_like('b.other_name', $data['keyword']);
+            $this->db->where("(b.name like '%" . $data['keyword'] . "%' or b.other_name like '%" . $data['keyword'] . "%')",null,false);
+
            // $this->db->group_end();
         }else{
             $this->db->where('a.id', -1);
         }
-        $this->db->where('a.flag',1);
+        $this->db->where('b.flag',1);
         $this->db->group_by('b.id,b.name,b.other_name');
         $this->db->order_by('b.name','desc');
         $this->db->limit(10, 0);

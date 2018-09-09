@@ -963,7 +963,7 @@ class Manage_model extends MY_Model
         $this->db->join('fp_xiaoqu_price a1','a.id = a1.xiaoqu_id','left');
         $this->db->join('fp_wy b','a1.wy_id = b.id','left');
         $this->db->join('fp_area c','a.area_id = c.id','left');
-        $this->db->where('a.id >=',1);
+
         if($this->input->post('flag'))
             $this->db->where("a.flag",$this->input->post('flag'));
         if($this->input->post('area_id'))
@@ -971,12 +971,11 @@ class Manage_model extends MY_Model
         if($this->input->post('wy_id'))
             $this->db->where("b.wy_id",$this->input->post('wy_id'));
         if($this->input->post('name')){
-            $this->db->group_start();
-            $this->db->like('a.name', $this->input->post('name'));
-            $this->db->or_like('a.other_name', $this->input->post('name'));
-            $this->db->group_end();
+
+            $this->db->where("(a.name like '%" . $this->input->post('name') . "%' or a.other_name like '%" . $this->input->post('name') . "%')",null,false);
         }
         $rs_total = $this->db->get()->row();
+        //die(var_dump($this->db->last_query()));
         //总记录数
         $data['countPage'] = $rs_total->num;
         $data['flag'] = $this->input->post('flag')?trim($this->input->post('flag')):null;
@@ -1000,10 +999,7 @@ class Manage_model extends MY_Model
         if($this->input->post('wy_id'))
             $this->db->where("b.wy_id",$this->input->post('wy_id'));
         if($this->input->post('name')){
-            $this->db->group_start();
-            $this->db->like('a.name', $this->input->post('name'));
-            $this->db->or_like('a.other_name', $this->input->post('name'));
-            $this->db->group_end();
+            $this->db->where("(a.name like '%" . $this->input->post('name') . "%' or a.other_name like '%" . $this->input->post('name') . "%')",null,false);
         }
         $this->db->group_by('a.id');
         $this->db->limit($numPerPage, ($pageNum - 1) * $numPerPage );
