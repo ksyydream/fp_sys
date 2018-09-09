@@ -1015,6 +1015,10 @@ class Manage_model extends MY_Model
     public function get_area_list(){
         return $this->db->select()->from('fp_area')->get()->result();
     }
+
+    public function get_wy_list(){
+        return $this->db->select()->from('fp_wy')->get()->result_array();
+    }
     /**
      * 保存小区
      */

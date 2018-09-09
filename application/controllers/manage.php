@@ -481,6 +481,11 @@ class Manage extends MY_Controller {
 	 * ***************************************以下为小区列表*******************************************************************
 	 */
 
+	public function list_wy_dialog(){
+		$data = $this->manage_model->list_fp_wy();
+		$this->load->view('manage/list_wy_dialog.php',$data);
+	}
+
 	public function list_fp_xiaoqu()
 	{
 		$data = $this->manage_model->list_fp_xiaoqu();
@@ -490,6 +495,7 @@ class Manage extends MY_Controller {
 	public function add_fp_xiaoqu(){
 		$data = array();
 		$data['area_list'] = $this->manage_model->get_area_list();
+		$data['wy_list'] = $this->manage_model->get_wy_list();
 		$this->load->view('manage/add_xiaoqu.php',$data);
 	}
 
