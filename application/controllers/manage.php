@@ -453,6 +453,31 @@ class Manage extends MY_Controller {
 
 	/**
 	 *
+	 * ***************************************以下为物业列表*******************************************************************
+	 */
+
+	public function list_fp_wy()
+	{
+		$data = $this->manage_model->list_fp_wy();
+		$this->load->view('manage/list_wy.php',$data);
+	}
+
+	public function save_fp_wy(){
+		$rs = $this->manage_model->save_fp_wy();
+		if ($rs === 1) {
+			form_submit_json("200", "操作成功", "list_wy");
+		} else {
+			form_submit_json("300", $rs);
+		}
+	}
+
+	public function edit_fp_wy($id){
+		$data = $this->manage_model->get_wy($id);
+		$this->load->view('manage/add_wy.php',$data);
+	}
+
+	/**
+	 *
 	 * ***************************************以下为小区列表*******************************************************************
 	 */
 

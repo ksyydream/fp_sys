@@ -873,6 +873,81 @@ class Manage_model extends MY_Model
         return $data;
     }
 
+    /**
+     * 获取物业列表
+     */
+    public function list_fp_wy(){
+        // 每页显示的记录条数，默认20条
+        $numPerPage = $this->input->post('numPerPage') ? $this->input->post('numPerPage') : 20;
+        $pageNum = $this->input->post('pageNum') ? $this->input->post('pageNum') : 1;
+
+        //获得总记录数
+        $this->db->select('count(1) as num');
+        $this->db->from('fp_wy');
+        $rs_total = $this->db->get()->row();
+        //总记录数
+        $data['countPage'] = $rs_total->num;
+
+        //list
+        $this->db->select('*');
+        $this->db->from('fp_wy');
+        $this->db->limit($numPerPage, ($pageNum - 1) * $numPerPage );
+        $this->db->order_by($this->input->post('orderField') ? $this->input->post('orderField') : 'id', $this->input->post('orderDirection') ? $this->input->post('orderDirection') : 'asc');
+        $data['res_list'] = $this->db->get()->result();
+        $data['pageNum'] = $pageNum;
+        $data['numPerPage'] = $numPerPage;
+        return $data;
+    }
+
+    /**
+     * 保存物业类型
+     */
+    public function save_fp_wy(){
+        $this->db->trans_start();
+        $data = array(
+            'id'=>$this->input->post('id'),
+            'flag'=>$this->input->post('flag'),
+            'ratio'=>$this->input->post('ratio')
+        );
+        switch ($data['flag']){
+            case 1:
+                $data['max_c'] = $this->input->post('max_c');
+                $data['min_c'] = $this->input->post('min_c');
+                $data['mm_ratio'] = $this->input->post('mm_ratio');
+                if(!$data['max_c'] || !$data['max_c'] || !$data['max_c']){
+                    return '信息缺失!';
+                }
+                break;
+            case 2:
+                break;
+            default:
+                return '物业类别异常!';
+                break;
+        }
+        if($this->input->post('id')){//修改
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('fp_wy', $data);
+        }else{//新增
+            unset($data['id']);
+            $this->db->insert('fp_wy', $data);
+        }
+        $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE) {
+            return $this->db_error;
+        } else {
+            return 1;
+        }
+    }
+
+    /**
+     * 获取物业类型详情
+     */
+    public function get_wy($id){
+        $this->db->select('*')->from('fp_wy')->where('id', $id);
+        $data = $this->db->get()->row();
+        return $data;
+    }
+
 
     /**
      * 获取小区列表
