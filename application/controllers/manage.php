@@ -431,36 +431,23 @@ class Manage extends MY_Controller {
 	 * ***************************************以下为区镇列表*******************************************************************
 	 */
 
-	public function list_towns()
+	public function list_fp_area()
 	{
-		$data = $this->manage_model->list_towns();
+		$data = $this->manage_model->list_fp_area();
 		$this->load->view('manage/list_towns.php',$data);
 	}
 
-	public function add_towns(){
-		$this->load->view('manage/add_town.php');
-	}
-
-	public function save_towns(){
-		$rs = $this->manage_model->save_towns();
+	public function save_fp_area(){
+		$rs = $this->manage_model->save_fp_area();
 		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_towns");
+			form_submit_json("200", "操作成功", "list_fp_area");
 		} else {
 			form_submit_json("300", $rs);
 		}
 	}
 
-	public function delete_towns($id){
-		$rs = $this->manage_model->delete_towns($id);
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_towns", "", "");
-		} else {
-			form_submit_json("300", $rs);
-		}
-	}
-
-	public function edit_towns($id){
-		$data = $this->manage_model->get_towns($id);
+	public function edit_fp_area($id){
+		$data = $this->manage_model->get_fp_area($id);
 		$this->load->view('manage/add_town.php',$data);
 	}
 
@@ -504,75 +491,6 @@ class Manage extends MY_Controller {
 		$data['towns_list'] = $this->manage_model->get_towns_list();
 		$this->load->view('manage/add_xiaoqu.php',$data);
 	}
-	/**
-	 *
-	 * ***************************************以下为区镇列表*******************************************************************
-	 */
-
-	public function list_menu()
-	{
-		$data = $this->manage_model->list_menu();
-		$this->load->view('manage/list_menu.php',$data);
-	}
-
-	public function add_menu(){
-		$data['icon_list'] = $this->manage_model->get_icon_list();
-		$this->load->view('manage/add_menu.php',$data);
-	}
-
-	public function save_menu(){
-		$rs = $this->manage_model->save_menu();
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_menu");
-		} else {
-			form_submit_json("300", $rs);
-		}
-	}
-
-	public function delete_menu($id){
-		$rs = $this->manage_model->delete_menu($id);
-		if ($rs === 1) {
-			form_submit_json("200", "操作成功", "list_menu", "", "");
-		} else {
-			form_submit_json("300", $rs);
-		}
-	}
-
-	public function edit_menu($id){
-		$data = $this->manage_model->get_menu($id);
-		$data['icon_list'] = $this->manage_model->get_icon_list();
-		$data['menu_detail'] = $this->manage_model->get_menu_detail($id);
-		$this->load->view('manage/add_menu.php',$data);
-	}
-
-	/**
-	 *
-	 * ***************************************以下为文档类别列表*******************************************************************
-	 */
-
-
-	/**
-	 *
-	 * ***************************************以下为新闻列表*******************************************************************
-	 */
-
-	/**
-	 *
-	 * ***************************************以下为试题列表*******************************************************************
-	 */
-
-	/**
-	 *
-	 * ***************************************以下为资金流水列表*******************************************************************
-	 */
-
-
-	/**
-	 *
-	 * ***************************************以下为资金流水列表*******************************************************************
-	 */
-
-
 
 	/**
 	 *

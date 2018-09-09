@@ -90,21 +90,23 @@ $(function(){
 				<div class="accordion" fillSpace="sidebar" >
 					<?php if($this->session->userdata('permission_id')==1):?>
 					<div class="accordionHeader">
-						<h2><span>Folder</span>分公司管理</h2>
+						<h2><span>Folder</span>用户管理</h2>
 					</div>
 					<div class="accordionContent">
 						<ul class="tree">
-							<li><a href="<?php echo site_url('manage/list_company');?>" target="navTab" rel="list_company">公司信息</a></li>
-							<li><a href="<?php echo site_url('manage/list_user');?>" target="navTab" rel="list_user">用户列表</a></li>
+							<li><a href="<?php echo site_url('manage/list_wx_user');?>" target="navTab" rel="list_user">用户列表</a></li>
 						</ul>
 					</div>
 						<div class="accordionHeader">
-							<h2><span>Folder</span>卡组设计</h2>
+							<h2><span>Folder</span>评估管理</h2>
 						</div>
 						<div class="accordionContent">
 							<ul class="tree">
-								<li><a href="<?php echo site_url('manage/list_product_first');?>" target="navTab" rel="list_product_first">卡组一级类别</a></li>
-
+								<!--<li><a href="<?php echo site_url('manage/list_product_first');?>" target="navTab" rel="list_product_first">卡组一级类别</a></li>-->
+								<li><a href="<?php echo site_url('manage/list_fp_xiaoqu');?>" target="navTab" rel="list_pg_xiaoqu">小区列表</a></li>
+								<li><a href="<?php echo site_url('manage/list_fp_area');?>" target="navTab" rel="list_fp_area">区域列表</a></li>
+								<li><a href="<?php echo site_url('manage/list_fp_wy');?>" target="navTab" rel="list_user">物业类型</a></li>
+								<li><a href="<?php echo site_url('manage/list_fp_ratio');?>" target="navTab" rel="list_fp_ratio">精确评估系数</a></li>
 							</ul>
 						</div>
 					<?php endif;?>

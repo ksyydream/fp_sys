@@ -814,21 +814,21 @@ class Manage_model extends MY_Model
     /**
      * 获取区镇列表
      */
-    public function list_towns(){
+    public function list_fp_area(){
         // 每页显示的记录条数，默认20条
         $numPerPage = $this->input->post('numPerPage') ? $this->input->post('numPerPage') : 20;
         $pageNum = $this->input->post('pageNum') ? $this->input->post('pageNum') : 1;
 
         //获得总记录数
         $this->db->select('count(1) as num');
-        $this->db->from('towns');
+        $this->db->from('fp_area');
         $rs_total = $this->db->get()->row();
         //总记录数
         $data['countPage'] = $rs_total->num;
 
         //list
         $this->db->select('*');
-        $this->db->from('towns');
+        $this->db->from('fp_area');
         $this->db->limit($numPerPage, ($pageNum - 1) * $numPerPage );
         $this->db->order_by($this->input->post('orderField') ? $this->input->post('orderField') : 'id', $this->input->post('orderDirection') ? $this->input->post('orderDirection') : 'asc');
         $data['res_list'] = $this->db->get()->result();
@@ -840,113 +840,40 @@ class Manage_model extends MY_Model
     /**
      * 保存区镇
      */
-    public function save_towns(){
+    public function save_fp_area(){
         $this->db->trans_start();
         $data = array(
             'id'=>$this->input->post('id'),
-            'towns_name'=>$this->input->post('towns_name'),
-            'flag'=>$this->input->post('flag')?1:2
+            'area'=>$this->input->post('area'),
+            'hot'=>$this->input->post('hot'),
+            'hot_class'=>$this->input->post('hot_class'),
+            'area_ratio'=>$this->input->post('area_ratio')
         );
         if($this->input->post('id')){//修改
             $this->db->where('id', $this->input->post('id'));
-            $this->db->update('towns', $data);
+            $this->db->update('fp_area', $data);
         }else{//新增
             unset($data['id']);
-            $this->db->insert('towns', $data);
+            $this->db->insert('fp_area', $data);
         }
         $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE) {
             return $this->db_error;
         } else {
             return 1;
-        }
-    }
-
-    /**
-     * 删除区镇
-     */
-    public function delete_towns($id){
-        $rs = $this->db->delete('towns', array('id' => $id));
-        if($rs){
-            return 1;
-        }else{
-            return $this->db_error;
         }
     }
 
     /**
      * 获取区镇详情
      */
-    public function get_towns($id){
-        $this->db->select('*')->from('towns')->where('id', $id);
+    public function get_fp_area($id){
+        $this->db->select('*')->from('fp_area')->where('id', $id);
         $data = $this->db->get()->row();
         return $data;
     }
 
-    /**
-     * 套餐处理
-     */
-    public function list_menu(){
-        // 每页显示的记录条数，默认20条
-        $numPerPage = $this->input->post('numPerPage') ? $this->input->post('numPerPage') : 20;
-        $pageNum = $this->input->post('pageNum') ? $this->input->post('pageNum') : 1;
 
-        //获得总记录数
-        $this->db->select('count(1) as num');
-        $this->db->from('power_menu');
-        $rs_total = $this->db->get()->row();
-        //总记录数
-        $data['countPage'] = $rs_total->num;
-
-        //list
-        $this->db->select('*');
-        $this->db->from('power_menu');
-        $this->db->limit($numPerPage, ($pageNum - 1) * $numPerPage );
-        $this->db->order_by($this->input->post('orderField') ? $this->input->post('orderField') : 'id', $this->input->post('orderDirection') ? $this->input->post('orderDirection') : 'asc');
-        $data['res_list'] = $this->db->get()->result();
-        $data['pageNum'] = $pageNum;
-        $data['numPerPage'] = $numPerPage;
-        return $data;
-    }
-
-    public function save_menu(){
-        $this->db->trans_start();
-        $data = array(
-            'id'=>$this->input->post('id'),
-            'menu_name'=>$this->input->post('menu_name'),
-            'flag'=>$this->input->post('flag')?1:2
-        );
-        if($this->input->post('id')){//修改
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->update('power_menu', $data);
-            $m_id = $this->input->post('id');
-        }else{//新增
-            unset($data['id']);
-            $this->db->insert('power_menu', $data);
-            $m_id = $this->db->insert_id();
-        }
-        $this->db->where('m_id',$m_id)->delete('power_menu_detail');
-        if($this->input->post('p_id')){
-            $subid=$this->input->post('p_id');
-            foreach($subid as $id){
-                $this->db->insert('power_menu_detail', array(
-                    'p_id'=>$id,
-                    'm_id'=>$m_id
-                ));
-            }
-        }
-
-        $this->db->trans_complete();
-        if ($this->db->trans_status() === FALSE) {
-            return $this->db_error;
-        } else {
-            return 1;
-        }
-    }
-
-    public function get_menu($id){
-       return $this->db->select()->from('power_menu')->where('id',$id)->get()->row_array();
-    }
     /**
      * 获取小区列表
      */
