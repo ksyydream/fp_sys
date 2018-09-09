@@ -16,7 +16,7 @@
 				<tr>
 					<td><label>小区名称：</label><input type="text" size="16" name="name" value="<?php echo $name; ?>" /></td>
 					<td><label>区域：</label>
-						<select class="combox" name="towns_id">
+						<select class="combox" name="area_id">
 							<option value="">请选择类别</option>
 							<?php
 							if (!empty($area_list)):
@@ -30,7 +30,7 @@
 							?>
 						</select></td>
 					<td><label>物业类型：</label>
-						<select class="combox" name="towns_id">
+						<select class="combox" name="wy_id">
 							<option value="">请选择类别</option>
 							<?php
 							if (!empty($wy_list)):
@@ -65,7 +65,7 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="<?php echo site_url('manage/add_xiaoqu')?>" target="dialog" rel="add_xiaoqu" title="新建"><span>新建</span></a></li>
+			<li><a class="add" href="<?php echo site_url('manage/add_fp_xiaoqu')?>" target="navTab" rel="add_fp_xiaoqu" title="新建"><span>新建</span></a></li>
 			<li><a class="delete" href="<?php echo site_url('manage/delete_xiaoqu')?>/{id}" target="ajaxTodo"  title="确定要删除？" warn="请选择一条记录"><span>删除</span></a></li>
 			<li><a class="edit" href="<?php echo site_url('manage/edit_xiaoqu/{id}')?>" target="dialog" rel="edit_xiaoqu" warn="请选择一条记录" title="查看"><span>查看</span></a></li>
 		</ul>
@@ -79,7 +79,7 @@
 				<th width="180">小区名称</th>
 				<th width="180">别名</th>
 				<th width="80">区镇</th>
-				<th width="140">物业类型</th>
+				<th width="180">物业类型</th>
 				<th>地址</th>
 				<th width="40">状态</th>
 			</tr>

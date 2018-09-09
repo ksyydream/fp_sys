@@ -954,7 +954,7 @@ class Manage_model extends MY_Model
      */
     public function list_fp_xiaoqu(){
         // 每页显示的记录条数，默认20条
-        $numPerPage = $this->input->post('numPerPage') ? $this->input->post('numPerPage') : 20;
+        $numPerPage = $this->input->post('numPerPage') ? $this->input->post('numPerPage') : 50;
         $pageNum = $this->input->post('pageNum') ? $this->input->post('pageNum') : 1;
 
         //获得总记录数
@@ -969,7 +969,7 @@ class Manage_model extends MY_Model
         if($this->input->post('area_id'))
             $this->db->where("a.area_id",$this->input->post('area_id'));
         if($this->input->post('wy_id'))
-            $this->db->where("b.wy_id",$this->input->post('wy_id'));
+            $this->db->where("a1.wy_id",$this->input->post('wy_id'));
         if($this->input->post('name')){
 
             $this->db->where("(a.name like '%" . $this->input->post('name') . "%' or a.other_name like '%" . $this->input->post('name') . "%')",null,false);
@@ -984,12 +984,12 @@ class Manage_model extends MY_Model
         $data['wy_id'] = $this->input->post('wy_id') ? trim($this->input->post('wy_id')):null;
         //list
         $this->db->select('a.*,c.area,
-        group_concat(distinct(b1.wy)) wy_list
+        group_concat(distinct(b.wy) order by b.wy) wy_list
         ');
         $this->db->from('fp_xiaoqu a');
         $this->db->join('fp_xiaoqu_price a1','a.id = a1.xiaoqu_id','left');
-        $this->db->join('fp_wy b','a1.wy_id = b.id','left');
-        $this->db->join('fp_wy b1','a1.wy_id = b1.id','left');
+        $this->db->join('fp_xiaoqu_price a2','a.id = a2.xiaoqu_id','left');
+        $this->db->join('fp_wy b','a2.wy_id = b.id','left');
         $this->db->join('fp_area c','a.area_id = c.id','left');
         $this->db->where('a.id >=',1);
         if($this->input->post('flag'))
@@ -997,7 +997,7 @@ class Manage_model extends MY_Model
         if($this->input->post('area_id'))
             $this->db->where("a.area_id",$this->input->post('area_id'));
         if($this->input->post('wy_id'))
-            $this->db->where("b.wy_id",$this->input->post('wy_id'));
+            $this->db->where("a1.wy_id",$this->input->post('wy_id'));
         if($this->input->post('name')){
             $this->db->where("(a.name like '%" . $this->input->post('name') . "%' or a.other_name like '%" . $this->input->post('name') . "%')",null,false);
         }
@@ -1012,8 +1012,8 @@ class Manage_model extends MY_Model
         return $data;
     }
 
-    public function get_towns_list(){
-        return $this->db->select()->where('flag',1)->from('towns')->get()->result();
+    public function get_area_list(){
+        return $this->db->select()->from('fp_area')->get()->result();
     }
     /**
      * 保存小区

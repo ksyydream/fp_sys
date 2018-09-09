@@ -487,9 +487,9 @@ class Manage extends MY_Controller {
 		$this->load->view('manage/list_xiaoqu.php',$data);
 	}
 
-	public function add_xiaoqu(){
+	public function add_fp_xiaoqu(){
 		$data = array();
-		$data['towns_list'] = $this->manage_model->get_towns_list();
+		$data['area_list'] = $this->manage_model->get_area_list();
 		$this->load->view('manage/add_xiaoqu.php',$data);
 	}
 

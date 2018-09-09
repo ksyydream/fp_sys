@@ -4,7 +4,7 @@
 .file{ position:absolute; top:0; right:80px; height:24px; filter:alpha(opacity:0);opacity: 0;width:300px }
 </style>
 <div class="pageContent">
-    <form method="post" enctype="multipart/form-data" action="<?php echo site_url('manage/save_xiaoqu');?>" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+    <form method="post" enctype="multipart/form-data" action="<?php echo site_url('manage/save_fp_xiaoqu');?>" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
         <div class="pageFormContent" layoutH="55">
         	<fieldset>
         	<legend>分店信息</legend>
@@ -16,21 +16,27 @@
 					</dd>
 				</dl>
 				<dl>
+					<dt>别名：</dt>
+					<dd>
+						<input name="other_name" type="text" value="<?php if(!empty($other_name)) echo $other_name;?>" />
+					</dd>
+				</dl>
+				<dl>
 					<dt>小区地址：</dt>
 					<dd>
-						<input name="path" type="text" class="required" value="<?php if(!empty($path)) echo $path;?>" />
+						<input name="address" type="text" class="required" value="<?php if(!empty($address)) echo $address;?>" />
 					</dd>
 				</dl>
 				<dl>
 					<dt>区镇：</dt>
 					<dd>
-						<select name="towns_id" class="combox">
+						<select name="area_id" class="combox">
 							<?php
-							if (!empty($towns_list)):
-								foreach ($towns_list as $row):
-									$selected = $row->id == $towns_id ? "selected" : "";
+							if (!empty($area_list)):
+								foreach ($area_list as $row):
+									$selected = $row->id == $area_id ? "selected" : "";
 									?>
-									<option value="<?php echo $row->id; ?>" <?php echo $selected; ?>><?php echo $row->towns_name; ?></option>
+									<option value="<?php echo $row->id; ?>" <?php echo $selected; ?>><?php echo $row->area; ?></option>
 									<?php
 								endforeach;
 							endif;
@@ -54,9 +60,7 @@
         </div>
         <div class="formBar">
     		<ul>
-				<?php if($this->session->userdata('permission_id') < 2):?>
     			<li><div class="buttonActive"><div class="buttonContent"><button type="submit" class="icon-save">保存</button></div></div></li>
-				<?php endif;?>
 				<li><div class="button"><div class="buttonContent"><button type="button" class="close icon-close">取消</button></div></div></li>
     		</ul>
         </div>
