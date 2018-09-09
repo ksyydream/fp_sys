@@ -1,8 +1,9 @@
-<form id="pagerForm" method="post" action="<?php echo site_url('manage/list_xiaoqu')?>">
+<form id="pagerForm" method="post" action="<?php echo site_url('manage/list_fp_xiaoqu')?>">
 	<input type="hidden" name="pageNum" value="<?php echo $pageNum;?>" />
 	<input type="hidden" name="numPerPage" value="<?php echo $numPerPage;?>" />
 	<input type="hidden" name="name" value="<?php echo $name;?>" />
-	<input type="hidden" name="towns_id" value="<?php echo $towns_id;?>" />
+	<input type="hidden" name="area_id" value="<?php echo $area_id;?>" />
+	<input type="hidden" name="wy_id" value="<?php echo $wy_id;?>" />
 	<input type="hidden" name="flag" value="<?php echo $flag;?>" />
 	<input type="hidden" name="orderField" value="<?php echo $this->input->post('orderField');?>" />
 	<input type="hidden" name="orderDirection" value="<?php echo $this->input->post('orderDirection');?>" />
@@ -13,7 +14,7 @@
 		<div class="searchBar">
 			<table class="searchContent" id="search_purchase_order">
 				<tr>
-					<td><label>标题：</label><input type="text" size="16" name="name" value="<?php echo $name; ?>" /></td>
+					<td><label>小区名称：</label><input type="text" size="16" name="name" value="<?php echo $name; ?>" /></td>
 					<td><label>类别：</label>
 						<select class="combox" name="towns_id">
 							<option value="">请选择类别</option>
@@ -27,7 +28,7 @@
 								endforeach;
 							endif;
 							?>
-						</select>
+						</select></td>
 					<td><label>状态：</label>
 						<select class="combox" name="flag">
 							<option value="">请选择状态</option>

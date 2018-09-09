@@ -952,7 +952,7 @@ class Manage_model extends MY_Model
     /**
      * 获取小区列表
      */
-    public function list_xiaoqu(){
+    public function list_fp_xiaoqu(){
         // 每页显示的记录条数，默认20条
         $numPerPage = $this->input->post('numPerPage') ? $this->input->post('numPerPage') : 20;
         $pageNum = $this->input->post('pageNum') ? $this->input->post('pageNum') : 1;

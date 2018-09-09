@@ -100,6 +100,7 @@ class Wx_index_model extends MY_Model
         }else{
             $this->db->where('a.id', -1);
         }
+        $this->db->where('a.flag',1);
         $this->db->group_by('b.id,b.name,b.other_name');
         $this->db->order_by('b.name','desc');
         $this->db->limit(10, 0);

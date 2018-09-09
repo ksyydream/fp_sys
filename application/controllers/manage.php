@@ -481,9 +481,9 @@ class Manage extends MY_Controller {
 	 * ***************************************以下为小区列表*******************************************************************
 	 */
 
-	public function list_xiaoqu()
+	public function list_fp_xiaoqu()
 	{
-		$data = $this->manage_model->list_xiaoqu();
+		$data = $this->manage_model->list_fp_xiaoqu();
 		$this->load->view('manage/list_xiaoqu.php',$data);
 	}
 
