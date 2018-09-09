@@ -958,34 +958,59 @@ class Manage_model extends MY_Model
         $pageNum = $this->input->post('pageNum') ? $this->input->post('pageNum') : 1;
 
         //获得总记录数
-        $this->db->select('count(1) as num');
-        $this->db->from('xiaoqu');
+        $this->db->select('count(distinct(a.id)) as num');
+        $this->db->from('fp_xiaoqu a');
+        $this->db->join('fp_xiaoqu_price a1','a.id = a1.xiaoqu_id','left');
+        $this->db->join('fp_wy b','a1.wy_id = b.id','left');
+        $this->db->join('fp_area c','a.area_id = c.id','left');
+        $this->db->where('a.id >=',1);
         if($this->input->post('flag'))
-            $this->db->where("flag",$this->input->post('flag'));
-        if($this->input->post('towns_id'))
-            $this->db->where("towns_id",$this->input->post('towns_id'));
-        if($this->input->post('name'))
-            $this->db->like("name",trim($this->input->post('name')));
+            $this->db->where("a.flag",$this->input->post('flag'));
+        if($this->input->post('area_id'))
+            $this->db->where("a.area_id",$this->input->post('area_id'));
+        if($this->input->post('wy_id'))
+            $this->db->where("b.wy_id",$this->input->post('wy_id'));
+        if($this->input->post('name')){
+            $this->db->group_start();
+            $this->db->like('a.name', $this->input->post('name'));
+            $this->db->or_like('a.other_name', $this->input->post('name'));
+            $this->db->group_end();
+        }
         $rs_total = $this->db->get()->row();
         //总记录数
         $data['countPage'] = $rs_total->num;
         $data['flag'] = $this->input->post('flag')?trim($this->input->post('flag')):null;
         $data['name'] = $this->input->post('name')?trim($this->input->post('name')):null;
-        $data['towns_id'] = $this->input->post('towns_id') ? trim($this->input->post('towns_id')):null;
+        $data['area_id'] = $this->input->post('area_id') ? trim($this->input->post('area_id')):null;
+        $data['wy_id'] = $this->input->post('wy_id') ? trim($this->input->post('wy_id')):null;
         //list
-        $this->db->select('a.*,b.towns_name');
-        $this->db->from('xiaoqu a');
-        $this->db->join('towns b','a.towns_id = b.id','left');
+        $this->db->select('a.*,c.area,
+        group_concat(distinct(b1.wy)) wy_list
+        ');
+        $this->db->from('fp_xiaoqu a');
+        $this->db->join('fp_xiaoqu_price a1','a.id = a1.xiaoqu_id','left');
+        $this->db->join('fp_wy b','a1.wy_id = b.id','left');
+        $this->db->join('fp_wy b1','a1.wy_id = b1.id','left');
+        $this->db->join('fp_area c','a.area_id = c.id','left');
+        $this->db->where('a.id >=',1);
         if($this->input->post('flag'))
             $this->db->where("a.flag",$this->input->post('flag'));
-        if($this->input->post('towns_id'))
-            $this->db->where("a.towns_id",$this->input->post('towns_id'));
-        if($this->input->post('name'))
-            $this->db->like("a.name",trim($this->input->post('name')));
+        if($this->input->post('area_id'))
+            $this->db->where("a.area_id",$this->input->post('area_id'));
+        if($this->input->post('wy_id'))
+            $this->db->where("b.wy_id",$this->input->post('wy_id'));
+        if($this->input->post('name')){
+            $this->db->group_start();
+            $this->db->like('a.name', $this->input->post('name'));
+            $this->db->or_like('a.other_name', $this->input->post('name'));
+            $this->db->group_end();
+        }
+        $this->db->group_by('a.id');
         $this->db->limit($numPerPage, ($pageNum - 1) * $numPerPage );
         $this->db->order_by($this->input->post('orderField') ? $this->input->post('orderField') : 'a.id', $this->input->post('orderDirection') ? $this->input->post('orderDirection') : 'asc');
         $data['res_list'] = $this->db->get()->result();
-        $data['towns_list'] = $this->db->from('towns')->get()->result();
+        $data['area_list'] = $this->db->from('fp_area')->get()->result();
+        $data['wy_list'] = $this->db->from('fp_wy')->get()->result();
         $data['pageNum'] = $pageNum;
         $data['numPerPage'] = $numPerPage;
         return $data;

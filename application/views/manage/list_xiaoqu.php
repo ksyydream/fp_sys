@@ -10,20 +10,34 @@
 </form>
 
 <div class="pageHeader">
-	<form onsubmit="return navTabSearch(this);" action="<?php site_url('manage/list_xiaoqu')?>" method="post">
+	<form onsubmit="return navTabSearch(this);" action="<?php site_url('manage/list_fp_xiaoqu')?>" method="post">
 		<div class="searchBar">
 			<table class="searchContent" id="search_purchase_order">
 				<tr>
 					<td><label>小区名称：</label><input type="text" size="16" name="name" value="<?php echo $name; ?>" /></td>
-					<td><label>类别：</label>
+					<td><label>区域：</label>
 						<select class="combox" name="towns_id">
 							<option value="">请选择类别</option>
 							<?php
-							if (!empty($towns_list)):
-								foreach ($towns_list as $row):
-									$selected = !empty($towns_id) && $row->id == $towns_id ? "selected" : "";
+							if (!empty($area_list)):
+								foreach ($area_list as $row):
+									$selected = !empty($area_id) && $row->id == $area_id ? "selected" : "";
 									?>
-									<option value="<?php echo $row->id; ?>" <?php echo $selected; ?>><?php echo $row->towns_name; ?></option>
+									<option value="<?php echo $row->id; ?>" <?php echo $selected; ?>><?php echo $row->area; ?></option>
+									<?php
+								endforeach;
+							endif;
+							?>
+						</select></td>
+					<td><label>物业类型：</label>
+						<select class="combox" name="towns_id">
+							<option value="">请选择类别</option>
+							<?php
+							if (!empty($wy_list)):
+								foreach ($wy_list as $row):
+									$selected = !empty($wy_id) && $row->id == $wy_id ? "selected" : "";
+									?>
+									<option value="<?php echo $row->id; ?>" <?php echo $selected; ?>><?php echo $row->wy; ?></option>
 									<?php
 								endforeach;
 							endif;
@@ -62,9 +76,11 @@
 		<thead>
 			<tr>
 				<th width="25">ID</th>
-				<th width="200">小区名称</th>
+				<th width="180">小区名称</th>
+				<th width="180">别名</th>
+				<th width="80">区镇</th>
+				<th width="140">物业类型</th>
 				<th>地址</th>
-				<th width="60">区镇</th>
 				<th width="40">状态</th>
 			</tr>
 		</thead>
@@ -76,8 +92,10 @@
             			<tr target="id" rel=<?php echo $row->id; ?>>
 							<td><?php echo $row->id;?></td>
             				<td><?php echo $row->name;?></td>
-							<td><?php echo $row->path;?></td>
-            				<td><?php echo $row->towns_name;?>
+							<td><?php echo $row->other_name;?></td>
+            				<td><?php echo $row->area;?>
+							<td><?php echo $row->wy_list;?>
+							<td><?php echo $row->address;?>
 							</td>
 							<td><?php
 								if($row->flag == 1){
