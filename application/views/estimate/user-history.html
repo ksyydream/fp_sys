@@ -75,7 +75,7 @@
         var counter = 0;
         // 每页展示4个
         var num = 4;
-        var pageStart = 0,pageEnd = 0;
+        var pageStart = 1,pageEnd = 0;
 
         // dropload
         $('#wrapper').dropload({
@@ -83,11 +83,27 @@
             loadDownFn : function(me){
                 $.ajax({
                     type: 'GET',
-                    url: '/wx_index/get_pg_log_list',
+                    url: '/wx_index/get_pg_log_list?' + 'count='+num+'&page='+pageStart,
                     dataType: 'json',
                     success: function(data){
+                        //var items = JSON.parse(data);
                         var result = '';
-                        counter++;
+                        for(var i in data.events) {
+                            var item = data.events[i];
+                            result += '<li><a href="/wx_index/person_pg_histroy_detail/' + item.id + '"><div class="am-u-sm-8"><span class="am-h-name">'
+                                + item.name + '</span><span class="am-h-pgstyle">'
+                                + item.status_name + '</span></div><div class="am-u-sm-4 am-form-label">'
+                                + item.cdate_day + '</div> <i class="am-icon-chevron"></i></a></li>'
+                        }
+                        if(data.events.length > 0){
+                            pageStart ++;
+                        }else{
+                            // 锁定
+                            me.lock();
+                            // 无数据
+                            me.noData();
+                        }
+                       /* counter++;
                         pageEnd = num * counter;
                         pageStart = pageEnd - num;
                         for(var i = pageStart; i < pageEnd; i++){
@@ -103,6 +119,7 @@
                                 break;
                             }
                         }
+                        */
                         // 为了测试，延迟1秒加载
                        // setTimeout(function(){
                             $('#events-list').append(result);
@@ -111,7 +128,7 @@
                        // },1000);
                     },
                     error: function(xhr, type){
-                        alert('Ajax error!');
+                       alert('Ajax error!');
                         // 即使加载出错，也得重置
                         me.resetload();
                     }

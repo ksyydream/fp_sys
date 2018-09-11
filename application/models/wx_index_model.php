@@ -353,8 +353,10 @@ class Wx_index_model extends MY_Model
     public function get_pg_log_list(){
         $openid = $this->session->userdata('openid');
         $check_ = $this->db->select()->from('fp_wx_user')->where('openid', $openid)->get()->row_array();
-        $data['start'] = isset($_GET['start']) ? $_GET['start'] : 0;
+        $data['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
         $data['count'] = isset($_GET['count']) ? $_GET['count'] : 10;
+        $data['start'] = ($data['page'] - 1) * $data['count'];
+
 
         $this->db->select('count(1) num');
         $this->db->from('fp_pg_log');
@@ -371,6 +373,7 @@ end as status_name,DATE_FORMAT(cdate,'%Y/%m/%d') cdate_day",false);
         $this->db->where('wx_id', $check_['id']);
         $this->db->limit($data['count'], $data['start']);
         $this->db->order_by('cdate','desc');
+        $this->db->order_by('id','desc');
         $data['events'] = $this->db->get()->result_array();
         return $data;
     }
