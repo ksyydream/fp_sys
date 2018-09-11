@@ -194,7 +194,7 @@ class Wx_index_model extends MY_Model
                         }
                     }else{
                         $xs_ = $szlc / $zlc;
-                        $xs_ = floor($xs_);
+                        $xs_ = floor($xs_ * 10) / 10;
                         $lc_info = $this->db->select()->from('fp_ratio')
                             ->where(array(
                                 'min_c <=' => $xs_,
