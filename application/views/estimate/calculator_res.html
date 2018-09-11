@@ -58,35 +58,35 @@
 <div class="am-main">
     <div class="am-calculator am-accurate-estimate calculator-res">
         <div class="am-form am-form-horizontal">
-            <div class="totalPrice"> <span>68400.00</span><br />税金总额（元）</div>
+            <div class="totalPrice"> <span>{{$data.sfhj|default:'-'}}</span><br />税金总额（元）</div>
             <div class="am-form-group">
                 <label class="am-u-sm-3 am-form-label">首付</label>
                 <div class="am-u-sm-9">
-                    <p class="am-spec-input">160000 元</p>
+                    <p class="am-spec-input">{{$data.shoufu|default:'-'}} 元</p>
                 </div>
             </div>
             <div class="am-form-group">
                 <label class="am-u-sm-3 am-form-label">契税</label>
                 <div class="am-u-sm-9">
-                    <p class="am-spec-input">160000 元</p>
+                    <p class="am-spec-input">{{$data.qishui|default:'-'}} 元</p>
                 </div>
             </div>
             <div class="am-form-group">
                 <label class="am-u-sm-3 am-form-label">营业税</label>
                 <div class="am-u-sm-9">
-                    <p class="am-spec-input">160000 元</p>
+                    <p class="am-spec-input">{{$data.yyshui|default:'-'}} 元</p>
                 </div>
             </div>
             <div class="am-form-group">
                 <label class="am-u-sm-4 am-form-label">个人所得税</label>
                 <div class="am-u-sm-8">
-                    <p class="am-spec-input">160000 元</p>
+                    <p class="am-spec-input">{{$data.grsdshui|default:'-'}} 元</p>
                 </div>
             </div>
             <div class="am-form-group">
                 <label class="am-u-sm-3 am-form-label">税金总额</label>
                 <div class="am-u-sm-9">
-                    <p class="am-spec-input">160000 元</p>
+                    <p class="am-spec-input">{{$data.sfhj|default:'-'}} 元</p>
                 </div>
             </div>
             <p class="p-tips">* 以上结果仅供参考。</p>
@@ -99,8 +99,8 @@
     </div>
     <p class="am-ftr">中国•昆山 萧林中路2191号昆山楼市•房猫服务中心<br />苏州曼纳吉信息科技有限公司</p>
     <div class="am-menu am-g-fixed am-g-menu">
-        <div class="am-u-sm-6"><a href="" class="am-btn-home"><img src="/assets/i/home.jpg" alt=""></a></div>
-        <div class="am-u-sm-6"><a href="" class="am-btn-home"><img src="/assets/i/user.jpg" alt=""></a></div>
+        <div class="am-u-sm-6"><a href="/wx_index/main" class="am-btn-home"><img src="/assets/i/home.jpg" alt=""></a></div>
+        <div class="am-u-sm-6"><a href="/wx_index/person_info" class="am-btn-home"><img src="/assets/i/user.jpg" alt=""></a></div>
     </div>
 </div>
 </body>
