@@ -33,7 +33,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 @-webkit-keyframes hang{
     0%,100%{-webkit-transform:translate(0,5px);}
     50%{-webkit-transform:translate(0,0);}}
-
+.am-float-tag .em-hty-tag0:after{background-position: 0 0;}
 .am-float-tag .em-hty-tag1:after{background-position: 0 0;}
 .am-float-tag .em-hty-tag2:after{background-position: 0 -40px;}
 .am-float-tag .em-hty-tag3:after{background-position: 0 -80px;}
@@ -158,7 +158,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 
 .am-calculator{background: #fff;margin-top: 0;border-top:0;}
 .am-calculator .am-radio-inline{float: right; font-size: .9rem;margin-left: 1rem;}
-.am-calculator .am-radio-inline input{ }
+.am-calculator .am-radio-inline input{margin-top:5px;width:18px;height: 18px; }
 
 /*利率弹框*/
 .am-cal-popup{font-size:.9rem;}
