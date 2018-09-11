@@ -91,7 +91,9 @@ class Wx_index extends Wx_controller {
     public function pg_list_new(){
         $this->display('estimate/estimate-new.html');
     }
-
+    public function pg_list_test(){
+        $this->display('estimate/test.html');
+    }
     public function person_info(){
         $data = $this->sys_model->person_info();
         $this->assign('data',$data);
