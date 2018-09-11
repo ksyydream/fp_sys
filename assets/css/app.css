@@ -9,7 +9,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-btn-home{width:1.5rem; display:inline-block;}.am-btn-home img{width: 100%;}
 .am-menu .am-u-sm-6{text-align: center;}
 
-.am-price{padding-top:.5rem;height: 10.2rem; background: #fff url(../../assets/i/wave_bg.jpg) no-repeat left bottom;
+.am-price{padding-top:.5rem;height: 10.5rem; background: #fff url(../../assets/i/wave_bg.jpg) no-repeat left bottom;
     background-size: 100%; position: relative; }
 .am-ftr{text-align: center; color: #a7a7a7; font-size: .5rem; clear:both;margin: 1rem 0 4rem; }
 .am-re-price{width:7rem; height: 7rem; background: #fff;border-radius: 50%;padding: .25rem;
@@ -65,7 +65,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-form .am-form-group{margin:0 0 0 1rem;border-bottom: 1px solid #e5e5e5;}
 .am-form .am-form-group:last-child{border:none;}
 .am-form .am-form-label{margin:0;padding:0 0 0 .3rem;font-weight: normal; height:2.3rem;line-height: 2.3rem; font-size: .93rem;}
-.am-form .am-userin-label:before{margin: .7rem .2rem 0 0;width: 20px; height: 20px; float: left; content: ""; background: url(../../assets/i/info.svg) no-repeat;}
+.am-form .am-userin-label:before{margin: .65rem .2rem 0 0;width: 20px; height: 20px; float: left; content: ""; background: url(../../assets/i/info.svg) no-repeat;}
 .am-form .am-userin-tel:before{background-position:0 -23px;}
 .am-form .am-userin-company:before{background-position:0 -46px;}
 .am-form .am-userin-his:before{background-position:0 -69px;}
@@ -75,7 +75,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 {padding:.6rem 0 .6rem .6rem;border:none;background:none;outline:none; text-align: right; width:100%;font-size: .93rem;}
 .am-form .am-spec-input{padding:0 0 0 .6rem; line-height: 2.3rem;}
 .am-form .ip-txt[type=number],.am-form .ip-txt[type=text]{float: left; width:92%;}
-.am-form .ip-txt[type=number]{padding-right: .5rem;}
+.am-form .ip-txt[type=number]{padding-right: .4rem;}
 
 .am-form select {padding:0;}
 .am-form select option{font-size: .93rem;}
@@ -158,3 +158,27 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-f-p-inner i{ margin-left: .5rem; font-size: .7rem;font-style: normal; color: #333;}
 .am-f-p-num{font-size: .9rem;}
 .am-f-p-inner .f-p-tag{margin-left: .5rem;padding:0 .3rem;color:#999; border:1px solid #999; border-radius:10px; display:inline-block;}
+
+.am-calculator{background: #fff;margin-top: 0;border-top:0;}
+.am-calculator .am-radio-inline{float: right; font-size: .9rem;margin-left: 1rem;}
+.am-calculator .am-radio-inline input{ }
+
+/*利率弹框*/
+.am-cal-popup{font-size:.9rem;}
+.am-cal-popup .am-popup-title{font-size:.9rem; font-weight: normal; }
+.am-cal-popup .am-popup-bd{padding:0;}
+.am-cal-popup .defined{padding:.5rem; background: #fff; font-size:.8rem;}
+.am-cal-popup .definedRate{ border:none;padding:.2rem;margin-left: 1rem;width:40%; text-align: right;}
+.am-cal-popup .definedRate,.am-cal-popup input[type=number]::focus{ outline:none;}
+.am-cal-popup .rate-btn{border:1px solid #0e90d2; padding:.2rem .8em; margin-left: 1rem;border-radius: 5px;}
+.rate-tips{font-size: .6rem;margin:.5rem;}
+.ul-rate{background: #fff;}.ul-rate li{font-size: .7rem;padding:.5rem;line-height: 1.4rem; font-size:.9rem;border:1px solid #eee; position: relative;}
+.ul-rate li.on:before{ content: "√"; position: absolute; right: 40px; color:#cc0000; }
+.p-tips{color:#999; font-size: .7rem;padding:.5rem 1rem;}
+.am-accu-btns .am-begin-cal{width: 100%;}
+
+.am-modal-bd-warn{font-size: .8rem;}
+
+.totalPrice{ text-align: center; padding:2rem 0; font-size: .9rem;}
+.totalPrice span{font-size: 2.5rem; font-weight: bold;}
+.calculator-res .am-form-group{padding:.2rem 0;}
