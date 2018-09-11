@@ -147,7 +147,6 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-data-history li a{color:#666;}
 .am-data-history .am-icon-chevron{top:1.3rem;}
 
-
 /*历史记录详情页*/
 .am-fast-price{background: #fff;font-size: .9rem;}
 .am-fast-price:first-child{margin-bottom:1rem;}
