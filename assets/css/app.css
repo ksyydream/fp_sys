@@ -145,10 +145,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-data-history .am-form-label{font-size: .8rem;}
 .am-data-history li a{color:#666;}
 .am-data-history .am-icon-chevron{top:1.3rem;}
-#wrapper {position: absolute; top:0;bottom: 0; overflow: hidden; margin: 0; width: 100%; padding: 0 8px;background-color: #f8f8f8;}
-.pull-action { text-align: center; height: 45px; line-height: 45px;color: #999; font-size: 1rem;}
-.pull-action .am-icon-spin {display: none;}.pull-action.loading .am-icon-spin {display: block;}
-.pull-action.loading .pull-label {display: none;}
+
 
 /*历史记录详情页*/
 .am-fast-price{background: #fff;font-size: .9rem;}
