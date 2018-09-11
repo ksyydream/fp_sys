@@ -306,8 +306,8 @@ function show_num(n,a) {
             backgroundPosition: '(0 ' + String(y) + 'px)'
         }, 'slow', 'swing', function () {
             if($(".am-house-num i").is(":animated")&&a==0){//精准评估
-                $(".am-re-price").animate({top:'27%'},'slow','swing',function(){
-                    $(".am-float-tag").fadeIn();
+                $(".am-re-price").animate({top:'30%'},'slow','swing',function(){
+                    $(".am-float-tag").fadeIn('slow');
                 });}
             else if($(".am-house-num i").is(":animated")&&a==1){//快评
                 $(".am-re-price").animate({top:'18%'},'slow','swing',function(){
