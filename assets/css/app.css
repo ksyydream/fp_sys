@@ -64,6 +64,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-accurate-estimate i{font-size: .9rem; font-style:normal; display: block; line-height: 2.3rem; float: left;}
 
 .am-form .am-form-group{margin:0 0 0 1rem;border-bottom: 1px solid #e5e5e5;}
+.am-form .am-form-group-borbno{border:none;}
 .am-form .am-form-group:last-child{border:none;}
 .am-form .am-form-label{margin:0;padding:0 0 0 .3rem;font-weight: normal; height:2.3rem;line-height: 2.3rem; font-size: .93rem;}
 .am-form .am-userin-label:before{margin: .65rem .2rem 0 0;width: 20px; height: 20px; float: left; content: ""; background: url(../../assets/i/info.svg) no-repeat;}
@@ -135,7 +136,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-form .am-edit-user-info label{padding:.6rem .6rem 0;}
 .am-form .am-edit-user-info input[type=text],.am-form .am-edit-user-info .am-textarea{font-size: .9rem;border-top:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5; text-align: left; background: #fff; border-left: none;border-right: none;}
 .am-form .am-btn-save{width: 100%;}
-
+.am-form .am-edit-tel[type=number]{text-align: left; background: #fff;}
 /*历史记录*/
 .am-data-history{font-size: .9rem; background: #fff;border-bottom:1px solid #e5e5e5;}
 .am-data-history li{margin-left: 1rem;padding:.4rem 0;height:3.5rem; line-height: 1.4rem;  position: relative;border-bottom:1px solid #e5e5e5;}
@@ -158,14 +159,8 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 
 .am-calculator{background: #fff;margin-top: 0;border-top:0;}
 .am-calculator .am-radio-inline{float: right; font-size: .9rem;margin-left: 1rem;}
-.am-calculator .am-radio-inline input{margin-top:5px;width:18px;height: 18px;
-    border:none;-webkit-appearance:none;}
-.am-calculator .am-radio-inline input[type="radio"]:after {
-    content: "";display: block; width: 18px;height: 18px;border-radius: 50%; text-align: center;
-    line-height: 5px; font-size: 1.2rem; color: #fff; border:2px solid #c0c6cc; box-sizing:border-box;
-}.am-calculator .am-radio-inline input[type="radio"]:checked:after{
-     content: " · ";font-size: 2rem; border-color: #f7aa2d; color:#f7aa2d;  background: #fff;
- }
+.am-calculator .am-radio-inline input{margin-top:5px;width:18px;height: 18px;border:none;}
+
 
 /*利率弹框*/
 .am-cal-popup{font-size:.9rem;}
