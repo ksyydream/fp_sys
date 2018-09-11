@@ -10,7 +10,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-btn-home{width:1.5rem; display:inline-block;}.am-btn-home img{width: 100%;}
 .am-menu .am-u-sm-6{text-align: center;}
 
-.am-price{padding-top:.5rem;height: 10.5rem; background: #fff url(../../assets/i/wave_bg.jpg) no-repeat left bottom;
+.am-price{padding-top:.5rem;height: 10.5rem; background: #fff url(../../assets/i/wave_bg.png) no-repeat left bottom;
     background-size: 100%; position: relative; }
 .am-ftr{text-align: center; color: #a7a7a7; font-size: .5rem; clear:both;margin: 1rem 0 4rem; }
 .am-re-price{width:7rem; height: 7rem; background: #fff;border-radius: 50%;padding: .25rem;
