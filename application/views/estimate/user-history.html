@@ -92,9 +92,9 @@
                         pageStart = pageEnd - num;
                         for(var i = pageStart; i < pageEnd; i++){
                             result += '<li><a href="/wx_index/person_pg_histroy_detail/{{id}}"><div class="am-u-sm-8"><span class="am-h-name">'
-                                    +'data.events[i].name'+'</span><span class="am-h-pgstyle">'
-                                    +'data.events[i].status_name'+'</span></div><div class="am-u-sm-4 am-form-label">'
-                                    +'data.events[i].time'+'</div> <i class="am-icon-chevron"></i></a></li>'
+                                    +data.events[i].name+'</span><span class="am-h-pgstyle">'
+                                    +data.events[i].status_name+'</span></div><div class="am-u-sm-4 am-form-label">'
+                                    +data.events[i].time+'</div> <i class="am-icon-chevron"></i></a></li>'
                             if((i + 1) >= data.events.length){
                                 // 锁定
                                 me.lock();
