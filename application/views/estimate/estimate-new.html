@@ -367,11 +367,13 @@ function choose_xiaoqu(id) {
                 $("#yy_zlc").val('');
                 $("#yy_szlc").val('');
                 if(item.flag == 2){
+                    $("#collapse-nav").collapse('close');
                     $(".am-show-btn-p").html("继续填写，精准评估").addClass('am-hidden-btn-p');
                     $(".am-show-btn").css({"border-top":"none"});
                     $("#accordion").hide();
                     $("#am-h-property").show();
                 }else{
+                    //$("#collapse-nav").collapse('close');
                     $("#accordion").show();
                     $("#am-h-property").hide();
                 }
@@ -388,10 +390,12 @@ function choose_wy(flag,min_c,max_c,wy,id){
       if(flag == '2'){
           $(".am-show-btn-p").html("继续填写，精准评估").addClass('am-hidden-btn-p');
           $(".am-show-btn").css({"border-top":"none"});
+          $("#collapse-nav").collapse('close');
           $("#accordion").hide();
           $("#am-h-property").show();
       }else{
           $("#accordion").show();
+         // $("#collapse-nav").collapse('close');
           $("#am-h-property").hide();
       }
     $("#yy_flag").html(flag);
