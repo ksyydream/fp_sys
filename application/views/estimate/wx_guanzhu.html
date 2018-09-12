@@ -1,72 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head lang="en">
-  <meta charset="UTF-8">
-  <title>房猫微店</title>
+<head>
+  <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="format-detection" content="telephone=no">
+  <title>我要评估</title>
+  <meta name="description" content="我要评估">
+  <meta name="keywords" content="index">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="alternate icon" type="image/png" href="/static/assets/i/favicon.png">
-  <link rel="stylesheet" href="/static/assets/css/amazeui.min.css"/>
-  <script src="/static/js/jquery.min.js"></script>
-  <script src="/static/assets/js/amazeui.js"></script>
-  <style>
-    .header {
-      text-align: center;
-    }
-    .header h1 {
-      font-size: 200%;
-      color: #333;
-      margin-top: 30px;
-    }
-    .header p {
-      font-size: 14px;
-    }
-    .yy_p_{
-      margin: 0px;
-    }
-  </style>
-  <script>
-
-</script>
+  <link rel="icon" type="image/png" href="/assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+  <link rel="stylesheet" href="/assets/css/amazeui.css"/>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <script type="text/javascript">
+    (function() {
+      var rem, dpr, time, doc = window.document,
+              docEl = doc.documentElement,
+              viewport = doc.querySelector('meta[name="viewport"]'),
+              zoomScale,
+              zoomScaleNum;
+      if (viewport) {
+        zoomScale = viewport.getAttribute("content").match(/initial\-scale=(["']?)([\d\.]+)\1?/);
+        if(zoomScale){
+          zoomScaleNum = parseFloat(zoomScale[2]);
+          dpr = parseInt(1 / zoomScaleNum);
+        }
+      }
+      if (!dpr && !zoomScaleNum) {
+        var os = (window.navigator.appVersion.match(/android/gi), window.navigator.appVersion.match(/iphone/gi)),
+                dpr = window.devicePixelRatio;
+        dpr = os ? dpr >= 3 ? 3 : dpr >= 2 ? 2 : 1 : 1;
+        zoomScaleNum = 1 / dpr;
+      }
+      window.addEventListener("resize",
+              function() {
+                clearTimeout(time);
+                time = setTimeout(changeRem, 300);
+              },false);
+      //改变基准rem
+      function changeRem(){
+        var docWidth = docEl.getBoundingClientRect().width;
+        if(docWidth / dpr > 540){
+          docWidth = 540 * dpr;
+        }
+        //rem字号以320下的16px为基线进行等比缩放
+        rem = docWidth/320 * 16;
+        docEl.style.fontSize = rem + "px";
+      }
+      changeRem();
+    })();
+  </script>
 </head>
-<body>
-<div class="header">
-  <div class="am-g">
-    <h2>房猫微店</h2>
-    <h4>咨询服务</h4>
-  </div>
-  <hr />
+<body style="background:#fff;">
+<div class="am-main gzerweima">
+  <img src="/assets/i/gz_weixin.jpg" alt="" class="img100">
+  <div class="erweima"><img src="/assets/i/erweima.jpg" alt="" >请先扫码关注后绑定</div>
+  <p class="am-ftr">中国•昆山 萧林中路2191号昆山楼市•房猫服务中心<br />苏州曼纳吉信息科技有限公司</p>
 </div>
-<div class="am-g">
-  <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
-    <h3>请先扫码关注后绑定</h3>
-    <div class="am-tabs" data-am-tabs="{noSwipe: 1}" id="doc-tab-demo-1">
-
-
-          <div class="am-form-group am-form-icon">
-            <ul id="" style="width: 95%;list-style: none">
-
-              <li style="list-style: none">
-                <img src="{{$img_url}}" alert="" style="width: 200px; height: 200px" />
-              </li>
-            </ul>
-          </div>
-
-    </div>
-
-    <hr>
-    <p class="am-serif yy_p_">@苏州曼纳吉信息科技有限公司所有</p>
-    <p class="am-serif yy_p_">地址：昆山市玉山镇萧林中路2191号</p>
-    <p class="am-serif yy_p_">电话：0512-36699066</p>
-    <hr>
-  </div>
-</div>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script>
-
-</script>
 </body>
 </html>

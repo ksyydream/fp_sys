@@ -180,7 +180,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 
 .totalPrice{ text-align: center; padding:2rem 0; font-size: .9rem;}
 .totalPrice span{font-size: 2.5rem; font-weight: bold;}
-.calculator-res .am-form-group{padding:.2rem 0;}
+
 
 /*下拉*/
 .dropload-up,.dropload-down{ position: relative; height: 0; overflow: hidden;font-size: .9rem;  -webkit-transform:translateZ(0);
@@ -198,3 +198,6 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 }
 
 #am-h-property{display: none;}
+.gzerweima{background: #fff;}
+.erweima img,.img100{width: 100%;}
+.erweima{width: 50%; margin-left: 25%; padding: 1rem 0; text-align: center; line-height: 2rem;}
