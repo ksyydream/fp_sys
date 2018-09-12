@@ -67,7 +67,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-form .am-form-group-borbno{border:none;}
 .am-form .am-form-group:last-child{border:none;}
 .am-form .am-form-label{margin:0;padding:0 0 0 .3rem;font-weight: normal; height:2.3rem;line-height: 2.3rem; font-size: .93rem;}
-.am-form .am-userin-label:before{margin: .65rem .2rem 0 0;width: 20px; height: 20px; float: left; content: ""; background: url(../../assets/i/info.svg) no-repeat;}
+.am-form .am-userin-label:before{margin: .68rem .2rem 0 0;width: 20px; height: 20px; float: left; content: ""; background: url(../../assets/i/info.svg) no-repeat;}
 .am-form .am-userin-tel:before{background-position:0 -23px;}
 .am-form .am-userin-company:before{background-position:0 -46px;}
 .am-form .am-userin-his:before{background-position:0 -69px;}
@@ -130,7 +130,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 
 .am-user-weixin .nick-name{ font-size: .9rem; line-height:2rem; display:block;}
 .am-user-info{background: #fff;margin-top: .8rem;border-bottom: 1px solid #e5e5e5;border-top: 1px solid #e5e5e5;}
-
+.am-user-info .user-link{color:#666;}
 /*修改我的信息*/
 .am-form .am-edit-user-info{ font-size: .9rem;margin:0;}
 .am-form .am-edit-user-info label{padding:.6rem .6rem 0;}
@@ -180,7 +180,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 
 .totalPrice{ text-align: center; padding:2rem 0; font-size: .9rem;}
 .totalPrice span{font-size: 2.5rem; font-weight: bold;}
-.calculator-res .am-form-group{padding:.2rem 0;}
+
 
 /*下拉*/
 .dropload-up,.dropload-down{ position: relative; height: 0; overflow: hidden;font-size: .9rem;  -webkit-transform:translateZ(0);
@@ -198,3 +198,6 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 }
 
 #am-h-property{display: none;}
+.gzerweima{background: #fff;}
+.erweima img,.img100{width: 100%;}
+.erweima{width: 50%; margin-left: 25%; padding: 1rem 0; text-align: center; line-height: 2rem;}
