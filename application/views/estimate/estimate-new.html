@@ -268,8 +268,12 @@
                    return false;
                }
                zlc_ = parseInt(zlc_);
+               if(zlc_ > max_c_){
+                   layer.msg($("#yy_wy").html() + '总楼层不能大于' + max_c_ + '层');
+                   return false;
+               }
                if(zlc_ > max_c_ || zlc_ < min_c_){
-                   layer.msg('总楼层不规范');
+                   layer.msg($("#yy_wy").html() + '总楼层不能小于' + min_c_ + '层');
                    return false;
                }
                $.post('/wx_api/api_get_price4jq',{status:2,price_id:id_, mianji:mianji_,zlc:zlc_,szlc:szlc_},function(data){
