@@ -107,7 +107,7 @@
       <div class="am-form-group" id="am-h-property">
           <label class="am-u-sm-3 am-form-label">建筑面积</label>
           <div class="am-u-sm-9">
-              <input type="number" class="ip-txt" id="" value="" placeholder="请输入"><i class="am-es-i">㎡</i>
+              <input type="number" class="ip-txt" id="flag_2_mianji" value="" placeholder="请输入"><i class="am-es-i">㎡</i>
           </div>
       </div>
   </form>
@@ -141,7 +141,7 @@
          <input type="hidden" id="yy_price_id" value="">
          <input type="hidden" id="pg_price" value="">
 </div>
-    <div class="am-show-btn" data-am-collapse="{target: '#collapse-nav'}">
+    <div id="yy_collapse_btn"  class="am-show-btn" data-am-collapse="{target: '#collapse-nav'}">
       <p class="am-u-sm-6 am-u-sm-centered am-show-btn-p am-hidden-btn-p">继续填写，精准评估</p></div>
    <div class="am-accu-btns">
      <div class="am-u-sm-12 am-u-sm-centered">  
@@ -203,7 +203,7 @@
       });$("#am-popup-close").click(function(event) {
           $("#my-popup").hide();$(".am-search-input").blur();
       });
-      $("#yy_mianji").keyup(function () {
+      $("#yy_mianji,#flag_2_mianji").keyup(function () {
           $(this).val($(this).val().replace(/[^0-9.]/g, ''));
           if(!/^[0-9]+(.[0-9]{0,2})?$/.test($(this).val())) {$(this).val('');}
       }).blur(function(){
@@ -227,7 +227,8 @@
           }
           var id_ = $.trim($("#yy_price_id").val());
            if($(".am-show-btn-p").hasClass('am-hidden-btn-p')){
-               $.post('/wx_api/api_get_price4jq',{status:1,price_id:id_},function(data){
+               var mianji_ = $.trim($("#flag_2_mianji").val());
+               $.post('/wx_api/api_get_price4jq',{status:1,price_id:id_,mianji:mianji_},function(data){
                    var items = JSON.parse(data);
                    if(items.success){
                        location.href="#my-scrollspy";
@@ -363,10 +364,15 @@ function choose_xiaoqu(id) {
                 $("#yy_mianji").val('');
                 $("#yy_zlc").val('');
                 $("#yy_szlc").val('');
+                //$('#collapse-nav').collapse('close');
                 if(item.flag == 2){
-                    $("#yy_szlc_div").hide();
+                    $("#collapse-nav").hide();
+                    $("#yy_collapse_btn").hide();
+                    $("#am-h-property").show();
                 }else{
-                    $("#yy_szlc_div").show();
+                    $("#collapse-nav").show();
+                    $("#yy_collapse_btn").show();
+                    $("#am-h-property").hide();
                 }
             }
             html += '<li onclick="choose_wy(\'' + item.flag + '\',\'' + item.min_c + '\',\'' + item.max_c + '\',\'' + item.wy + '\',\'' + item.id + '\')" >' + item.wy +'</li>'
@@ -379,9 +385,13 @@ function choose_xiaoqu(id) {
 function choose_wy(flag,min_c,max_c,wy,id){
     $("#yy_szlc").val('');
       if(flag == '2'){
-          $("#yy_szlc_div").hide();
+          $("#collapse-nav").hide();
+          $("#yy_collapse_btn").hide();
+          $("#am-h-property").show();
       }else{
-          $("#yy_szlc_div").show();
+          $("#collapse-nav").show();
+          $("#yy_collapse_btn").show();
+          $("#am-h-property").hide();
       }
     $("#yy_flag").html(flag);
      $("#yy_wy").html(wy);

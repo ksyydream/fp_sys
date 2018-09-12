@@ -59,7 +59,7 @@
   <div class="am-fast-price">
      <div class="am-f-p-inner">
       <span class="am-f-p-num">{{$data.price_1}}</span><i>元/㎡</i><br />
-      <span class="f-p-tag">快速评估</span>
+      <span class="f-p-tag">{{if $data.flag == 1}}快速评估{{else}}评估{{/if}}</span>
     </div>
       <div class="am-form am-form-horizontal">
      <div class="am-form-group">
@@ -86,9 +86,17 @@
         <p class="am-spec-input">{{$data.area}}</p>
       </div>
     </div>
+          {{if $data.flag == 2}}
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">建筑面积</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$data.mianji}}㎡</p>
+              </div>
+          </div>
+          {{/if}}
   </div>
   </div>
-    {{if $data.status == 2}}
+    {{if $data.status == 2 && $data.flag == 1}}
     <div class="am-fast-price">
         <div class="am-f-p-inner">
             <span class="am-f-p-num">{{$data.price_jp}}</span><i>元/㎡</i><br />

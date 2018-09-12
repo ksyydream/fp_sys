@@ -259,7 +259,9 @@ class Wx_index_model extends MY_Model
             );
             switch ($status){
                 case 1:
-
+                    if($mianji && $price_info['flag'] == 2){
+                        $insert_data['mianji'] = $mianji;
+                    }
                     break;
                 case 2:
                     $insert_data['mianji'] = $mianji;
@@ -365,10 +367,10 @@ class Wx_index_model extends MY_Model
         //总记录数
         $data['total'] = $rs_total->num;
         //list
-        $this->db->select("id,wy,name,case status
-when 1 then '快评'
-else '精评'
-end as status_name,DATE_FORMAT(cdate,'%Y/%m/%d') cdate_day",false);
+        $this->db->select("id,wy,name,
+CASE WHEN status = 1 and flag = 1 then '快评' 
+    WHEN status = 2 and flag = 1 then  '精评' 
+    else '' end as status_name,DATE_FORMAT(cdate,'%Y/%m/%d') cdate_day",false);
         $this->db->from("fp_pg_log");
         $this->db->where('wx_id', $check_['id']);
         $this->db->limit($data['count'], $data['start']);
