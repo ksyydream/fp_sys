@@ -232,7 +232,7 @@ class Wx_index_model extends MY_Model
                 return $res_data;
         }
 
-        $res_data['price'] = floor($res_data['price']);
+        $res_data['price'] = round($res_data['price']);
         //die(var_dump($res_data['price']));
         $res_data['success'] = true;
         $this->save_pg_log($status,$price_id,$res_data['price'],$this->input->post('mianji'),$this->input->post('zlc'),$this->input->post('szlc'));
