@@ -147,7 +147,7 @@ class Wx_index_model extends MY_Model
             return $res_data;
         }
         $res_data['price'] = $price_info['price']; //基准评估价
-        $res_data['price'] *= $price_info['area_ratio']; //乘以区域系数
+        $res_data['price'] = $res_data['price'] * $price_info['area_ratio']; //乘以区域系数
         $res_data['flag'] = $price_info['flag']; //物业类型
         $res_data['hot'] = $price_info['hot']; //区域热度
         $res_data['hot_class'] = $price_info['hot_class']; //区域热度
@@ -231,8 +231,8 @@ class Wx_index_model extends MY_Model
                 $res_data['err_msg'] = '请先选择小区';
                 return $res_data;
         }
-
-        $res_data['price'] = floor($res_data['price']);
+        //$res_data['price'] = intval($res_data['price']);
+        $res_data['price'] = round($res_data['price']);
         //die(var_dump($res_data['price']));
         $res_data['success'] = true;
         $this->save_pg_log($status,$price_id,$res_data['price'],$this->input->post('mianji'),$this->input->post('zlc'),$this->input->post('szlc'));
