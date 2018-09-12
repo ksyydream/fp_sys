@@ -97,6 +97,28 @@
             </div>
         </div>
     </div>
+    <div class="am-calculator am-accurate-estimate calculator-res">
+        <div class="am-form am-form-horizontal">
+            <div class="am-form-group">
+                <label class="am-u-sm-4 am-form-label">每月还款</label>
+                <div class="am-u-sm-8">
+                    <p class="am-spec-input">{{$data.myhke|default:'-'}}  元</p>
+                </div>
+            </div>
+            <div class="am-form-group">
+                <label class="am-u-sm-3 am-form-label">总还款</label>
+                <div class="am-u-sm-9">
+                    <p class="am-spec-input">{{$data.sumall|default:'-'}} 元</p>
+                </div>
+            </div>
+            <p class="p-tips">* 以上结果仅供参考。</p>
+            <div class="am-accu-btns">
+                <div class="am-u-sm-12 am-u-sm-centered">
+                    <a class="am-btn am-btn-danger am-begin-cal startCal" href="javascript:">重新计算</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <p class="am-ftr">中国•昆山 萧林中路2191号昆山楼市•房猫服务中心<br />苏州曼纳吉信息科技有限公司</p>
     <div class="am-menu am-g-fixed am-g-menu">
         <div class="am-u-sm-6"><a href="/wx_index/main" class="am-btn-home"><img src="/assets/i/home.jpg" alt=""></a></div>

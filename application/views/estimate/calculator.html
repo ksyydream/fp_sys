@@ -169,10 +169,12 @@
     <input type="hidden" value="" class="ipt-txt" id="grsdshui" name="grsdshui" pattern="[0-9]*">
     <!-- 税金总额 -->
     <input type="hidden" value="" class="ipt-txt" id="sfhj" name="sfhj" pattern="[0-9]*">
-    <!-- 房屋购置年限select -->
-
+    <!-- 每月还款 -->
+    <input type="hidden" value="" class="ipt-txt" id="myhke" name="myhke" pattern="[0-9]*">
+    <!-- 总还款 -->
+    <input type="hidden" value="" class="ipt-txt" id="sumall" name="sumall" pattern="[0-9]*">
 </form>
-
+<!-- 房屋购置年限select -->
 <div class="am-modal-actions" id="my-imitate">
     <div class="am-modal-actions-group">
         <div class="imitate-select-div">
@@ -266,7 +268,7 @@
         }
         else{
             $('#my-popup').modal('close');
-            $(".rate").attr('select-value', $(".definedRate").val()).html($(".definedRate").val()).css("color","#333");
+            $(".rate").attr('select-value', $(".definedRate").val()).html($(".definedRate").val()+"%").css("color","#333");
         }
     });
     // 房屋购置年限
