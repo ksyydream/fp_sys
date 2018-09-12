@@ -89,7 +89,7 @@
     <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">物业类型</label>
       <div class="am-u-sm-9 am-form-select">         
-        <a href="javascript:" id="yy_wy" class="before-input am-imitate-select"  data-am-modal="{target: '#my-actions-search'}">多层</a><i class="am-icon-chevron"></i>
+        <a href="javascript:" id="yy_wy" class="before-input am-imitate-select"  data-am-modal="{target: '#my-actions-search'}"></a><i class="am-icon-chevron"></i>
       </div>
     </div>
     <div class="am-form-group">
@@ -227,7 +227,8 @@
               return false;
           }
           var id_ = $.trim($("#yy_price_id").val());
-           if($(".am-show-btn-p").hasClass('am-hidden-btn-p')){
+          var status_ = $(".am-show-btn-p").hasClass('am-hidden-btn-p');
+           if(status_){
                var mianji_ = $.trim($("#flag_2_mianji").val());
                $.post('/wx_api/api_get_price4jq',{status:1,price_id:id_,mianji:mianji_},function(data){
                    var items = JSON.parse(data);
@@ -366,6 +367,8 @@ function choose_xiaoqu(id) {
                 $("#yy_zlc").val('');
                 $("#yy_szlc").val('');
                 if(item.flag == 2){
+                    $(".am-show-btn-p").html("继续填写，精准评估").addClass('am-hidden-btn-p');
+                    $(".am-show-btn").css({"border-top":"none"});
                     $("#accordion").hide();
                     $("#am-h-property").show();
                 }else{
@@ -383,6 +386,8 @@ function choose_xiaoqu(id) {
 function choose_wy(flag,min_c,max_c,wy,id){
     $("#yy_szlc").val('');
       if(flag == '2'){
+          $(".am-show-btn-p").html("继续填写，精准评估").addClass('am-hidden-btn-p');
+          $(".am-show-btn").css({"border-top":"none"});
           $("#accordion").hide();
           $("#am-h-property").show();
       }else{
