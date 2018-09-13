@@ -61,26 +61,26 @@
             <div class="am-form-group">
                 <label class="am-u-sm-3 am-form-label">评估单价</label>
                 <div class="am-u-sm-9">
-                    <input type="number" class="ip-txt ipt-price" id="" value="7000"><i class="am-es-i">元</i>
+                    <input type="number" class="ip-txt ipt-price" value="7000"><i class="am-es-i">元</i>
                 </div>
             </div>
 
             <div class="am-form-group">
-                <label  class="am-u-sm-4 am-form-label">实际销售总价</label>
+                <label class="am-u-sm-4 am-form-label">实际销售总价</label>
                 <div class="am-u-sm-8">
-                    <input type="number" class="ip-txt sales-price" id="" value="" placeholder="请输入实际销售总价"><i class="am-es-i">万</i>
+                    <input type="number" class="ip-txt sales-price"  value="" placeholder="请输入实际销售总价"><i class="am-es-i">万</i>
                 </div>
             </div>
             <div class="am-form-group">
                 <label class="am-u-sm-3 am-form-label">房屋面积</label>
                 <div class="am-u-sm-9">
-                    <input type="number" class="ip-txt ipt-area" id="" value="" placeholder="请输入房屋面积"><i class="am-es-i">㎡</i>
+                    <input type="number" class="ip-txt ipt-area" value="" placeholder="请输入房屋面积"><i class="am-es-i">㎡</i>
                 </div>
             </div>
             <div class="am-form-group">
                 <label class="am-u-sm-3 am-form-label">阁楼面积</label>
                 <div class="am-u-sm-9">
-                    <input type="number" class="ip-txt ipt-gl-area" id="" value="" placeholder="请输入阁楼面积"><i class="am-es-i">㎡</i>
+                    <input type="number" class="ip-txt ipt-gl-area" value="" placeholder="请输入阁楼面积"><i class="am-es-i">㎡</i>
                 </div>
             </div>
         </form>
@@ -154,8 +154,8 @@
     <p class="p-tips">* 计算结果仅供参考。</p>
     <p class="am-ftr">中国•昆山 萧林中路2191号昆山楼市•房猫服务中心<br />苏州曼纳吉信息科技有限公司</p>
     <div class="am-menu am-g-fixed am-g-menu">
-        <div class="am-u-sm-6"><a href="" class="am-btn-home"><img src="assets/i/home.jpg" alt=""></a></div>
-        <div class="am-u-sm-6"><a href="" class="am-btn-home"><img src="assets/i/user.jpg" alt=""></a></div>
+        <div class="am-u-sm-6"><a href="" class="am-btn-home"><img src="/assets/i/home.jpg" alt=""></a></div>
+        <div class="am-u-sm-6"><a href="" class="am-btn-home"><img src="/assets/i/user.jpg" alt=""></a></div>
     </div>
 
     <div class="am-modal am-modal-no-btn" tabindex="-1" id="your-modal">
@@ -173,21 +173,21 @@
 <!-- 计算结果 -->
 <form action="/wx_index/calculator_res" method="get" id="get_form">
 <!-- 发票首付 -->
-<input type="hidden" value="" class="ipt-txt" id="shoufu" pattern="[0-9]*">
+<input type="text" value="" class="ipt-txt" id="shoufu" name="shoufu" pattern="[0-9]*">
 <!-- 实际首付 -->
-<input type="hidden" value="" class="ipt-txt" id="sjshoufu" pattern="[0-9]*">
+<input type="text" value="" class="ipt-txt" id="sjshoufu" name="sjshoufu" pattern="[0-9]*">
 <!-- 契税 -->
-<input type="hidden" value="" class="ipt-txt" id="qishui" pattern="[0-9]*">
+<input type="text" value="" class="ipt-txt" id="qishui" name="qishui" pattern="[0-9]*">
 <!-- 营业税 -->
-<input type="hidden" value="" class="ipt-txt" id="yyshui" pattern="[0-9]*">
+<input type="text" value="" class="ipt-txt" id="yyshui" name="yyshui" pattern="[0-9]*">
 <!-- 个人所得税 -->
-<input type="hidden" value="" class="ipt-txt" id="grsdshui" pattern="[0-9]*">
+<input type="text" value="" class="ipt-txt" id="grsdshui" name="grsdshui" pattern="[0-9]*">
 <!-- 税金总额 -->
-<input type="hidden" value="" class="ipt-txt" id="sfhj" pattern="[0-9]*">
+<input type="text" value="" class="ipt-txt" id="sfhj" name="sfhj" pattern="[0-9]*">
 <!-- 每月还款 -->
-<input type="hidden" value="" class="ipt-txt" id="myhke" pattern="[0-9]*">
+<input type="text" value="" class="ipt-txt" id="myhke" name="myhke" pattern="[0-9]*">
 <!-- 总还款 -->
-<input type="hidden" value="" class="ipt-txt" id="sumall" pattern="[0-9]*">
+<input type="text" value="" class="ipt-txt" id="sumall" name="sumall" pattern="[0-9]*">
  </form>
 <!-- 房屋购置年限select -->
 <div class="am-modal-actions" id="my-imitate">
