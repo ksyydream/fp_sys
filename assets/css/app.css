@@ -26,9 +26,9 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-price .am-u-sm-9{padding-left: 1.5rem;}
 /*漂浮标签*/
 .am-float-tag{position: absolute; display: none;}
-.am-float-tag .am-em-tag{ color:#ffb700; font-style:normal;font-size: .7rem; display: block; width:45px;
+.am-float-tag .am-em-tag{ color:#ffb700; font-style:normal;font-size: .7rem; display: block; width:60px;
     text-align: center;-webkit-animation:hang linear 3s infinite;}
-.am-float-tag .am-em-tag:after{width:40px; height:40px; display: inline-block; content: "";
+.am-float-tag .am-em-tag:after{margin:0 auto;width:40px; height:40px; display:block; content: "";
     background: url(../../assets/i/h_icon.svg) no-repeat;}
 @-webkit-keyframes hang{
     0%,100%{-webkit-transform:translate(0,5px);}
@@ -46,9 +46,9 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-float-tag .em-hot-tag2:after{background-position: 0 -400px;}
 .am-float-tag .em-hot-tag3:after{background-position: 0 -440px;}
 
-.am-float-tag1{top:30%;left:20%;}
+.am-float-tag1{top:30%;left:19%;}
 .am-float-tag2{top:0;left:46%;}
-.am-float-tag3{top:30%;left:70%;}
+.am-float-tag3{top:30%;left:69%;}
 
 .am-tags-ul li{ color:#c0c6cc;float: left; list-style: none;font-size: .7rem; }
 .am-tags-ul span{padding-right:.4rem;}
