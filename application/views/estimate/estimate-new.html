@@ -89,7 +89,7 @@
     <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">物业类型</label>
       <div class="am-u-sm-9 am-form-select">         
-        <a href="javascript:" id="yy_wy" class="before-input am-imitate-select"  data-am-modal="{target: '#my-actions-search'}">请选择物业类型</a><i class="am-icon-chevron"></i>
+        <a href="javascript:" id="yy_wy" class="before-input"  data-am-modal="{target: '#my-actions-search'}">请选择物业类型</a><i class="am-icon-chevron"></i>
       </div>
     </div>
     <div class="am-form-group">
@@ -363,7 +363,7 @@ function choose_xiaoqu(id) {
                 $("#yy_address").html(item.address);
                 $("#yy_area").html(item.area);
                 $("#am-house-input").val(item.name);
-              //  $("#yy_wy").html(item.wy);
+               // $("#yy_wy").html(item.wy);
                 $("#yy_max_c").val(item.max_c);
                 $("#yy_min_c").val(item.min_c);
                 $("#yy_price_id").val(item.id);
@@ -382,9 +382,9 @@ function choose_xiaoqu(id) {
                     $("#accordion").show();
                     $("#am-h-property").hide();
                 }
-            }else if(items.length==1){
+            } if(items.length==1){
                 $("#yy_wy").html(item.wy).addClass('am-imitate-select');
-            }
+            }else if(items.length>1){$("#yy_wy").html();}
             html += '<li onclick="choose_wy(\'' + item.flag + '\',\'' + item.min_c + '\',\'' + item.max_c + '\',\'' + item.wy + '\',\'' + item.id + '\')" >' + item.wy +'</li>'
         }
         $("#wy_list").html(html);
