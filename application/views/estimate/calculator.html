@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>税费清单</title>
-    <meta name="description" content="税费清单">
+    <title>我要评估</title>
+    <meta name="description" content="我要评估">
     <meta name="keywords" content="index">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
     <meta name="renderer" content="webkit">
@@ -59,21 +59,28 @@
     <div class="am-calculator am-accurate-estimate">
         <form class="am-form am-form-horizontal">
             <div class="am-form-group">
-                <label class="am-u-sm-3 am-form-label">评估价</label>
+                <label class="am-u-sm-3 am-form-label">评估单价</label>
                 <div class="am-u-sm-9">
-                    <input type="number" class="ip-txt ipt-price" value="{{$pg_price|default:0}}"><i class="am-es-i">元</i>
+                    <input type="number" class="ip-txt ipt-price" id="" value="7000"><i class="am-es-i">元</i>
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <label class="am-u-sm-4 am-form-label">实际销售总价</label>
+                <div class="am-u-sm-8">
+                    <input type="number" class="ip-txt sales-price" id="" value="" placeholder="请输入实际销售总价"><i class="am-es-i">万</i>
                 </div>
             </div>
             <div class="am-form-group">
                 <label class="am-u-sm-3 am-form-label">房屋面积</label>
                 <div class="am-u-sm-9">
-                    <input type="number" class="ip-txt ipt-area" value="" placeholder="请输入房屋面积"><i class="am-es-i">㎡</i>
+                    <input type="number" class="ip-txt ipt-area" id="" value="" placeholder="请输入房屋面积"><i class="am-es-i">㎡</i>
                 </div>
             </div>
             <div class="am-form-group">
                 <label class="am-u-sm-3 am-form-label">阁楼面积</label>
                 <div class="am-u-sm-9">
-                    <input type="number" class="ip-txt ipt-gl-area" value="" placeholder="请输入阁楼面积"><i class="am-es-i">㎡</i>
+                    <input type="number" class="ip-txt ipt-gl-area" id="" value="" placeholder="请输入阁楼面积"><i class="am-es-i">㎡</i>
                 </div>
             </div>
         </form>
@@ -87,8 +94,8 @@
                 </div>
             </div>
             <div class="am-form-group">
-                <label class="am-u-sm-4 am-form-label buyer">买房首套住房</label>
-                <div class="am-u-sm-8">
+                <label class="am-u-sm-5 am-form-label buyer">买方第一次购房</label>
+                <div class="am-u-sm-7">
                     <label class="am-radio-inline">
                         <input type="radio" value="0" name="docInlineRadio1"> 否
                     </label>
@@ -98,14 +105,20 @@
                 </div>
             </div>
             <div class="am-form-group">
-                <label class="am-u-sm-4 am-form-label">有无贷款</label>
-                <div class="am-u-sm-8">
-                    <label class="am-radio-inline">
-                        <input type="radio" value="0" name="docInlineRadio2"> 有
+                <label class="am-u-sm-3 am-form-label">买方贷款</label>
+                <div class="am-u-sm-9">
+                    <a href="javascript:" class="before-input am-imitate-select loanpercent"  data-am-modal="{target: '#my-loan'}" data-value="0.7" num-value="0">七成</a><i class="am-icon-chevron"></i>
+                    <!-- <label class="am-radio-inline">
+                     <input type="radio" value="0.7" name="docInlineRadio2"> 七成
                     </label>
                     <label class="am-radio-inline">
-                        <input type="radio" value="1" name="docInlineRadio2"> 无
+                     <input type="radio" value="0.5" name="docInlineRadio2"> 五成
                     </label>
+                    <label class="am-radio-inline">
+                     <input type="radio" value="0.2" name="docInlineRadio2"> 两成
+                    </label>
+                     <span class="span-deloan"><input type="number" value="" class="ipt-txt definedLoan" placeholder="自定义">
+                     <i class="am-es-i">万</i></span> -->
                 </div>
             </div>
             <div class="am-form-group">
@@ -122,13 +135,13 @@
             <div class="am-form-group">
                 <label class="am-u-sm-4 am-form-label">按揭年数</label>
                 <div class="am-u-sm-8 am-form-select">
-                    <a href="javascript:" class="before-input am-imitate-select am-mortgage"  data-am-modal="{target: '#my-mortgage'}" data-value="1">1年(12期)</a><i class="am-icon-chevron"></i>
+                    <a href="javascript:" class="before-input am-imitate-select am-mortgage"  data-am-modal="{target: '#my-mortgage'}" data-value="12">30年(360期)</a><i class="am-icon-chevron"></i>
                 </div>
             </div>
             <div class="am-form-group">
                 <label class="am-u-sm-4 am-form-label">利率</label>
                 <div class="am-u-sm-8 am-form-select">
-                    <a href="javascript:" class="before-input am-imitate-select am-rate-btn rate" data-value="4.6">最新基准利率（4.6%)</a><i class="am-icon-chevron"></i>
+                    <a href="javascript:" class="before-input am-imitate-select am-rate-btn rate" data-value="4.9">最新基准利率（4.9%)</a><i class="am-icon-chevron"></i>
                 </div>
             </div>
         </form>
@@ -141,8 +154,8 @@
     <p class="p-tips">* 计算结果仅供参考。</p>
     <p class="am-ftr">中国•昆山 萧林中路2191号昆山楼市•房猫服务中心<br />苏州曼纳吉信息科技有限公司</p>
     <div class="am-menu am-g-fixed am-g-menu">
-        <div class="am-u-sm-6"><a href="/wx_index/main" class="am-btn-home"><img src="/assets/i/home.jpg" alt=""></a></div>
-        <div class="am-u-sm-6"><a href="/wx_index/person_info" class="am-btn-home"><img src="/assets/i/user.jpg" alt=""></a></div>
+        <div class="am-u-sm-6"><a href="" class="am-btn-home"><img src="assets/i/home.jpg" alt=""></a></div>
+        <div class="am-u-sm-6"><a href="" class="am-btn-home"><img src="assets/i/user.jpg" alt=""></a></div>
     </div>
 
     <div class="am-modal am-modal-no-btn" tabindex="-1" id="your-modal">
@@ -157,32 +170,32 @@
     </div>
 
 </div>
-<form action="/wx_index/calculator_res" method="get" id="get_form">
-    <!-- 计算结果 -->
-    <!-- 首付 -->
-    <input type="hidden" value="" class="ipt-txt" id="shoufu" name="shoufu" pattern="[0-9]*">
-    <!-- 契税 -->
-    <input type="hidden" value="" class="ipt-txt" id="qishui" name="qishui" pattern="[0-9]*">
-    <!-- 营业税 -->
-    <input type="hidden" value="" class="ipt-txt" id="yyshui" name="yyshui" pattern="[0-9]*">
-    <!-- 个人所得税 -->
-    <input type="hidden" value="" class="ipt-txt" id="grsdshui" name="grsdshui" pattern="[0-9]*">
-    <!-- 税金总额 -->
-    <input type="hidden" value="" class="ipt-txt" id="sfhj" name="sfhj" pattern="[0-9]*">
-    <!-- 每月还款 -->
-    <input type="hidden" value="" class="ipt-txt" id="myhke" name="myhke" pattern="[0-9]*">
-    <!-- 总还款 -->
-    <input type="hidden" value="" class="ipt-txt" id="sumall" name="sumall" pattern="[0-9]*">
-</form>
+<!-- 计算结果 -->
+<!-- 发票首付 -->
+<input type="hidden" value="" class="ipt-txt" id="shoufu" pattern="[0-9]*">
+<!-- 实际首付 -->
+<input type="hidden" value="" class="ipt-txt" id="sjshoufu" pattern="[0-9]*">
+<!-- 契税 -->
+<input type="hidden" value="" class="ipt-txt" id="qishui" pattern="[0-9]*">
+<!-- 营业税 -->
+<input type="hidden" value="" class="ipt-txt" id="yyshui" pattern="[0-9]*">
+<!-- 个人所得税 -->
+<input type="hidden" value="" class="ipt-txt" id="grsdshui" pattern="[0-9]*">
+<!-- 税金总额 -->
+<input type="hidden" value="" class="ipt-txt" id="sfhj" pattern="[0-9]*">
+<!-- 每月还款 -->
+<input type="hidden" value="" class="ipt-txt" id="myhke" pattern="[0-9]*">
+<!-- 总还款 -->
+<input type="hidden" value="" class="ipt-txt" id="sumall" pattern="[0-9]*">
 <!-- 房屋购置年限select -->
 <div class="am-modal-actions" id="my-imitate">
     <div class="am-modal-actions-group">
         <div class="imitate-select-div">
             <a href="javascript:" class="am-imitate-btn" data-am-modal-close>取消</a>
             <ul class="ul-imitate-select">
-                <li select-value="5">满5年</li>
-                <li select-value="2" >2-5年</li>
                 <li select-value="1">不满2年</li>
+                <li select-value="2" >2-5年</li>
+                <li select-value="5">满5年</li>
             </ul>
         </div>
     </div>
@@ -248,14 +261,32 @@
                 <li data-rate="0.88" class="">88折</li>
                 <li data-rate="0.9" class="">9折</li>
                 <li data-rate="0.95" class="">95折</li>
-                <li data-rate="1.05" class="">1.05倍</li>
-                <li data-rate="1.1" class="">1.1倍</li>
-                <li data-rate="1.2" class="">1.2倍</li>
-                <li data-rate="1.3" class="">1.3倍</li>
+                <li data-rate="1.05" class="">上浮5%</li>
+                <li data-rate="1.1" class="">上浮10%</li>
+                <li data-rate="1.2" class="">上浮20%</li>
+                <li data-rate="1.3" class="">上浮30%</li>
             </ul>
         </div>
     </div>
 </div>
+<!-- 贷款成数 -->
+<div class="am-modal-actions am-loan-actions" id="my-loan">
+    <div class="am-modal-actions-group">
+        <div class="imitate-select-div">
+            <a href="javascript:" class="am-imitate-btn" data-am-modal-close>取消</a>
+            <div class="defined">
+                <p class="defined-inner"><input type="number" value="" class="ipt-txt definedLoan" placeholder="自定义"><i>万</i>
+                </p><a href="javascript:" class="loan-btn">确定</a>
+            </div>
+            <ul class="ul-loan-select">
+                <li select-value="0.2">两成</li>
+                <li select-value="0.5">五成</li>
+                <li select-value="0.7">七成</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <script src="/assets/js/jquery-1.7.1.js"></script>
 <script src="/assets/js/amazeui.js"></script>
 <script type="text/javascript">
@@ -271,12 +302,29 @@
             $(".rate").attr('select-value', $(".definedRate").val()).html($(".definedRate").val()+"%").css("color","#333");
         }
     });
+    //贷款利率
+    $(".loan-btn").click(function(event) {
+        if($(".definedLoan").val()==""){
+            $(".definedLoan").attr('placeholder', '请输入贷款金额');
+        }
+        else{
+            $('#my-loan').modal('close');
+            $(".loanpercent").attr('num-value', $(".definedLoan").val()).html($(".definedLoan").val()+"万").css("color","#333").attr('data-value','0');
+        }
+    });
     // 房屋购置年限
     $(".ul-imitate-select li").click(function(event) {
         /* Act on the event */
         $('.limityear').html($(this).html());
         $('.limityear').attr('data-value',$(this).attr('select-value'));
         $('#my-imitate').modal('close');
+    });
+    // 贷款成数
+    $(".ul-loan-select li").click(function(event) {
+        /* Act on the event */
+        $('.loanpercent').html($(this).html());
+        $('.loanpercent').attr('data-value',$(this).attr('select-value')).attr('num-value','0');
+        $('#my-loan').modal('close');
     });
     // 按揭年数
     $(".ul-mortgage-select li").click(function(event) {
@@ -298,24 +346,25 @@
 
     $(".startCal").click(function(event) {
         /* Act on the event */
-        var pgprice =$(".ipt-price").val(),area = $(".ipt-area").val(),glarea =$(".ipt-gl-area").val(),limityear = $(".limityear").attr("data-value"),buyer = $('input[name="docInlineRadio1"]:checked').val(),
+        var salesprice =$(".sales-price").val(),pgprice =$(".ipt-price").val(),area = $(".ipt-area").val(),glarea =$(".ipt-gl-area").val(),limityear = $(".limityear").attr("data-value"),buyer = $('input[name="docInlineRadio1"]:checked').val(),
                 loan = $('input[name="docInlineRadio2"]:checked').val(),seller =$('input[name="docInlineRadio3"]:checked').val(),mortgage = $(".am-mortgage").attr("data-value"),rate = $(".rate").attr("data-value");
 
+        if(salesprice==""){
+            $(".am-modal-bd-warn").html("请输入实际销售总价");
+            $('#your-modal').modal();
+            return;
+        };
         if(pgprice==""){
             $(".am-modal-bd-warn").html("请输入评估价");
             $('#your-modal').modal();
             return;
         };
         if(area==""){
-            $(".am-modal-bd-warn").html("请输入面积");
+            $(".am-modal-bd-warn").html("请输入房屋面积");
             $('#your-modal').modal();
             return;
         };
-        if(glarea==""){
-            $(".am-modal-bd-warn").html("请输入阁楼面积,没有请输0");
-            $('#your-modal').modal();
-            return;
-        };
+
 
         if(limityear==""){
             $(".am-modal-bd-warn").html("请选择房屋购置年限");
@@ -324,12 +373,7 @@
         };
 
         if(buyer==null){
-            $(".am-modal-bd-warn").html("请选择买房家庭首次购房");
-            $('#your-modal').modal();
-            return false;
-        };
-        if(loan==null){
-            $(".am-modal-bd-warn").html("请选择有无贷款");
+            $(".am-modal-bd-warn").html("请选择买房第一次购房");
             $('#your-modal').modal();
             return false;
         };
@@ -353,51 +397,55 @@
         ex_total();
     });
     function ex_total(){
-        var pgprice =$(".ipt-price").val();//评估价
+        var salesprice =parseFloat($(".sales-price").val());//实际销售总价
+        var pgprice =parseFloat($(".ipt-price").val());//评估价
         var area =parseFloat($(".ipt-area").val());//房屋面积
-        var glarea =parseFloat($(".ipt-gl-area").val());//阁楼面积
         var limityear =parseFloat($(".limityear").attr("data-value"));//购置年限
         var buyer = $('input[name="docInlineRadio1"]:checked').val();//买家家庭首次购买
-        var loan = $('input[name="docInlineRadio2"]:checked').val();//有无贷款
+        var loanbl = parseFloat($(".loanpercent").attr("data-value"));//贷款成数
+        var loannum = parseFloat($(".loanpercent").attr("num-value"));//贷款额度
+
         var seller =$('input[name="docInlineRadio3"]:checked').val();//卖房是否唯一住房
         var mortgage = parseFloat($(".am-mortgage").attr("data-value")),rate = parseFloat($(".rate").attr("data-value")/100);
-        var  housePrice = pgprice*(area +glarea);
+        if($(".ipt-gl-area").val()==""){
+            glarea=0;
+        };
+        housePrice = pgprice*(area +glarea);
         //计算结果
         var dklv//税费利率
         var qishui;//契税
         var yyshui;//营业税
         var grsdshui;//个人所得税
         var shoufu;//首付
-        var loanbl//贷款比率
         //买家
         if(buyer == "0"){//买家首次购房
             if(area<=90){//90平以内（含）
                 dklv =0.01;
-                $("#qishui").val((housePrice*dklv).toFixed(2));//精确到小数点后两位
-            }else if(area >90){dklv =0.015; $("#qishui").val((housePrice*dklv).toFixed(2));}
-            if(loan == "1"){loanbl = 0.2;}
-            else if(loan == "0"){loanbl = 0.7;}
+                $("#qishui").val((housePrice*dklv).toFixed(2)+"(1%)");//精确到小数点后两位
+            }else if(area >90){dklv =0.015; $("#qishui").val((housePrice*dklv).toFixed(2)+"(1.5%)");}
+            // if(loan == "1"){loanbl = 0.2;}
+            //else if(loan == "0"){loanbl = 0.7;}
         }else if(buyer == "1"){//买家二套购房
             if(area<=90){
                 dklv =0.01;
-                $("#qishui").val((housePrice*dklv).toFixed(2));//精确到小数点后两位
-            }else if(area >90){dklv =0.015;$("#qishui").val((housePrice*dklv).toFixed(2));}//精确到小数点后两位
-            if(loan == "1"){loanbl = 0.2;}
-            else if(loan == "0"){loanbl = 0.5;}
+                $("#qishui").val((housePrice*dklv).toFixed(2)+"(1%)");//精确到小数点后两位
+            }else if(area >90){dklv =0.015;$("#qishui").val((housePrice*dklv).toFixed(2)+"(1.5%)");}//精确到小数点后两位
+            //if(loan == "1"){loanbl = 0.2;}
+            //else if(loan == "0"){loanbl = 0.5;}
         }else if(buyer == "2"){
             dklv = 0.03;
-            $("#qishui").val((housePrice*dklv).toFixed(2));
-            if(loan == "1"){loanbl = 0.2;}
-            else if(loan == "0"){loanbl = 0.5;}
+            $("#qishui").val((housePrice*dklv).toFixed(2)+"(3%)");
+            // if(loan == "1"){loanbl = 0.2;}
+            // else if(loan == "0"){loanbl = 0.5;}
         }
         //卖家
         if (seller=="1"){//卖家唯一住房
             if(limityear =="1"){
 
-                $("#grsdshui").val((housePrice*1/100).toFixed(2));
-                $("#yyshui").val((housePrice*5.6/100).toFixed(2));
+                $("#grsdshui").val((housePrice*1/100).toFixed(2)+"(1%)");
+                $("#yyshui").val((housePrice*5.6/100).toFixed(2)+"(5.6%)");
             }else if(limityear =="2"){
-                $("#grsdshui").val((housePrice*1/100).toFixed(2));
+                $("#grsdshui").val((housePrice*1/100).toFixed(2)+"(1%)");
                 $("#yyshui").val(0);
             }
             else if(limityear =="5"){
@@ -406,30 +454,37 @@
             }
         }else if(seller=="0"){
             if(limityear =="1"){
-                $("#grsdshui").val((housePrice*1/100).toFixed(2));
-                $("#yyshui").val((housePrice*5.6/100).toFixed(2));
+                $("#grsdshui").val((housePrice*1/100).toFixed(2)+"(1%)");
+                $("#yyshui").val((housePrice*5.6/100).toFixed(2)+"(5.6%)");
             }else if(limityear =="2"){
-                $("#grsdshui").val((housePrice*1/100).toFixed(2));
+                $("#grsdshui").val((housePrice*1/100).toFixed(2)+"(1%)");
                 $("#yyshui").val(0);
             }
             else if(limityear =="5"){
-                $("#grsdshui").val((housePrice*1/100).toFixed(2));
+                $("#grsdshui").val((housePrice*1/100).toFixed(2)+"(1%)");
                 $("#yyshui").val(0);
             }
 
         }
+        var dked,glarea,housePrice;//贷款额度
 
-        shoufu = (housePrice - [(pgprice * area + pgprice * glarea * 0.5 ) * loanbl]).toFixed(2);
+        if(loanbl!=""&&loannum==""){
+            dked =(pgprice * area + pgprice * glarea * 0.5 ) * loanbl;
+        }else if(loannum!=""&&loanbl==""){
+            dked =loannum;
+        }
+        shoufu = (housePrice - dked).toFixed(2);//发票首付
+        sjshoufu = (salesprice*10000 - dked).toFixed(2);//实际首付
         $("#shoufu").val(shoufu);
+        $("#sjshoufu").val(sjshoufu);
         var totalPrice =(parseFloat($("#qishui").val())+parseFloat($("#yyshui").val())+parseFloat($("#grsdshui").val())).toFixed(2);
         $("#sfhj").val(totalPrice);
-        // alert(dklv);
         //等额本息  本金*月利率*（1+月利率）^还款月数/[(1+月利率)^还款月数-1]
         var everyMoth = (housePrice-shoufu)*rate/12*Math.pow((1+rate/12),mortgage*12)/[Math.pow((1+rate/12),mortgage*12)-1];
         var sumall = (everyMoth*mortgage*12).toFixed(2);
         $("#myhke").val(everyMoth.toFixed(2));
         $("#sumall").val(sumall);
-        $("#get_form").submit();
+
     }
 </script>
 </body>

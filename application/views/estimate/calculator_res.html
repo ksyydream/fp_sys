@@ -60,7 +60,13 @@
         <div class="am-form am-form-horizontal">
             <div class="totalPrice"> <span>{{$data.sfhj|default:'-'}}</span><br />税金总额（元）</div>
             <div class="am-form-group">
-                <label class="am-u-sm-3 am-form-label">首付</label>
+                <label class="am-u-sm-3 am-form-label">实际首付</label>
+                <div class="am-u-sm-9">
+                    <p class="am-spec-input">{{$data.sjshoufu|default:'-'}} 元</p>
+                </div>
+            </div>
+            <div class="am-form-group">
+                <label class="am-u-sm-3 am-form-label">发票首付</label>
                 <div class="am-u-sm-9">
                     <p class="am-spec-input">{{$data.shoufu|default:'-'}} 元</p>
                 </div>
