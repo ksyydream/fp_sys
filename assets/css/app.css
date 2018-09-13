@@ -76,13 +76,13 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-form input[type=button],.am-form input[type=text],.am-form input[type=number],.am-form .am-spec-input,.am-form select
 {padding:.6rem 0 .6rem .6rem;border:none;background:none;outline:none; text-align: right; width:100%;font-size: .93rem;}
 .am-form .am-spec-input{padding:0 0 0 .6rem; line-height: 2.3rem;}
-.am-form .ip-txt[type=number],.am-form .ip-txt[type=text]{float: left; width:92%;}
+.am-form .ip-txt[type=number],.am-form .ip-txt[type=text]{float: left; width:90%;}
 .am-form .ip-txt[type=number]{padding-right: .4rem;}
 
 .am-form select {padding:0;}
 .am-form select option{font-size: .93rem;}
 .am-form .before-input{display: block; font-size: .93rem;height:2.3rem;line-height: 2.3rem;  text-align: right;padding-right: 1.1rem;color: #c0c6cc;}
-.am-form .am-imitate-select,.am-form .after-input{color:#666;}
+.am-form .am-imitate-select,.am-form .after-input,.am-form .am-loan-select{color:#666;}
 
 .am-form .am-u-sm-9{ position: relative;}
 .am-form .am-icon-chevron{position: absolute;right:1rem;top:.95rem; width: .4rem;height: 1rem; background: url(../../assets/i/arrow.png) no-repeat; background-size: 100%;}
@@ -158,7 +158,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-f-p-inner .f-p-tag{margin-left: .5rem;padding:0 .3rem;color:#999; border:1px solid #999; border-radius:10px; display:inline-block;}
 
 .am-calculator{background: #fff;margin-top: 0;border-top:0;}
-.am-calculator .am-radio-inline{float: right; font-size: .9rem;margin-left: 1rem;}
+.am-calculator .am-radio-inline{float: right; font-size: .9rem;margin-left: .6rem;}
 .am-calculator .am-radio-inline input{margin-top:5px;width:18px;height: 18px;border:none;}
 
 
@@ -201,3 +201,13 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .gzerweima{background: #fff;}
 .erweima img,.img100{width: 100%;}
 .erweima{width: 50%; margin-left: 25%; padding: 1rem 0; text-align: center; line-height: 2rem;}
+.am-form-horizontal .am-radio-inline{padding-top: .48rem;}
+
+.span-deloan .ipt-txt[type=number]{float: left; width:3.5rem;}
+
+.am-loan-actions .defined{  padding:.5rem 0;border-bottom: 1px solid #e5e5e5; height: 2.5rem;}
+.am-loan-actions .defined i{float: left; font-style: normal;}
+.am-loan-actions .definedLoan{border:none; text-align: right; padding:.2rem;width:11rem; float: left; background: none;}
+.am-loan-actions .defined-inner{  line-height: 1.6rem;}
+.am-loan-actions .loan-btn{border:1px solid #0e90d2; padding:0 .5em; margin-left: .8rem;border-radius: 5px; float: left;}
+.am-loan-actions .definedLoan,.am-loan-actions .definedLoan[type=number]::focus{outline:none;border:none;}
