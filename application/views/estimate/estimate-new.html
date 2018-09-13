@@ -353,7 +353,7 @@ function  beginsearch() {
 }
 
 function choose_xiaoqu(id) {
-  //  $("#yy_wy").removeClass('am-imitate-select');
+    $("#yy_wy").removeClass('am-imitate-select');
     $.post('/wx_api/api_get_xiaoqu_info',{xiaoqu_id:id},function(data){
         var html = '';
         var items = JSON.parse(data);
@@ -363,7 +363,7 @@ function choose_xiaoqu(id) {
                 $("#yy_address").html(item.address);
                 $("#yy_area").html(item.area);
                 $("#am-house-input").val(item.name);
-                $("#yy_wy").html().removeClass('am-imitate-select');
+                $("#yy_wy").html();
                 $("#yy_max_c").val(item.max_c);
                 $("#yy_min_c").val(item.min_c);
                 $("#yy_price_id").val(item.id);
@@ -384,7 +384,7 @@ function choose_xiaoqu(id) {
                 }
             } if(items.length==1){
                 $("#yy_wy").html(item.wy).addClass('am-imitate-select');
-            }else if(items.length>1){$("#yy_wy").html();}
+            }else if(items.length>1){$("#yy_wy").html()}
             html += '<li onclick="choose_wy(\'' + item.flag + '\',\'' + item.min_c + '\',\'' + item.max_c + '\',\'' + item.wy + '\',\'' + item.id + '\')" >' + item.wy +'</li>'
         }
         $("#wy_list").html(html);
