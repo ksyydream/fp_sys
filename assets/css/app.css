@@ -81,7 +81,8 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 
 .am-form select {padding:0;}
 .am-form select option{font-size: .93rem;}
-.am-form .before-input{display: block; font-size: .93rem;height:2.3rem;line-height: 2.3rem;  text-align: right;padding-right: 1.1rem;color: #c0c6cc;}
+.am-form .before-input{display: block; font-size: .93rem;height:2.3rem;line-height: 2.3rem;
+    text-align: right;padding-right: 1.1rem;color: #c0c6cc; overflow: hidden;}
 .am-form .am-imitate-select,.am-form .after-input,.am-form .am-loan-select{color:#666;}
 
 .am-form .am-u-sm-9{ position: relative;}
