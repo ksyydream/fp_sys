@@ -47,7 +47,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-float-tag .em-hot-tag3:after{background-position: 0 -440px;}
 
 .am-float-tag1{top:30%;left:19%;}
-.am-float-tag2{top:0;left:45%;}
+.am-float-tag2{top:0;left:44%;}
 .am-float-tag3{top:30%;left:69%;}
 
 .am-tags-ul li{ color:#c0c6cc;float: left; list-style: none;font-size: .7rem; }
