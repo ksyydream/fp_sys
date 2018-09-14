@@ -226,6 +226,10 @@
               layer.msg('请先选择小区');
               return false;
           }
+          if($("#yy_wy").html() == "请选择物业类型" || $("#yy_wy").html() == ""){
+              layer.msg('请选择物业类型');
+              return false;
+          }
           var id_ = $.trim($("#yy_price_id").val());
           var status_ = $(".am-show-btn-p").hasClass('am-hidden-btn-p');
            if(status_){
@@ -371,9 +375,14 @@ function choose_xiaoqu(id) {
                 $("#yy_zlc").val('');
                 $("#yy_szlc").val('');
                 if(item.flag == 2){
-                    $("#collapse-nav").collapse('close');
-                    $(".am-show-btn-p").html("继续填写，精准评估").addClass('am-hidden-btn-p');
-                    $(".am-show-btn").css({"border-top":"none"});
+                    var status_ = $(".am-show-btn-p").hasClass('am-hidden-btn-p');
+                    if(status_){
+
+                    }else{
+                        $("#collapse-nav").collapse('close');
+                        $(".am-show-btn-p").html("继续填写，精准评估").addClass('am-hidden-btn-p');
+                        $(".am-show-btn").css({"border-top":"none"});
+                    }
                     $("#accordion").hide();
                     $("#am-h-property").show();
                 }else{
@@ -394,9 +403,14 @@ function choose_xiaoqu(id) {
 function choose_wy(flag,min_c,max_c,wy,id){
     $("#yy_szlc").val('');
       if(flag == '2'){
-          $(".am-show-btn-p").html("继续填写，精准评估").addClass('am-hidden-btn-p');
-          $(".am-show-btn").css({"border-top":"none"});
-          $("#collapse-nav").collapse('close');
+          var status_ = $(".am-show-btn-p").hasClass('am-hidden-btn-p');
+          if(status_){
+
+          }else{
+              $("#collapse-nav").collapse('close');
+              $(".am-show-btn-p").html("继续填写，精准评估").addClass('am-hidden-btn-p');
+              $(".am-show-btn").css({"border-top":"none"});
+          }
           $("#accordion").hide();
           $("#am-h-property").show();
       }else{
