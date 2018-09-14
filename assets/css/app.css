@@ -46,9 +46,9 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-float-tag .em-hot-tag2:after{background-position: 0 -400px;}
 .am-float-tag .em-hot-tag3:after{background-position: 0 -440px;}
 
-.am-float-tag1{top:30%;left:19%;}
-.am-float-tag2{top:0;left:44%;}
-.am-float-tag3{top:30%;left:69%;}
+.am-float-tag1{top:30%;left:18%;}
+.am-float-tag2{top:0;left:43%;}
+.am-float-tag3{top:30%;left:68%;}
 
 .am-tags-ul li{ color:#c0c6cc;float: left; list-style: none;font-size: .7rem; }
 .am-tags-ul span{padding-right:.4rem;}
@@ -149,13 +149,13 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-data-history .am-icon-chevron{top:1.3rem;}
 
 /*历史记录详情页*/
-.am-fast-price{background: #fff;font-size: .9rem;}
+.am-fast-price{background: #fff;font-size: .8rem;}
 .am-fast-price:first-child{margin-bottom:1rem;}
 .am-f-p-inner{border-bottom: 1px solid #e5e5e5;padding: 0 0 1rem .8rem;}
 .am-f-p-inner .am-f-p-num{ font-size: 2.5rem; font-weight: bold;}
 .am-f-p-inner i{ margin-left: .5rem; font-size: .7rem;font-style: normal; color: #333;}
 .am-f-p-num{font-size: .9rem;}
-.am-f-p-inner .f-p-tag{margin-left: .5rem;padding:0 .3rem;color:#999; border:1px solid #999; border-radius:10px; display:inline-block;}
+.am-f-p-inner .f-p-tag{margin-left: .5rem;padding:0 .3rem;color:#999; border:1px solid #999; border-radius:15px; display:inline-block;}
 
 .am-calculator{background: #fff;margin-top: 0;border-top:0;}
 .am-calculator .am-radio-inline{float: right; font-size: .9rem;margin-left: .6rem;}
