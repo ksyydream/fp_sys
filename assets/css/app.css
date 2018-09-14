@@ -101,9 +101,9 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-search-popup{position: fixed;left:0;top:0;width:100%; height: 100%; z-index: 1110; background:#fff; display: none;overflow-y: scroll;}
 .am-search-popup .am-form-top{padding:.4rem;background: #fff;}
 .am-search-popup .am-form{width:100%;height:2rem;}
-.am-search-popup .am-form-group{margin:0;float: left;border:none;width:86%; position: relative; background: #f6f6f6;}
-.am-search-popup .am-form .am-search-input{ font-size: .9rem;border:none; border-radius: 3px;padding:.4rem .4rem .4rem 2rem;background: #f6f6f6; }
-.am-search-popup .am-close{color:#333;font-weight: normal; font-size: .9rem; text-align: center; opacity: 1;width:14%;line-height: 2rem;height:2rem; float: left;}
+.am-search-popup .am-form-group{margin:0;float: left;border:none;width:99%; position: relative; background: #f6f6f6;}
+.am-search-popup .am-form .am-search-input{ font-size: .85rem;border:none; border-radius: 3px;padding:.4rem .4rem .4rem 2rem;background: #f6f6f6; }
+.am-search-popup .am-close{color:#333;font-weight: normal; font-size: .8rem; text-align: right; opacity: 1;width:11%;line-height: 1.8rem;height:1.8rem; float: left;}
 .am-search-popup .search-btn{ display:block;width:1rem; height: 1rem; background: url(../../assets/i/search.png) no-repeat; background-size: 100%;position: absolute; top:8px;left:10px;}
 .am-data-result{margin-left:.5rem;}
 .am-data-result li{padding:.4rem 0;font-size: .9rem; line-height: 1.5rem; list-style: none;border-bottom: 1px solid #e5e5e5;}
@@ -151,11 +151,12 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 /*历史记录详情页*/
 .am-fast-price{background: #fff;font-size: .8rem;}
 .am-fast-price:first-child{margin-bottom:1rem;}
-.am-f-p-inner{border-bottom: 1px solid #e5e5e5;padding: 0 0 1rem .8rem;}
+.am-f-p-inner{border-bottom: 1px solid #e5e5e5;padding: 1rem 0 .5rem .8rem; line-height: 2rem;}
 .am-f-p-inner .am-f-p-num{ font-size: 2.5rem; font-weight: bold;}
 .am-f-p-inner i{ margin-left: .5rem; font-size: .7rem;font-style: normal; color: #333;}
 .am-f-p-num{font-size: .9rem;}
-.am-f-p-inner .f-p-tag{margin-left: .5rem;padding:0 .3rem;color:#999; border:1px solid #999; border-radius:15px; display:inline-block;}
+.am-f-p-inner .f-p-tag{margin-left: .5rem;padding:0 .3rem;color:#999; border:1px solid #999;
+    border-radius:15px; display:inline-block;line-height: 1.5rem;}
 
 .am-calculator{background: #fff;margin-top: 0;border-top:0;}
 .am-calculator .am-radio-inline{float: right; font-size: .9rem;margin-left: .6rem;}
