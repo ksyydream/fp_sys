@@ -196,4 +196,9 @@ class Wx_index extends Wx_controller {
         $this->assign('data',$data);
         $this->display('estimate/calculator_res.html');
     }
+
+    public function save_user_info4jp(){
+        $data = $this->wx_index_model->save_user_info4jp();
+        echo json_encode($data);
+    }
 }

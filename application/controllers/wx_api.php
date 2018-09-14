@@ -36,4 +36,11 @@ class Wx_api extends CI_controller {
             echo json_encode($data);
         }
     }
+
+    public function api_user_info(){
+        if($this->session->userdata('openid')){
+            $data = $this->wx_index_model->api_user_info();
+            echo json_encode($data);
+        }
+    }
 }

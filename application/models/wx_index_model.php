@@ -386,4 +386,48 @@ CASE WHEN status = 1 and flag = 1 then '快评'
         $data = $this->db->select('*,round(price_1) as price_kp,round(price_log) as price_jp')->from('fp_pg_log')->where(array('id' => $id , 'wx_id' => $check_['id']))->get()->row_array();
         return $data;
     }
+
+    public function api_user_info(){
+        $openid = $this->session->userdata('openid');
+        $check_ = $this->db->select()->from('fp_wx_user')->where('openid', $openid)->get()->row_array();
+        if($check_){
+            if($check_['true_mobile'] == ""){
+                $check_['success'] = false;
+            }else{
+                $check_['success'] = true;
+            }
+            return $check_;
+        }else{
+            return array(
+                'success' => false,
+                'true_mobile' => '',
+                'true_company' => '',
+                'true_name' => ''
+            );
+        }
+    }
+
+    public function save_user_info4jp(){
+        $res = array(
+            'success'=> false
+        );
+        $update = array(
+            'true_mobile' => $this->input->post('mobile'),
+            'true_company' => $this->input->post('company'),
+            'true_name' => $this->input->post('name'),
+        );
+        if(!$update['true_mobile']){
+            $res['err_msg'] = '电话号码必须填写！';
+            return $res;
+        }
+        $openid = $this->session->userdata('openid');
+        $check_ = $this->db->select()->from('fp_wx_user')->where('openid', $openid)->get()->row_array();
+        if($check_){
+            $this->db->where('id', $check_['id'])->update('fp_wx_user', $update);
+            $res['success'] = true;
+        }else{
+            $res['err_msg'] = '帐号异常！';
+        }
+        return $res;
+    }
 }
