@@ -229,8 +229,8 @@
           var id_ = $.trim($("#yy_price_id").val());
           var status_ = $(".am-show-btn-p").hasClass('am-hidden-btn-p');
            if(status_){
-               var mianji1_ = $.trim($("#flag_2_mianji").val());
-               $.post('/wx_api/api_get_price4jq',{status:1,price_id:id_,mianji:mianji1_},function(data){
+               var mianji_ = $.trim($("#flag_2_mianji").val());
+               $.post('/wx_api/api_get_price4jq',{status:1,price_id:id_,mianji:mianji_},function(data){
                    var items = JSON.parse(data);
                    if(items.success){
                        location.href="#my-scrollspy";
@@ -241,13 +241,13 @@
                        return false;
                    }
                })
-           }else{
+           }else if(!status_&&$("#am-h-property").css('display')=="none"){
                 var min_c_ = parseInt($("#yy_min_c").val());
                 var max_c_ = parseInt($("#yy_max_c").val());
                 var flag_ = $("#yy_flag").val();
                 var mianji_ = $.trim($("#yy_mianji").val());
                 if(mianji_ == ""){
-                    layer.msg('请先输入面积1');
+                    layer.msg('请先输入面积');
                     return false;
                 }
                var szlc_ = $.trim($("#yy_szlc").val());
