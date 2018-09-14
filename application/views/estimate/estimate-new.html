@@ -60,7 +60,7 @@
     <!-- <div id="wave" class="wave"></div> -->
     <div class="am-re-price">
       <div class="am-re-price-inner">
-        <p class="am-house-p" id="am-price-num"><span class="am-house-num">-----</span><br />
+        <p class="am-house-p" id="am-price-num"><span class="am-house-num"></span><br />
         元/㎡</p></div>
     </div>
       <div class="am-float-tag am-float-tag1">
@@ -221,6 +221,7 @@
 <script type="text/javascript">
 //评估价数字滚动效果
   $(function () {
+      show_num('00000',1);
       $('#collapse-nav').on('open.collapse.amui', function() {
           $(".am-show-btn-p").html("暂时不填了").removeClass('am-hidden-btn-p');
           $(".am-show-btn").css({"border-top":"1px solid #e5e5e5"});
