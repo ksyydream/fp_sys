@@ -411,8 +411,9 @@
         var seller =$('input[name="docInlineRadio3"]:checked').val();//卖房是否唯一住房
         var mortgage = parseFloat($(".am-mortgage").attr("data-value")),rate = parseFloat($(".rate").attr("data-value")/100);
         if(glarea==""){
-            glarea=0;
-        };
+            glarea=parseFloat(0);
+        }
+        else{glarea=parseFloat(glarea)};
         housePrice = pgprice*(area +glarea);
         //计算结果
         var dklv//税费利率
