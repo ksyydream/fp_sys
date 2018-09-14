@@ -47,7 +47,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-float-tag .em-hot-tag3:after{background-position: 0 -440px;}
 
 .am-float-tag1{top:30%;left:19%;}
-.am-float-tag2{top:0;left:46%;}
+.am-float-tag2{top:0;left:45%;}
 .am-float-tag3{top:30%;left:69%;}
 
 .am-tags-ul li{ color:#c0c6cc;float: left; list-style: none;font-size: .7rem; }
@@ -211,4 +211,6 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-loan-actions .defined-inner{  line-height: 1.8rem;}
 .am-loan-actions .loan-btn{border:1px solid #000; padding:0 .5em; margin-left: .8rem;border-radius: 5px; float: left; color: #000;}
 .am-loan-actions .definedLoan,.am-loan-actions .definedLoan[type=number]::focus{outline:none;border:none;}
-.am-popup-hd .am-close{color: #000;opacity: 1;}
+.am-popup-hd .am-close{color: #000;opacity: 1; font-size:1.5rem;}
+
+#my-info-popup{background: #f8f8f8;}

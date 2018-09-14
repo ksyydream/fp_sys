@@ -177,6 +177,36 @@
 
     </ul>
 </div>
+    <!-- 补充信息弹框 -->
+    <div class="am-popup am-cal-popup" id="my-info-popup">
+        <div class="am-popup-inner">
+            <div class="am-popup-hd">
+                <h4 class="am-popup-title">补充信息</h4>
+                <span data-am-modal-close class="am-close">&times;</span>
+            </div>
+            <div class="am-popup-bd">
+                <form action class="am-form">
+                    <div class="am-form-group am-form-group-borbno am-edit-user-info">
+                        <label for="doc-ipt-1">姓名</label>
+                        <input type="text" class="am-edit-txt" id="doc-ipt-1">
+                    </div>
+                    <div class="am-form-group am-form-group-borbno am-edit-user-info">
+                        <label for="doc-ipt-2">手机号码</label>
+                        <input type="number" class="am-edit-txt am-edit-tel" id="doc-ipt-2">
+                    </div>
+                    <div class="am-form-group am-form-group-borbno am-edit-user-info">
+                        <label for="doc-ipt-3">所属公司</label>
+                        <input type="text" class="am-edit-txt" id="doc-ipt-3">
+                    </div>
+                    <div class="am-accu-btns">
+                        <div class="am-u-sm-12 am-u-sm-centered">
+                            <a class="am-btn am-btn-danger am-btn-save" href="">保存</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 <!-- 搜索弹框end -->
    <p class="am-ftr">中国•昆山 萧林中路2191号昆山楼市•房猫服务中心<br />苏州曼纳吉信息科技有限公司</p>
   <div class="am-menu am-g-fixed am-g-menu">
@@ -189,7 +219,6 @@
 <script src="/assets/js/animateBackground-plugin.js"></script>
 <script src="/assets/js/layer/layer.js"></script>
 <script type="text/javascript">
-
 //评估价数字滚动效果
   $(function () {
       $('#collapse-nav').on('open.collapse.amui', function() {
