@@ -66,7 +66,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-form .am-form-group{margin:0 0 0 1rem;border-bottom: 1px solid #e5e5e5;}
 .am-form .am-form-group-borbno{border:none;}
 .am-form .am-form-group:last-child{border:none;}
-.am-form .am-form-label{margin:0;padding:0 0 0 .3rem;font-weight: normal; height:2.3rem;line-height: 2.3rem; font-size: .93rem;}
+.am-form .am-form-label{margin:0;padding:0 0 0 .3rem;font-weight: normal; height:2.3rem;line-height: 2.3rem; font-size: .93rem;color:#000;}
 .am-form .am-userin-label:before{margin: .68rem .2rem 0 0;width: 20px; height: 20px; float: left; content: ""; background: url(../../assets/i/info.svg) no-repeat;}
 .am-form .am-userin-tel:before{background-position:0 -23px;}
 .am-form .am-userin-company:before{background-position:0 -46px;}
@@ -117,7 +117,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 /*首页焦点图*/
 .am-slider-default{margin-bottom: .7rem;}
 .am-slider-default .am-control-nav{ bottom:10px;}
-.am-slider-default .am-control-nav li a{ background: #fff; opacity: 0.5; width:12px; height: 12px;}
+.am-slider-default .am-control-nav li a{ background: #fff; opacity: 0.5; width:10px; height: 10px;}
 .am-slider-default .am-control-nav li a.am-active{ opacity: 1;background: #fff;}
 .am-u-ind-btns{padding:0 .5rem;}.am-u-ind-btns a{margin-bottom: .5rem; display: block;}
 .am-index-btns .am-u-sm-12 img{width: 100%;}
