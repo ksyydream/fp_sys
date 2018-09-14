@@ -20,12 +20,12 @@ class Wx_controller extends MY_Controller
         $this->wxconfig['appid']=$this->config->item('appid');
         $this->wxconfig['appsecret']=$this->config->item('appsecret');
         //var_dump($this->wxconfig);
-        if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
+        //if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
             $this->get_openid();
-        }else{
-            $openid = 'oFzKgwbFEyC40jU6bS_HQ5sxM4X8';
-            $this->session->set_userdata('openid', $openid);
-        }
+        //}else{
+            //$openid = 'oFzKgwbFEyC40jU6bS_HQ5sxM4X8';
+            //$this->session->set_userdata('openid', $openid);
+        //}
         if($this->session->userdata('wx_user_id')){
             $this->cismarty->assign('rel_name',$this->session->userdata('wx_rel_name'));
             $this->cismarty->assign('role_id',$this->session->userdata('wx_role_id'));
