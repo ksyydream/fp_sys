@@ -229,8 +229,8 @@
           var id_ = $.trim($("#yy_price_id").val());
           var status_ = $(".am-show-btn-p").hasClass('am-hidden-btn-p');
            if(status_){
-               var mianji_ = $.trim($("#flag_2_mianji").val());
-               $.post('/wx_api/api_get_price4jq',{status:1,price_id:id_,mianji:mianji_},function(data){
+               var mianji1_ = $.trim($("#flag_2_mianji").val());
+               $.post('/wx_api/api_get_price4jq',{status:1,price_id:id_,mianji:mianji1_},function(data){
                    var items = JSON.parse(data);
                    if(items.success){
                        location.href="#my-scrollspy";
