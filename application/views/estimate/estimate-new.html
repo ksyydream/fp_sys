@@ -200,7 +200,7 @@
                     </div>
                     <div class="am-accu-btns">
                         <div class="am-u-sm-12 am-u-sm-centered">
-                            <a class="am-btn am-btn-danger am-btn-save" href="">保存</a>
+                            <a class="am-btn am-btn-danger am-btn-save" id="save_info" href="javascript:;">保存</a>
                         </div>
                     </div>
                 </form>
@@ -251,6 +251,7 @@
       }).bind("paste", function () {  //CTR+V事件处理
           $(this).val($(this).val().replace(/[^0-9]/g, ''));
       }).css("ime-mode", "disabled"); //CSS设置输入法不可用
+
       $("#jisuan_btn").click(function () {
           if($("#am-house-input").val() == "请输入" || $("#yy_price_id").val() == ""){
               layer.msg('请先选择小区');
@@ -260,82 +261,149 @@
               layer.msg('请选择物业类型');
               return false;
           }
-          var id_ = $.trim($("#yy_price_id").val());
           var status_ = $(".am-show-btn-p").hasClass('am-hidden-btn-p');
-           if(status_){
-               var mianji_ = $.trim($("#flag_2_mianji").val());
-               $.post('/wx_api/api_get_price4jq',{status:1,price_id:id_,mianji:mianji_},function(data){
-                   var items = JSON.parse(data);
-                   if(items.success){
-                       location.href="#my-scrollspy";
-                       show_num(items.price,1);
+          if(status_){
+              jisuan_pg()
+          }else{
+              var check_res_ = check_info();
+              if(!check_res_){
+                  return false;
+              }
+              $.post('/wx_api/api_user_info',{},function(data){
+                  var items = JSON.parse(data);
+                  if(items.success){
+                      jisuan_pg()
+                  }else{
+                      $("#doc-ipt-1").val(items.true_name);
+                      $("#doc-ipt-2").val(items.true_mobile);
+                      $("#doc-ipt-3").val(items.true_company);
+                      $('#my-info-popup').modal();
+                  }
+              })
+          }
+      })
 
-                   }else{
-                       layer.msg(items.err_msg);
-                       return false;
-                   }
-               })
-           }else{
-                var min_c_ = parseInt($("#yy_min_c").val());
-                var max_c_ = parseInt($("#yy_max_c").val());
-                var flag_ = $("#yy_flag").val();
-                var mianji_ = $.trim($("#yy_mianji").val());
-                if(mianji_ == ""){
-                    layer.msg('请先输入面积');
-                    return false;
-                }
-               var szlc_ = $.trim($("#yy_szlc").val());
-                if(flag_ == '1'){
-                    if(szlc_ == ""){
-                        layer.msg('请先输入所在楼层');
-                        return false;
-                    }
-                    szlc_ = parseInt(szlc_);
-                    if(szlc_ > max_c_){
-                        layer.msg('所在楼层不规范');
-                        return false;
-                    }
-                }
-               var zlc_ = $.trim($("#yy_zlc").val());
-               if(zlc_ == ""){
-                   layer.msg('请先输入总楼层');
-                   return false;
-               }
-               zlc_ = parseInt(zlc_);
-               if(zlc_ > max_c_){
-                   layer.msg($("#yy_wy").html() + '总楼层不能大于' + max_c_ + '层');
-                   return false;
-               }
-               if(zlc_ > max_c_ || zlc_ < min_c_){
-                   layer.msg($("#yy_wy").html() + '总楼层不能小于' + min_c_ + '层');
-                   return false;
-               }
-               $.post('/wx_api/api_get_price4jq',{status:2,price_id:id_, mianji:mianji_,zlc:zlc_,szlc:szlc_},function(data){
-                   var items = JSON.parse(data);
-                   if(items.success){
-                       show_num(items.price,0);
-                       var div_tag3 = $('.am-float-tag3').eq(0);
-                       var div_tag2 = $('.am-float-tag2').eq(0);
-                       var div_tag1 = $('.am-float-tag1').eq(0);
-                       div_tag3.find('em').attr('class','am-em-tag ' + items.hot_class);
-                       if(items.flag == 1){
-                           //div_tag1.show();
-                           div_tag1.find('em').attr('class','am-em-tag ' + items.lc_class);
-                           div_tag1.find('em').eq(0).html(items.lc_name);
-                       }else{
-                           div_tag1.hide();
-                       }
-                       div_tag2.find('em').attr('class','am-em-tag ' + items.mj_class);
-                       div_tag2.find('em').eq(0).html(items.mj_name);
-                       location.href="#my-scrollspy";
-                   }else{
-                       layer.msg(items.err_msg);
-                       return false;
-                   }
-               })
-           }
+      $("#save_info").click(function () {
+          var mobile = $.trim($("#doc-ipt-2").val());
+          if(mobile == ""){
+              layer.msg("请完善电话后保存!");
+              return false;
+          }
+          var ret = /^1\d{10}$/;
+          if(!ret.test(mobile)){
+              layer.msg('请输入规范的手机号码!', {icon: 2});
+              return false;
+          }
+          var name = $.trim($("#doc-ipt-1").val());
+          var company = $.trim($("#doc-ipt-3").val());
+          $.post('/wx_index/save_user_info4jp',{name:name,mobile:mobile,company:company},function(data){
+              var items = JSON.parse(data);
+              if(items.success){
+                  $('#my-info-popup').modal('close');
+                  jisuan_pg()
+              }else{
+                  layer.msg(items.err_msg);
+                  return false;
+              }
+          })
       })
   });
+
+function jisuan_pg() {
+    if($("#am-house-input").val() == "请输入" || $("#yy_price_id").val() == ""){
+        layer.msg('请先选择小区');
+        return false;
+    }
+    if($("#yy_wy").html() == "请选择物业类型" || $("#yy_wy").html() == ""){
+        layer.msg('请选择物业类型');
+        return false;
+    }
+    var id_ = $.trim($("#yy_price_id").val());
+    var status_ = $(".am-show-btn-p").hasClass('am-hidden-btn-p');
+    if(status_){
+        var mianji_ = $.trim($("#flag_2_mianji").val());
+        $.post('/wx_api/api_get_price4jq',{status:1,price_id:id_,mianji:mianji_},function(data){
+            var items = JSON.parse(data);
+            if(items.success){
+                location.href="#my-scrollspy";
+                show_num(items.price,1);
+
+            }else{
+                layer.msg(items.err_msg);
+                return false;
+            }
+        })
+    }else{
+        var check_res_ = check_info();
+        if(!check_res_){
+            return false;
+        }
+        var zlc_ = $.trim($("#yy_zlc").val());
+        var mianji_ = $.trim($("#yy_mianji").val());
+        var szlc_ = $.trim($("#yy_szlc").val());
+        $.post('/wx_api/api_get_price4jq',{status:2,price_id:id_, mianji:mianji_,zlc:zlc_,szlc:szlc_},function(data){
+            var items = JSON.parse(data);
+            if(items.success){
+                show_num(items.price,0);
+                var div_tag3 = $('.am-float-tag3').eq(0);
+                var div_tag2 = $('.am-float-tag2').eq(0);
+                var div_tag1 = $('.am-float-tag1').eq(0);
+                div_tag3.find('em').attr('class','am-em-tag ' + items.hot_class);
+                if(items.flag == 1){
+                    //div_tag1.show();
+                    div_tag1.find('em').attr('class','am-em-tag ' + items.lc_class);
+                    div_tag1.find('em').eq(0).html(items.lc_name);
+                }else{
+                    div_tag1.hide();
+                }
+                div_tag2.find('em').attr('class','am-em-tag ' + items.mj_class);
+                div_tag2.find('em').eq(0).html(items.mj_name);
+                location.href="#my-scrollspy";
+            }else{
+                layer.msg(items.err_msg);
+                return false;
+            }
+        })
+    }
+}
+
+function check_info() {
+    var min_c_ = parseInt($("#yy_min_c").val());
+    var max_c_ = parseInt($("#yy_max_c").val());
+    var flag_ = $("#yy_flag").val();
+    var mianji_ = $.trim($("#yy_mianji").val());
+    if(mianji_ == ""){
+        layer.msg('请先输入面积');
+        return false;
+    }
+    var szlc_ = $.trim($("#yy_szlc").val());
+    if(flag_ == '1'){
+        if(szlc_ == ""){
+            layer.msg('请先输入所在楼层');
+            return false;
+        }
+        szlc_ = parseInt(szlc_);
+        if(szlc_ > max_c_){
+            layer.msg('所在楼层不规范');
+            return false;
+        }
+    }
+    var zlc_ = $.trim($("#yy_zlc").val());
+    if(zlc_ == ""){
+        layer.msg('请先输入总楼层');
+        return false;
+    }
+    zlc_ = parseInt(zlc_);
+    if(zlc_ > max_c_){
+        layer.msg($("#yy_wy").html() + '总楼层不能大于' + max_c_ + '层');
+        return false;
+    }
+    if(zlc_ > max_c_ || zlc_ < min_c_){
+        layer.msg($("#yy_wy").html() + '总楼层不能小于' + min_c_ + '层');
+        return false;
+    }
+    return true;
+}
 
 function show_num(n,a) {
     $("#pg_price").val(n);
