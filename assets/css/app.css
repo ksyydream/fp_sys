@@ -119,7 +119,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-slider-default .am-control-nav{ bottom:10px;}
 .am-slider-default .am-control-nav li a{ background: #fff; opacity: 0.5; width:8px; height: 8px;}
 .am-slider-default .am-control-nav li a.am-active{ opacity: 1;background: #fff;}
-.am-u-ind-btns{padding:0 .5rem;}.am-u-ind-btns a{margin-bottom: .5rem; display: block;}
+.am-u-ind-btns{padding:0 .4rem;}.am-u-ind-btns a{margin-bottom: .5rem; display: block;}
 .am-index-btns .am-u-sm-12 img{width: 100%;}
 .am-index-btns .am-u-sm-12 .am-indbtn-left,.am-index-btns .am-u-sm-12 .am-indbtn-right{width:49%; }
 .am-index-btns .am-u-sm-12 .am-indbtn-left{float: left;}
