@@ -117,7 +117,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 /*首页焦点图*/
 .am-slider-default{margin-bottom: .7rem;}
 .am-slider-default .am-control-nav{ bottom:10px;}
-.am-slider-default .am-control-nav li a{ background: #fff; opacity: 0.5; width:8px; height: 8px;}
+.am-slider-default .am-control-nav li a{ background: #fff; opacity: 0.5; width:10px; height: 10px;}
 .am-slider-default .am-control-nav li a.am-active{ opacity: 1;background: #fff;}
 .am-u-ind-btns{padding:0 .5rem;}.am-u-ind-btns a{margin-bottom: .5rem; display: block;}
 .am-index-btns .am-u-sm-12 img{width: 100%;}
@@ -208,6 +208,6 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-loan-actions .defined{  padding:.5rem 0;border-bottom: 1px solid #e5e5e5; height: 2.5rem;}
 .am-loan-actions .defined i{float: left; font-style: normal;}
 .am-loan-actions .definedLoan{border:none; text-align: right; padding:.2rem;width:11rem; float: left; background: none;}
-.am-loan-actions .defined-inner{  line-height: 1.6rem;}
-.am-loan-actions .loan-btn{border:1px solid #0e90d2; padding:0 .5em; margin-left: .8rem;border-radius: 5px; float: left;}
+.am-loan-actions .defined-inner{  line-height: 1.8rem;}
+.am-loan-actions .loan-btn{border:1px solid #000; padding:0 .5em; margin-left: .8rem;border-radius: 5px; float: left; color: #000;}
 .am-loan-actions .definedLoan,.am-loan-actions .definedLoan[type=number]::focus{outline:none;border:none;}
