@@ -135,7 +135,7 @@
             <div class="am-form-group">
                 <label class="am-u-sm-4 am-form-label">按揭年数</label>
                 <div class="am-u-sm-8 am-form-select">
-                    <a href="javascript:" class="before-input am-imitate-select am-mortgage"  data-am-modal="{target: '#my-mortgage'}" data-value="12">30年(360期)</a><i class="am-icon-chevron"></i>
+                    <a href="javascript:" class="before-input am-imitate-select am-mortgage"  data-am-modal="{target: '#my-mortgage'}" data-value="30">30年(360期)</a><i class="am-icon-chevron"></i>
                 </div>
             </div>
             <div class="am-form-group">
@@ -188,6 +188,8 @@
 <input type="hidden" value="" class="ipt-txt" id="myhke" name="myhke" pattern="[0-9]*">
 <!-- 总还款 -->
 <input type="hidden" value="" class="ipt-txt" id="sumall" name="sumall" pattern="[0-9]*">
+<!-- 贷款金额 -->
+<input type="hidden" value="" class="ipt-txt" id="dkje" name="dkje" pattern="[0-9]*">
  </form>
 <!-- 房屋购置年限select -->
 <div class="am-modal-actions" id="my-imitate">
@@ -473,18 +475,19 @@
         var dked,glarea,housePrice;//贷款额度
 
         if(loanbl!=""&&loannum==""){
-            dked =(pgprice * area + pgprice * glarea * 0.5 ) * loanbl;
+            dked =parseInt((pgprice * area + pgprice * glarea * 0.5 ) * loanbl);
         }else if(loannum!=""&&loanbl==""){
             dked =loannum;
         }
         shoufu = (housePrice - dked).toFixed(2);//发票首付
         sjshoufu = (salesprice*10000 - dked).toFixed(2);//实际首付
+        $("#dkje").val(dked);
         $("#shoufu").val(shoufu);
         $("#sjshoufu").val(sjshoufu);
         var totalPrice =(parseFloat($("#qishui").val())+parseFloat($("#yyshui").val())+parseFloat($("#grsdshui").val())).toFixed(2);
         $("#sfhj").val(totalPrice);
         //等额本息  本金*月利率*（1+月利率）^还款月数/[(1+月利率)^还款月数-1]
-        var everyMoth = (housePrice-shoufu)*rate/12*Math.pow((1+rate/12),mortgage*12)/[Math.pow((1+rate/12),mortgage*12)-1];
+        var everyMoth =dked*rate/12*Math.pow((1+rate/12),mortgage*12)/[Math.pow((1+rate/12),mortgage*12)-1];
         var sumall = (everyMoth*mortgage*12).toFixed(2);
         $("#myhke").val(everyMoth.toFixed(2));
         $("#sumall").val(sumall);
