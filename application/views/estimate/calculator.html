@@ -477,7 +477,7 @@
         if(loanbl!=""&&loannum==""){
             dked =parseInt((pgprice * area + pgprice * glarea * 0.5 ) * loanbl);
         }else if(loannum!=""&&loanbl==""){
-            dked =loannum;
+            dked =loannum*10000;
         }
         shoufu = (housePrice - dked).toFixed(2);//发票首付
         sjshoufu = (salesprice*10000 - dked).toFixed(2);//实际首付
