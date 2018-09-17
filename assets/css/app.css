@@ -216,3 +216,5 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-popup-hd .am-close{color: #000;opacity: 1; font-size:1.5rem;}
 
 #my-info-popup{background: #f8f8f8;}
+
+.fztips{font-size: .7rem; color: #999; font-style: normal;}
