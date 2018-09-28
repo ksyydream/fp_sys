@@ -91,10 +91,7 @@ class Manage extends MY_Controller {
 		$this->load->view('manage/index.php');
 	}
 
-    public function search-credit()
-	{
-		$this->load->view('manage/search-credit.php');
-	}
+
 	/**
 	 * 公司信息
 	 */
