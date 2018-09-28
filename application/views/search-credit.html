@@ -110,7 +110,7 @@
 
   </form>
   </div>
-  <div class="partner-info">
+  <div class="partner-info" style="display: none;">
     <p class="p-tips">配偶信息</p>
     <div class="am-calculator am-accurate-estimate">
   <form class="am-form am-form-horizontal">
@@ -253,7 +253,10 @@
        }
      
 
-     $.post('https://apitest.tongdun.cn/bodyguard/apply/v4.3?partner_code=demo&partner_key=abcd1234566&app_name=web', {"account_name":name,"id_number":identify,"account_mobile":phone,"annual_income":income,"career":profes,"house":house_property,"contact1_name":partner_name,"contact1_id_number":partner_identify,"contact1_mobile":partner_phone}, function(data) { 
+     $.post('https://apitest.tongdun.cn/bodyguard/apply/v4.3?partner_code=demo&partner_key=abcd1234566&app_name=web',
+             {"account_name":name,"id_number":identify,"account_mobile":phone,"annual_income":income,"career":profes,"house":house_property,"contact1_name":partner_name,"contact1_id_number":partner_identify,"contact1_mobile":partner_phone},
+             function(data) {
+       alert(data.success);
         if(data.success)   {
           if(data.reason_desc){
             alert(data.reason_desc);
