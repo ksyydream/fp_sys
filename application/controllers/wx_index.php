@@ -87,7 +87,10 @@ class Wx_index extends Wx_controller {
     public function main(){
         $this->display('index.html');
     }
-
+    public function search-credit()
+	{
+		$this->load->view('search-credit.html');
+	}
     public function pg_list_new(){
         $this->display('estimate/estimate-new.html');
     }
