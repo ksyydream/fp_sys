@@ -243,7 +243,6 @@ class Manage extends MY_Controller {
 		}else{
 			$res = $this->manage_model->password_reset($id);
 		}
-
 		echo json_encode($res);
 	}
 
