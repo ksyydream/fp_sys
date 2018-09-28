@@ -87,7 +87,7 @@ class Wx_index extends Wx_controller {
     public function main(){
         $this->display('index.html');
     }
-    public function search-credit()
+    public function search_credit()
 	{
 		$this->display('search-credit.html');
 	}
