@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>信用查询</title>
+  <meta name="description" content="信用查询">
+  <meta name="keywords" content="index">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="icon" type="image/png" href="assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+  <link rel="stylesheet" href="assets/css/amazeui.css"/>
+  <link rel="stylesheet" href="assets/css/app.css">
+  <script type="text/javascript">
+    (function() {
+        var rem, dpr, time, doc = window.document,
+        docEl = doc.documentElement,
+        viewport = doc.querySelector('meta[name="viewport"]'),
+        zoomScale,
+        zoomScaleNum;
+        if (viewport) {            
+            zoomScale = viewport.getAttribute("content").match(/initial\-scale=(["']?)([\d\.]+)\1?/);
+            if(zoomScale){
+              zoomScaleNum = parseFloat(zoomScale[2]);
+              dpr = parseInt(1 / zoomScaleNum);
+            }
+        }
+        if (!dpr && !zoomScaleNum) {
+            var os = (window.navigator.appVersion.match(/android/gi), window.navigator.appVersion.match(/iphone/gi)),
+            dpr = window.devicePixelRatio;
+            dpr = os ? dpr >= 3 ? 3 : dpr >= 2 ? 2 : 1 : 1;
+            zoomScaleNum = 1 / dpr;
+        }
+        window.addEventListener("resize",
+            function() {
+                clearTimeout(time);
+                time = setTimeout(changeRem, 300);
+            },false);
+      //改变基准rem
+        function changeRem(){
+            var docWidth = docEl.getBoundingClientRect().width;
+            if(docWidth / dpr > 540){
+              docWidth = 540 * dpr;
+            }
+            //rem字号以320下的16px为基线进行等比缩放
+            rem = docWidth/320 * 16;
+            docEl.style.fontSize = rem + "px";
+        }
+        changeRem();
+    })();
+  </script> 
+  
+</head>
+<body>
+<div class="am-main">
+    <p class="p-tips">* 填写信息越完整，评估越精确</p>
+    <div class="am-calculator am-accurate-estimate">
+  <form class="am-form am-form-horizontal">
+    <div class="am-form-group">
+      <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">姓名</label>
+      <div class="am-u-sm-9">
+        <input type="text" class="ip-txt ip-txt-w100" id="ip-txt-name" value="" placeholder="请输入姓名">
+      </div>
+    </div>
+
+     <div class="am-form-group">
+      <label for="doc-ipt-3" class="am-u-sm-4 am-form-label">手机号码</label>
+      <div class="am-u-sm-8">
+        <input type="number" class="ip-txt ip-txt-w100" id="ip-txt-tel" value="" placeholder="请输入手机号码">
+      </div>
+    </div>
+    <div class="am-form-group">
+      <label class="am-u-sm-3 am-form-label">身份证</label>
+      <div class="am-u-sm-9">
+        <input type="number" class="ip-txt ip-txt-w100" id="ip-txt-id" value="" placeholder="请输入身份证">
+      </div>
+    </div>
+        <div class="am-form-group">
+      <label class="am-u-sm-3 am-form-label">年收入</label>
+      <div class="am-u-sm-9">
+        <input type="number" class="ip-txt ip-txt-w95" id="ip-txt-income" value="" placeholder="请输入月收入"><i class="am-es-i">K</i>
+      </div>
+    </div>
+    <div class="am-form-group">
+      <label class="am-u-sm-4 am-form-label">职业</label>
+      <div class="am-u-sm-8 am-form-select">         
+        <a href="javascript:" class="before-input" id="ip-txt-pro"  data-am-modal="{target: '#my-profession'}" data-value="0">请选择</a><i class="am-icon-chevron"></i>
+      </div>
+    </div>
+       <div class="am-form-group">
+      <label class="am-u-sm-4 am-form-label">房产情况</label>
+      <div class="am-u-sm-8 am-form-select">         
+        <a href="javascript:" class="before-input" id="ip-txt-house" data-am-modal="{target: '#my-house'}" data-value="0">请选择</a><i class="am-icon-chevron"></i>
+      </div>
+    </div>
+          <div class="am-form-group">
+      <label class="am-u-sm-5 am-form-label buyer">是否单身</label>
+      <div class="am-u-sm-7"> 
+         <label class="am-radio-inline">
+          <input type="radio" value="未婚" name="docInlineRadio1"> 未婚
+         </label> 
+         <label class="am-radio-inline">
+          <input type="radio" value="已婚" name="docInlineRadio1"> 已婚
+         </label>
+      </div>
+    </div>
+
+  </form>
+  </div>
+  <div class="partner-info">
+    <p class="p-tips">配偶信息</p>
+    <div class="am-calculator am-accurate-estimate">
+  <form class="am-form am-form-horizontal">
+    <div class="am-form-group">
+      <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">姓名</label>
+      <div class="am-u-sm-9">
+        <input type="text" class="ip-txt ip-txt-w100" id="partner-ip-txt-name" value="" placeholder="请输入姓名">
+      </div>
+    </div>
+
+     <div class="am-form-group">
+      <label for="doc-ipt-3" class="am-u-sm-4 am-form-label">手机号码</label>
+      <div class="am-u-sm-8">
+        <input type="number" class="ip-txt ip-txt-w100" id="partner-ip-txt-tel" value="" placeholder="请输入手机号码">
+      </div>
+    </div>
+    <div class="am-form-group">
+      <label class="am-u-sm-3 am-form-label">身份证</label>
+      <div class="am-u-sm-9">
+        <input type="number" class="ip-txt ip-txt-w100" id="partner-ip-txt-id" value="" placeholder="请输入身份证">
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+   <div class="am-accu-btns">
+     <div class="am-u-sm-12 am-u-sm-centered">  
+      <a class="am-btn am-btn-danger am-begin-cal" href="javascript:">开始评估</a>
+    </div> 
+   </div>
+     <p class="am-ftr">中国•昆山 萧林中路2191号昆山楼市•房猫服务中心<br />苏州曼纳吉信息科技有限公司</p>
+</div>
+
+      <!-- 选择职业 -->
+     <div class="am-modal-actions" id="my-profession">
+      <div class="am-modal-actions-group">
+        <div class="imitate-select-div">  
+          <a href="javascript:" class="am-imitate-btn" data-am-modal-close>取消</a>
+          <ul class="ul-profession-select">
+        <li select-value="保安、司机、服务、外送人员">保安、司机、服务、外送人员</li>
+        <li select-value="退休">退休</li>
+        <li select-value="失业">失业</li>
+        <li select-value="技能工作者、文艺工作者">技能工作者、文艺工作者</li>
+        <li select-value="农林牧渔">农林牧渔</li>
+        <li select-value="业务人员">业务人员</li>
+        <li select-value="一般工人">一般工人</li>
+        <li select-value="专业人员">专业人员</li>
+        <li select-value="警察、消防">警察、消防</li>
+        <li select-value="操作人员">操作人员</li>
+        <li select-value="个体商店老板">个体商店老板</li>
+        <li select-value="现役军人">现役军人</li>
+        <li select-value="收货人员">收货人员</li>
+        <li select-value="学生">学生</li>
+        <li select-value="企业负责人、股东">企业负责人、股东</li>
+        <li select-value="摊贩">摊贩</li>
+        <li select-value="无技术工人">无技术工人</li>
+        <li select-value="政府官员、公务员">政府官员、公务员</li>
+        <li select-value="企业基层主管、半专业人员">企业基层主管、半专业人员</li>
+        <li select-value="军官">军官</li>
+        <li select-value="企业高中级主管">企业高中级主管</li>
+        <li select-value="清洁人员">清洁人员</li>
+        <li select-value="实习生">实习生</li>
+        <li select-value="家庭主妇">家庭主妇</li>
+          </ul>
+        </div>
+      </div>
+    </div> 
+   <!-- 选择房产情况 -->
+    <div class="am-modal-actions" id="my-house">
+      <div class="am-modal-actions-group">
+        <div class="imitate-select-div">  
+          <a href="javascript:" class="am-imitate-btn" data-am-modal-close>取消</a>
+          <ul class="ul-house-select">
+        <li select-value="无房">无房</li>
+        <li select-value="其他">其他</li>
+        <li select-value="有房有贷款">有房有贷款</li>
+        <li select-value="有房无贷款">有房无贷款</li>
+        </ul>
+        </div>
+      </div>
+    </div> 
+<script src="assets/js/jquery-1.7.1.js"></script>
+<script src="assets/js/amazeui.js"></script>
+<script type="text/javascript">
+ $('input[name="docInlineRadio1"]').click(function(event) {
+   if($(this).val()=="已婚"){
+      $(".partner-info").show();
+   }else if($(this).val()=="未婚") {
+      $(".partner-info").hide();
+   }
+ });
+   // 选择职业
+   $(".ul-profession-select li").click(function(event) {
+     /* Act on the event */
+       $('#ip-txt-pro').html($(this).html()).addClass('am-imitate-select');
+       $('#ip-txt-pro').attr('data-value',$(this).attr('select-value'));
+       $('#my-profession').modal('close');
+   });
+
+    // 选择房产情况
+   $(".ul-house-select li").click(function(event) {
+     /* Act on the event */
+       $('#ip-txt-house').html($(this).html()).addClass('am-imitate-select');
+       $('#ip-txt-house').attr('data-value',$(this).attr('select-value'));
+       $('#my-house').modal('close');
+   });
+
+ $(".am-begin-cal").click(function(event) {
+       var name =$("#ip-txt-name").val();
+       var phone = $("#ip-txt-tel").val();
+       var identify =$("#ip-txt-id").val(); 
+       var income =$("#ip-txt-income").val();
+       var profes =$("#ip-txt-pro").val();
+       var house =$("#ip-txt-house").val();
+       var marriage =$('input[name="docInlineRadio1"]').val();
+       var partner_name=$("#partner-ip-txt-name").val();
+       var partner_phone=$("#partner-ip-txt-tel").val();
+       var partner_identify=$("#partner-ip-txt-id").val();
+       
+       checkString(name,phone,identify);
+       function checkString(name,tel,id_number){
+          if(name==""){
+            alert("请输入姓名");
+            return false; 
+           }
+          if(!(/^1[34578]\d{9}$/.test(tel))){ 
+            alert("手机号码有误，请重填");  
+            $(this).focus();
+            return false; 
+         }
+          if(!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(id_number))){
+            alert("身份证号码有误，请重填"); 
+            $(this).focus(); 
+            return false; 
+         }
+       }
+
+       if(!($(".partner-info").is(":hidden"))){
+           checkString(partner_name,partner_phone,partner_identify);
+       }
+     
+
+     $.post('https://apitest.tongdun.cn/bodyguard/apply/v4.3?partner_code=demo&partner_key=abcd1234566&app_name=web', {"account_name":name,"id_number":identify,"account_mobile":phone,"annual_income":income,"career":profes,"house":house_property,"contact1_name":partner_name,"contact1_id_number":partner_identify,"contact1_mobile":partner_phone}, function(data) { 
+        if(data.success)   {
+          if(data.reason_desc){
+            alert(data.reason_desc);
+          }
+          else {
+            alert(data.final_decision);
+          }
+        }
+      });
+   });
+ </script>
+</body>
+</html>
