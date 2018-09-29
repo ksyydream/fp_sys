@@ -253,10 +253,12 @@
            checkString(partner_name,partner_phone,partner_identify);
        }
      $.ajax({
-         type : "post",  //提交方式  
-         dataType:'jsonp',
-         jsonp:'callback',
-         url : "https://apitest.tongdun.cn/entcheck/apply.bodyguard/v3", 
+         type:"POST",
+         url:"https://apitest.tongdun.cn/entcheck/apply.bodyguard/v3",
+         crossDomain: true,
+         contentType: false,
+         processData: false,
+         dataType: 'json',
          data : {
              "partner_code":"funmall"
              ,"partner_key":"295a9ce170f34880a780b21c3ce5e793"
