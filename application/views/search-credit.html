@@ -254,11 +254,12 @@
        }
      $.ajax({
          type : "POST",  //提交方式  
-         url : "https://api.tongdun.cn/bodyguard/apply/v4.3",//路径  
-         data : {"partner_code": "funmall", "partner_key":"295a9ce170f34880a780b21c3ce5e793","app_name":"funmall_web"
-            , "account_name":name
+         url : "https://apitest.tongdun.cn/entcheck/apply.bodyguard/v3?partner_code=funmall&partner_key=295a9ce170f34880a780b21c3ce5e793&app_name=funmall_web", 
+         data : {
+             "biz_code":"loan"
+             ,"account_name":name
              ,"id_number":identify
-            , "account_mobile":phone
+             , "account_mobile":phone
           //  , "annual_income":income
           //  , "career":profes
           //  , "house":house
