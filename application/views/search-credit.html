@@ -255,7 +255,13 @@
          type : "POST",  //提交方式  
          url : "https://api.tongdun.cn/bodyguard/apply/v4.3",//路径  
          data : {"partner_code": "demo", "partner_key":"abcd1234566","app_name":"web",
-             "account_name":name,"id_number":identify,"account_mobile":phone,"annual_income":income,"career":profes,"house":house_property,"contact1_name":partner_name,"contact1_id_number":partner_identify,"contact1_mobile":partner_phone
+             "account_name":name,
+             "id_number":identify,
+             "account_mobile":phone,
+             "annual_income":income,
+             "career":profes,
+             "house":house,
+             "contact1_name":partner_name,"contact1_id_number":partner_identify,"contact1_mobile":partner_phone
          },//数据，这里使用的是Json格式进行传输  
          success : function(data) {//返回数据根据结果进行相应的处理  
              if (data.success ) {
