@@ -254,16 +254,13 @@
        }
      $.ajax({
          type:"POST",
-         url:"https://apitest.tongdun.cn/entcheck/apply.bodyguard/v3",
+         url:"https://apitest.tongdun.cn/entcheck/apply.bodyguard/v3?partner_code=funmall&partner_key=295a9ce170f34880a780b21c3ce5e793&app_name=funmall_web",
          crossDomain: true,
          contentType: false,
          processData: false,
          dataType: 'json',
          data : {
-             "partner_code":"funmall"
-             ,"partner_key":"295a9ce170f34880a780b21c3ce5e793"
-             ,"app_name":"funmall_web"
-             ,"biz_code":"loan"
+             "biz_code":"loan"
              ,"account_name":name
              ,"id_number":identify
              , "account_mobile":phone
