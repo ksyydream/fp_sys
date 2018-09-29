@@ -218,3 +218,12 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 #my-info-popup{background: #f8f8f8;}
 
 .fztips{font-size: .7rem; color: #999; font-style: normal;}
+
+/*登录*/
+.login-logo{ display: block;margin:5rem 0 3rem;}
+.login-logo img{width: 100%;}
+.login-am-form .am-accu-btns{background: #fff;margin-bottom: 2rem;}
+.login-am-form .am-form-group{margin: 0 2rem .5rem;}
+.login-am-form input[type=number]{text-align: left;}
+.login-am-form .am-form-label{float: left; width:30px; height: 25px;}
+.login-am-form .am-form-label img{width: 100%;}
