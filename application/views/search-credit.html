@@ -58,24 +58,24 @@
 <div class="am-main">
     <p class="p-tips">* 填写信息越完整，评估越精确</p>
     <div class="am-calculator am-accurate-estimate">
-  <form class="am-form am-form-horizontal">
+  <form class="am-form am-form-horizontal" id="save_form" action="/wx_index/begin_cal" method="post">
     <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">姓名</label>
       <div class="am-u-sm-9">
-        <input type="text" class="ip-txt ip-txt-w100" id="ip-txt-name" value="" placeholder="请输入姓名">
+        <input type="text" class="ip-txt ip-txt-w100" name="user_name" id="ip-txt-name" value="" placeholder="请输入姓名">
       </div>
     </div>
 
      <div class="am-form-group">
       <label class="am-u-sm-4 am-form-label">手机号码</label>
       <div class="am-u-sm-8">
-        <input type="number" class="ip-txt ip-txt-w100" id="ip-txt-tel" value="" placeholder="请输入手机号码">
+        <input type="number" class="ip-txt ip-txt-w100" name="user_mobile" id="ip-txt-tel" value="" placeholder="请输入手机号码">
       </div>
     </div>
     <div class="am-form-group">
       <label class="am-u-sm-3 am-form-label">身份证</label>
       <div class="am-u-sm-9">
-        <input type="number" class="ip-txt ip-txt-w100" id="ip-txt-id" value="" placeholder="请输入身份证">
+        <input type="number" class="ip-txt ip-txt-w100" name="user_card" id="ip-txt-id" value="" placeholder="请输入身份证">
       </div>
     </div>
         <div class="am-form-group">
@@ -231,52 +231,36 @@
        var partner_phone=$("#partner-ip-txt-tel").val();
        var partner_identify=$("#partner-ip-txt-id").val();
        
-       checkString(name,phone,identify);
-       function checkString(name,tel,id_number){
-          if(name==""){
-            alert("请输入姓名");
-            return false; 
-           }
-          if(!(/^1[34578]\d{9}$/.test(tel))){ 
-            alert("手机号码有误，请重填");  
-            $(this).focus();
-            return false; 
-         }
-          if(!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(id_number))){
-            alert("身份证号码有误，请重填"); 
-            $(this).focus(); 
-            return false; 
-         }
-       }
-
+       var res_ = checkString(name,phone,identify);
+     if(!res_){
+         return false;
+     }
        if(!($(".partner-info").is(":hidden"))){
-           checkString(partner_name,partner_phone,partner_identify);
+           var res_1 = checkString(partner_name,partner_phone,partner_identify);
+           if(!res_1){
+               return false;
+           }
        }
-     $.ajax({
-         type:"POST",
-         url:"https://apitest.tongdun.cn/bodyguard/apply/v4.3?partner_code=funmall&partner_key=295a9ce170f34880a780b21c3ce5e793&app_name=funmall_web",
-         dataType: 'json',
-         data : {
-             "biz_code":"loan"
-             ,"account_name":name
-             ,"id_number":identify
-             , "account_mobile":phone
-          //  , "annual_income":income
-          //  , "career":profes
-          //  , "house":house
-          //  , "contact1_name":partner_name,"contact1_id_number":partner_identify,"contact1_mobile":partner_phone
-         },//数据，这里使用的是Json格式进行传输  
-         success : function(data) {//返回数据根据结果进行相应的处理  
-             if (data.success) {
-                 alert("ok");
-
-             } else {
-                 alert("fail");
-             }
-         }
-     });
+   $("#save_form").submit();
 
  });
+
+ function checkString(name,tel,id_number){
+     if(name==""){
+         alert("请输入姓名");
+         return false;
+     }
+     if(!(/^1[34578]\d{9}$/.test(tel))){
+         alert("手机号码有误，请重填");
+         $(this).focus();
+         return false;
+     }
+     if(!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(id_number))){
+         alert("身份证号码有误，请重填");
+         $(this).focus();
+         return false;
+     }
+ }
  </script>
 </body>
 </html>

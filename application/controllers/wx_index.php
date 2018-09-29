@@ -91,6 +91,17 @@ class Wx_index extends Wx_controller {
 	{
 		$this->display('search-credit.html');
 	}
+
+    public function begin_cal(){
+        $res = $this->wx_index_model->begin_cal();
+        if($res->success){
+            $this->assign('data',$res);
+            $this->display('get-credit.html');
+        }else{
+            $this->show_message('提交失败！');
+        }
+    }
+
     public function pg_list_new(){
         $this->display('estimate/estimate-new.html');
     }
@@ -203,5 +214,18 @@ class Wx_index extends Wx_controller {
     public function save_user_info4jp(){
         $data = $this->wx_index_model->save_user_info4jp();
         echo json_encode($data);
+    }
+
+    public function test_gkd(){
+        //$data = mb_convert_encoding("1灏忔椂鍐呰韩浠借瘉鎴栨墜鏈哄彿鐢宠娆℃暟澶т簬绛変簬3", "UTF-8", "GBK");
+        header("Content-Type: text/html;charset=utf-8");
+        $old = "1灏忔椂鍐呰韩浠借瘉鎴栨墜鏈哄彿鐢宠娆℃暟澶т簬绛変簬3";
+        //echo $old;
+        $data =iconv("gbk", "utf-8//ignore", "1灏忔椂鍐呰韩浠借瘉鎴栨墜鏈哄彿鐢宠娆℃暟澶т簬绛変簬3");
+        $str = mb_convert_encoding("1灏忔椂鍐呰韩浠借瘉鎴栨墜鏈哄彿鐢宠娆℃暟澶т簬绛変簬3", "utf-8", "gbk");
+        $res = iconv("utf-8", "gb2312//ignore", $old);
+        //echo $data;
+        //echo $str;
+        echo $res;
     }
 }
