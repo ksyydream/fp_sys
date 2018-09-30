@@ -227,3 +227,6 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .login-am-form input[type=number]{text-align: left;}
 .login-am-form .am-form-label{float: left; width:30px; height: 25px;}
 .login-am-form .am-form-label img{width: 100%;}
+
+.p-result{text-align: center; font-size: 2rem; padding:5rem 0 3rem;}
+.mt10{margin-top: 2rem;}
