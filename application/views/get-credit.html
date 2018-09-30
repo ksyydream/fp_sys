@@ -61,7 +61,8 @@
         <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">结果</label>
             <div class="am-u-sm-9">
-                <input type="text" class="ip-txt ip-txt-w100"  value="{{$data->result_desc->ANTIFRAUD->final_decision}}" placeholder="">
+                <p id="p-result">{{$data->result_desc->ANTIFRAUD->final_decision}}</p>
+               // <input type="hidden" class="ip-txt ip-txt-w100 ip-txt-result"  value="{{$data->result_desc->ANTIFRAUD->final_decision}}" placeholder="">
             </div>
         </div>
 
@@ -69,10 +70,19 @@
 
      <p class="am-ftr">中国•昆山 萧林中路2191号昆山楼市•房猫服务中心<br />苏州曼纳吉信息科技有限公司</p>
 </div>
-
 <script src="/assets/js/jquery-1.7.1.js"></script>
-<script src="/assets/js/amazeui.js"></script>
 <script type="text/javascript">
+//    $(function () {
+//       if( $(".ip-txt-result").val()=="PASS"){
+//            $("#p-result").html("PASS");
+//       }
+//        if( $(".ip-txt-result").val()=="REVIEW "){
+//            $("#p-result").html("REVIEW");
+//        }
+//        if( $(".ip-txt-result").val()=="PASS"){
+//            $("#p-result").html("PASS");
+//        }
+//    })
 
  </script>
 </body>
