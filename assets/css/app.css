@@ -78,7 +78,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-form .am-spec-input{padding:0 0 0 .6rem; line-height: 2.3rem;}
 .am-form .ip-txt[type=number],.am-form .ip-txt[type=text]{float: left; width:90%;}
 .am-form .ip-txt[type=number]{padding-right: .4rem;}
-
+.am-form .ip-txt-w100[type=number],.am-form .ip-txt-w100[type=text]{width:100%;padding-right: 0;}
 .am-form select {padding:0;}
 .am-form select option{font-size: .93rem;}
 .am-form .before-input{display: block; font-size: .93rem;height:2.3rem;line-height: 2.3rem;
