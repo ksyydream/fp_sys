@@ -1,0 +1,75 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>成绩查询</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="stylesheet" href="/assets/exam/style.css">
+	<script type="application/javascript" src="/assets/js/jquery.min.js"></script>
+	<script type="application/javascript" src="/assets/js/layer/layer.js"></script>
+</head>
+<body>
+	<img src="/assets/exam/banner.jpg" alt="" class="banner">
+	<span class="sTit">2019年昆山房地产<br />经纪从业人员水平评价考试</span>
+	<span class="sTips">输入身份证号或准考证号，立即查询成绩</span>
+	<form method="post" id="select_form">
+		<input type="text" id="keyword" name="keyword" value="" class="inp-txt js4phone" placeholder="请输入准考证号或身份证号查询">
+	</form>
+
+	<a href="javascript:" id="select_btn" class="clickBtn">立即查询</a>
+	<div class="result" id="div_result">
+
+	</div>
+</body>
+</html>
+<script>
+	$(".js4phone").keyup(function () {
+		$(this).val($(this).val().replace(/[^0-9Xx]/g, ''));
+
+		$(this).val($(this).val().toUpperCase());
+	}).blur(function(){
+		$(this).val($(this).val().replace(/[^0-9Xx]/g, ''));
+
+		$(this).val($(this).val().toUpperCase());
+	}).bind("paste", function () {  //CTR+V事件处理
+		$(this).val($(this).val().replace(/[^0-9Xx]/g, ''));
+
+		$(this).val($(this).val().toUpperCase());
+
+	}).css("ime-mode", "disabled"); //CSS设置输入法不可用
+	$("#select_btn").click(function(){
+		if($.trim($("#keyword").val()) == ''){
+			layer.msg('请输入身份证号或准考证号')
+			return false;
+		}
+		var form = document.getElementById('select_form');
+		var formdata = new FormData(form);
+		$.ajax({
+			type : "POST",
+			url : "/map/get_result",
+			data : formdata,
+			async: false,
+			cache: false,
+			contentType: false,
+			processData: false,
+			success : function(data) {
+				var return_ = JSON.parse(data)
+				if(return_.status == 1){
+					var html = '<p><span class="th">姓&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp名</span><span class="td">' + return_.result.real_name + '</span></p>';
+					html += '<p><span class="th">准考证号</span><span class="td">' + return_.result.ticket + '</span></p>';
+					html += '<p><span class="th">身份证号</span><span class="td">' + return_.result.code + '</span></p>';
+					html += '<p><span class="th">成&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp绩</span><span class="td score">' + return_.result.score + '分(' + return_.result.result + ')</span></p>';
+					$("#div_result").html(html);
+				}else{
+					$("#div_result").html('');
+					layer.alert(return_.msg,{icon:2});
+				}
+			}
+		});
+	})
+</script>

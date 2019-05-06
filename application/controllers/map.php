@@ -46,5 +46,14 @@ class Map extends CI_Controller
 
         $this->map_model->upload_excel();
     }
+
+    public function show_result(){
+        $this->display("dby_test/score.html");
+    }
+
+    public function get_result(){
+        $data = $this->map_model->get_result();
+        echo json_encode($data);
+    }
 }
 
