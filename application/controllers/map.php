@@ -14,7 +14,7 @@ class Map extends CI_Controller
     {
         parent::__construct();
         ini_set('date.timezone','Asia/Shanghai');
-        $this->load->model('map_model');
+        //$this->load->model('map_model');
     }
 
     //重载smarty方法assign
