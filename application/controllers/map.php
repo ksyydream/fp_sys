@@ -52,8 +52,8 @@ class Map extends CI_Controller
     }
 
     public function get_result(){
-        //$data = $this->map_model->get_result_yy();
-        //echo json_encode($data);
+        $data = $this->map_model->get_result_yy();
+        echo json_encode($data);
     }
 }
 
