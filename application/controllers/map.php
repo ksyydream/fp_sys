@@ -37,7 +37,7 @@ class Map extends CI_Controller
 
     public function index(){
 
-
+        die('asd');
         $this->display("dby_test/excel.html");
     }
 
