@@ -128,7 +128,7 @@ class Map_model extends MY_Model
         $res['status'] = 1;
         $res['result'] = array();
         $keyword = trim($this->input->post('keyword'));
-        $this->db->select()->from('exam_result');
+        $this->db->select('real_name,ticket,code,score,result')->from('exam_result');
         if($keyword){
             $this->db->where('ticket', $keyword);
             $this->db->or_where('code', $keyword);
