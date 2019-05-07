@@ -13,7 +13,7 @@
 	<script type="application/javascript" src="/assets/js/jquery.min.js"></script>
 	<script type="application/javascript" src="/assets/js/layer/layer.js"></script>
 </head>
-<body>
+<body id="content">
 	<img src="/assets/exam/banner.jpg" alt="" class="banner">
 	<span class="sTit">2019年昆山房地产<br />经纪从业人员水平评价考试</span>
 	<span class="sTips">输入身份证号或准考证号，立即查询成绩</span>
@@ -22,9 +22,10 @@
 	</form>
 
 	<a href="javascript:" id="select_btn" class="clickBtn">立即查询</a>
-	<div class="result" id="div_result">
+	<div  id="div_result">
 
 	</div>
+
 </body>
 </html>
 <script>
@@ -60,11 +61,18 @@
 			success : function(data) {
 				var return_ = JSON.parse(data)
 				if(return_.status == 1){
-					var html = '<p><span class="th">姓&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp名</span><span class="td">' + return_.result.real_name + '</span></p>';
-					html += '<p><span class="th">准考证号</span><span class="td">' + return_.result.ticket + '</span></p>';
-					html += '<p><span class="th">身份证号</span><span class="td">' + return_.result.code + '</span></p>';
-					html += '<p><span class="th">成&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp绩</span><span class="td score">' + return_.result.score + '分(' + return_.result.result + ')</span></p>';
+					var html = '';
+					$.each(return_.result,function(key,val){
+						html += '<div class="result"><p><span class="th">姓&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp名</span><span class="td">' + val.real_name + '</span></p>';
+						html += '<p><span class="th">准考证号</span><span class="td">' + val.ticket + '</span></p>';
+						html += '<p><span class="th">身份证号</span><span class="td">' + val.code + '</span></p>';
+						html += '<p><span class="th">成&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp绩</span><span class="td score">' + val.score + '分(' + val.result + ')</span></p></div>';
+
+					})
 					$("#div_result").html(html);
+
+					$('html,body').animate({scrollTop:$('#div_result').offset().top},1000)
+
 				}else{
 					$("#div_result").html('');
 					layer.msg(return_.msg,{icon:2,time:1000});

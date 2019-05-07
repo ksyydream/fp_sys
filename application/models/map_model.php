@@ -137,7 +137,7 @@ class Map_model extends MY_Model
             $res['msg'] = '请输入信息再查询';
             return $res;
         }
-        $data = $this->db->get()->row_array();
+        $data = $this->db->get()->result_array();
         if(!$data){
             $res['status'] = -1;
             $res['msg'] = '未找到信息!';
