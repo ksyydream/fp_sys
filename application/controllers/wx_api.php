@@ -19,24 +19,6 @@ class Wx_api extends CI_controller {
 
     }
 
-    public function get_zcs(){
-        $data = $this->wx_index_model->get_zcs();
-        echo json_encode($data);
-    }
-
-    public function api_get_xiaoqu_info(){
-        if($this->session->userdata('openid')){
-            $data = $this->wx_index_model->api_get_xiaoqu_info();
-            echo json_encode($data);
-        }
-    }
-    public function api_get_price4jq(){
-        if($this->session->userdata('openid')){
-            $data = $this->wx_index_model->api_get_price4jq();
-            echo json_encode($data);
-        }
-    }
-
     public function api_user_info(){
         if($this->session->userdata('openid')){
             $data = $this->wx_index_model->api_user_info();

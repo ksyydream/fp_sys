@@ -26,11 +26,6 @@ class Wx_controller extends MY_Controller
             $openid = 'oFzKgwbFEyC40jU6bS_HQ5sxM4X8';
             $this->session->set_userdata('openid', $openid);
         }
-        if($this->session->userdata('wx_user_id')){
-            $this->cismarty->assign('rel_name',$this->session->userdata('wx_rel_name'));
-            $this->cismarty->assign('role_id',$this->session->userdata('wx_role_id'));
-            $this->cismarty->assign('role_name',$this->session->userdata('wx_role_name'));
-        }
 
         $res = $this->sys_model->check_openid($this->session->userdata('openid'));
         if(!$check_person_check = $this->sys_model->check_person()){
