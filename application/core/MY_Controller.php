@@ -29,6 +29,7 @@ class MY_Controller extends CI_Controller
 					}
 			}
 		}
+		//临时保存
 		if ($login_user_id <=0 || !$this->session->userdata('login_user_id')){
 			if($this->uri->segment(2) == 'popup_room'){
 				die('账户登陆超时或在异地登陆,请退出后再登陆');
