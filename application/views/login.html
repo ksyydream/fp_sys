@@ -1,40 +1,75 @@
 <!doctype html>
-<html class="no-js">
+<html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>登录</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="description" content="登录">
+  <meta name="keywords" content="index">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="stylesheet" href="/assets/css/amazeui.min.css">
-  <link rel="stylesheet" href="/assets/css/amazeui.switch.css">
+  <link rel="icon" type="image/png" href="/assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+  <link rel="stylesheet" href="/assets/css/amazeui.css"/>
   <link rel="stylesheet" href="/assets/css/app.css">
+  <script type="text/javascript">
+    (function() {
+        var rem, dpr, time, doc = window.document,
+        docEl = doc.documentElement,
+        viewport = doc.querySelector('meta[name="viewport"]'),
+        zoomScale,
+        zoomScaleNum;
+        if (viewport) {            
+            zoomScale = viewport.getAttribute("content").match(/initial\-scale=(["']?)([\d\.]+)\1?/);
+            if(zoomScale){
+              zoomScaleNum = parseFloat(zoomScale[2]);
+              dpr = parseInt(1 / zoomScaleNum);
+            }
+        }
+        if (!dpr && !zoomScaleNum) {
+            var os = (window.navigator.appVersion.match(/android/gi), window.navigator.appVersion.match(/iphone/gi)),
+            dpr = window.devicePixelRatio;
+            dpr = os ? dpr >= 3 ? 3 : dpr >= 2 ? 2 : 1 : 1;
+            zoomScaleNum = 1 / dpr;
+        }
+        window.addEventListener("resize",
+            function() {
+                clearTimeout(time);
+                time = setTimeout(changeRem, 300);
+            },false);
+      //改变基准rem
+        function changeRem(){
+            var docWidth = docEl.getBoundingClientRect().width;
+            if(docWidth / dpr > 540){
+              docWidth = 540 * dpr;
+            }
+            //rem字号以320下的16px为基线进行等比缩放
+            rem = docWidth/320 * 16;
+            docEl.style.fontSize = rem + "px";
+        }
+        changeRem();
+    })();
+  </script> 
+  
 </head>
 <body>
-<div class="am-g" id="login">
-    <div class="login-div">
-        <span class="login-logo"><img src="/assets/images/jf_login.png" alt=""></span>
-        <form method="post" class="am-form" action="/wx_index/submit_login">
-            <div class="login-bd">
-                <div class="input-email input-div"><i class="am-input-icon am-icon1-user"><img src="/assets/images/login_img1.png" alt=""></i><input type="text" name="name" id="email" value="" autoComplete="off" placeholder="请输入用户名" required></div>
-                <div class="input-div"><i class="am-input-icon am-icon1-key"><img src="/assets/images/login_img2.png" alt=""></i><input type="password" name="passwd" id="password" value="" autoComplete="off" placeholder="请输入密码" required></div>
-            </div>
-            <input type="submit" value="登 录" class="am-btn">
-      </form>
-    </div>
-    <p class="copyright">苏州曼纳吉信息科技有限公司</p>
+<div class="am-main">
+  <div class="login-page">
+    <p class="pTit">你的身份是？</p>
+    <p class="pTxt">请根据你的身份选择登录</p>
+   </div>
+    <a href="" class="am-btn login-btn"><img src="/assets/i/login-btn1.png"></a>
+    <a href="" class="am-btn login-btn"><img src="/assets/i/login-btn2.png"></a>
+    <p class="center-txt"><a href="" class="am-txt">还没有账号？立即注册</a></p>
 </div>
+<script src="/assets/js/jquery-1.7.1.js"></script>
+<script src="/assets/js/amazeui.js"></script>
+<script src="/assets/js/animateBackground-plugin.js"></script>
 <script type="text/javascript">
-    var maxH=Math.max(document.documentElement.clientHeight,window.innerHeight);
 
-     function setHeight(){
-      var wrapper=document.getElementById('login');
-      wrapper.style.height=maxH+"px";
-    }
-    setHeight();
+
 </script>
 </body>
 </html>

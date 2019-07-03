@@ -9,12 +9,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="icon" type="image/png" href="/assets/i/favicon.png">
-  <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
+  <link rel="icon" type="image/png" href="assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
   <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-  <link rel="stylesheet" href="/assets/css/amazeui.css"/>
-  <link rel="stylesheet" href="/assets/css/app.css">
-   <script type="text/javascript">
+  <link rel="stylesheet" href="assets/css/amazeui.css"/>
+  <link rel="stylesheet" href="assets/css/app.css">
+  <script type="text/javascript">
     (function() {
         var rem, dpr, time, doc = window.document,
         docEl = doc.documentElement,
@@ -52,32 +52,42 @@
         changeRem();
     })();
   </script> 
+  
 </head>
-<body style="background:#fff;">
-<div class="am-g">
-    <div class="login-div">
-        <div class="am-u-sm-8 am-u-sm-centered login-logo"><img src="/assets/i/jf_login.png" alt=""></div>
-        <form action="" class="am-form am-form-horizontal login-am-form">
-          <div class="am-form-group">
-            <label class="am-form-label"><img src="/assets/i/login_img1.png" alt=""></label>
-            <div class="am-u-sm-10">
-              <input type="number" class="ip-txt ipt-price" value="" placeholder="请输入姓名">
-            </div>
-          </div>
-          <div class="am-form-group">
-            <label class="am-form-label"><img src="/assets/i/login_img2.png" alt=""></label>
-            <div class="am-u-sm-10">
-              <input type="number" class="ip-txt sales-price" value="" placeholder="请输入密码">
-            </div>
-          </div>
-           <div class="am-accu-btns">
-             <div class="am-u-sm-12 am-u-sm-centered">  
-              <a class="am-btn am-btn-danger am-begin-cal startCal" href="javascript:">登录</a>
-            </div> 
-           </div>
-        </form>
+<body class="am-main-login">
+<div class="am-main" >
+  <div class="login-page login-page1">
+    <p class="pTit">验证码登录</p>
+  </div>
+    <form class="am-form am-form-horizontal">
+      <div class="am-form-login">
+     <div class="am-form-group">
+        <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">手机号</label>
+        <div class="am-u-sm-9">
+         <input type="number" class="ip-txt" id="" value="" placeholder="请输入您的手机号">
+        </div>
+      </div>
+      <div class="am-form-group">
+           <div class="am-u-sm-8 yzcode-div">
+       <input type="number" class="ip-txt yzcode" id="" value="" placeholder="请输入您的手机号">
+      </div>
+      <a class="am-btn am-yzcode" href="">获取验证码</a>
     </div>
-   <p class="am-ftr">中国•昆山 萧林中路2191号昆山楼市•房猫服务中心<br />苏州曼纳吉信息科技有限公司</p>
-</div>
+    </div>
+    <a class="am-btn am-btn-register" href="javascript:">立即注册</a>
+    </form>
+    <p class="center-txt"><a href="" class="am-txt">点此切换到管理员登录</a></p>
+    <div class="am-menu am-g-fixed am-g-menu"><p class="copyright">©  Funmall finance</p></div>
+
+   </div>
+
+
+<script src="assets/js/jquery-1.7.1.js"></script>
+<script src="assets/js/amazeui.js"></script>
+<script src="assets/js/animateBackground-plugin.js"></script>
+<script type="text/javascript">
+
+
+</script>
 </body>
 </html>

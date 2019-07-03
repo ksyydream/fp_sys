@@ -28,7 +28,7 @@ class Wx_controller extends MY_Controller
         }
 
         $res = $this->sys_model->check_openid($this->session->userdata('openid'));
-        if(!$check_person_check = $this->sys_model->check_person()){
+        /*if(!$check_person_check = $this->sys_model->check_person()){
             $person_info = $this->getUserInfoById($this->session->userdata('openid'));
             if($person_info){
                 if($person_info['subscribe'] != 1){
@@ -39,7 +39,7 @@ class Wx_controller extends MY_Controller
                     $this->cismarty->display('estimate/wx_guanzhu.html');
                     exit();
                 }
-                $s_p = $this->sys_model->save_person($person_info);
+                //$s_p = $this->sys_model->save_person($person_info);
                 if($person_info['qr_scene_str'] == 'person_info' && $s_p == 1){
                     //redirect('wx_index/person_info');
                 }
@@ -51,7 +51,7 @@ class Wx_controller extends MY_Controller
                 $this->cismarty->display('estimate/wx_guanzhu.html');
                 exit();
             }
-        }
+        }*/
 
 
 

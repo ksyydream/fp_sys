@@ -31,21 +31,37 @@ class Sys_model extends MY_Model
         }
     }
 
+    public function check_person(){
+
+    }
+
     public function check_openid(){
         $openid = $this->session->userdata('openid');
+        //检测是否是users
         $this->db->select('a.user_id,a.rel_name')->from('users a');
         $this->db->where('a.openid',$openid);
-        $row=$this->db->get()->row_array();
+        $row = $this->db->get()->row_array();
         if($row){
-            $res = $this->set_session_wx($row['user_id']);
+            $res = $this->set_user_session_wx($row['user_id']);
             if($res==1)
                 return 1;
         }
         $this->session->unset_userdata('wx_user_id');
+        //检测是否是members
+        $this->db->select('a.m_id,a.rel_name')->from('members a');
+        $this->db->where('a.openid',$openid);
+        $row = $this->db->get()->row_array();
+        if($row){
+            $res = $this->set_member_session_wx($row['m_id']);
+            if($res==1)
+                return 1;
+        }
+        $this->session->unset_userdata('wx_m_id');
+        $this->session->unset_userdata('wx_class');
         return -1;
     }
 
-    public function set_session_wx($id){
+    public function set_user_session_wx($id){
         $this->db->from('users');
         $this->db->where('user_id', $id);
         $rs = $this->db->get();
@@ -56,10 +72,29 @@ class Sys_model extends MY_Model
             $user_info['wx_user_id'] = $res->user_id;
             $user_info['wx_rel_name'] = $res->rel_name;
             $user_info['wx_user_pic'] = $res->pic;
+            $user_info['wx_class'] = 'users';
             $this->session->set_userdata($user_info);
             return 1;
         }
-        return 0;
+        return -1;
+    }
+
+    public function set_member_session_wx($id){
+        $this->db->from('members');
+        $this->db->where('m_id', $id);
+        $rs = $this->db->get();
+        if ($rs->num_rows() > 0) {
+            $res = $rs->row();
+            $token = uniqid();
+            $member_info['wx_token'] = $token;
+            $member_info['wx_m_id'] = $res->m_id;
+            $member_info['wx_rel_name'] = $res->rel_name;
+            $member_info['wx_user_pic'] = $res->pic;
+            $member_info['wx_class'] = 'members';
+            $this->session->set_userdata($member_info);
+            return 1;
+        }
+        return -1;
     }
 
     public function check_user(){

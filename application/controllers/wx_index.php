@@ -19,7 +19,7 @@ class Wx_index extends Wx_controller {
             'logout',
             'submit_login',
             );
-        if($this->session->userdata('wx_user_id') && !in_array($this->uri->segment(2), $ignore_methods)){
+        if($this->session->userdata('wx_class') && !in_array($this->uri->segment(2), $ignore_methods)){
             /*if($this->session->userdata('wx_role_id') >= 1){
                 redirect('wx_salesman');
                 exit();
