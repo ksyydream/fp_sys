@@ -10,7 +10,8 @@
 
 require_once "wx_controller.php";
 class Wx_api extends CI_controller {
-
+    private $return_success = array('status' => 1, 'msg' => '', 'result' => array());
+    private $return_fail = array('status' => -1, 'msg' => '操作失败!', 'result' => array());
     public function __construct()
     {
         parent::__construct();
@@ -19,10 +20,34 @@ class Wx_api extends CI_controller {
 
     }
 
+    public function ajaxReturn($data){
+        exit(json_encode($data, JSON_UNESCAPED_UNICODE));
+    }
+
     public function api_user_info(){
         if($this->session->userdata('openid')){
             $data = $this->wx_index_model->api_user_info();
             echo json_encode($data);
         }
+    }
+
+    public function sendSms(){
+        $type = $this->input->get('type');
+        $mobile = $this->input->get('mobile');
+        if(!$mobile){
+            $this->return_fail['msg'] = '电话号码不能为空!';
+            $this->ajaxReturn($this->return_fail);
+        }
+        $this->load->model('sms_model');
+
+        //随机一个验证码
+        $code = rand(10000, 99999);
+        $res = $this->sms_model->send_code($mobile, '房猫服务中心', $code, $type);
+        if($res['status'] != 1){
+            $this->return_fail['msg'] = $res['msg'];
+            $this->ajaxReturn($this->return_fail);
+        }
+        $this->return_fail['msg'] = '操作失败!';
+        $this->ajaxReturn($this->return_fail);
     }
 }
