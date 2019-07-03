@@ -1,4 +1,5 @@
 var nameEl = document.getElementById('picker');
+var nameDiv = document.getElementById('picker_div');
 var nameVl = document.getElementById('area_value');
 
 var first = []; /* 省，直辖市 */
@@ -111,7 +112,7 @@ picker.on('picker.valuechange', function (selectedVal, selectedIndex) {
    console.log(selectedIndex);
 });
 
-nameEl.addEventListener('click', function () {
+nameDiv.addEventListener('click', function () {
 	picker.show();
 });
 
