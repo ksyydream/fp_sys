@@ -17,7 +17,7 @@ if(typeof selected_parent_old!="undefined"){
 var checked = [0, 0, 0, 0]; /* 已选选项 */
 $.ajaxSettings.async = false;
 function creatList(parent_id, list){
-  $.getJSON('/wx_index/get_region?parent_id=' + parent_id, function(data){
+  $.getJSON('/wx_api/get_region?parent_id=' + parent_id, function(data){
     if (data.status == 1) {
       data.result.forEach(function(item, index){
         var temp = new Object();
@@ -46,7 +46,7 @@ picker.on('picker.select', function (selectedVal, selectedIndex) {
   var text2 = second[selectedIndex[1]].text;
   var text3 = third[selectedIndex[2]] ? third[selectedIndex[2]].text : '';
   var text4 = area[selectedIndex[3]] ? area[selectedIndex[3]].text : '';
-	nameEl.value = text1 + ' ' + text2 + ' ' + text3 + ' ' + text4;
+	nameEl.innerHTML = text1 + ' ' + text2 + ' ' + text3 + ' ' + text4;
   var val1 = selectedVal[0];
   var val2 = selectedVal[1];
   var val3 = selectedVal[2] ? selectedVal[2] : '0';
