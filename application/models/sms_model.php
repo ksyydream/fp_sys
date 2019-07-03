@@ -106,7 +106,7 @@ class Sms_model extends MY_Model
         if(!isset($ali_templateCode[$type])){
             return array('status' => -1, 'msg' => '请求类型不存在');
         }
-        $sms_log = $this->db->select('*')->from('sms_log')->where(array('mobile' => $mobile, 'status' => 1))->get()->row_array();
+        $sms_log = $this->db->select('*')->from('sms_log')->where(array('mobile' => $mobile, 'status' => 1))->order_by('add_time','desc')->get()->row_array();
         if($sms_log){
             $sms_time_out = $this->config->item('sms_time_out');
             $sms_time_out = $sms_time_out ? $sms_time_out : 120;

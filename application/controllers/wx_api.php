@@ -47,7 +47,15 @@ class Wx_api extends CI_controller {
             $this->return_fail['msg'] = $res['msg'];
             $this->ajaxReturn($this->return_fail);
         }
-        $this->return_fail['msg'] = '操作失败!';
-        $this->ajaxReturn($this->return_fail);
+        $this->return_success['msg'] = '发送成功!';
+        $this->ajaxReturn($this->return_success);
+    }
+
+    public function get_region()
+    {
+        $parent_id = $this->input->get('parent_id');
+        $res = $this->wx_index_model->get_region($parent_id);
+        $return_ = ['status' => 1, 'msg' => '获取成功', 'result' => $res];
+        echo json_encode($return_);
     }
 }
