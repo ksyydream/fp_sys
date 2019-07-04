@@ -36,7 +36,7 @@ class Wx_service extends CI_controller {
                 $result = "";
                 switch ($RX_TYPE) {
                     case "text":
-                        $result = $this->receiveText($postObj);
+                        //$result = $this->receiveText($postObj);
                         break;
                     case "event":
                         $result = $this->receiveEvent($postObj);

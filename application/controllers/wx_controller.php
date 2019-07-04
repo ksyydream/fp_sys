@@ -27,8 +27,10 @@ class Wx_controller extends MY_Controller
             $this->session->set_userdata('openid', $openid);
         }
 
-        $res = $this->sys_model->check_openid($this->session->userdata('openid'));
-        /*if(!$check_person_check = $this->sys_model->check_person()){
+        $this->sys_model->check_openid($this->session->userdata('openid')); //通过openid绑定session
+        //验证用户是否关注公众号
+        //先看用户是否登录,如果已经登录了,就不去判断
+        if(!$check_person_check = $this->sys_model->check_person()){
             $person_info = $this->getUserInfoById($this->session->userdata('openid'));
             if($person_info){
                 if($person_info['subscribe'] != 1){
@@ -51,7 +53,7 @@ class Wx_controller extends MY_Controller
                 $this->cismarty->display('estimate/wx_guanzhu.html');
                 exit();
             }
-        }*/
+        }
 
 
 
