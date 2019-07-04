@@ -14,7 +14,7 @@ class Wx_index extends Wx_controller {
     public function __construct()
     {
         parent::__construct();
-
+        $this->load->model('wx_index_model');
         $ignore_methods = array(
             'logout'
             );
