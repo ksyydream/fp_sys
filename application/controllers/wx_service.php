@@ -153,29 +153,29 @@ class Wx_service extends CI_controller {
         if(!$member_info)
             return;
 
-        $itemTpl = "
-			<item>
-		        <Title><![CDATA[%s]]></Title>
-		        <Description><![CDATA[%s]]></Description>
-		        <PicUrl><![CDATA[%s]]></PicUrl>
-		        <Url><![CDATA[%s]]></Url>
-    		</item>
-		";
-        $item_str = "";
-        $item_str .= sprintf($itemTpl, '注册绑定管理员', '管理员邀请码:' . $member_info['invite_code'], 'http://sys.ksls.com.cn/assets/i/gz_weixin.jpg', 'http://sys.ksls.com.cn/wx_index/register?invite_code_temp=' . $member_info['invite_code']);
-
-        $newsTpl = "
-		<xml>
-		<ToUserName><![CDATA[%s]]></ToUserName>
-		<FromUserName><![CDATA[%s]]></FromUserName>
-		<CreateTime>%s</CreateTime>
-		<MsgType><![CDATA[news]]></MsgType>
-		<Content><![CDATA[]]></Content>
-		<ArticleCount>%s</ArticleCount>
-		<Articles>$item_str</Articles>
-		</xml>
-		";
-        return sprintf($newsTpl, $object->FromUserName, $object->ToUserName, time(), 1);
+        $newsTplHead = "<xml>
+                <ToUserName><![CDATA[%s]]></ToUserName>
+                <FromUserName><![CDATA[%s]]></FromUserName>
+                <CreateTime>%s</CreateTime>
+                <MsgType><![CDATA[news]]></MsgType>
+                <ArticleCount>1</ArticleCount>
+                <Articles>";
+        $newsTplBody = "<item>
+                <Title><![CDATA[%s]]></Title>
+                <Description><![CDATA[%s]]></Description>
+                <PicUrl><![CDATA[%s]]></PicUrl>
+                <Url><![CDATA[%s]]></Url>
+                </item>";
+        $newsTplFoot = "</Articles>
+                <FuncFlag>0</FuncFlag>
+                </xml>";
+        $header = sprintf($newsTplHead, $object->FromUserName, $object->ToUserName, time());
+        $title = '请注册并绑定管理员';
+        $desc = '管理员邀请码:' . $member_info['invite_code'];
+        $picUrl = 'http://sys.ksls.com.cn/assets/i/gz_weixin.jpg';
+        $url = 'http://sys.ksls.com.cn/wx_index/register?invite_code_temp=' . $member_info['invite_code'];
+        $body = sprintf($newsTplBody, $title, $desc, $picUrl, $url);
+        return $header . $body . $newsTplFoot;
     }
 
     private function checkSignature() {
