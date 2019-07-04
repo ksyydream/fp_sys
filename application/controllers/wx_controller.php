@@ -161,7 +161,7 @@ class Wx_controller extends MY_Controller
         return $result;
     }
 
-    private function get_or_create_ticket($access_token,$action_name = 'QR_SCENE') {
+    private function get_or_create_ticket($access_token,$action_name = 'QR_STR_SCENE') {
         $url = 'https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=' . $access_token;
         @$post_data->expire_seconds = 2592000;
         @$post_data->action_name = $action_name;
