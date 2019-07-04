@@ -173,6 +173,7 @@ class Wx_index_model extends MY_Model
         }
         $insert['type_id'] = $data['type_id'];
         $insert['pic'] = $data['pic'];
+        die(var_dump($insert));
         $this->db->insert('users', $insert);
         $user_id = $this->db->insert_id();
         //以防万一 去除其他账号相同openid的状态
