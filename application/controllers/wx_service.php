@@ -75,7 +75,7 @@ class Wx_service extends CI_controller {
                     $invite_code = str_replace("qrscene_", "", $object->EventKey);
                     $content .= "您已关注了经纪人: " . $invite_code;
                 }
-                //file_get_contents('http://ws.ksls.com.cn/api/update_weixin_user/' . $object->FromUserName . '/' . $broker_id);
+                file_get_contents('http://ws.ksls.com.cn/api/update_weixin_user/' . $object->FromUserName . '/' . $broker_id);
                 break;
             case "unsubscribe":
                 $content = "取消关注";
