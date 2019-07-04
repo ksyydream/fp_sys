@@ -87,15 +87,11 @@ class Wx_service extends CI_controller {
                 $content = "欢迎关注房猫微店公众账号!";
                 $invite_code = $object->EventKey;
                 if(!$invite_code){
-                    $member_info['invite_code'] = $invite_code;
-                    return $this->transmitDBY($object, $member_info);
+                    $member_info = $this->wx_index_model->getMemberByInvite($invite_code);
+                    if($member_info){
+                        return $this->transmitDBY($object, $member_info);
+                    }
                 }
-
-                //$member_info = $this->wx_index_model->getMemberByInvite($invite_code);
-                //if($member_info){
-                    //return $this->transmitDBY($object, $member_info);
-                //}
-
                 break;
             case "CLICK":
                 $content = "点击菜单拉取消息： " . $object->EventKey;
