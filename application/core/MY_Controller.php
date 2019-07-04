@@ -20,27 +20,10 @@ class MY_Controller extends CI_Controller
 		$this->load->model('sys_model');
         ini_set('date.timezone','Asia/Shanghai');
         $this->cismarty->assign('base_url',base_url());//url路径
-		$login_user_id = $this->session->userdata('login_user_id');
-		if($login_user_id > 0){
-			$data = $this->sys_model->get_token($login_user_id);
-			if($data != -1){
-				if($data != $this->session->userdata('login_token')){
-					$this->session->unset_userdata('login_user_id');
-					$login_user_id = 0;
-					}
-			}
-		}
+		//if(!@file_get_contents('./uploadfiles/profile/'.$user_pic)){
+		//	$user_pic='user_photo.gif';
+		//}
 
-
-		$this->cismarty->assign('login_user_id', $login_user_id > 0 ? true : false);
-		$this->cismarty->assign('login_user_name', $this->session->userdata('login_rel_name'));
-		$this->cismarty->assign('login_flag', $this->session->userdata('login_flag') ? $this->session->userdata('login_flag') : -1);
-		$user_pic = $this->session->userdata('login_user_pic');
-		if(empty($user_pic)) $user_pic = 'user_photo.gif';
-		if(!@file_get_contents('./uploadfiles/profile/'.$user_pic)){
-			$user_pic='user_photo.gif';
-		}
-		$this->cismarty->assign('login_user_pic', $user_pic);
     }
     
 	//重载smarty方法assign
