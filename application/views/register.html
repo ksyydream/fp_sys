@@ -58,7 +58,7 @@
 <div class="am-main">
 
  
-  <form class="am-form am-form-horizontal">
+  <form class="am-form am-form-horizontal" id="reg_form">
        <p class="p-tit">请选择注册类型</p>
      <div class="am-fast-estimate">
            <div class="am-form-group">
@@ -84,20 +84,20 @@
     <div class="am-form-group">
       <label for="mobile" class="am-u-sm-3 am-form-label">手机号</label>
       <div class="am-u-sm-9">
-       <input type="number" class="ip-txt" id="mobile" name="mobile" value="" placeholder="请输入您的手机号">
+       <input type="text" class="ip-txt js4phone" maxlength="11" id="mobile" name="mobile" value="" placeholder="请输入您的手机号">
       </div>
     </div>
         <div class="am-form-group">
            <div class="am-u-sm-8 yzcode-div">
-       <input type="number" class="ip-txt yzcode" id="" value="" placeholder="请输入验证码">
+       <input type="text" class="ip-txt yzcode js4phone" maxlength="5" id="code" name="code" value="" placeholder="请输入验证码">
       </div>
       <a class="am-btn am-yzcode" id="get_code" href="javascript:void(0);">获取验证码</a>
      
     </div>
     <div class="am-form-group">
-      <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">注册邀请码</label>
+      <label for="invite_code" class="am-u-sm-3 am-form-label">注册邀请码</label>
       <div class="am-u-sm-9">
-        <p class="am-spec-input">021360</p>
+          <input type="text" class="ip-txt js4carNo_6" id="invite_code" name="invite_code" value="KS0001" placeholder="请输入邀请码">
       </div>
     </div>
 
@@ -109,7 +109,7 @@
               <div class="am-form-group">
                   <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">门店名称</label>
                   <div class="am-u-sm-9">
-                      <input type="text" class="ip-txt" id="" value="" placeholder="请填写门店名称">
+                      <input type="text" class="ip-txt" id="shop_name" name="shop_name" value="" placeholder="请填写门店名称">
                   </div>
               </div>
               <div class="am-form-group" id="picker_div">
@@ -120,14 +120,12 @@
               <div class="am-form-group">
                   <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">详细地址</label>
                   <div class="am-u-sm-9">
-                      <input type="text" class="ip-txt" id="" value="" placeholder="请输入详细地址">
+                      <input type="text" class="ip-txt" id="address" name="address" value="" placeholder="请输入详细地址">
                   </div>
               </div>
           </div>
       </div>
-
-
-    <a class="am-btn am-btn-register" href="javascript:">立即注册</a>
+    <a class="am-btn am-btn-register" id="save_btn" href="javascript:">立即注册</a>
   </form>
 
 
@@ -143,6 +141,7 @@
 <script src="/assets/js/animateBackground-plugin.js"></script>
 <script src="/assets/js/picker.min.js"></script>
 <script src="/assets/js/index.js"></script>
+<script src="/assets/js/DBY_common.js"></script>
 <script type="text/javascript">
     var wait = 120;
     $("#get_code").click(function () {
@@ -204,6 +203,65 @@
             $("#radio_div").hide();
         }
     });
+    $("#save_btn").click(function(){
+        var type_id = $("input[name='type_id']:checked").val();
+        var mobile = $.trim($("#mobile").val());
+        var code = $.trim($("#code").val());
+        var rel_name = $.trim($("#rel_name").val());
+        var invite_code = $.trim($("#invite_code").val());
+        if(rel_name == ''){
+            layer.msg('姓名不能为空');
+            return false;
+        }
+        if(mobile == ''){
+            layer.msg('手机号不能为空');
+            return false;
+        }
+        var iphone = /^1[0-9]{10}$/g;
+        if(!(iphone.test(mobile))){
+            layer.msg('手机号不能为空');
+            return false;
+        }
+        if(code == ''){
+            layer.msg('验证码不能为空');
+            return false;
+        }
+        if(invite_code == ''){
+            layer.msg('邀请码不能为空');
+            return false;
+        }
+        switch (type_id){
+            case '1':
+                break;
+            case '2':
+                break;
+            default:
+                layer.msg('请选择注册类型');
+                return false;
+        }
+
+        var form = document.getElementById('reg_form');
+
+        var formdata = new FormData(form);
+        $.ajax({
+            type : "POST",
+            url : "/wx_index/reg_save",
+            data : formdata,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success : function(data) {
+                var return_ = JSON.parse(data)
+                if(return_.status == 1){
+                    window.location.href= '/mobile/gener/invite_index';
+                }else{
+                    alert(return_.msg);
+                }
+            }
+        });
+    })
+
 </script>
 </body>
 </html>

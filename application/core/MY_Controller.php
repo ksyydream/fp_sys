@@ -12,7 +12,8 @@ if (! defined('BASEPATH'))
  */
 class MY_Controller extends CI_Controller
 {
-
+	public $wx_success = array('status' => 1, 'msg' => '', 'result' => array());
+	public $wx_fail = array('status' => -1, 'msg' => '操作失败!', 'result' => array());
     public function __construct ()
     {
         parent::__construct();
@@ -51,7 +52,10 @@ class MY_Controller extends CI_Controller
     public function display($html) {
         $this->cismarty->display($html);  
     }
-    
+
+	public function ajaxReturn($data){
+		exit(json_encode($data, JSON_UNESCAPED_UNICODE));
+	}
     /**
      * 获取产品菜单的树状结构
      **/

@@ -43,12 +43,7 @@ class Wx_api extends CI_controller {
         //随机一个验证码
         $code = rand(10000, 99999);
         $res = $this->sms_model->send_code($mobile, '房猫服务中心', $code, $type);
-        if($res['status'] != 1){
-            $this->return_fail['msg'] = $res['msg'];
-            $this->ajaxReturn($this->return_fail);
-        }
-        $this->return_success['msg'] = '发送成功!';
-        $this->ajaxReturn($this->return_success);
+        $this->ajaxReturn($res);
     }
 
     public function get_region()

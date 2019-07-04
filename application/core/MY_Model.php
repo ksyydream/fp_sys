@@ -10,7 +10,8 @@
  *
  */
 class MY_Model extends CI_Model{
-
+    public $model_success = array('status' => 1, 'msg' => '', 'result' => array());
+    public $model_fail = array('status' => -1, 'msg' => '操作失败!', 'result' => array());
     protected $db_error = "数据操作发生错误，请稍后再试-_-!";
     public $role_id = 0;
     public $user_id = 0;
@@ -566,56 +567,14 @@ class MY_Model extends CI_Model{
         return $data;
     }
 
-    public function check_sum($company_id){
-        $row = $this->db->select()->from('company')->where('id',$company_id)->get()->row_array();
-        if(!$row){
-            return -1;
-        }
-        if($row['sum'] > $this->config->item('Arrears_CK')){
-            return 1;
-        }else{
-            return -1;
-        }
+    public function fun_fail($msg){
+        $this->model_fail['msg'] = $msg;
+        return $this->model_fail;
     }
-
-    public function change_sum($company_id,$qty,$style,$demo,$table=null,$t_id=-1,$flag=1){
-        $res_sum = $this->check_sum($company_id);
-        if($res_sum == 1 || $style == 1 || $flag == 2){
-            if($style ==1){
-                $this->db->set('sum','sum + '.$qty,false);
-            }else{
-                $this->db->set('sum','sum - '.$qty,false);
-            }
-            $this->db->where('id',$company_id);
-           $up_flag = $this->db->update('company');
-            if(!$up_flag){
-                return -1;
-            }
-            $data = array(
-                'company_id' => $company_id,
-                'qty' => $qty,
-                'style' => $style,
-                'demo' => $demo,
-                'user_id' => $this->session->userdata('login_user_id'),
-                't_id' => $t_id,
-                't_name'=>$table,
-                'flag'=>1,
-                'created' => date("Y-m-d H:i:s")
-            );
-           $in_flag = $this->db->insert('sum_log',$data);
-            if(!$in_flag){
-                return -1;
-            }
-            return 1;
-        }else{
-            return -1;
-        }
-
-    }
-
-    public function get_user_info4wx($id){
-        $data = $this->db->select()->from('user')->where('id',$id)->get()->row_array();
-        return $data;
+    public function fun_success($msg = '操作成功', $result = []){
+        $this->model_success['msg'] = $msg;
+        $this->model_success['result'] = $result;
+        return $this->model_success;
     }
 }
 

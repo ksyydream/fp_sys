@@ -104,14 +104,14 @@ class Sms_model extends MY_Model
     public function send_code($mobile, $smsSign, $code, $type){
         $ali_templateCode = $this->config->item('ali_templateCode');
         if(!isset($ali_templateCode[$type])){
-            return array('status' => -1, 'msg' => '请求类型不存在');
+            return $this->fun_fail('请求类型不存在');
         }
         $sms_log = $this->db->select('*')->from('sms_log')->where(array('mobile' => $mobile, 'status' => 1))->order_by('add_time','desc')->get()->row_array();
         if($sms_log){
             $sms_time_out = $this->config->item('sms_time_out');
             $sms_time_out = $sms_time_out ? $sms_time_out : 120;
             if ((time() - $sms_log['add_time']) < $sms_time_out) {
-                return array('status' => -1, 'msg' => $sms_time_out . '秒内不允许重复发送');
+                return $this->fun_fail($sms_time_out . '秒内不允许重复发送');
             }
         }
         $res = $this->sendSms($mobile, $smsSign, $code, $ali_templateCode[$type]);
@@ -125,7 +125,7 @@ class Sms_model extends MY_Model
         if ($res && $res->Code == 'OK') {
             $insert_['status'] = 1;
             $this->db->insert('sms_log', $insert_);
-            return array('status' => 1, 'msg' => '发送成功');
+            return $this->fun_success('发送成功');
         }else{
             if($res){
                 $insert_['status'] = 0;
@@ -133,6 +133,6 @@ class Sms_model extends MY_Model
                 $this->db->insert('sms_log', $insert_);
             }
         }
-        return array('status' => -1, 'msg' => '发送失败');
+        return $this->fun_fail('发送失败');
     }
 }
