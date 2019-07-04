@@ -16,10 +16,9 @@ class Wx_index extends Wx_controller {
         parent::__construct();
 
         $ignore_methods = array(
-            'logout',
-            'submit_login',
+            'logout'
             );
-        if($this->session->userdata('wx_user_id') && !in_array($this->uri->segment(2), $ignore_methods)){
+        if($this->session->userdata('wx_class') && !in_array($this->uri->segment(2), $ignore_methods)){
             /*if($this->session->userdata('wx_role_id') >= 1){
                 redirect('wx_salesman');
                 exit();
@@ -38,6 +37,9 @@ class Wx_index extends Wx_controller {
         $this->display('login.html');
     }
 
+    public function register(){
+        $this->display('register.html');
+    }
     /**
      * 登陆提交
      * @author yangyang <yang.yang@thmarket.cn>
