@@ -131,7 +131,6 @@ class Wx_index_model extends MY_Model
         }
         $insert['mobile'] = $data['mobile'];
         $insert['rel_name'] = $data['rel_name'];
-        $insert['mobile'] = $data['mobile'];
         //验证邀请码是否合法
         $check_member_ = $this->db->from('members')->where(array('invite_code' => $data['invite_code']))->get()->row_array();
         if(!$check_member_){
