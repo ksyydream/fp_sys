@@ -59,6 +59,8 @@ class Wx_index extends Wx_controller {
         if(!$data) {
             $this->ajaxReturn($this->wx_fail);
         }
+        $person_info = $this->getUserInfoById($this->session->userdata('openid'));
+        $data['pic'] = $person_info['headimgurl'];
         $res = $this->wx_index_model->reg_save($data);
         $this->ajaxReturn($res);
 
