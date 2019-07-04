@@ -165,7 +165,7 @@ class Wx_controller extends MY_Controller
         $url = 'https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=' . $access_token;
         @$post_data->expire_seconds = 2592000;
         @$post_data->action_name = $action_name;
-        $invite_code = $_GET["invite_code_temp"];
+        $invite_code = $this->input->get('invite_code_temp');
         if(!isset($invite_code)){
             $invite_code = '';
         }
