@@ -27,10 +27,10 @@ class Wx_controller extends MY_Controller
             $this->session->set_userdata('openid', $openid);
         }
 
-        $this->sys_model->check_openid($this->session->userdata('openid')); //通过openid绑定session
+        $res = $this->sys_model->check_openid($this->session->userdata('openid')); //通过openid绑定session
         //验证用户是否关注公众号
         //先看用户是否登录,如果已经登录了,就不去判断
-        if(!$check_person_check = $this->sys_model->check_person()){
+        if($res != 1){
             $person_info = $this->getUserInfoById($this->session->userdata('openid'));
             if($person_info){
                 if($person_info['subscribe'] != 1){
@@ -165,7 +165,11 @@ class Wx_controller extends MY_Controller
         $url = 'https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=' . $access_token;
         @$post_data->expire_seconds = 2592000;
         @$post_data->action_name = $action_name;
-        @$post_data->action_info->scene->scene_str = 'person_info';
+        $invite_code = $_GET["invite_code_temp"];
+        if(!isset($invite_code)){
+            $invite_code = '';
+        }
+        @$post_data->action_info->scene->scene_str = $invite_code;
         $ticket_data = json_decode($this->post($url, $post_data));
         $ticket = $ticket_data->ticket;
         $img_url = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=".urlencode($ticket);
