@@ -172,7 +172,6 @@ class Wx_controller extends MY_Controller
         @$post_data->action_info->scene->scene_str = $invite_code;
         $ticket_data = json_decode($this->post($url, $post_data));
         @$ticket = $ticket_data->ticket;
-        die(var_dump($ticket_data));
         $img_url = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=".urlencode($ticket);
         return $img_url;
     }
