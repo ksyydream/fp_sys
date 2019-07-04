@@ -272,7 +272,7 @@
             success : function(data) {
                 var return_ = JSON.parse(data)
                 if(return_.status == 1){
-                    window.location.href= '/mobile/gener/invite_index';
+                    window.location.href= '/wx_users/index';
                 }else{
                    layer.msg(return_.msg);
                 }
