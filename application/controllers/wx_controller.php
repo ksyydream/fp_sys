@@ -42,7 +42,7 @@ class Wx_controller extends MY_Controller
                     exit();
                 }
                 //$s_p = $this->sys_model->save_person($person_info);
-                if($person_info['qr_scene_str'] == 'person_info' && $s_p == 1){
+                if($person_info['qr_scene_str'] == 'person_info'){
                     //redirect('wx_index/person_info');
                 }
             }else{
@@ -171,7 +171,7 @@ class Wx_controller extends MY_Controller
         }
         @$post_data->action_info->scene->scene_str = $invite_code;
         $ticket_data = json_decode($this->post($url, $post_data));
-        $ticket = $ticket_data->ticket;
+        @$ticket = $ticket_data->ticket;
         $img_url = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=".urlencode($ticket);
         return $img_url;
     }
