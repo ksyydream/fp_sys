@@ -173,6 +173,10 @@ class Wx_index_model extends MY_Model
         }
         $insert['type_id'] = $data['type_id'];
         $this->db->insert('users', $insert);
+        $user_id = $this->db->insert_id();
+        //以防万一 去除其他账号相同openid的状态
+        $this->delOpenidById($user_id, $insert['openid']);
+        $this->set_user_session_wx($user_id);
         return $this->fun_success('注册成功!');
     }
 

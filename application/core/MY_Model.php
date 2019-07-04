@@ -13,12 +13,6 @@ class MY_Model extends CI_Model{
     public $model_success = array('status' => 1, 'msg' => '', 'result' => array());
     public $model_fail = array('status' => -1, 'msg' => '操作失败!', 'result' => array());
     protected $db_error = "数据操作发生错误，请稍后再试-_-!";
-    public $role_id = 0;
-    public $user_id = 0;
-    public $is_manager = 0;
-    public $company_id = 0;
-    public $parent_id = -1;
-    public $c_cust_id = -1;
     /**
      * 构造函数
      *
@@ -28,27 +22,6 @@ class MY_Model extends CI_Model{
     {
         parent::__construct();
         $this->load->database();
-        $this->user_id = $this->session->userdata('wx_user_id') ? $this->session->userdata('wx_user_id') : -1;
-        if($this->user_id != -1){
-            $data = $this->get_user_info4wx($this->user_id);
-            if($data){
-                $this->role_id = $data['role_id'];
-                $this->is_manager = $data['is_manager'];
-                $this->company_id = $data['company_id'];
-                if($this->role_id == -1){
-                    $this->parent_id = $data['parent_id'];
-                    $this->c_cust_id = $this->user_id;
-                }
-                if($this->role_id == -2){
-                    $cust = $this->get_user_info4wx($data['c_cust_id']);
-                    $this->parent_id = $cust['parent_id'];
-                    $this->c_cust_id = $cust['id'];
-                }
-                if($this->role_id >= 1){
-                    $this->parent_id = $this->user_id;
-                }
-            }
-        }
     }
 
     /**
@@ -597,6 +570,50 @@ class MY_Model extends CI_Model{
             return $this->fun_fail('验证失败,验证码有误');
         }
         return $this->fun_success('验证成功');
+    }
+
+    //将openid其他的登录状态清楚
+    public function delOpenidById($id, $openid){
+        $this->db->where(array('user_id <>' => $id, 'openid' => $openid))->update('users', array('openid' => ''));
+        $this->db->where(array('m_id <>' => $id, 'openid' => $openid))->update('members', array('openid' => ''));
+    }
+
+    //存入user的session
+    public function set_user_session_wx($id){
+        $this->db->from('users');
+        $this->db->where('user_id', $id);
+        $rs = $this->db->get();
+        if ($rs->num_rows() > 0) {
+            $res = $rs->row();
+            $token = uniqid();
+            $user_info['wx_token'] = $token;
+            $user_info['wx_user_id'] = $res->user_id;
+            $user_info['wx_rel_name'] = $res->rel_name;
+            $user_info['wx_user_pic'] = $res->pic;
+            $user_info['wx_class'] = 'users';
+            $this->session->set_userdata($user_info);
+            return 1;
+        }
+        return -1;
+    }
+
+    //存入member的session
+    public function set_member_session_wx($id){
+        $this->db->from('members');
+        $this->db->where('m_id', $id);
+        $rs = $this->db->get();
+        if ($rs->num_rows() > 0) {
+            $res = $rs->row();
+            $token = uniqid();
+            $member_info['wx_token'] = $token;
+            $member_info['wx_m_id'] = $res->m_id;
+            $member_info['wx_rel_name'] = $res->rel_name;
+            $member_info['wx_user_pic'] = $res->pic;
+            $member_info['wx_class'] = 'members';
+            $this->session->set_userdata($member_info);
+            return 1;
+        }
+        return -1;
     }
 }
 

@@ -61,42 +61,6 @@ class Sys_model extends MY_Model
         return -1;
     }
 
-    public function set_user_session_wx($id){
-        $this->db->from('users');
-        $this->db->where('user_id', $id);
-        $rs = $this->db->get();
-        if ($rs->num_rows() > 0) {
-            $res = $rs->row();
-            $token = uniqid();
-            $user_info['wx_token'] = $token;
-            $user_info['wx_user_id'] = $res->user_id;
-            $user_info['wx_rel_name'] = $res->rel_name;
-            $user_info['wx_user_pic'] = $res->pic;
-            $user_info['wx_class'] = 'users';
-            $this->session->set_userdata($user_info);
-            return 1;
-        }
-        return -1;
-    }
-
-    public function set_member_session_wx($id){
-        $this->db->from('members');
-        $this->db->where('m_id', $id);
-        $rs = $this->db->get();
-        if ($rs->num_rows() > 0) {
-            $res = $rs->row();
-            $token = uniqid();
-            $member_info['wx_token'] = $token;
-            $member_info['wx_m_id'] = $res->m_id;
-            $member_info['wx_rel_name'] = $res->rel_name;
-            $member_info['wx_user_pic'] = $res->pic;
-            $member_info['wx_class'] = 'members';
-            $this->session->set_userdata($member_info);
-            return 1;
-        }
-        return -1;
-    }
-
     public function check_user(){
         $openid = $this->session->userdata('openid');
         $check_ = $this->db->select()->from('users')->where('openid', $openid)->get()->row_array();
