@@ -73,7 +73,7 @@ class Wx_service extends CI_controller {
                 $content = "欢迎关注房猫微店公众账号。";
                 if (!empty($object->EventKey)){
                     $invite_code = str_replace("qrscene_", "", $object->EventKey);
-                    $content .= "您已关注了经纪人: " . $invite_code;
+                    $content .= "您已关注了管理员: " . $invite_code;
                 }
                 file_get_contents('http://ws.ksls.com.cn/api/update_weixin_user/' . $object->FromUserName . '/' . $invite_code);
                 break;
