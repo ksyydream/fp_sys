@@ -107,7 +107,7 @@
 
           <div class="am-fast-estimate">
               <div class="am-form-group">
-                  <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">门店名称</label>
+                  <label for="shop_name" class="am-u-sm-3 am-form-label">门店名称</label>
                   <div class="am-u-sm-9">
                       <input type="text" class="ip-txt" id="shop_name" name="shop_name" value="" placeholder="请填写门店名称">
                   </div>
@@ -118,7 +118,7 @@
                   <label for="doc-ipt-3" class="am-u-sm-3 am-form-label"><i class="am-icon-chevron"></i></label>
               </div>
               <div class="am-form-group">
-                  <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">详细地址</label>
+                  <label for="address" class="am-u-sm-3 am-form-label">详细地址</label>
                   <div class="am-u-sm-9">
                       <input type="text" class="ip-txt" id="address" name="address" value="" placeholder="请输入详细地址">
                   </div>
@@ -232,6 +232,24 @@
         }
         switch (type_id){
             case '1':
+                var shop_name = $.trim($("#shop_name").val());//获取门店名称
+                var areaVal = $("#area_value").val();//获取所在区域
+                var addressVal = $("#address").val();//获取详细地址
+                //详细地址验证
+                if(shop_name == ''){
+                    layer.msg('请填写门店名称');
+                    return false;
+                }
+                //所在区域验证
+                if(areaVal == ''){
+                    layer.msg('请设置所在区域');
+                    return false;
+                }
+                //详细地址验证
+                if(addressVal == ''){
+                    layer.msg('请填写详细地址');
+                    return false;
+                }
                 break;
             case '2':
                 break;

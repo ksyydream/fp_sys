@@ -13,3 +13,13 @@ function form_submit_json($statusCode,$message,$navTabId="",$forwardUrl="",$call
     $returnType['callbackType'] = $callbackType;
     echo (json_encode($returnType));
 }
+
+/**
+ * 检查手机号码格式
+ * @param $mobile 手机号码
+ */
+function check_mobile($mobile){
+    if(preg_match('/1[0-9]\d{9}$/',$mobile))
+        return true;
+    return false;
+}

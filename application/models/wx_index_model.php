@@ -18,8 +18,11 @@ class Wx_index_model extends MY_Model
     }
 
     public function logout(){
-        $this->db->where('id',$this->session->userdata('wx_user_id'))->update('user',array('openid'=>''));
+        $this->db->where('user_id',$this->session->userdata('wx_user_id'))->update('users',array('openid'=>''));
+        $this->db->where('m_id',$this->session->userdata('wx_m_id'))->update('members',array('openid'=>''));
         $this->session->unset_userdata('wx_user_id');
+        $this->session->unset_userdata('wx_m_id');
+        $this->session->unset_userdata('wx_class');
         $this->session->sess_destroy();
     }
 
@@ -94,4 +97,84 @@ class Wx_index_model extends MY_Model
        return $res;
 
     }
+
+    //用户注册申请
+    public function reg_save($data){
+        $insert = array(
+            'reg_time' => time(),
+            'openid' => $this->session->userdata('openid')
+        );
+        if(!$data['rel_name']){
+            return $this->fun_fail('姓名不能为空!');
+        }
+        if(!$data['mobile']){
+            return $this->fun_fail('手机号不能为空!');
+        }
+        if(!check_mobile($data['mobile'])){
+            return $this->fun_fail('手机号不规范!');
+        }
+        if(!$data['code']){
+            return $this->fun_fail('短信验证码不能为空!');
+        }
+        if(!$data['invite_code']){
+            return $this->fun_fail('邀请码不能为空!');
+        }
+        //开始验证电话号码是否已经注册
+        $check_reg_ = $this->db->from('users')->where(array('mobile' => $data['mobile']))->get()->row_array();
+        if($check_reg_){
+            return $this->fun_fail('电话号码已注册!');
+        }
+        //验证手机短信
+        $check_sms_ = $this->check_sms($data['mobile'], $data['code']);
+        if($check_sms_['status'] != 1){
+            return $check_sms_;
+        }
+        $insert['mobile'] = $data['mobile'];
+        $insert['rel_name'] = $data['rel_name'];
+        $insert['mobile'] = $data['mobile'];
+        //验证邀请码是否合法
+        $check_member_ = $this->db->from('members')->where(array('invite_code' => $data['invite_code']))->get()->row_array();
+        if(!$check_member_){
+            return $this->fun_fail('邀请码不存在!');
+        }
+        if($check_member_['status'] != 1){
+            return $this->fun_fail('邀请码已不可使用!');
+        }
+        $insert['invite'] = $check_member_['m_id'];
+        switch($data['type_id']){
+            case 1:
+                //门店注册需要保存门店信息
+                if(!$data['shop_name']){
+                    return $this->fun_fail('请填写门店名称!');
+                }
+
+                $area_value = $data['area_value'];
+                if(!$area_value){
+                    return $this->fun_fail('请选择区域!');
+                }
+                $area_arr = explode(',', $area_value);
+                if(!$area_arr[0] || !isset($area_arr[1]) || !isset($area_arr[2])){
+                    return $this->fun_fail('必须选择区域!');
+                }
+                //区域保存
+                $insert['shop_name'] = $data['shop_name'];
+                $insert['province'] = $area_arr[0];
+                $insert['city'] = isset($area_arr[1]) ? $area_arr[1] : 0;
+                $insert['district'] = isset($area_arr[2]) ? $area_arr[2] : 0;
+                $insert['twon'] = isset($area_arr[3]) ? $area_arr[3] : 0;
+                $insert['address'] = $data['address'];
+                if(!$insert['address']){
+                    return $this->fun_fail('必须选择区域!');
+                }
+                break;
+            case 2:
+                break;
+            default:
+                return $this->fun_fail('请选择注册类型!');
+        }
+        $insert['type_id'] = $data['type_id'];
+        $this->db->insert('users', $insert);
+        return $this->fun_success('注册成功!');
+    }
+
 }

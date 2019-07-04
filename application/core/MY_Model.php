@@ -567,14 +567,36 @@ class MY_Model extends CI_Model{
         return $data;
     }
 
+    //返回失败的信息
     public function fun_fail($msg){
         $this->model_fail['msg'] = $msg;
         return $this->model_fail;
     }
+
+    //返回成功的信息
     public function fun_success($msg = '操作成功', $result = []){
         $this->model_success['msg'] = $msg;
         $this->model_success['result'] = $result;
         return $this->model_success;
+    }
+
+    //验证短信
+    public function check_sms($mobile, $code){
+        $sms_time_out = $this->config->item('sms_time_out');
+        $sms_time_out = $sms_time_out ? $sms_time_out : 120;
+        $sms_log = $this->db->from('sms_log')->where(array('mobile' => $mobile, 'status' => 1))->order_by('add_time', 'desc')->get()->row_array();
+        if(!$sms_log){
+            return $this->fun_fail('请先获取验证码');
+        }
+        if($sms_log['code'] == $code){
+            $timeOut = $sms_log['add_time'] + $sms_time_out;
+            if($timeOut < time()){
+                return $this->fun_fail('验证码已超时失效');
+            }
+        }else{
+            return $this->fun_fail('验证失败,验证码有误');
+        }
+        return $this->fun_success('验证成功');
     }
 }
 
