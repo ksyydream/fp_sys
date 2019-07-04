@@ -57,7 +57,7 @@ class Wx_index extends Wx_controller {
         if(!$data) {
             $this->ajaxReturn($this->wx_fail);
         }
-        $res = $this->wx_index_model->reg($data);
+        $res = $this->wx_index_model->reg_save($data);
         $this->ajaxReturn($res);
         if(!$data['rel_name']){
             $this->wx_fail['msg'] = '姓名不能为空!';
