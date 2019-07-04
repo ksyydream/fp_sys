@@ -73,19 +73,24 @@ class Wx_service extends CI_controller {
                 $content = "欢迎关注房猫微店公众账号。";
                 if (!empty($object->EventKey)){
                     $invite_code = str_replace("qrscene_", "", $object->EventKey);
-                    $content .= "您已关注了管理员: " . $invite_code;
+                    $member_info = $this->wx_index_model->getMemberByInvite($invite_code);
+                    if($member_info){
+                        return $this->transmitDBY($object, $member_info);
+                    }
                 }
-                file_get_contents('http://ws.ksls.com.cn/api/update_weixin_user/' . $object->FromUserName . '/' . $invite_code);
                 break;
             case "unsubscribe":
                 $content = "取消关注";
                 //file_get_contents('http://ws.ksls.com.cn/api/unsubscribe_weixin_user/' . $object->FromUserName);
                 break;
             case "SCAN":
-                $content = "您扫描二维码关注经纪人";
+                $content = "欢迎关注房猫微店公众账号。";
                 $invite_code = $object->EventKey;
-                $content = "您已关注了经纪人: " . $invite_code;
-               // file_get_contents('http://ws.ksls.com.cn/api/update_weixin_user/' . $object->FromUserName . '/' . $broker_id);
+                $member_info = $this->wx_index_model->getMemberByInvite($invite_code);
+                if($member_info){
+                    return $this->transmitDBY($object, $member_info);
+                }
+
                 break;
             case "CLICK":
                 $content = "点击菜单拉取消息： " . $object->EventKey;
@@ -142,6 +147,35 @@ class Wx_service extends CI_controller {
 		</xml>
 		";
         return sprintf($newsTpl, $object->FromUserName, $object->ToUserName, time(), count($arr_item));
+    }
+
+    private function transmitDBY($object, $member_info) {
+        if(!$member_info)
+            return;
+
+        $itemTpl = "
+			<item>
+		        <Title><![CDATA[%s]]></Title>
+		        <Description><![CDATA[%s]]></Description>
+		        <PicUrl><![CDATA[%s]]></PicUrl>
+		        <Url><![CDATA[%s]]></Url>
+    		</item>
+		";
+        $item_str = "";
+        $item_str .= sprintf($itemTpl, '注册绑定管理员', '管理员邀请码:' . $member_info['invite_code'], 'http://sys.ksls.com.cn/assets/i/gz_weixin.jpg', 'http://sys.ksls.com.cn/wx_index/register?invite_code_temp=' . $member_info['invite_code']);
+
+        $newsTpl = "
+		<xml>
+		<ToUserName><![CDATA[%s]]></ToUserName>
+		<FromUserName><![CDATA[%s]]></FromUserName>
+		<CreateTime>%s</CreateTime>
+		<MsgType><![CDATA[news]]></MsgType>
+		<Content><![CDATA[]]></Content>
+		<ArticleCount>%s</ArticleCount>
+		<Articles>$item_str</Articles>
+		</xml>
+		";
+        return sprintf($newsTpl, $object->FromUserName, $object->ToUserName, time(), 1);
     }
 
     private function checkSignature() {

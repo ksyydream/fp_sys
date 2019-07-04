@@ -615,6 +615,11 @@ class MY_Model extends CI_Model{
         }
         return -1;
     }
+
+    //通过invite_code查询管理员
+    public function getMemberByInvite($invite_code){
+        return $this->db->select()->from('members')->where(array('status' => 1, 'invite_code' => $invite_code))->get()->row_array();
+    }
 }
 
 /* End of file MY_Model.php */

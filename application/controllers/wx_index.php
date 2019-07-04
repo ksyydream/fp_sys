@@ -43,6 +43,8 @@ class Wx_index extends Wx_controller {
      * @date 2019-07-03
      */
     public function register(){
+        $invite_code = $this->input->get('invite_code_temp');
+        $this->assign('invite_code', $invite_code);
         $this->display('register.html');
     }
 
