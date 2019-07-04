@@ -148,7 +148,7 @@ class Wx_service extends CI_controller {
         $signature = $_GET["signature"];
         $timestamp = $_GET["timestamp"];
         $nonce = $_GET["nonce"];
-        $token = $this->config->item('beingweixin19900206');
+        $token = $this->config->item('wx_service_token');
         $tmpArr = array($token, $timestamp, $nonce);
         sort($tmpArr);
         $tmpStr = implode( $tmpArr );
