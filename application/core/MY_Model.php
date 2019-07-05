@@ -557,7 +557,7 @@ class MY_Model extends CI_Model{
     public function check_sms($mobile, $code){
         $sms_time_out = $this->config->item('sms_time_out');
         $sms_time_out = $sms_time_out ? $sms_time_out : 120;
-        $sms_log = $this->db->from('sms_log')->where(array('mobile' => $mobile, 'status' => 1))->order_by('add_time', 'desc')->get()->row_array();
+        $sms_log = $this->db->from('sms_log')->where(array('mobile' => $mobile, 'status' => 1))->order_by('add_time', 'desc')->limit(1)->get()->row_array();
         if(!$sms_log){
             return $this->fun_fail('请先获取验证码');
         }

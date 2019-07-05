@@ -182,4 +182,34 @@ class Wx_index_model extends MY_Model
         return $this->fun_success('注册成功!');
     }
 
+    public function user_login($data){
+        if(!$data['mobile']){
+            return $this->fun_fail('手机号不能为空!');
+        }
+        if(!check_mobile($data['mobile'])){
+            return $this->fun_fail('手机号不规范!');
+        }
+        if(!$data['code']){
+            return $this->fun_fail('短信验证码不能为空!');
+        }
+        //开始验证电话号码是否已经注册
+        $check_reg_ = $this->db->from('users')->where(array('mobile' => $data['mobile']))->get()->row_array();
+        if(!$check_reg_){
+            return $this->fun_fail('电话号码未注册!');
+        }
+        if($check_reg_['status'] != 1){
+            return $this->fun_fail('账号异常!');
+        }
+        //验证手机短信
+        $check_sms_ = $this->check_sms($data['mobile'], $data['code']);
+        if($check_sms_['status'] != 1){
+            return $check_sms_;
+        }
+        //以防万一 去除其他账号相同openid的状态
+        $open_id =  $this->session->userdata('openid');
+        $this->delOpenidById($check_reg_['user_id'], $open_id);
+        $this->set_user_session_wx($check_reg_['user_id']);
+        return $this->fun_success('注册成功!');
+    }
+
 }
