@@ -8,7 +8,7 @@ var third = []; /* 镇 */
 var area = [];
 
 var selectedIndex = [0, 0, 0, 0]; /* 默认选中的地区 */
-var selected_parent = [0, 10543, 10544, 10545] /* 默认选中的地区的数据库ID */
+var selected_parent = [0, 1, 2, 3] /* 默认选中的地区的数据库ID */
 if(typeof selectedIndex_old!="undefined"){
   selectedIndex = selectedIndex_old;
 }

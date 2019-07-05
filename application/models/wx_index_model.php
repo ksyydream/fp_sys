@@ -67,7 +67,8 @@ class Wx_index_model extends MY_Model
     {
         if($parent_id == 0){
             $this->db->select('id,name')->from('region');
-            $this->db->where_in('id', array(10543, 10808));
+            $this->db->where('parent_id', 0);
+            //$this->db->where_in('id', array(10543, 10808));
             $this->db->order_by('id', 'asc');
         }else{
             $this->db->select('id,name')->from('region')->where('parent_id', $parent_id)->order_by('id', 'asc');
