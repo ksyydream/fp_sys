@@ -56,6 +56,7 @@ picker.on('picker.select', function (selectedVal, selectedIndex) {
 });
 
 picker.on('picker.change', function (index, selectedIndex) {
+
   if (index === 0){
     firstChange();
   } else if (index === 1) {
@@ -65,6 +66,7 @@ picker.on('picker.change', function (index, selectedIndex) {
   }
 
   function firstChange() {
+    var index = layer.load(1, {shade: [0.1,'#fff']});
     second = [];
     third = [];
     area = [];
@@ -81,9 +83,11 @@ picker.on('picker.change', function (index, selectedIndex) {
     picker.scrollColumn(1, 0);
     picker.scrollColumn(2, 0);
     picker.scrollColumn(3, 0)
+    layer.close(index);
   }
 
   function secondChange() {
+    var index = layer.load(1, {shade: [0.1,'#fff']});
     third = [];
     area = [];
     checked[1] = selectedIndex;
@@ -94,16 +98,19 @@ picker.on('picker.change', function (index, selectedIndex) {
     picker.refillColumn(3, area);
     picker.scrollColumn(2, 0);
     picker.scrollColumn(3, 0)
+    layer.close(index);
   }
 
   function thirdChange() {
-
+    var index = layer.load(1, {shade: [0.1,'#fff']});
     area = [];
     checked[2] = selectedIndex;
     creatList(third[checked[2]].value, area);
     picker.refillColumn(3, area);
     picker.scrollColumn(3, 0)
+    layer.close(index);
   }
+
 
 });
 
