@@ -92,7 +92,12 @@ class Wx_index extends Wx_controller {
         $this->display('admin_login.html');
     }
 
-    public function main(){
+    public function test_RQimg($invite_code){
+        $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('appsecret')));
+        $access_token = $this->wxjssdk_th->wxgetAccessToken();
+        $img_url = $this->get_or_create_ticket($access_token, 'QR_STR_SCENE', $invite_code);
+        $this->cismarty->assign('img_url',$img_url);
+        $this->cismarty->display('estimate/wx_guanzhu.html');
         $this->display('index.html');
     }
 

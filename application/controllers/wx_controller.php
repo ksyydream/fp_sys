@@ -32,19 +32,8 @@ class Wx_controller extends MY_Controller
         //先看用户是否登录,如果已经登录了,就不去判断
         if($res != 1){
             $person_info = $this->getUserInfoById($this->session->userdata('openid'));
-            if($person_info){
-                if($person_info['subscribe'] != 1){
-                    $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('appsecret')));
-                    $access_token = $this->wxjssdk_th->wxgetAccessToken();
-                    $img_url = $this->get_or_create_ticket($access_token);
-                    $this->cismarty->assign('img_url',$img_url);
-                    $this->cismarty->display('estimate/wx_guanzhu.html');
-                    exit();
-                }
-                //$s_p = $this->sys_model->save_person($person_info);
-                if($person_info['qr_scene_str'] == 'person_info'){
-                    //redirect('wx_index/person_info');
-                }
+            if($person_info && $person_info['subscribe'] == 1){
+
             }else{
                 $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('appsecret')));
                 $access_token = $this->wxjssdk_th->wxgetAccessToken();
@@ -64,7 +53,7 @@ class Wx_controller extends MY_Controller
      * @author yaobin <bin.yao@thmarket.cn>
      * @date 2017-12-27
      */
-    public function get_openid(){
+    private function get_openid(){
         if(!$this->session->userdata('openid')){
             $appid = $this->wxconfig['appid'];
             $secret = $this->wxconfig['appsecret'];
@@ -161,7 +150,7 @@ class Wx_controller extends MY_Controller
         return $result;
     }
 
-    private function get_or_create_ticket($access_token,$action_name = 'QR_STR_SCENE') {
+    public function get_or_create_ticket($access_token,$action_name = 'QR_STR_SCENE', $scene_str = '') {
         $url = 'https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=' . $access_token;
         @$post_data->expire_seconds = 2592000;
         @$post_data->action_name = $action_name;
@@ -169,6 +158,8 @@ class Wx_controller extends MY_Controller
         if(!isset($invite_code)){
             $invite_code = '';
         }
+        if($scene_str != '')
+            $invite_code = $scene_str;
         @$post_data->action_info->scene->scene_str = $invite_code;
         $ticket_data = json_decode($this->post($url, $post_data));
         @$ticket = $ticket_data->ticket;
