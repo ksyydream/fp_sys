@@ -102,7 +102,8 @@ class Wx_index_model extends MY_Model
     public function reg_save($data){
         $insert = array(
             'reg_time' => time(),
-            'openid' => $this->session->userdata('openid')
+            'openid' => $this->session->userdata('openid'),
+            'token' => uniqid()
         );
         if(!$data['rel_name']){
             return $this->fun_fail('姓名不能为空!');
@@ -183,6 +184,10 @@ class Wx_index_model extends MY_Model
     }
 
     public function user_login($data){
+        $update_ = array(
+            'openid' => $this->session->userdata('openid'),
+            'token' => uniqid()
+        );
         if(!$data['mobile']){
             return $this->fun_fail('手机号不能为空!');
         }
@@ -206,10 +211,10 @@ class Wx_index_model extends MY_Model
             return $check_sms_;
         }
         //以防万一 去除其他账号相同openid的状态
-        $open_id =  $this->session->userdata('openid');
-        $this->delOpenidById($check_reg_['user_id'], $open_id);
+        $this->db->where('user_id', $check_reg_['user_id'])->update('users', $update_);
+        $this->delOpenidById($check_reg_['user_id'], $update_['openid']);
         $this->set_user_session_wx($check_reg_['user_id']);
-        return $this->fun_success('注册成功!');
+        return $this->fun_success('登录成功!');
     }
 
 }
