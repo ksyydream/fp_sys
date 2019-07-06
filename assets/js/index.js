@@ -80,6 +80,7 @@ picker.on('picker.select', function (selectedVal, selectedI) {
       picker.scrollColumn(2, selectedIndex[2]);
       picker.scrollColumn(3, selectedIndex[3]);
       console.log(selectedIndex[2]);
+      layer.msg('操作太快,请重新确认地址!');
     }else{
       nameEl.innerHTML = text1 + ' ' + text2 + ' ' + text3 + ' ' + text4;
       nameVl.value = val1 + ',' + val2 + ',' + val3 + ',' + val4;
