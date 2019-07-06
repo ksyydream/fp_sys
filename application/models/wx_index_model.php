@@ -76,6 +76,85 @@ class Wx_index_model extends MY_Model
         return $this->db->get()->result_array();
     }
 
+    public function check_region(){
+        $province = $this->input->post('val1');
+        $city = $this->input->post('val2');
+        $district = $this->input->post('val3');
+        $twon = $this->input->post('val4');
+        if(!isset($twon) || $twon == null)
+            $twon = 0;
+        if(!$province || !$city || !$district){
+            return $this->fun_fail('地址缺失!');
+        }
+        //开始检查地址是否对应
+        if($twon){
+            $check_val4 = $this->db->select()->from('region')->where(array('id' => $twon, 'parent_id' => $district))->get()->row_array();
+            if(!$check_val4){
+                $res_ = $this->new_region($district, $twon);
+                return $this->fun_fail('地址错误!', $res_);
+            }
+        }
+        $check_val3 = $this->db->select()->from('region')->where(array('id' => $district, 'parent_id' => $city))->get()->row_array();
+        if(!$check_val3){
+            $res_ = $this->new_region($district, $twon);
+            return $this->fun_fail('地址错误!', $res_);
+        }
+        $check_val2 = $this->db->select()->from('region')->where(array('id' => $city, 'parent_id' => $province))->get()->row_array();
+        if(!$check_val2){
+            $res_ = $this->new_region($district, $twon);
+            return $this->fun_fail('地址错误!', $res_);
+        }
+        return $this->fun_success('确认正确!');
+    }
+
+    private function new_region($district, $twon=0){
+        $index_1 = 0;
+        $index_2 = 0;
+        $index_3 = 0;
+        $index_4 = 0;
+        if($twon){
+            $check_val4 = $this->db->select()->from('region')->where(array('id' => $twon))->get()->row_array();
+            $district = $check_val4['parent_id'];
+        }
+        $check_val3 = $this->db->select()->from('region')->where(array('id' => $district))->get()->row_array();
+        $city = $check_val3['parent_id'];
+        $check_val2 = $this->db->select()->from('region')->where(array('id' => $city))->get()->row_array();
+        $province = $check_val2['parent_id'];
+        $retrun_['value_arr'] = array('province_p' => 0, 'city_p' => $province, 'district_p' => $city, 'twon_p' => $district);
+
+        $region_1 = $this->db->select()->from('region')->where("parent_id", 0)->get()->result_array();
+        foreach($region_1 as $k1 => $v1){
+            if($v1['id'] == $province){
+                $index_1 = $k1;
+                break;
+            }
+        }
+        $region_2 = $this->db->select()->from('region')->where("parent_id", $province)->get()->result_array();
+        foreach($region_2 as $k2 => $v2){
+            if($v2['id'] == $city){
+                $index_2 = $k2;
+                break;
+            }
+        }
+        $region_3 = $this->db->select()->from('region')->where("parent_id", $city)->get()->result_array();
+        foreach($region_3 as $k3 =>$v3){
+            if($v3['id'] == $district){
+                $index_3 = $k3;
+                break;
+            }
+        }
+        $region_4 = $this->db->select()->from('region')->where("parent_id", $district)->get()->result_array();
+        foreach($region_4 as $k4 => $v4){
+            if($v4['id'] == $twon){
+                $index_4 = $k4;
+                break;
+            }
+        }
+        $retrun_['index_arr'] = array('index_1' => $index_1, 'index_2' => $index_2, 'index_3' => $index_3, 'index_4' => $index_4);
+        return $retrun_;
+    }
+
+
     public function begin_cal(){
         $param = array(
             'biz_code' => 'loan',

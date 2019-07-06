@@ -541,8 +541,9 @@ class MY_Model extends CI_Model{
     }
 
     //返回失败的信息
-    public function fun_fail($msg){
+    public function fun_fail($msg, $result = []){
         $this->model_fail['msg'] = $msg;
+        $this->model_fail['result'] = $result;
         return $this->model_fail;
     }
 

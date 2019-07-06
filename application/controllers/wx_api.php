@@ -53,4 +53,9 @@ class Wx_api extends CI_controller {
         $return_ = ['status' => 1, 'msg' => '获取成功', 'result' => $res];
         echo json_encode($return_);
     }
+
+    public function check_region(){
+        $res = $this->wx_index_model->check_region();
+        $this->ajaxReturn($res);
+    }
 }
