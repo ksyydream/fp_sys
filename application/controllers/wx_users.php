@@ -21,7 +21,7 @@ class Wx_users extends Wx_controller {
             redirect('wx_index/logout');
         }
         $this->user_id = $this->session->userdata('wx_user_id');
-        $this->user_info = $this->db->select()->from('users')->where('user_id', $this->user_id)->get()->row_array();
+        $this->user_info = $this->wx_users_model->get_user_info($this->user_id);
         if(!$this->user_info){
             redirect('wx_index/logout');
         }
@@ -43,7 +43,7 @@ class Wx_users extends Wx_controller {
      */
     public function foreclosure(){
         if(IS_POST){
-            $res = $this->wx_users_model->save_foreclosure();
+            $res = $this->wx_users_model->save_foreclosure($this->user_info);
             $this->ajaxReturn($res);
             $insert_ = array(
                 'borrower_marriage' => $this->input->post('is_marriage'),

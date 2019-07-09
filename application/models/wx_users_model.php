@@ -18,22 +18,32 @@ class Wx_users_model extends MY_Model
         parent::__destruct();
     }
 
+    public function get_user_info($user_id){
+        return $this->db->select()->from('users')->where('user_id', $user_id)->get()->row_array();
+    }
+
     /**
      * 申请赎楼一
      * @author yangyang <yang.yang@thmarket.cn>
      * @date 2019-07-09
      */
-    public function save_foreclosure(){
+    public function save_foreclosure($user_info){
         $insert_ = array(
             'borrower_marriage' => $this->input->post('is_marriage'),
             'borrower_name' => $this->input->post('borrower_name'),
             'borrower_code' => $this->input->post('borrower_code'),
             'borrower_mobile' => $this->input->post('borrower_mobile'),
             'now_time' => $this->input->post('now_time'),
-            'user_id' => $this->session->userdata('wx_user_id'),
+            'user_id' => $user_info['user_id'],
+            'm_id' => $user_info['invite'],
             'add_time' => time(),
             'status' => 1,
         );
+        //查看是否重复提交
+        $check_info_ = $this->db->select()->from('foreclosure')->where(array('user_id' => $user_info['user_id'], 'now_time' => $insert_['now_time']))->get()->row_array();
+        if($check_info_){
+            return $this->fun_success('借款人信息不可重复提交!', $check_info_);
+        }
         if(!$insert_['borrower_name'] || !$insert_['borrower_code'] || !$insert_['borrower_mobile'])
             return $this->fun_fail('借款人信息不完善');
         if(is_idcard($insert_['borrower_code']))
@@ -69,8 +79,10 @@ class Wx_users_model extends MY_Model
             $insert_['borrower_spouse_td_score'] = 90;
         }
 
-
-        return $this->fun_success('提交成功');
+        $this->db->insert('foreclosure', $insert_);
+        $foreclosure_id = $this->db->insert_id();
+        $foreclosure_info = $this->db->select()->from('foreclosure')->where('foreclosure_id', $foreclosure_id)->get()->row_array();
+        return $this->fun_success('提交成功', $foreclosure_info);
     }
 
 }
