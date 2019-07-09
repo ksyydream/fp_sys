@@ -67,13 +67,93 @@ class Wx_index_model extends MY_Model
     {
         if($parent_id == 0){
             $this->db->select('id,name')->from('region');
-            $this->db->where_in('id', array(10543, 10808));
+            $this->db->where('parent_id', 0);
+            //$this->db->where_in('id', array(10543, 10808));
             $this->db->order_by('id', 'asc');
         }else{
             $this->db->select('id,name')->from('region')->where('parent_id', $parent_id)->order_by('id', 'asc');
         }
         return $this->db->get()->result_array();
     }
+
+    public function check_region(){
+        $province = $this->input->post('val1');
+        $city = $this->input->post('val2');
+        $district = $this->input->post('val3');
+        $twon = $this->input->post('val4');
+        if(!isset($twon) || $twon == null)
+            $twon = 0;
+        if(!$province || !$city || !$district){
+            return $this->fun_fail('地址缺失!');
+        }
+        //开始检查地址是否对应
+        if($twon){
+            $check_val4 = $this->db->select()->from('region')->where(array('id' => $twon, 'parent_id' => $district))->get()->row_array();
+            if(!$check_val4){
+                $res_ = $this->new_region($district, $twon);
+                return $this->fun_fail('地址错误!', $res_);
+            }
+        }
+        $check_val3 = $this->db->select()->from('region')->where(array('id' => $district, 'parent_id' => $city))->get()->row_array();
+        if(!$check_val3){
+            $res_ = $this->new_region($district, $twon);
+            return $this->fun_fail('地址错误!', $res_);
+        }
+        $check_val2 = $this->db->select()->from('region')->where(array('id' => $city, 'parent_id' => $province))->get()->row_array();
+        if(!$check_val2){
+            $res_ = $this->new_region($district, $twon);
+            return $this->fun_fail('地址错误!', $res_);
+        }
+        return $this->fun_success('确认正确!');
+    }
+
+    private function new_region($district, $twon=0){
+        $index_1 = 0;
+        $index_2 = 0;
+        $index_3 = 0;
+        $index_4 = 0;
+        if($twon){
+            $check_val4 = $this->db->select()->from('region')->where(array('id' => $twon))->get()->row_array();
+            $district = $check_val4['parent_id'];
+        }
+        $check_val3 = $this->db->select()->from('region')->where(array('id' => $district))->get()->row_array();
+        $city = $check_val3['parent_id'];
+        $check_val2 = $this->db->select()->from('region')->where(array('id' => $city))->get()->row_array();
+        $province = $check_val2['parent_id'];
+        $retrun_['value_arr'] = array('province_p' => 0, 'city_p' => $province, 'district_p' => $city, 'twon_p' => $district);
+
+        $region_1 = $this->db->select()->from('region')->where("parent_id", 0)->get()->result_array();
+        foreach($region_1 as $k1 => $v1){
+            if($v1['id'] == $province){
+                $index_1 = $k1;
+                break;
+            }
+        }
+        $region_2 = $this->db->select()->from('region')->where("parent_id", $province)->get()->result_array();
+        foreach($region_2 as $k2 => $v2){
+            if($v2['id'] == $city){
+                $index_2 = $k2;
+                break;
+            }
+        }
+        $region_3 = $this->db->select()->from('region')->where("parent_id", $city)->get()->result_array();
+        foreach($region_3 as $k3 =>$v3){
+            if($v3['id'] == $district){
+                $index_3 = $k3;
+                break;
+            }
+        }
+        $region_4 = $this->db->select()->from('region')->where("parent_id", $district)->get()->result_array();
+        foreach($region_4 as $k4 => $v4){
+            if($v4['id'] == $twon){
+                $index_4 = $k4;
+                break;
+            }
+        }
+        $retrun_['index_arr'] = array('index_1' => $index_1, 'index_2' => $index_2, 'index_3' => $index_3, 'index_4' => $index_4);
+        return $retrun_;
+    }
+
 
     public function begin_cal(){
         $param = array(
@@ -102,7 +182,8 @@ class Wx_index_model extends MY_Model
     public function reg_save($data){
         $insert = array(
             'reg_time' => time(),
-            'openid' => $this->session->userdata('openid')
+            'openid' => $this->session->userdata('openid'),
+            'token' => uniqid()
         );
         if(!$data['rel_name']){
             return $this->fun_fail('姓名不能为空!');
@@ -180,6 +261,40 @@ class Wx_index_model extends MY_Model
         $this->delOpenidById($user_id, $insert['openid']);
         $this->set_user_session_wx($user_id);
         return $this->fun_success('注册成功!');
+    }
+
+    public function user_login($data){
+        $update_ = array(
+            'openid' => $this->session->userdata('openid'),
+            'token' => uniqid()
+        );
+        if(!$data['mobile']){
+            return $this->fun_fail('手机号不能为空!');
+        }
+        if(!check_mobile($data['mobile'])){
+            return $this->fun_fail('手机号不规范!');
+        }
+        if(!$data['code']){
+            return $this->fun_fail('短信验证码不能为空!');
+        }
+        //开始验证电话号码是否已经注册
+        $check_reg_ = $this->db->from('users')->where(array('mobile' => $data['mobile']))->get()->row_array();
+        if(!$check_reg_){
+            return $this->fun_fail('电话号码未注册!');
+        }
+        if($check_reg_['status'] != 1){
+            return $this->fun_fail('账号异常!');
+        }
+        //验证手机短信
+        $check_sms_ = $this->check_sms($data['mobile'], $data['code']);
+        if($check_sms_['status'] != 1){
+            return $check_sms_;
+        }
+        //以防万一 去除其他账号相同openid的状态
+        $this->db->where('user_id', $check_reg_['user_id'])->update('users', $update_);
+        $this->delOpenidById($check_reg_['user_id'], $update_['openid']);
+        $this->set_user_session_wx($check_reg_['user_id']);
+        return $this->fun_success('登录成功!');
     }
 
 }

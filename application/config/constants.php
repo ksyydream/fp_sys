@@ -36,10 +36,10 @@ define('FOPEN_READ_WRITE_CREATE',				'a+b');
 define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
-define('APP_ID', 'wx6eb14c27ebe160c6');
-define('APP_SECRET', '7921ff3dbf764e2c5df5964a18846554');
-define('TOKEN', '8354b302d5100247d2acc6211664c6f3');
-define('DOMAIN', 'www.funmall.com.cn');
+//定义请求数据的方法
+define('IS_POST',strtolower($_SERVER["REQUEST_METHOD"]) == 'post');//判断是否是post方法
+define('IS_GET',strtolower($_SERVER["REQUEST_METHOD"]) == 'get');//判断是否是get方法
+define('IS_AJAX',isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');//判断是否是ajax请求
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

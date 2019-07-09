@@ -8,7 +8,7 @@ var third = []; /* 镇 */
 var area = [];
 
 var selectedIndex = [0, 0, 0, 0]; /* 默认选中的地区 */
-var selected_parent = [0, 10543, 10544, 10545] /* 默认选中的地区的数据库ID */
+var selected_parent = [0, 1, 2, 3] /* 默认选中的地区的数据库ID */
 if(typeof selectedIndex_old!="undefined"){
   selectedIndex = selectedIndex_old;
 }
@@ -42,17 +42,50 @@ var picker = new Picker({
 	title: '地址选择'
 });
 
-picker.on('picker.select', function (selectedVal, selectedIndex) {
-  var text1 = first[selectedIndex[0]].text;
-  var text2 = second[selectedIndex[1]].text;
-  var text3 = third[selectedIndex[2]] ? third[selectedIndex[2]].text : '';
-  var text4 = area[selectedIndex[3]] ? area[selectedIndex[3]].text : '';
-	nameEl.innerHTML = text1 + ' ' + text2 + ' ' + text3 + ' ' + text4;
+picker.on('picker.select', function (selectedVal, selectedI) {
+  var text1 = first[selectedI[0]].text;
+  var text2 = second[selectedI[1]].text;
+  var text3 = third[selectedI[2]] ? third[selectedI[2]].text : '';
+  var text4 = area[selectedI[3]] ? area[selectedI[3]].text : '';
+
   var val1 = selectedVal[0];
   var val2 = selectedVal[1];
   var val3 = selectedVal[2] ? selectedVal[2] : '0';
   var val4 = selectedVal[3] ? selectedVal[3] : '0';
-  nameVl.value = val1 + ',' + val2 + ',' + val3 + ',' + val4;
+
+  $.ajaxSettings.async = false;
+  //检查地址是否满足要求
+  $.post('/wx_api/check_region',{val1:val1, val2:val2, val3:val3, val4:val4}, function(data){
+    var return_ = JSON.parse(data)
+    if(return_.status != 1){
+      var index_arr = return_.result.index_arr;
+      var value_arr = return_.result.value_arr;
+      selectedIndex = [index_arr.index_1, index_arr.index_2, index_arr.index_3, index_arr.index_4]; /* 默认选中的地区 */
+      selected_parent = [value_arr.province_p, value_arr.city_p, value_arr.district_p, value_arr.twon_p]; /* 默认选中的地区 */
+      second = [];
+      third = [];
+      area = [];
+      checked[0] = selectedIndex[0];
+      creatList(first[checked[0]].value, second);
+      checked[1] = selectedIndex[1];
+      creatList(second[checked[1]].value, third);
+      checked[2] = selectedIndex[2];
+      creatList(third[checked[2]].value, area);
+      picker.refillColumn(0, first);
+      picker.refillColumn(1, second);
+      picker.refillColumn(2, third);
+      picker.refillColumn(3, area);
+      picker.scrollColumn(0, selectedIndex[0]);
+      picker.scrollColumn(1, selectedIndex[1]);
+      picker.scrollColumn(2, selectedIndex[2]);
+      picker.scrollColumn(3, selectedIndex[3]);
+      console.log(selectedIndex[2]);
+      layer.msg('操作太快,请重新确认地址!');
+    }else{
+      nameEl.innerHTML = text1 + ' ' + text2 + ' ' + text3 + ' ' + text4;
+      nameVl.value = val1 + ',' + val2 + ',' + val3 + ',' + val4;
+    }
+  });
 });
 
 picker.on('picker.change', function (index, selectedIndex) {
@@ -114,9 +147,42 @@ picker.on('picker.change', function (index, selectedIndex) {
 
 });
 
-picker.on('picker.valuechange', function (selectedVal, selectedIndex) {
+picker.on('picker.valuechange', function (selectedVal, selectedI) {
+  var val1 = selectedVal[0];
+  var val2 = selectedVal[1];
+  var val3 = selectedVal[2] ? selectedVal[2] : '0';
+  var val4 = selectedVal[3] ? selectedVal[3] : '0';
+  $.ajaxSettings.async = false;
+  //检查地址是否满足要求
+  $.post('/wx_api/check_region',{val1:val1, val2:val2, val3:val3, val4:val4}, function(data){
+    var return_ = JSON.parse(data)
+    if(return_.status != 1){
+      var index_arr = return_.result.index_arr;
+      var value_arr = return_.result.value_arr;
+      selectedIndex = [index_arr.index_1, index_arr.index_2, index_arr.index_3, index_arr.index_4]; /* 默认选中的地区 */
+      selected_parent = [value_arr.province, value_arr.city, value_arr.district, value_arr.twon]; /* 默认选中的地区 */
+      second = [];
+      third = [];
+      area = [];
+      checked[0] = selectedIndex[0];
+      creatList(first[checked[0]].value, second);
+      checked[1] = selectedIndex[1];
+      creatList(second[checked[1]].value, third);
+      checked[2] = selectedIndex[2];
+      creatList(third[checked[2]].value, area);
+      picker.refillColumn(0, first);
+      picker.refillColumn(1, second);
+      picker.refillColumn(2, third);
+      picker.refillColumn(3, area);
+      picker.scrollColumn(0, selectedIndex[0]);
+      picker.scrollColumn(1, selectedIndex[1]);
+      picker.scrollColumn(2, selectedIndex[2]);
+      picker.scrollColumn(3, selectedIndex[3]);
+      console.log(selectedIndex[2]);
+    }
+  });
    console.log(selectedVal);
-   console.log(selectedIndex);
+   console.log(selectedI);
 });
 
 nameDiv.addEventListener('click', function () {
