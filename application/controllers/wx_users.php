@@ -37,19 +37,36 @@ class Wx_users extends Wx_controller {
 
 
     /**
-     * 登陆提交
+     * 申请赎楼一
      * @author yangyang <yang.yang@thmarket.cn>
-     * @date 2018-05-13
+     * @date 2019-07-09
      */
-    public function submit_login(){
-        $rs = $this->wx_index_model->submit_login();
-        if($rs == '1'){
-            $this->show_message('登陆成功',site_url('wx_salesman/index'));
-        }else if($rs == '-1'){
-            $this->show_message('登陆失败！');
-        }else{
-            $this->show_message('登陆失败！');
+    public function foreclosure(){
+        if(IS_POST){
+            $res = $this->wx_users_model->save_foreclosure();
+            $this->ajaxReturn($res);
+            $insert_ = array(
+                'borrower_marriage' => $this->input->post('is_marriage'),
+                'borrower_name' => $this->input->post('borrower_name'),
+                'borrower_code' => $this->input->post('borrower_code'),
+                'borrower_mobile' => $this->input->post('borrower_mobile'),
+                'now_time' => $this->input->post('now_time'),
+                'user_id' => $this->user_id,
+                'add_time' => time(),
+                'status' => 1,
+            );
+            //开始效验
+            switch($insert_['borrower_marriage']){
+                case 1:
+                    break;
+                case -1:
+                    break;
+                default:
+
+            }
         }
+        $this->assign('now_time', time());
+        $this->display('users/foreclosure/step1.html');
     }
 
 }

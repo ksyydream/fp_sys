@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>借款人基本信息</title>
+  <meta name="description" content="借款人基本信息">
+  <meta name="keywords" content="index">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="icon" type="image/png" href="/assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+  <link rel="stylesheet" href="/assets/css/amazeui.css"/>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <script type="text/javascript">
+    (function() {
+        var rem, dpr, time, doc = window.document,
+        docEl = doc.documentElement,
+        viewport = doc.querySelector('meta[name="viewport"]'),
+        zoomScale,
+        zoomScaleNum;
+        if (viewport) {            
+            zoomScale = viewport.getAttribute("content").match(/initial\-scale=(["']?)([\d\.]+)\1?/);
+            if(zoomScale){
+              zoomScaleNum = parseFloat(zoomScale[2]);
+              dpr = parseInt(1 / zoomScaleNum);
+            }
+        }
+        if (!dpr && !zoomScaleNum) {
+            var os = (window.navigator.appVersion.match(/android/gi), window.navigator.appVersion.match(/iphone/gi)),
+            dpr = window.devicePixelRatio;
+            dpr = os ? dpr >= 3 ? 3 : dpr >= 2 ? 2 : 1 : 1;
+            zoomScaleNum = 1 / dpr;
+        }
+        window.addEventListener("resize",
+            function() {
+                clearTimeout(time);
+                time = setTimeout(changeRem, 300);
+            },false);
+      //改变基准rem
+        function changeRem(){
+            var docWidth = docEl.getBoundingClientRect().width;
+            if(docWidth / dpr > 540){
+              docWidth = 540 * dpr;
+            }
+            //rem字号以320下的16px为基线进行等比缩放
+            rem = docWidth/320 * 16;
+            docEl.style.fontSize = rem + "px";
+        }
+        changeRem();
+    })();
+  </script> 
+  
+</head>
+<body>
+<div class="am-main">
+
+ 
+  <form id="save_form" class="am-form am-form-horizontal">
+      <input value="{{$now_time}}" type="hidden" name="now_time">
+    <p class="p-tit">请填写借款人基本信息</p>
+     <div class="am-fast-estimate">
+    <div class="am-form-group">
+      <label for="doc-ipt-3" class="am-u-sm-7 am-form-label">婚姻状况</label>
+      <div class="am-u-sm-5">
+              <div class="radio-input">
+          <label class="register-type-label"><input type="radio" class="radio_DBY_" value="1" name="is_marriage" checked>已婚</input></label>
+          <label class="register-type-label"><input type="radio" class="radio_DBY_" value="-1" name="is_marriage">单身</input></label>
+      </div>
+      </div>
+    </div>
+
+    <div class="am-form-group">
+      <label for="borrower_name" class="am-u-sm-3 am-form-label">姓名</label>
+      <div class="am-u-sm-9">
+       <input type="text" class="ip-txt" id="borrower_name" maxlength="4" name="borrower_name" value="" placeholder="请输入借款人姓名">
+      </div>
+    </div>
+    <div class="am-form-group">
+      <label for="borrower_code" class="am-u-sm-3 am-form-label">身份证号</label>
+      <div class="am-u-sm-9">
+         <input type="text" class="ip-txt js4IDcard" maxlength="18" id="borrower_code" name="borrower_code" value="" placeholder="请输入借款人身份证号码">
+      </div>
+    </div>
+   <div class="am-form-group">
+      <label for="borrower_mobile" class="am-u-sm-3 am-form-label">手机号</label>
+      <div class="am-u-sm-9">
+         <input type="text" class="ip-txt js4phone" id="borrower_mobile" name="borrower_mobile" value="" placeholder="请输入借款人手机号码">
+      </div>
+    </div>
+ </div>
+      <div id="radio_div">
+          <p class="p-tit">请填写借款人配偶基本信息</p>
+
+          <div class="am-fast-estimate">
+              <div class="am-form-group">
+                  <label for="borrower_spouse_name" class="am-u-sm-3 am-form-label">姓名</label>
+                  <div class="am-u-sm-9">
+                      <input type="text" class="ip-txt" maxlength="4" id="borrower_spouse_name" name="borrower_spouse_name" value="" placeholder="请输入借款人配偶姓名">
+                  </div>
+              </div>
+              <div class="am-form-group">
+                  <label for="borrower_spouse_mobile" class="am-u-sm-3 am-form-label">身份证号</label>
+                  <div class="am-u-sm-9">
+                      <input type="text" class="ip-txt js4IDcard" maxlength="18" id="borrower_spouse_mobile" name="borrower_spouse_mobile" value="" placeholder="请输入借款人配偶身份证号码">
+                  </div>
+              </div>
+              <div class="am-form-group">
+                  <label for="borrower_spouse_code" class="am-u-sm-3 am-form-label">手机号</label>
+                  <div class="am-u-sm-9">
+                      <input type="text" class="ip-txt js4phone" id="borrower_spouse_code" name="borrower_spouse_code" value="" placeholder="请输入借款人配偶手机号码">
+                  </div>
+              </div>
+          </div>
+      </div>
+
+    <a class="am-btn am-btn-register" id="save_btn" href="javascript:">下一步</a>
+  </form>
+
+
+    {{include file='public/foot.html'}}
+</div>
+<script src="/assets/js/jquery-2.2.3.min.js"></script>
+<script src="/assets/js/amazeui.js"></script>
+<script src="/assets/js/animateBackground-plugin.js"></script>
+<script src="/assets/js/DBY_common.js?v2"></script>
+<script src="/assets/js/layer/layer.js"></script>
+
+<script type="text/javascript">
+    $(".radio_DBY_").click(function(){
+        var type_id = $("input[name='is_marriage']:checked").val();
+        if(type_id == '1'){
+            $("#radio_div").show();
+        }
+        if(type_id == '-1'){
+            $("#radio_div").hide();
+        }
+    });
+    $("#save_btn").click(function(){
+        var type_id = $("input[name='is_marriage']:checked").val();
+        var borrower_name = $.trim($("#borrower_name").val());
+        var borrower_mobile = $.trim($("#borrower_mobile").val());
+        var borrower_code = $.trim($("#borrower_code").val());
+        if(borrower_name == ''){
+            layer.msg('借款人姓名不能为空');
+            return false;
+        }
+        if(borrower_mobile == ''){
+            layer.msg('借款人手机号不能为空');
+            return false;
+        }
+        var iphone = /^1[0-9]{10}$/g;
+        if(!(iphone.test(borrower_mobile))){
+            layer.msg('借款人手机号不规范');
+            return false;
+        }
+        if(!IdentityCodeValid(borrower_code)){
+            layer.msg('借款人身份证填写不规范');
+            return false;
+        }
+        switch (type_id){
+            case '1':
+                var borrower_spouse_name = $.trim($("#borrower_spouse_name").val());        //配偶姓名
+                var borrower_spouse_mobile = $("#borrower_spouse_mobile").val();            //配偶手机号码
+                var borrower_spouse_code = $("#borrower_spouse_code").val();                //配偶身份证号码
+                if(borrower_spouse_name == ''){
+                    layer.msg('配偶姓名不能为空');
+                    return false;
+                }
+                if(!IdentityCodeValid(borrower_spouse_code)){
+                    layer.msg('配偶身份证填写不规范');
+                    return false;
+                }
+                if(borrower_spouse_mobile == ''){
+                    layer.msg('配偶手机号不能为空');
+                    return false;
+                }
+                if(!(iphone.test(borrower_spouse_mobile))){
+                    layer.msg('配偶手机号不规范');
+                    return false;
+                }
+
+                break;
+            case '-1':
+
+                break;
+            default:
+                layer.msg('请选择婚姻状况');
+                return false;
+        }
+        var form = document.getElementById('save_form');
+
+        var formdata = new FormData(form);
+        $.ajax({
+            type : "POST",
+            url : "/wx_index/foreclosure",
+            data : formdata,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success : function(data) {
+                var return_ = JSON.parse(data)
+                if(return_.status == 1){
+                    window.location.href= '/wx_users/index';
+                }else{
+                    layer.msg(return_.msg);
+                }
+            }
+        });
+    })
+</script>
+</body>
+</html>
