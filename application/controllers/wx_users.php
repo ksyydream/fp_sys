@@ -41,12 +41,16 @@ class Wx_users extends Wx_controller {
      * @author yangyang <yang.yang@thmarket.cn>
      * @date 2019-07-09
      */
-    public function foreclosure(){
+    public function foreclosure($now_time = ''){
         if(IS_POST){
             $res = $this->wx_users_model->save_foreclosure($this->user_info);
             $this->ajaxReturn($res);
         }
-        $this->assign('now_time', time());
+        if(!$now_time){
+            //以防返回重复生成工作单,需要在所有入口增加随机数进行判断,如果不存在 就是非法入口,需要跳转到别的地方
+            redirect('wx_users/foreclosure/' . time()); //自动增加now_time
+        }
+        $this->assign('now_time', $now_time);
         $this->display('users/foreclosure/step1.html');
     }
 
@@ -55,7 +59,7 @@ class Wx_users extends Wx_controller {
      * @author yangyang <yang.yang@thmarket.cn>
      * @date 2019-07-10
      */
-    public function foreclosure_s2($f_id){
+    public function foreclosure_s2($f_id = 0){
         if(IS_POST){
             $res = $this->wx_users_model->edit_foreclosure4s2();
             $this->ajaxReturn($res);

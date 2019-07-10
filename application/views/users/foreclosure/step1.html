@@ -147,19 +147,23 @@
         var borrower_mobile = $.trim($("#borrower_mobile").val());
         var borrower_code = $.trim($("#borrower_code").val());
         if(borrower_name == ''){
+            layer.close(index);
             layer.msg('借款人姓名不能为空');
             return false;
         }
         if(!IdentityCodeValid(borrower_code)){
+            layer.close(index);
             layer.msg('借款人身份证填写不规范');
             return false;
         }
         if(borrower_mobile == ''){
+            layer.close(index);
             layer.msg('借款人手机号不能为空');
             return false;
         }
         var iphone = /^1[0-9]{10}$/g;
         if(!(iphone.test(borrower_mobile))){
+            layer.close(index);
             layer.msg('借款人手机号不规范');
             return false;
         }
@@ -169,23 +173,28 @@
                 var borrower_spouse_mobile = $("#borrower_spouse_mobile").val();            //配偶手机号码
                 var borrower_spouse_code = $("#borrower_spouse_code").val();                //配偶身份证号码
                 if(borrower_spouse_name == ''){
+                    layer.close(index);
                     layer.msg('配偶姓名不能为空');
                     return false;
                 }
                 if(!IdentityCodeValid(borrower_spouse_code)){
+                    layer.close(index);
                     layer.msg('配偶身份证填写不规范');
                     return false;
                 }
                 if(borrower_spouse_mobile == ''){
+                    layer.close(index);
                     layer.msg('配偶手机号不能为空');
                     return false;
                 }
                 var iphone1 = /^1[0-9]{10}$/g;
                 if(!(iphone1.test(borrower_spouse_mobile))){
+                    layer.close(index);
                     layer.msg('配偶手机号不规范');
                     return false;
                 }
                 if(borrower_code == borrower_spouse_code){
+                    layer.close(index);
                     layer.msg('配偶身份证号不可用借款人相同!');
                     return false;
                 }
@@ -195,6 +204,7 @@
 
                 break;
             default:
+                layer.close(index);
                 layer.msg('请选择婚姻状况');
                 return false;
         }
@@ -214,8 +224,14 @@
                 if(return_.status == 1){
                     window.location.href= '/wx_users/foreclosure_s2/' + return_.result.foreclosure_id;
                 }else{
+                    layer.close(index);
                     layer.msg(return_.msg);
                 }
+                layer.close(index);
+            },
+            error:function(){
+                layer.close(index);
+                layer.msg('网络异常!');
             }
         });
     })

@@ -196,13 +196,13 @@
               var return_ = JSON.parse(data)
               if(return_.status == 1){
                   switch (return_.result.bank_loan_type){
-                      case 1:
+                      case '1':
                           window.location.href= '/wx_users/foreclosure_s4/' + return_.result.foreclosure_id;
                           break;
-                      case 2:
+                      case '2':
                           window.location.href= '/wx_users/foreclosure_s3/' + return_.result.foreclosure_id;
                           break;
-                      case 3:
+                      case '3':
                           window.location.href= '/wx_users/foreclosure_s3/' + return_.result.foreclosure_id;
                           break;
                       default:
@@ -215,6 +215,7 @@
                   layer.close(index);
                   layer.msg(return_.msg);
               }
+              layer.close(index);
           },
           error:function(){
               layer.close(index);
