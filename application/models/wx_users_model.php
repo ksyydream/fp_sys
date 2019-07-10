@@ -196,7 +196,7 @@ class Wx_users_model extends MY_Model
             }
         }else{
             if(!@file_get_contents('./upload_files/' . $file_ . '/'. $f_info_['work_no'] . '/'  . $f_info_['borrower_img_SFZ'])){
-                return $this->fun_fail('请上传借款人身份证');
+                return $this->fun_fail('请上传借款人身份证!');
             }
         }
         if($f_info_['is_mortgage'] == 1){
@@ -207,7 +207,7 @@ class Wx_users_model extends MY_Model
                 }
             }else{
                 if(!@file_get_contents('./upload_files/' . $file_ . '/'. $f_info_['work_no'] . '/'  . $f_info_['borrower_spouse_img_SFZ1'])){
-                    return $this->fun_fail('请上传配偶身份证');
+                    return $this->fun_fail('请上传配偶身份证!');
                 }
             }
         }
