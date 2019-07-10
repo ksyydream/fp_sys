@@ -79,7 +79,7 @@ class Wx_users extends Wx_controller {
      */
     public function foreclosure_s4($f_id = 0){
         if(IS_POST){
-            $res = $this->wx_users_model->edit_foreclosure4();
+            $res = $this->wx_users_model->edit_foreclosure4s4();
             $this->ajaxReturn($res);
         }
         $f_info = $this->wx_users_model->get_foreclosure4user($f_id);

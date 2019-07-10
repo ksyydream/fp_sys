@@ -58,7 +58,7 @@
 <div class="am-main">
 
  
-  <form class="am-form am-form-horizontal">
+  <form id="save_form" class="am-form am-form-horizontal">
       <div class="upload-page">
     <p class="pTit">上传借款人身份证正面图片资料</p>
     <p class="pTxt"><span class="tips-icon"><img src="/assets/i/tips.png" alt=""></span>请保证上传图片边框完整，图片清晰。</p>
@@ -74,7 +74,7 @@
        <div class="upid">
         <a href="javascript:;" class="upload_click"><img src="/assets/i/id_upload.png" alt=""></a>
       </div>
-       <a class="am-btn am-btn-register" href="javascript:">下一步</a>
+       <a class="am-btn am-btn-register" id="save_btn" href="javascript:">下一步</a>
   </form>
     {{include file='public/foot.html'}}
 </div>
@@ -140,6 +140,36 @@
                 }
             });
         };
+    })
+
+    $("#save_btn").click(function(){
+
+        var form = document.getElementById('save_form');
+
+        var formdata = new FormData(form);
+        $.ajax({
+            type : "POST",
+            url : "/wx_users/foreclosure_s4",
+            data : formdata,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success : function(data) {
+                var return_ = JSON.parse(data)
+                if(return_.status == 1){
+                    window.location.href= '/wx_users/foreclosure_s5/' + return_.result.foreclosure_id;
+                }else{
+                    layer.close(index);
+                    layer.msg(return_.msg);
+                }
+                layer.close(index);
+            },
+            error:function(){
+                layer.close(index);
+                layer.msg('网络异常!');
+            }
+        });
     })
 </script>
 </body>

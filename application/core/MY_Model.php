@@ -606,6 +606,34 @@ class MY_Model extends CI_Model{
             return 1;
         }
     }
+
+    //微信图片上传
+    public function getmedia($media_id, $finance_num, $file){
+        $app = $this->config->item('appid');
+        $appsecret = $this->config->item('appsecret');
+        $accessToken = $this->get_token($app,$appsecret);
+        $url = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=".$accessToken."&media_id=".$media_id;
+
+        if (is_readable('./uploadfiles/' . $file) == false) {
+            mkdir('./uploadfiles/finance', 0777, true);
+        }
+        if (is_readable('./uploadfiles/'.$file.'/'.$finance_num) == false) {
+            mkdir('./uploadfiles/finance/'.$finance_num, 0777, true);
+        }
+        $file_name = date('YmdHis').rand(1000,9999).'.jpg';
+        $targetName = './uploadfiles/'.$file.'/'.$finance_num.'/'.$file_name;
+        //file_put_contents('/var/yy.txt', $url);
+
+        $ch = curl_init($url); // 初始化
+        $fp = fopen($targetName, 'wb'); // 打开写入
+        curl_setopt($ch, CURLOPT_FILE, $fp); // 设置输出文件的位置，值是一个资源类型
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_exec($ch);
+        curl_close($ch);
+        fclose($fp);
+
+        return $file_name;
+    }
 }
 
 /* End of file MY_Model.php */

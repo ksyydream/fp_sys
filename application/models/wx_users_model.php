@@ -176,6 +176,58 @@ class Wx_users_model extends MY_Model
 
     }
 
+    public function edit_foreclosure4s4(){
+        $file_ = 'foreclosure';
+        $user_id = $this->session->userdata('wx_user_id');
+        $fc_id = $this->input->post('fc_id');
+        if(!$fc_id)
+            return $this->fun_fail('工作单异常');
+        $f_info_ = $this->get_foreclosure4user($fc_id);
+        if(!$f_info_ || $f_info_['status'] != 1){
+            return $this->fun_fail('工作单已不在草稿箱内,不可修改');
+        }
+        $update_ = array(
+            'user_modify_time' => time()
+        );
+        if($borrower_img_SFZ = $this->input->post('borrower_img_SFZ')){
+            $update_['borrower_img_SFZ'] = $this->getmedia($borrower_img_SFZ, $f_info_['work_no'], $file_);
+            if(!@file_get_contents('./uploadfiles/' . $file_. '/'. $update_['borrower_img_SFZ'])){
+                return $this->fun_fail('请上传借款人身份证');
+            }
+        }else{
+            if(!@file_get_contents('./uploadfiles/' . $file_ . '/' . $f_info_['borrower_img_SFZ'])){
+                return $this->fun_fail('请上传借款人身份证');
+            }
+        }
+        if($f_info_['is_mortgage'] == 1){
+            if($borrower_spouse_img_SFZ1 = $this->input->post('borrower_spouse_img_SFZ1')){
+                $update_['borrower_spouse_img_SFZ1'] = $this->getmedia($borrower_spouse_img_SFZ1, $f_info_['work_no'], $file_);
+                if(!@file_get_contents('./uploadfiles/' . $file_. '/'. $update_['borrower_spouse_img_SFZ1'])){
+                    return $this->fun_fail('请上传配偶身份证');
+                }
+            }else{
+                if(!@file_get_contents('./uploadfiles/' . $file_ . '/' . $f_info_['borrower_spouse_img_SFZ1'])){
+                    return $this->fun_fail('请上传配偶身份证');
+                }
+            }
+        }
+
+        $res = $this->db->where(array(
+            'foreclosure_id' => $fc_id,
+            'user_id' => $user_id
+        ))->update('foreclosure', $update_);
+        if($res){
+            $foreclosure_info = $this->db->select('foreclosure_id')->from('foreclosure')
+                ->where(array(
+                    'foreclosure_id' => $fc_id,
+                    'user_id' => $user_id
+                ))->get()->row_array();
+            return $this->fun_success('操作成功', $foreclosure_info);
+        }else{
+            return $this->fun_fail('操作失败!');
+        }
+    }
+
     //获取赎楼详情,这里做用户权限判断
     public function get_foreclosure4user($f_id){
         $this->db->select();
