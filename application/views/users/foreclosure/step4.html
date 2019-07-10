@@ -64,14 +64,15 @@
     <p class="pTxt"><span class="tips-icon"><img src="/assets/i/tips.png" alt=""></span>请保证上传图片边框完整，图片清晰。</p>
    </div>
       <div class="upid">
-        <a href="" class="upload_click"><img src="/assets/i/id_upload.png" alt=""></a>
+        <a href="javascript:;" class="upload_click"><img src="/assets/i/id_upload.png" alt=""></a>
+          <input type="hidden" value="" id="borrower_img_SFZ" name="borrower_img_SFZ">
       </div>
         <div class="upload-page">
     <p class="pTit">上传借款人配偶身份证正面图片资料</p>
     <p class="pTxt"><span class="tips-icon"><img src="/assets/i/tips.png" alt=""></span>请保证上传图片边框完整，图片清晰。</p>
    </div>
        <div class="upid">
-        <a href="" class="upload_click"><img src="/assets/i/id_upload.png" alt=""></a>
+        <a href="javascript:;" class="upload_click"><img src="/assets/i/id_upload.png" alt=""></a>
       </div>
        <a class="am-btn am-btn-register" href="javascript:">下一步</a>
   </form>
@@ -82,9 +83,52 @@
 <script src="/assets/js/layer/layer.js"></script>
 <script src="/assets/js/amazeui.js"></script>
 <script src="/assets/js/animateBackground-plugin.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script type="text/javascript">
+    wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: '{{$wxappId}}', // 必填，公众号的唯一标识
+        timestamp: {{$wxtimestamp}}, // 必填，生成签名的时间戳
+    nonceStr: '{{$wxnonceStr}}', // 必填，生成签名的随机串
+            signature: '{{$wxsignature}}',// 必填，签名，见附录1
+            jsApiList: ['chooseImage','uploadFile','checkJsApi','uploadImage','onMenuShareAppMessage','hideMenuItems'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    });
+
+    wx.ready(function () {
 
 
+        $(".upload-pic").click(function(){
+            var my = $(this);
+            var input_h = $(this).next();
+            if(input_h.val() != ""){
+                //return false;
+            }
+            wx.chooseImage({
+                count: 1, // 默认9
+                sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                success: function(res) {
+                    var localIds = res.localIds;
+                    syncUpload(localIds,my,input_h);
+                }
+            });
+        })
+        var syncUpload = function(localIds,my_,input_h_){
+            var localId = localIds.shift();
+            wx.uploadImage({
+                localId: localId,
+                isShowProgressTips: 1,
+                success: function (res) {
+                    var serverId = res.serverId; // 返回图片的服务器端ID
+                    html = '<img src="' + localId + '" alt="">'
+                    //html = "<img style='width: 14.8rem;height: 14.8rem' src='"+localId+"' alt='' class='upload-has-pic'>";
+                    //html +="<em onclick='del_pic(this);' class='am-f-close'></em>"
+                    my_.html(html);
+                    input_h_.val(serverId);
+                }
+            });
+        };
+    })
 </script>
 </body>
 </html>
