@@ -258,7 +258,7 @@ class MY_Model extends CI_Model{
     }
 
 
-
+    /**
     public function get_access_token() {
         $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.APP_ID.'&secret='.APP_SECRET;
         $response = file_get_contents($url);
@@ -291,6 +291,7 @@ class MY_Model extends CI_Model{
             return $data_token['token'];
         }
     }
+*/
 
     public function wxpost($template_id,$post_data,$user_id,$url='www.funmall.com.cn'){
         $openid = $this->get_openid($user_id);
@@ -339,6 +340,7 @@ class MY_Model extends CI_Model{
 
     }
 
+/**
     public function get_token($app,$appsecret){
         $this->db->from('token');
         $this->db->where('app_id', $app);
@@ -404,6 +406,7 @@ class MY_Model extends CI_Model{
         $ticket = $res->ticket;
         return $ticket;
     }
+*/
 
     private function wxhttpGet($url) {
         $curl = curl_init();
@@ -611,7 +614,8 @@ class MY_Model extends CI_Model{
     public function getmedia($media_id, $finance_num, $file){
         $app = $this->config->item('appid');
         $appsecret = $this->config->item('appsecret');
-        $accessToken = $this->get_token($app,$appsecret);
+        $this->load->library('wxjssdk_th',array('appid' => $app, 'appsecret' => $appsecret));
+        $accessToken = $this->wxjssdk_th->wxgetAccessToken();
         $url = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=".$accessToken."&media_id=".$media_id;
 
         if (is_readable('./upload_files/' . $file) == false) {
