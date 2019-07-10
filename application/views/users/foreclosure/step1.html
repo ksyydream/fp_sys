@@ -139,6 +139,9 @@
         }
     });
     $("#save_btn").click(function(){
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
         var type_id = $("input[name='is_marriage']:checked").val();
         var borrower_name = $.trim($("#borrower_name").val());
         var borrower_mobile = $.trim($("#borrower_mobile").val());
@@ -209,7 +212,7 @@
             success : function(data) {
                 var return_ = JSON.parse(data)
                 if(return_.status == 1){
-                    window.location.href= '/wx_users/index';
+                    window.location.href= '/wx_users/foreclosure_s2/' + return_.result.foreclosure_id;
                 }else{
                     layer.msg(return_.msg);
                 }

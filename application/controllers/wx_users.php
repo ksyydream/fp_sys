@@ -50,4 +50,39 @@ class Wx_users extends Wx_controller {
         $this->display('users/foreclosure/step1.html');
     }
 
+    /**
+     * 申请赎楼 第二步,填写主贷人和类型
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2019-07-10
+     */
+    public function foreclosure_s2($f_id){
+        if(IS_POST){
+            $res = $this->wx_users_model->edit_foreclosure4s2();
+            $this->ajaxReturn($res);
+        }
+        $f_info = $this->wx_users_model->get_foreclosure4user($f_id);
+        if(!$f_info || $f_info['status'] != 1){
+            redirect('wx_users/index'); //当发现工作单不能修改时,应该会进入列表,但因为现在没有,所以先进入首页
+        }
+        $this->assign('f_info', $f_info);
+        $this->display('users/foreclosure/step2.html');
+    }
+
+    /**
+     * 申请赎楼 上次身份证
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2019-07-10
+     */
+    public function foreclosure_s4($f_id){
+        $f_info = $this->wx_users_model->get_foreclosure4user($f_id);
+        if(!$f_info || $f_info['status'] != 1){
+            redirect('wx_users/index'); //当发现工作单不能修改时,应该会进入列表,但因为现在没有,所以先进入首页
+        }
+        if(IS_POST){
+            $res = $this->wx_users_model->edit_foreclosure4();
+            $this->ajaxReturn($res);
+        }
+        $this->assign('f_info', $f_info);
+        $this->display('users/foreclosure/step4.html');
+    }
 }

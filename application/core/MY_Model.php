@@ -46,6 +46,18 @@ class MY_Model extends CI_Model{
     }
 
     /**
+     * 根据id读取一条记录
+     * @param string $table 读取的表
+     * @param int $id_name 主键id的名称
+     * @param int $id_value 主键id的值
+     * @return array 一条记录信息数组
+     */
+    protected function readByID($table, $id_name, $id_value)
+    {
+        return $this->db->get_where($table, array($id_name => $id_value))->row_array();
+    }
+
+    /**
      * 按id返回指定列，id可以是批量
      * @param string $select 指定字段，例:'title, content, date'
      * @param string $table 查询的目标表

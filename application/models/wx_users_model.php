@@ -129,8 +129,63 @@ class Wx_users_model extends MY_Model
         $insert_['work_no'] = $title_ . sprintf('%03s', $this->get_sys_num_auto($title_));
         $this->db->insert('foreclosure', $insert_);
         $foreclosure_id = $this->db->insert_id();
-        $foreclosure_info = $this->db->select()->from('foreclosure')->where('foreclosure_id', $foreclosure_id)->get()->row_array();
+        $foreclosure_info = $this->db->select('foreclosure_id')->from('foreclosure')->where('foreclosure_id', $foreclosure_id)->get()->row_array();
         return $this->fun_success('提交成功', $foreclosure_info);
+    }
+
+    public function edit_foreclosure4s2(){
+        $user_id = $this->session->userdata('wx_user_id');
+        $fc_id = $this->input->post('fc_id');
+        if(!$fc_id)
+            return $this->fun_fail('工作单异常');
+        $f_info_ = $this->get_foreclosure4user($fc_id);
+        if(!$f_info_ || $f_info_['status'] != 1){
+            return $this->fun_fail('工作单已不在草稿箱内,不可修改');
+        }
+        $update_ = array(
+            'buyer_name' => $this->input->post('buyer_name'),
+            'buyer_code' => $this->input->post('buyer_code'),
+            'bank_loan_type' => $this->input->post('bank_loan_type'),
+            'is_mortgage' => $this->input->post('is_mortgage'),
+            'user_modify_time' => time()
+        );
+        if(!$update_['buyer_name'] || !$update_['buyer_code'] || !$update_['bank_loan_type'] || !$update_['is_mortgage'])
+            return $this->fun_fail('信息不完善');
+        if(!is_idcard($update_['buyer_code']))
+            return $this->fun_fail('身份证号码不规范');
+        if(!in_array($update_['bank_loan_type'], array(1,2,3))){
+            return $this->fun_fail('请选择贷款方式');
+        }
+        if($update_['bank_loan_type'] == 2 && !in_array($update_['is_mortgage'], array(1,-1))){
+            return $this->fun_fail('商业贷款需要选择按揭情况!');
+        }
+        $res = $this->db->where(array(
+            'foreclosure_id' => $fc_id,
+            'user_id' => $user_id
+        ))->update('foreclosure', $update_);
+        if($res){
+            $foreclosure_info = $this->db->select('foreclosure_id,bank_loan_type')->from('foreclosure')
+                ->where(array(
+                    'foreclosure_id' => $fc_id,
+                    'user_id' => $user_id
+                ))->get()->row_array();
+            return $this->fun_success('操作成功', $foreclosure_info);
+        }else{
+            return $this->fun_fail('操作失败!');
+        }
+
+    }
+
+    //获取赎楼详情,这里做用户权限判断
+    public function get_foreclosure4user($f_id){
+        $this->db->select();
+        $this->db->from('foreclosure');
+        $this->db->where(array(
+            'foreclosure_id' => $f_id,
+            'user_id' => $this->session->userdata('wx_user_id')
+        ));
+        $f_info = $this->db->get()->row_array();
+        return $f_info;
     }
 
 }

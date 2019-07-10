@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>上传身份证资料</title>
+  <meta name="description" content="上传身份证资料">
+  <meta name="keywords" content="index">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="icon" type="image/png" href="/assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+  <link rel="stylesheet" href="/assets/css/amazeui.css"/>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <script type="text/javascript">
+    (function() {
+        var rem, dpr, time, doc = window.document,
+        docEl = doc.documentElement,
+        viewport = doc.querySelector('meta[name="viewport"]'),
+        zoomScale,
+        zoomScaleNum;
+        if (viewport) {            
+            zoomScale = viewport.getAttribute("content").match(/initial\-scale=(["']?)([\d\.]+)\1?/);
+            if(zoomScale){
+              zoomScaleNum = parseFloat(zoomScale[2]);
+              dpr = parseInt(1 / zoomScaleNum);
+            }
+        }
+        if (!dpr && !zoomScaleNum) {
+            var os = (window.navigator.appVersion.match(/android/gi), window.navigator.appVersion.match(/iphone/gi)),
+            dpr = window.devicePixelRatio;
+            dpr = os ? dpr >= 3 ? 3 : dpr >= 2 ? 2 : 1 : 1;
+            zoomScaleNum = 1 / dpr;
+        }
+        window.addEventListener("resize",
+            function() {
+                clearTimeout(time);
+                time = setTimeout(changeRem, 300);
+            },false);
+      //改变基准rem
+        function changeRem(){
+            var docWidth = docEl.getBoundingClientRect().width;
+            if(docWidth / dpr > 540){
+              docWidth = 540 * dpr;
+            }
+            //rem字号以320下的16px为基线进行等比缩放
+            rem = docWidth/320 * 16;
+            docEl.style.fontSize = rem + "px";
+        }
+        changeRem();
+    })();
+  </script> 
+  
+</head>
+<body>
+<div class="am-main">
+
+ 
+  <form class="am-form am-form-horizontal">
+      <div class="upload-page">
+    <p class="pTit">上传借款人身份证正面图片资料</p>
+    <p class="pTxt"><span class="tips-icon"><img src="/assets/i/tips.png" alt=""></span>请保证上传图片边框完整，图片清晰。</p>
+   </div>
+      <div class="upid">
+        <a href="" class="upload_click"><img src="/assets/i/id_upload.png" alt=""></a>
+      </div>
+        <div class="upload-page">
+    <p class="pTit">上传借款人配偶身份证正面图片资料</p>
+    <p class="pTxt"><span class="tips-icon"><img src="/assets/i/tips.png" alt=""></span>请保证上传图片边框完整，图片清晰。</p>
+   </div>
+       <div class="upid">
+        <a href="" class="upload_click"><img src="/assets/i/id_upload.png" alt=""></a>
+      </div>
+       <a class="am-btn am-btn-register" href="javascript:">下一步</a>
+  </form>
+    {{include file='public/foot.html'}}
+</div>
+<script src="/assets/js/jquery-2.2.3.min.js"></script>
+<script src="/assets/js/DBY_common.js?v2"></script>
+<script src="/assets/js/layer/layer.js"></script>
+<script src="/assets/js/amazeui.js"></script>
+<script src="/assets/js/animateBackground-plugin.js"></script>
+<script type="text/javascript">
+
+
+</script>
+</body>
+</html>
