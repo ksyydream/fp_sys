@@ -574,6 +574,26 @@ class MY_Model extends CI_Model{
         return $this->fun_success('获取成功', $info_);
 
     }
+
+    /**
+     * 自动增加单号
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2019-07-10
+     */
+    public function get_sys_num_auto($title){
+        $check_ = $this->db->select()->from('sys_num')->where('title',$title)->get()->row_array();
+        if($check_){
+            $this->db->where('title',$title)->set('num','num + 1',false)->update('sys_num');
+            return $check_['num'];
+        }else{
+            $insert_data = array(
+                'title' => $title,
+                'num' => 2
+            );
+            $this->db->insert('sys_num', $insert_data);
+            return 1;
+        }
+    }
 }
 
 /* End of file MY_Model.php */

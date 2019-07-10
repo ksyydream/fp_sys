@@ -177,8 +177,13 @@
                     layer.msg('配偶手机号不能为空');
                     return false;
                 }
-                if(!(iphone.test(borrower_spouse_mobile))){
+                var iphone1 = /^1[0-9]{10}$/g;
+                if(!(iphone1.test(borrower_spouse_mobile))){
                     layer.msg('配偶手机号不规范');
+                    return false;
+                }
+                if(borrower_code == borrower_spouse_code){
+                    layer.msg('配偶身份证号不可用借款人相同!');
                     return false;
                 }
 

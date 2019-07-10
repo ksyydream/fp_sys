@@ -113,8 +113,8 @@ class Wx_index extends Wx_controller {
     }
 
     public function get_tongdun_info(){
-        $res = $this->wx_index_model->get_tongdun_info($this->input->post('account_name'), $this->input->post('id_number'), $this->input->post('account_mobile'));
-        $this->ajaxReturn($res);
+        //$res = $this->wx_index_model->get_tongdun_info($this->input->post('account_name'), $this->input->post('id_number'), $this->input->post('account_mobile'));
+        //$this->ajaxReturn($res);
     }
 
     public function test_gkd(){

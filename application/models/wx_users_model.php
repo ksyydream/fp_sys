@@ -124,6 +124,9 @@ class Wx_users_model extends MY_Model
                 }
                 break;
         }
+        //要生成工作单号
+        $title_ = 'SL' . date('Ymd', time());
+        $insert_['work_no'] = $title_ . sprintf('%03s', $this->get_sys_num_auto($title_));
         $this->db->insert('foreclosure', $insert_);
         $foreclosure_id = $this->db->insert_id();
         $foreclosure_info = $this->db->select()->from('foreclosure')->where('foreclosure_id', $foreclosure_id)->get()->row_array();
