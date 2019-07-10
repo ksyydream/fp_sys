@@ -73,7 +73,7 @@ class Wx_users extends Wx_controller {
     }
 
     /**
-     * 申请赎楼 上次身份证
+     * 申请赎楼 上传身份证
      * @author yangyang <yang.yang@thmarket.cn>
      * @date 2019-07-10
      */
@@ -89,5 +89,24 @@ class Wx_users extends Wx_controller {
         $this->buildWxData();
         $this->assign('f_info', $f_info);
         $this->display('users/foreclosure/step4.html');
+    }
+
+    /**
+     * 申请赎楼 上传房产证
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2019-07-10
+     */
+    public function foreclosure_s5($f_id = 0){
+        if(IS_POST){
+            $res = $this->wx_users_model->edit_foreclosure4s5();
+            $this->ajaxReturn($res);
+        }
+        $f_info = $this->wx_users_model->get_foreclosure4user($f_id);
+        if(!$f_info || $f_info['status'] != 1){
+            redirect('wx_users/index'); //当发现工作单不能修改时,应该会进入列表,但因为现在没有,所以先进入首页
+        }
+        $this->buildWxData();
+        $this->assign('f_info', $f_info);
+        $this->display('users/foreclosure/step5.html');
     }
 }

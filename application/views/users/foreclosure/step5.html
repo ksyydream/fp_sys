@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>上传身份证资料</title>
-  <meta name="description" content="上传身份证资料">
+  <title>上传房产证资料</title>
+  <meta name="description" content="上传房产证资料">
   <meta name="keywords" content="index">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="icon" type="image/png" href="/assets/i/favicon.png">
-  <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
+  <link rel="icon" type="image/png" href="assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
   <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-  <link rel="stylesheet" href="/assets/css/amazeui.css"/>
-  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="assets/css/amazeui.css"/>
+  <link rel="stylesheet" href="assets/css/app.css">
   <script type="text/javascript">
     (function() {
         var rem, dpr, time, doc = window.document,
@@ -58,31 +58,28 @@
 <div class="am-main">
 
  
-  <form id="save_form" class="am-form am-form-horizontal">
-      <input type="hidden" id="fc_id" name="fc_id" value="{{$f_info.foreclosure_id}}">
+  <form class="am-form am-form-horizontal">
       <div class="upload-page">
-    <p class="pTit">上传借款人身份证正面图片资料</p>
-    <p class="pTxt"><span class="tips-icon"><img src="/assets/i/tips.png" alt=""></span>请保证上传图片边框完整，图片清晰。</p>
+    <p class="pTit">上传借款人房产证图片资料</p>
+    <p class="pTxt"> <span class="tips-icon"></span>请保证上传图片边框完整，图片清晰。</p>
    </div>
       <div class="upid">
-        <a href="javascript:;" class="upload_click"><img src="/assets/i/id_upload.png" alt=""></a>
-          <input type="hidden" value="" id="borrower_img_SFZ" name="borrower_img_SFZ">
+        <a href="javascript:;" class="upload_click"><img src="/assets/i/house_upload.png" alt=""></a>
+      </div> <div class="upid">
+        <a href="javascript:;" class="upload_click"><img src="/assets/i/house_upload.png" alt=""></a>
       </div>
-        <div class="upload-page">
-    <p class="pTit">上传借款人配偶身份证正面图片资料</p>
-    <p class="pTxt"><span class="tips-icon"><img src="/assets/i/tips.png" alt=""></span>请保证上传图片边框完整，图片清晰。</p>
-   </div>
-       <div class="upid">
-        <a href="javascript:;" class="upload_click"><img src="/assets/i/id_upload.png" alt=""></a>
+        <div class="upid add">
+        <a href="javascript:;" class="upload_click"><img src="/assets/i/add_upload.png" alt=""></a>
       </div>
-       <a class="am-btn am-btn-register" id="save_btn" href="javascript:">下一步</a>
+
+       <a class="am-btn am-btn-register" href="javascript:">下一步</a>
   </form>
     {{include file='public/foot.html'}}
 </div>
 <script src="/assets/js/jquery-2.2.3.min.js"></script>
-<script src="/assets/js/layer/layer.js"></script>
 <script src="/assets/js/amazeui.js"></script>
 <script src="/assets/js/animateBackground-plugin.js"></script>
+<script src="/assets/js/layer/layer.js"></script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script type="text/javascript">
     wx.config({
@@ -133,8 +130,6 @@
                 success: function (res) {
                     var serverId = res.serverId; // 返回图片的服务器端ID
                     html = '<img src="' + localId + '" alt="">'
-                    //html = "<img style='width: 14.8rem;height: 14.8rem' src='"+localId+"' alt='' class='upload-has-pic'>";
-                    //html +="<em onclick='del_pic(this);' class='am-f-close'></em>"
                     my_.html(html);
                     input_h_.val(serverId);
                 }
@@ -142,37 +137,6 @@
         };
     })
 
-    $("#save_btn").click(function(){
-        var index = layer.load(1, {
-            shade: [0.1,'#fff'] //0.1透明度的白色背景
-        });
-        var form = document.getElementById('save_form');
-
-        var formdata = new FormData(form);
-        $.ajax({
-            type : "POST",
-            url : "/wx_users/foreclosure_s4",
-            data : formdata,
-            async: false,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success : function(data) {
-                var return_ = JSON.parse(data)
-                if(return_.status == 1){
-                    window.location.href= '/wx_users/foreclosure_s5/' + return_.result.foreclosure_id;
-                }else{
-                    layer.close(index);
-                    layer.msg(return_.msg);
-                }
-                layer.close(index);
-            },
-            error:function(){
-                layer.close(index);
-                layer.msg('网络异常!');
-            }
-        });
-    })
 </script>
 </body>
 </html>
