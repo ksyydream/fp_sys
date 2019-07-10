@@ -93,7 +93,19 @@
             signature: '{{$wxsignature}}',// 必填，签名，见附录1
             jsApiList: ['chooseImage','uploadFile','checkJsApi','uploadImage','onMenuShareAppMessage','hideMenuItems'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     });
-
+    wx.checkJsApi({
+        jsApiList: [
+            'chooseImage','uploadImage'
+        ],
+        success: function (res) {
+            alert(JSON.stringify(res));
+            // alert(JSON.stringify(res.checkResult.getLocation));
+            if (res.checkResult.getLocation == false) {
+                //alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
+                return;
+            }
+        }
+    });
     wx.ready(function () {
 
 
