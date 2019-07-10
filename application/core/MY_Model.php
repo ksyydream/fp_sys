@@ -619,10 +619,10 @@ class MY_Model extends CI_Model{
         $url = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=".$accessToken."&media_id=".$media_id;
 
         if (is_readable('./upload_files/' . $file) == false) {
-            mkdir('./upload_files/finance', 0777, true);
+            mkdir('./upload_files/' . $file, 0777, true);
         }
-        if (is_readable('./upload_files/'.$file.'/'.$finance_num) == false) {
-            mkdir('./upload_files/finance/'.$finance_num, 0777, true);
+        if (is_readable('./upload_files/' . $file . '/'.$finance_num) == false) {
+            mkdir('./upload_files/' . $file . '/'.$finance_num, 0777, true);
         }
         $file_name = date('YmdHis').rand(1000,9999).'.jpg';
         $targetName = './upload_files/'.$file.'/'.$finance_num.'/'.$file_name;
