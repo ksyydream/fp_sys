@@ -537,7 +537,7 @@ class MY_Model extends CI_Model{
             //判断是否超过使用限期,如果没有超过,就直接使用
             if($tongdun_info['add_time'] + $td_deadline_ > time()){
                 $log_['td_id'] = $tongdun_info['id'];
-                $this->db->insert('tongdun_log'. $log_);
+                $this->db->insert('tongdun_log', $log_);
                 return $this->fun_success('获取成功', $tongdun_info);
             }
         }

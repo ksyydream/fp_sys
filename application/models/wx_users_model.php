@@ -46,9 +46,9 @@ class Wx_users_model extends MY_Model
         }
         if(!$insert_['borrower_name'] || !$insert_['borrower_code'] || !$insert_['borrower_mobile'])
             return $this->fun_fail('借款人信息不完善');
-        if(is_idcard($insert_['borrower_code']))
+        if(!is_idcard($insert_['borrower_code']))
             return $this->fun_fail('借款人身份证号码不规范');
-        if(check_mobile($insert_['borrower_mobile']))
+        if(!check_mobile($insert_['borrower_mobile']))
             return $this->fun_fail('借款人电话号码不规范');
         //开始效验
         switch($insert_['borrower_marriage']){
@@ -60,9 +60,9 @@ class Wx_users_model extends MY_Model
                 $insert_['borrower_spouse_code'] = $this->input->post('borrower_spouse_code');
                 if(!$insert_['borrower_spouse_name'] || !$insert_['borrower_spouse_mobile'] || !$insert_['borrower_spouse_code'])
                     return $this->fun_fail('配偶信息不完善');
-                if(is_idcard($insert_['borrower_spouse_code']))
+                if(!is_idcard($insert_['borrower_spouse_code']))
                     return $this->fun_fail('配偶身份证号码不规范');
-                if(check_mobile($insert_['borrower_spouse_mobile']))
+                if(!check_mobile($insert_['borrower_spouse_mobile']))
                     return $this->fun_fail('配偶电话号码不规范');
                 break;
             default:
@@ -81,9 +81,9 @@ class Wx_users_model extends MY_Model
             $td_info = $borrower_td_info_['result'];
             $insert_['borrower_td_id'] = $td_info['id'];
             $json_data = json_decode($td_info['json_data']);
-            if($json_data['success'] == true){
-                $insert_['borrower_td_score'] = $json_data['result_desc']['ANTIFRAUD']['final_score'];
-                $insert_['borrower_td_decision'] = $json_data['result_desc']['ANTIFRAUD']['final_decision'];
+            if($json_data->success == true){
+                $insert_['borrower_td_score'] = $json_data->result_desc->ANTIFRAUD->final_score;
+                $insert_['borrower_td_decision'] = $json_data->result_desc->ANTIFRAUD->final_decision;
             }
         }
 
@@ -96,9 +96,9 @@ class Wx_users_model extends MY_Model
                 $td_info = $borrower_spouse_td_info_['result'];
                 $insert_['borrower_spouse_td_id'] = $td_info['id'];
                 $json_data = json_decode($td_info['json_data']);
-                if($json_data['success'] == true){
-                    $insert_['borrower_spouse_td_score'] = $json_data['result_desc']['ANTIFRAUD']['final_score'];
-                    $insert_['borrower_spouse_td_decision'] = $json_data['result_desc']['ANTIFRAUD']['final_decision'];
+                if($json_data->success == true){
+                    $insert_['borrower_spouse_td_score'] = $json_data->result_desc->ANTIFRAUD->final_score;
+                    $insert_['borrower_spouse_td_decision'] = $json_data->result_desc->ANTIFRAUD->final_decision;
                 }
             }
         }

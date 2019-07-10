@@ -45,25 +45,6 @@ class Wx_users extends Wx_controller {
         if(IS_POST){
             $res = $this->wx_users_model->save_foreclosure($this->user_info);
             $this->ajaxReturn($res);
-            $insert_ = array(
-                'borrower_marriage' => $this->input->post('is_marriage'),
-                'borrower_name' => $this->input->post('borrower_name'),
-                'borrower_code' => $this->input->post('borrower_code'),
-                'borrower_mobile' => $this->input->post('borrower_mobile'),
-                'now_time' => $this->input->post('now_time'),
-                'user_id' => $this->user_id,
-                'add_time' => time(),
-                'status' => 1,
-            );
-            //开始效验
-            switch($insert_['borrower_marriage']){
-                case 1:
-                    break;
-                case -1:
-                    break;
-                default:
-
-            }
         }
         $this->assign('now_time', time());
         $this->display('users/foreclosure/step1.html');

@@ -102,15 +102,15 @@
                   </div>
               </div>
               <div class="am-form-group">
-                  <label for="borrower_spouse_mobile" class="am-u-sm-3 am-form-label">身份证号</label>
+                  <label for="borrower_spouse_code" class="am-u-sm-3 am-form-label">身份证号</label>
                   <div class="am-u-sm-9">
-                      <input type="text" class="ip-txt js4IDcard" maxlength="18" id="borrower_spouse_mobile" name="borrower_spouse_mobile" value="" placeholder="请输入借款人配偶身份证号码">
+                      <input type="text" class="ip-txt js4IDcard" maxlength="18" id="borrower_spouse_code" name="borrower_spouse_code" value="" placeholder="请输入借款人配偶身份证号码">
                   </div>
               </div>
               <div class="am-form-group">
-                  <label for="borrower_spouse_code" class="am-u-sm-3 am-form-label">手机号</label>
+                  <label for="borrower_spouse_mobile" class="am-u-sm-3 am-form-label">手机号</label>
                   <div class="am-u-sm-9">
-                      <input type="text" class="ip-txt js4phone" id="borrower_spouse_code" name="borrower_spouse_code" value="" placeholder="请输入借款人配偶手机号码">
+                      <input type="text" class="ip-txt js4phone" id="borrower_spouse_mobile" name="borrower_spouse_mobile" value="" placeholder="请输入借款人配偶手机号码">
                   </div>
               </div>
           </div>
@@ -147,6 +147,10 @@
             layer.msg('借款人姓名不能为空');
             return false;
         }
+        if(!IdentityCodeValid(borrower_code)){
+            layer.msg('借款人身份证填写不规范');
+            return false;
+        }
         if(borrower_mobile == ''){
             layer.msg('借款人手机号不能为空');
             return false;
@@ -154,10 +158,6 @@
         var iphone = /^1[0-9]{10}$/g;
         if(!(iphone.test(borrower_mobile))){
             layer.msg('借款人手机号不规范');
-            return false;
-        }
-        if(!IdentityCodeValid(borrower_code)){
-            layer.msg('借款人身份证填写不规范');
             return false;
         }
         switch (type_id){
@@ -195,7 +195,7 @@
         var formdata = new FormData(form);
         $.ajax({
             type : "POST",
-            url : "/wx_index/foreclosure",
+            url : "/wx_users/foreclosure",
             data : formdata,
             async: false,
             cache: false,
