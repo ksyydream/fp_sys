@@ -102,6 +102,7 @@ class Wx_index extends Wx_controller {
 
 
     public function begin_cal(){
+        die('...');
         $res = $this->wx_index_model->begin_cal();
         if($res->success){
             $this->assign('data',$res);
@@ -109,6 +110,11 @@ class Wx_index extends Wx_controller {
         }else{
             $this->show_message('提交失败！');
         }
+    }
+
+    public function get_tongdun_info(){
+        $res = $this->wx_index_model->get_tongdun_info($this->input->post('account_name'), $this->input->post('id_number'), $this->input->post('account_mobile'));
+        $this->ajaxReturn($res);
     }
 
     public function test_gkd(){

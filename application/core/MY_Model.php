@@ -516,6 +516,64 @@ class MY_Model extends CI_Model{
         $res = $this->db->select()->from('members')->where(array('status' => 1, 'invite_code' => $invite_code))->get()->row_array();
         return $res;
     }
+
+    //同盾获取征信信息
+    public function get_tongdun_info($account_name = '', $id_number = '', $accout_mobile = ''){
+        $user_id = $this->session->userdata('wx_user_id');
+        $this->db->set('use_td_times','use_td_times + 1',false);
+        $this->db->where('user_id', $user_id);
+        $this->db->update('users');
+        $log_ = array(
+            'account_name' => $account_name,
+            'id_number' => $id_number,
+            'account_mobile' => $accout_mobile,
+            'user_id' => $user_id,
+            'add_time' => time()
+        );
+        //先查看是否有缓存数据
+        $tongdun_info = $this->db->select()->from('tongdun_info')->where(array('id_number' => $id_number))->order_by('add_time', 'desc')->limit(1)->get()->row_array();
+        if($tongdun_info){
+            $td_deadline_ = $this->config->item('td_deadline'); //缓存数据使用限期,这里是秒为单位的
+            //判断是否超过使用限期,如果没有超过,就直接使用
+            if($tongdun_info['add_time'] + $td_deadline_ > time()){
+                $log_['td_id'] = $tongdun_info['id'];
+                $this->db->insert('tongdun_log'. $log_);
+                return $this->fun_success('获取成功', $tongdun_info);
+            }
+        }
+        $param = array(
+            'biz_code' => 'loan',
+            'account_name' => $account_name,
+            'id_number' => $id_number,
+            'account_mobile' => $accout_mobile
+        );
+        $curlPost = $param;
+        header("Content-Type: text/html;charset=utf-8");
+        $ch = curl_init(); //初始化curl
+        curl_setopt($ch, CURLOPT_URL, $this->config->item('td_url') . "&partner_key=" . $this->config->item('partner_key')); //抓取指定网页
+        curl_setopt($ch, CURLOPT_HEADER, 0); //设置header
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //要求结果为字符串且输出到屏幕上
+        curl_setopt($ch, CURLOPT_POST, 1); //post提交方式
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($curlPost));
+        $data = curl_exec($ch); //运行curl
+        //$data = iconv("utf-8", "GBK//ignore", $data);
+        curl_close($ch);
+        $info_ = array(
+            'account_name' => $account_name,
+            'id_number' => $id_number,
+            'account_mobile' => $accout_mobile,
+            'user_id' => $user_id,
+            'add_time' => time(),
+            'json_data' => $data
+        );
+        $this->db->insert('tongdun_info', $info_);
+        $td_id_ = $this->db->insert_id();
+        $log_['td_id'] = $td_id_;
+        $this->db->insert('tongdun_log', $log_);
+        $info_['id'] = $td_id_;
+        return $this->fun_success('获取成功', $info_);
+
+    }
 }
 
 /* End of file MY_Model.php */

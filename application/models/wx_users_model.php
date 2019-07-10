@@ -72,13 +72,58 @@ class Wx_users_model extends MY_Model
          先通过身份证获取数据库内的同盾数据,
          如果数据库内没有数据,或者数据已经过期(过期时间暂定7天,建议过期时间存config文件内),再调取同盾接口获取借款人及其配偶的信息
          */
-
-        //暂时先保存默认数据
-        $insert_['borrower_td_score'] = 90;
-        if($insert_['borrower_marriage'] == 1){
-            $insert_['borrower_spouse_td_score'] = 90;
+        //先给默认分数
+        $insert_['borrower_td_score'] = -1;
+        $insert_['borrower_td_decision'] = '';
+        $insert_['borrower_td_id'] = -1;
+        $borrower_td_info_ = $this->get_tongdun_info($insert_['borrower_name'], $insert_['borrower_code'], $insert_['borrower_mobile']);
+        if($borrower_td_info_ && $borrower_td_info_['status'] == 1){
+            $td_info = $borrower_td_info_['result'];
+            $insert_['borrower_td_id'] = $td_info['id'];
+            $json_data = json_decode($td_info['json_data']);
+            if($json_data['success'] == true){
+                $insert_['borrower_td_score'] = $json_data['result_desc']['ANTIFRAUD']['final_score'];
+                $insert_['borrower_td_decision'] = $json_data['result_desc']['ANTIFRAUD']['final_decision'];
+            }
         }
 
+        if($insert_['borrower_marriage'] == 1){
+            $insert_['borrower_spouse_td_id'] = -1;
+            $insert_['borrower_spouse_td_score'] = -1;
+            $insert_['borrower_spouse_td_decision'] = '';
+            $borrower_spouse_td_info_ = $this->get_tongdun_info($insert_['borrower_spouse_name'], $insert_['borrower_spouse_code'], $insert_['borrower_spouse_mobile']);
+            if($borrower_spouse_td_info_ && $borrower_spouse_td_info_['status'] == 1){
+                $td_info = $borrower_spouse_td_info_['result'];
+                $insert_['borrower_spouse_td_id'] = $td_info['id'];
+                $json_data = json_decode($td_info['json_data']);
+                if($json_data['success'] == true){
+                    $insert_['borrower_spouse_td_score'] = $json_data['result_desc']['ANTIFRAUD']['final_score'];
+                    $insert_['borrower_spouse_td_decision'] = $json_data['result_desc']['ANTIFRAUD']['final_decision'];
+                }
+            }
+        }
+        //REJECT、REVIEW、PASS 的同盾信息中 REVIEW、PASS 算通过
+        //开始效验
+        switch($insert_['borrower_marriage']){
+            case -1:
+                if(!in_array($insert_['borrower_td_decision'], array('REVIEW', 'PASS'))){
+                    $insert_['status'] = -1;
+                    $insert_['td_status'] = -1;
+                }else{
+                    $insert_['status'] = 1;
+                    $insert_['td_status'] = 2;
+                }
+                break;
+            case 1:
+                if(!in_array($insert_['borrower_td_decision'], array('REVIEW', 'PASS')) || !in_array($insert_['borrower_spouse_td_decision'], array('REVIEW', 'PASS'))){
+                    $insert_['status'] = -1;
+                    $insert_['td_status'] = -1;
+                }else{
+                    $insert_['status'] = 1;
+                    $insert_['td_status'] = 2;
+                }
+                break;
+        }
         $this->db->insert('foreclosure', $insert_);
         $foreclosure_id = $this->db->insert_id();
         $foreclosure_info = $this->db->select()->from('foreclosure')->where('foreclosure_id', $foreclosure_id)->get()->row_array();
