@@ -68,6 +68,7 @@
         <a href="javascript:;" class="upload_click"><img src="/assets/i/id_upload.png" alt=""></a>
           <input type="hidden" value="" id="borrower_img_SFZ" name="borrower_img_SFZ">
       </div>
+      {{if $f_info.is_mortgage == 1}}
         <div class="upload-page">
     <p class="pTit">上传借款人配偶身份证正面图片资料</p>
     <p class="pTxt"><span class="tips-icon"><img src="/assets/i/tips.png" alt=""></span>请保证上传图片边框完整，图片清晰。</p>
@@ -75,6 +76,7 @@
        <div class="upid">
         <a href="javascript:;" class="upload_click"><img src="/assets/i/id_upload.png" alt=""></a>
       </div>
+      {{/if}}
        <a class="am-btn am-btn-register" id="save_btn" href="javascript:">下一步</a>
   </form>
     {{include file='public/foot.html'}}
