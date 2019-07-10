@@ -200,13 +200,13 @@ class Wx_users_model extends MY_Model
             }
         }
         if($f_info_['is_mortgage'] == 1){
-            if($borrower_spouse_img_SFZ1 = $this->input->post('borrower_spouse_img_SFZ1')){
-                $update_['borrower_spouse_img_SFZ1'] = $this->getmedia($borrower_spouse_img_SFZ1, $f_info_['work_no'], $file_);
-                if(!@file_get_contents('./upload_files/' . $file_. '/'. $f_info_['work_no'] . '/' . $update_['borrower_spouse_img_SFZ1'])){
+            if($borrower_spouse_img_SFZ = $this->input->post('borrower_spouse_img_SFZ')){
+                $update_['borrower_spouse_img_SFZ'] = $this->getmedia($borrower_spouse_img_SFZ, $f_info_['work_no'], $file_);
+                if(!@file_get_contents('./upload_files/' . $file_. '/'. $f_info_['work_no'] . '/' . $update_['borrower_spouse_img_SFZ'])){
                     return $this->fun_fail('请上传配偶身份证');
                 }
             }else{
-                if(!@file_get_contents('./upload_files/' . $file_ . '/'. $f_info_['work_no'] . '/'  . $f_info_['borrower_spouse_img_SFZ1'])){
+                if(!@file_get_contents('./upload_files/' . $file_ . '/'. $f_info_['work_no'] . '/'  . $f_info_['borrower_spouse_img_SFZ'])){
                     return $this->fun_fail('请上传配偶身份证!');
                 }
             }
