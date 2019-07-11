@@ -199,6 +199,7 @@ class Foreclosure_model extends MY_Model
 
     }
 
+    //保存身份证照片
     public function edit_foreclosure4s4(){
         $file_ = 'foreclosure';
         $fc_id = $this->input->post('fc_id');
@@ -250,5 +251,11 @@ class Foreclosure_model extends MY_Model
         }else{
             return $this->fun_fail('操作失败!');
         }
+    }
+
+    //获取赎楼房产证照片
+    public function get_property_img($fc_id = 0){
+        $img_list = $this->db->from('foreclosure_property_img')->where('fc_id', $fc_id)->get()->result_array();
+        return $img_list;
     }
 }
