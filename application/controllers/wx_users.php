@@ -68,7 +68,7 @@ class Wx_users extends Wx_controller {
             }
         }
         $this->assign('now_time', $now_time);
-        $this->display('foreclosure/edit/step_add.html');
+        $this->display('users/foreclosure/step1.html');
     }
 
     /**
