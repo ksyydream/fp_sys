@@ -182,7 +182,6 @@ class Wx_users extends Wx_controller {
      * @date 2019-07-10
      */
     public function foreclosure_s6($f_id = 0){
-        die('step6');
         if(IS_POST){
             $f_id = $this->input->post('fc_id');
             $this->check_foreclosure_edit($f_id); //检查权限
@@ -191,10 +190,10 @@ class Wx_users extends Wx_controller {
         }
         $this->check_foreclosure_edit($f_id); //检查权限
         $f_info = $this->foreclosure_model->get_foreclosure($f_id);
-        $property_img_list = $this->foreclosure_model->get_property_img($f_id);
-        //$this->buildWxData();
+        $credit_img_list = $this->foreclosure_model->get_credit_img($f_id);
+        $this->buildWxData();
         $this->assign('f_info', $f_info);
-        $this->assign('property_img_list', $property_img_list);
-        $this->display('users/foreclosure/step5.html');
+        $this->assign('credit_img_list', $credit_img_list);
+        $this->display('users/foreclosure/step6.html');
     }
 }
