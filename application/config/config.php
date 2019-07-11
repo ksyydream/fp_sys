@@ -357,6 +357,6 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
-
+//页面公共合并前的备份
 /* End of file config.php */
 /* Location: ./application/config/config.php */
