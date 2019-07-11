@@ -17,6 +17,7 @@ class Wx_users extends Wx_controller {
         parent::__construct();
         $this->load->model('wx_index_model');
         $this->load->model('wx_users_model');
+        $this->load->model('foreclosure_model');
         if($this->session->userdata('wx_class') != 'users' || !$this->session->userdata('wx_user_id') ){
             redirect('wx_index/logout');
         }
@@ -44,12 +45,27 @@ class Wx_users extends Wx_controller {
      */
     public function foreclosure($now_time = ''){
         if(IS_POST){
-            $res = $this->wx_users_model->save_foreclosure($this->user_info);
+            $res = $this->foreclosure_model->save_foreclosure($this->user_info);
             $this->ajaxReturn($res);
         }
         if(!$now_time){
             //以防返回重复生成工作单,需要在所有入口增加随机数进行判断,如果不存在 就是非法入口,需要跳转到别的地方
-            redirect('wx_users/foreclosure/' . time()); //自动增加now_time
+            redirect('wx_users/foreclosure/' . $this->user_info . '_' . time()); //自动增加now_time
+        }else{
+            $f_info = $this->foreclosure_model->get_foreclosureBynowtime($now_time);
+            //判断now_time是否存在工作单,只要存在,但不符合条件就应该当做是一个新的申请
+            if($f_info){
+                $fc_deadline_ = $this->config->item('fc_deadline'); //缓存数据使用限期,这里是秒为单位的
+                if($f_info['user_id'] == $this->user_id && $f_info['status'] == 1 && $f_info['add_time'] + $fc_deadline_ > time()) {
+                    $this->assign('f_info', $f_info);
+                    $this->assign('now_time', $now_time);
+                    $this->display('foreclosure/edit/step_show.html');
+                }else{
+                    redirect('wx_users/foreclosure/' . $this->user_info . '_' . time()); //自动增加now_time
+                }
+            }else{
+                $this->assign('f_info', array());
+            }
         }
         $this->assign('now_time', $now_time);
         $this->display('foreclosure/edit/step_add.html');
@@ -61,13 +77,35 @@ class Wx_users extends Wx_controller {
      * @date 2019-07-10
      */
     public function foreclosure_s2($f_id = 0){
+        $fc_deadline_ = $this->config->item('fc_deadline'); //缓存数据使用限期,这里是秒为单位的
         if(IS_POST){
-            $res = $this->wx_users_model->edit_foreclosure4s2();
+            $f_id = $this->input->post('fc_id');
+            $f_info = $this->foreclosure_model->get_foreclosure($f_id);
+            if(!$f_info || $f_info['user_id'] != $this->user_id){
+                $res = $this->foreclosure_model->fun_fail('工作单不存在!');
+                $this->ajaxReturn($res);
+            }
+            if($f_info['status'] != 1){
+                $res = $this->foreclosure_model->fun_fail('工作单已不再草稿箱内,不可修改!');
+                $this->ajaxReturn($res);
+            }
+
+            if($f_info['add_time'] + $fc_deadline_ < time()){
+                $res = $this->foreclosure_model->fun_fail('工作单已过有效期!,不可修改');
+                $this->ajaxReturn($res);
+            }
+            $res = $this->foreclosure_model->edit_foreclosure4s2();
             $this->ajaxReturn($res);
         }
-        $f_info = $this->wx_users_model->get_foreclosure4user($f_id);
-        if(!$f_info || $f_info['status'] != 1){
-            redirect('wx_users/index'); //当发现工作单不能修改时,应该会进入列表,但因为现在没有,所以先进入首页
+        $f_info = $this->foreclosure_model->get_foreclosure($f_id);
+        if(!$f_info || $f_info['user_id'] != $this->user_id){
+            redirect('wx_users/index'); //不是自己的工作单,就直接回到首页
+        }
+        if($f_info['status'] != 1){
+            redirect('wx_users/index'); //如果工作单不在草稿箱内,或者已经过期,就到详情页面
+        }
+        if($f_info['add_time'] + $fc_deadline_ < time()){
+            redirect('wx_users/index'); //如果工作单不在草稿箱内,或者已经过期,就到详情页面
         }
         $this->assign('f_info', $f_info);
         $this->display('foreclosure/edit/step2.html');
@@ -79,13 +117,34 @@ class Wx_users extends Wx_controller {
      * @date 2019-07-10
      */
     public function foreclosure_s4($f_id = 0){
+        $fc_deadline_ = $this->config->item('fc_deadline'); //缓存数据使用限期,这里是秒为单位的
         if(IS_POST){
-            $res = $this->wx_users_model->edit_foreclosure4s4();
+            $f_id = $this->input->post('fc_id');
+            $f_info = $this->foreclosure_model->get_foreclosure($f_id);
+            if(!$f_info || $f_info['user_id'] != $this->user_id){
+                $res = $this->foreclosure_model->fun_fail('工作单不存在!');
+                $this->ajaxReturn($res);
+            }
+            if($f_info['status'] != 1){
+                $res = $this->foreclosure_model->fun_fail('工作单已不再草稿箱内,不可修改!');
+                $this->ajaxReturn($res);
+            }
+            if($f_info['add_time'] + $fc_deadline_ < time()){
+                $res = $this->foreclosure_model->fun_fail('工作单已过有效期!,不可修改');
+                $this->ajaxReturn($res);
+            }
+            $res = $this->foreclosure_model->edit_foreclosure4s4();
             $this->ajaxReturn($res);
         }
-        $f_info = $this->wx_users_model->get_foreclosure4user($f_id);
-        if(!$f_info || $f_info['status'] != 1){
-            redirect('wx_users/index'); //当发现工作单不能修改时,应该会进入列表,但因为现在没有,所以先进入首页
+        $f_info = $this->foreclosure_model->get_foreclosure($f_id);
+        if(!$f_info || $f_info['user_id'] != $this->user_id){
+            redirect('wx_users/index'); //不是自己的工作单,就直接回到首页
+        }
+        if($f_info['status'] != 1){
+            redirect('wx_users/index'); //如果工作单不在草稿箱内,或者已经过期,就到详情页面
+        }
+        if($f_info['add_time'] + $fc_deadline_ < time()){
+            redirect('wx_users/index'); //如果工作单不在草稿箱内,或者已经过期,就到详情页面
         }
         $this->buildWxData();
         $this->assign('f_info', $f_info);
@@ -98,13 +157,34 @@ class Wx_users extends Wx_controller {
      * @date 2019-07-10
      */
     public function foreclosure_s5($f_id = 0){
+        $fc_deadline_ = $this->config->item('fc_deadline'); //缓存数据使用限期,这里是秒为单位的
         if(IS_POST){
-            $res = $this->wx_users_model->edit_foreclosure4s5();
+            $f_id = $this->input->post('fc_id');
+            $f_info = $this->foreclosure_model->get_foreclosure($f_id);
+            if(!$f_info || $f_info['user_id'] != $this->user_id){
+                $res = $this->foreclosure_model->fun_fail('工作单不存在!');
+                $this->ajaxReturn($res);
+            }
+            if($f_info['status'] != 1){
+                $res = $this->foreclosure_model->fun_fail('工作单已不再草稿箱内,不可修改!');
+                $this->ajaxReturn($res);
+            }
+            if($f_info['add_time'] + $fc_deadline_ < time()){
+                $res = $this->foreclosure_model->fun_fail('工作单已过有效期!,不可修改');
+                $this->ajaxReturn($res);
+            }
+            $res = $this->foreclosure_model->edit_foreclosure4s5();
             $this->ajaxReturn($res);
         }
-        $f_info = $this->wx_users_model->get_foreclosure4user($f_id);
-        if(!$f_info || $f_info['status'] != 1){
-            redirect('wx_users/index'); //当发现工作单不能修改时,应该会进入列表,但因为现在没有,所以先进入首页
+        $f_info = $this->foreclosure_model->get_foreclosure($f_id);
+        if(!$f_info || $f_info['user_id'] != $this->user_id){
+            redirect('wx_users/index'); //不是自己的工作单,就直接回到首页
+        }
+        if($f_info['status'] != 1){
+            redirect('wx_users/index'); //如果工作单不在草稿箱内,或者已经过期,就到详情页面
+        }
+        if($f_info['add_time'] + $fc_deadline_ < time()){
+            redirect('wx_users/index'); //如果工作单不在草稿箱内,或者已经过期,就到详情页面
         }
         $this->buildWxData();
         $this->assign('f_info', $f_info);
