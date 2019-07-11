@@ -65,7 +65,7 @@
             <p class="pTxt"> <span class="tips-icon"></span>请保证上传图片边框完整，图片清晰。</p>
         </div>
         {{foreach from=$property_img_list item=item}}
-        <div class="upid">
+        <div class="upid DBY_img_div">
             <a href="javascript:void(0)" class="upload_click"><img src="/upload_files/foreclosure/{{$f_info.work_no}}/{{$item.file_name}}" alt=""></a>
             <a href="javascript:void(0)" class="close_btn"></a>
             <input value="{{$item.file_name}}" type="hidden" name="old_img[]">
@@ -150,6 +150,45 @@
                 }
             });
         };
+    })
+
+    $("#save_btn").click(function(){
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
+        var img_length = $("#save_form .DBY_img_div").length;
+        if(img_length <= 0){
+            layer.close(index);
+            layer.msg('请上传房产证照片');
+            return false;
+        }
+        var form = document.getElementById('save_form');
+
+        var formdata = new FormData(form);
+        $.ajax({
+            type : "POST",
+            url : "/wx_users/foreclosure_s5",
+            data : formdata,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success : function(data) {
+                var return_ = JSON.parse(data)
+                if(return_.status == 1){
+                    var url = '/wx_users/foreclosure_s6/' + return_.result.foreclosure_id;
+                    window.location.replace(url);
+                }else{
+                    layer.close(index);
+                    layer.msg(return_.msg);
+                }
+                layer.close(index);
+            },
+            error:function(){
+                layer.close(index);
+                layer.msg('网络异常!');
+            }
+        });
     })
 </script>
 </body>

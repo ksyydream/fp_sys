@@ -258,4 +258,78 @@ class Foreclosure_model extends MY_Model
         $img_list = $this->db->from('foreclosure_property_img')->where('fc_id', $fc_id)->get()->result_array();
         return $img_list;
     }
+
+    //保存房产证照片
+    public function edit_foreclosure4s5(){
+        $file_ = 'foreclosure';
+        $fc_id = $this->input->post('fc_id');
+        if(!$fc_id)
+            return $this->fun_fail('工作单异常');
+        $f_info_ = $this->get_foreclosure($fc_id);
+        if($f_info_)
+            return $this->fun_fail('工作单异常');
+        $update_ = array();
+        $where_ = array(
+            'foreclosure_id' => $fc_id
+        );
+        $wx_class = $this->session->userdata('wx_class');
+        switch($wx_class){
+            case 'users':
+                $update_['user_modify_time'] = time();
+                break;
+            case 'members':
+                $update_['m_modify_time'] = time();
+                break;
+            default:
+                return $this->fun_fail('登录状态异常');
+        }
+        $img_insert_ = array();
+        $old_imgs = $this->input->post('old_img');
+        $wx_imgs = $this->input->post('wx_img');
+        if(!$old_imgs && !$wx_imgs){
+            return $this->fun_fail('房产证照片需要上传');
+        }
+        if($old_imgs){
+            foreach($old_imgs as $img_){
+                if(@file_get_contents('./upload_files/' . $file_. '/'. $f_info_['work_no'] . '/' . $img_)){
+                    $img_insert_[] = array(
+                        'fc_id'         => $fc_id,
+                        'file_name'     => $img_,
+                        'add_time'      => time()
+                    );
+                }
+            }
+        }
+        if($wx_imgs){
+            foreach($wx_imgs as $media_){
+                $wx_img_ = $this->getmedia($media_, $f_info_['work_no'], $file_);
+                if(@file_get_contents('./upload_files/' . $file_. '/'. $f_info_['work_no'] . '/' . $wx_img_)){
+                    $img_insert_[] = array(
+                        'fc_id'         => $fc_id,
+                        'file_name'     => $wx_img_,
+                        'add_time'      => time()
+                    );
+                }
+            }
+        }
+        if(!$img_insert_)
+            return $this->fun_fail('房产证照片需要上传');
+        $this->db->trans_start();
+        $this->db->where('fc_id', $fc_id)->delete('foreclosure_property_img');
+        $this->db->insert_batch('foreclosure_property_img', $img_insert_);
+        $this->db->trans_complete();//------结束事务
+        if ($this->db->trans_status() === FALSE) {
+            return $this->fun_fail('操作失败!');
+        }else{
+            $res = $this->db->where($where_)->update('foreclosure', $update_);
+            if($res){
+                $foreclosure_info = $this->db->select('foreclosure_id')->from('foreclosure')->where($where_)->get()->row_array();
+                return $this->fun_success('操作成功', $foreclosure_info);
+            }else{
+                return $this->fun_fail('操作失败!');
+            }
+        }
+
+
+    }
 }
