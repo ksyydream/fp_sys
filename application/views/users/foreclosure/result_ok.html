@@ -66,6 +66,10 @@
 <script src="/assets/js/amazeui.js"></script>
 <script src="/assets/js/animateBackground-plugin.js"></script>
 <script type="text/javascript">
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function () {
+        history.pushState(null, null, document.URL);
+    });
 
     $("#save_btn").click(function(){
         var url = '/wx_users/foreclosure_s2/{{$f_info.foreclosure_id}}';
