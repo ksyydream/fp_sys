@@ -65,8 +65,8 @@
     <p class="pTxt"> <span class="tips-icon"></span>请保证上传图片边框完整，图片清晰。</p>
    </div>
       {{foreach from=$credit_img_list item=item}}
-      <div class="upid upid1 DBY_img_div">
-          <a href="javascript:void(0)" class="upload_click upload_click1"><img src="/upload_files/foreclosure/{{$f_info.work_no}}/{{$item.file_name}}" alt=""></a>
+      <div class="upid DBY_img_div">
+          <a href="javascript:void(0)" class="upload_click"><img src="/upload_files/foreclosure/{{$f_info.work_no}}/{{$item.file_name}}" alt=""></a>
           <a href="javascript:void(0)" class="close_btn"></a>
           <input value="{{$item.file_name}}" type="hidden" name="old_img[]">
       </div>
@@ -137,8 +137,8 @@
                 success: function (res) {
                     var serverId = res.serverId; // 返回图片的服务器端ID
                     var html = '';
-                    html += '<div class="upid upid1  DBY_img_div">';
-                    html += '<a href="javascript:void(0)" class="upload_click upload_click1"><img src="' + localId + '" alt=""></a>';
+                    html += '<div class="upid DBY_img_div">';
+                    html += '<a href="javascript:void(0)" class="upload_click"><img src="' + localId + '" alt=""></a>';
                     html += '<a href="javascript:void(0)" class="close_btn"></a>';
                     html += '<input type="hidden" value="' + serverId + '" name="wx_img[]">';
                     html += '</div>';
