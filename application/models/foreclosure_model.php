@@ -266,7 +266,7 @@ class Foreclosure_model extends MY_Model
         if(!$fc_id)
             return $this->fun_fail('工作单异常');
         $f_info_ = $this->get_foreclosure($fc_id);
-        if($f_info_)
+        if(!$f_info_)
             return $this->fun_fail('工作单异常');
         $update_ = array();
         $where_ = array(
