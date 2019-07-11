@@ -58,7 +58,7 @@
 <div class="am-main">
 <div class="wid100"><img src="/assets/i/result-1.jpg" alt=""></div>
 <p class="center-txt colorgreen">恭喜！您的风控评估预审通过。</p>
-<a class="am-btn am-btn-register" href="/wx_users/foreclosure_s2/{{$f_info.foreclosure_id}}">下一步</a>
+<a class="am-btn am-btn-register" id="save_btn" href="javascript:">下一步</a>
     {{include file='users/public/foot.html'}}
 
 </div>
@@ -67,7 +67,10 @@
 <script src="/assets/js/animateBackground-plugin.js"></script>
 <script type="text/javascript">
 
-
+    $("#save_btn").click(function(){
+        var url = '/wx_users/foreclosure_td/{{$f_info.foreclosure_id}}';
+        window.location.replace(url);
+    })
 </script>
 </body>
 </html>

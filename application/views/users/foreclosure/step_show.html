@@ -132,8 +132,8 @@
 <script type="text/javascript">
 
     $("#save_btn").click(function(){
-
-        window.location.href= '/wx_users/foreclosure_td/{{$f_info.foreclosure_id}}';
+        var url = '/wx_users/foreclosure_td/{{$f_info.foreclosure_id}}';
+        window.location.replace(url);
     })
 </script>
 </body>

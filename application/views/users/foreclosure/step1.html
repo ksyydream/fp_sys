@@ -222,7 +222,7 @@
             success : function(data) {
                 var return_ = JSON.parse(data)
                 if(return_.status == 1){
-                    window.location.href= '/wx_users/foreclosure_td/' + return_.result.foreclosure_id;
+                    window.location.replace('/wx_users/foreclosure_td/' + return_.result.foreclosure_id);
                 }else{
                     layer.close(index);
                     layer.msg(return_.msg);
