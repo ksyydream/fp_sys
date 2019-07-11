@@ -255,7 +255,7 @@ class Foreclosure_model extends MY_Model
 
     //获取赎楼房产证照片
     public function get_property_img($fc_id = 0){
-        $img_list = $this->db->from('foreclosure_property_img')->where('fc_id', $fc_id)->get()->result_array();
+        $img_list = $this->db->from('foreclosure_property_img')->where('fc_id', $fc_id)->get()->order_by('img_id','desc')->result_array();
         return $img_list;
     }
 
