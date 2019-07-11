@@ -59,7 +59,7 @@ class Wx_users extends Wx_controller {
                 if($f_info['user_id'] == $this->user_id && $f_info['status'] == 1 && $f_info['add_time'] + $fc_deadline_ > time()) {
                     $this->assign('f_info', $f_info);
                     $this->assign('now_time', $now_time);
-                    $this->display('foreclosure/edit/step_show.html');
+                    $this->display('users/foreclosure/step_show.html');
                 }else{
                     redirect('wx_users/foreclosure/' . $this->user_id . '_' . time()); //自动增加now_time
                 }
@@ -108,7 +108,7 @@ class Wx_users extends Wx_controller {
             redirect('wx_users/index'); //如果工作单不在草稿箱内,或者已经过期,就到详情页面
         }
         $this->assign('f_info', $f_info);
-        $this->display('foreclosure/edit/step2.html');
+        $this->display('users/foreclosure/step2.html');
     }
 
     /**
@@ -148,7 +148,7 @@ class Wx_users extends Wx_controller {
         }
         $this->buildWxData();
         $this->assign('f_info', $f_info);
-        $this->display('foreclosure/edit/step4.html');
+        $this->display('users/foreclosure/step4.html');
     }
 
     /**
@@ -188,6 +188,6 @@ class Wx_users extends Wx_controller {
         }
         $this->buildWxData();
         $this->assign('f_info', $f_info);
-        $this->display('foreclosure/edit/step5.html');
+        $this->display('users/foreclosure/step5.html');
     }
 }
