@@ -143,11 +143,11 @@
                     html += '<input type="hidden" value="' + serverId + '" name="wx_img[]">';
                     html += '</div>';
                     $("#add_div").before(html);
+                    if(localIds.length > 0){
+                        syncUpload(localIds);
+                    }
                 }
             });
-            if(localIds.length > 0){
-                syncUpload(localIds);
-            }
         };
     })
 

@@ -359,6 +359,8 @@ class Foreclosure_model extends MY_Model
         switch($wx_class){
             case 'users':
                 $update_['user_modify_time'] = time();
+                $update_['submit_time'] = time();
+                $update_['status'] = 2;
                 break;
             case 'members':
                 $update_['m_modify_time'] = time();
