@@ -50,7 +50,7 @@ class Wx_users extends Wx_controller {
         }
         if(!$now_time){
             //以防返回重复生成工作单,需要在所有入口增加随机数进行判断,如果不存在 就是非法入口,需要跳转到别的地方
-            redirect('wx_users/foreclosure/' . $this->user_info . '_' . time()); //自动增加now_time
+            redirect('wx_users/foreclosure/' . $this->user_id . '_' . time()); //自动增加now_time
         }else{
             $f_info = $this->foreclosure_model->get_foreclosureBynowtime($now_time);
             //判断now_time是否存在工作单,只要存在,但不符合条件就应该当做是一个新的申请
@@ -61,7 +61,7 @@ class Wx_users extends Wx_controller {
                     $this->assign('now_time', $now_time);
                     $this->display('foreclosure/edit/step_show.html');
                 }else{
-                    redirect('wx_users/foreclosure/' . $this->user_info . '_' . time()); //自动增加now_time
+                    redirect('wx_users/foreclosure/' . $this->user_id . '_' . time()); //自动增加now_time
                 }
             }else{
                 $this->assign('f_info', array());
