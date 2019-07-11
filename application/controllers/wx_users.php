@@ -28,6 +28,7 @@ class Wx_users extends Wx_controller {
         if($this->user_info['status'] != 1){
             redirect('wx_index/logout');
         }
+        $this->assign('controller_name', 'wx_users');
     }
 
 
@@ -51,7 +52,7 @@ class Wx_users extends Wx_controller {
             redirect('wx_users/foreclosure/' . time()); //自动增加now_time
         }
         $this->assign('now_time', $now_time);
-        $this->display('users/foreclosure/step1.html');
+        $this->display('foreclosure/edit/step_add.html');
     }
 
     /**
@@ -69,7 +70,7 @@ class Wx_users extends Wx_controller {
             redirect('wx_users/index'); //当发现工作单不能修改时,应该会进入列表,但因为现在没有,所以先进入首页
         }
         $this->assign('f_info', $f_info);
-        $this->display('users/foreclosure/step2.html');
+        $this->display('foreclosure/edit/step2.html');
     }
 
     /**
@@ -88,7 +89,7 @@ class Wx_users extends Wx_controller {
         }
         $this->buildWxData();
         $this->assign('f_info', $f_info);
-        $this->display('users/foreclosure/step4.html');
+        $this->display('foreclosure/edit/step4.html');
     }
 
     /**
@@ -107,6 +108,6 @@ class Wx_users extends Wx_controller {
         }
         $this->buildWxData();
         $this->assign('f_info', $f_info);
-        $this->display('users/foreclosure/step5.html');
+        $this->display('foreclosure/edit/step5.html');
     }
 }
