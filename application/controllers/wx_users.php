@@ -170,7 +170,7 @@ class Wx_users extends Wx_controller {
         $this->check_foreclosure_edit($f_id); //检查权限
         $f_info = $this->foreclosure_model->get_foreclosure($f_id);
         $property_img_list = $this->foreclosure_model->get_property_img($f_id);
-        //$this->buildWxData();
+        $this->buildWxData();
         $this->assign('f_info', $f_info);
         $this->assign('property_img_list', $property_img_list);
         $this->display('users/foreclosure/step5.html');
