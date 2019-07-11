@@ -255,13 +255,13 @@ class Foreclosure_model extends MY_Model
 
     //获取赎楼房产证照片
     public function get_property_img($fc_id = 0){
-        $img_list = $this->db->from('foreclosure_property_img')->where('fc_id', $fc_id)->order_by('img_id','desc')->get()->result_array();
+        $img_list = $this->db->from('foreclosure_property_img')->where('fc_id', $fc_id)->order_by('sort_id','asc')->get()->result_array();
         return $img_list;
     }
 
     //获取赎楼房产证照片
     public function get_credit_img($fc_id = 0){
-        $img_list = $this->db->from('foreclosure_credit_img')->where('fc_id', $fc_id)->get()->result_array();
+        $img_list = $this->db->from('foreclosure_credit_img')->where('fc_id', $fc_id)->order_by('sort_id','asc')->get()->result_array();
         return $img_list;
     }
 
@@ -295,13 +295,15 @@ class Foreclosure_model extends MY_Model
         if(!$old_imgs && !$wx_imgs){
             return $this->fun_fail('房产证照片需要上传');
         }
+        $sort_id_ = 1;
         if($old_imgs){
             foreach($old_imgs as $img_){
                 if(@file_get_contents('./upload_files/' . $file_. '/'. $f_info_['work_no'] . '/' . $img_)){
                     $img_insert_[] = array(
                         'fc_id'         => $fc_id,
                         'file_name'     => $img_,
-                        'add_time'      => time()
+                        'add_time'      => time(),
+                        'sort_id'       => $sort_id_++
                     );
                 }
             }
@@ -313,7 +315,8 @@ class Foreclosure_model extends MY_Model
                     $img_insert_[] = array(
                         'fc_id'         => $fc_id,
                         'file_name'     => $wx_img_,
-                        'add_time'      => time()
+                        'add_time'      => time(),
+                        'sort_id'       => $sort_id_++
                     );
                 }
             }
@@ -369,13 +372,15 @@ class Foreclosure_model extends MY_Model
         if(!$old_imgs && !$wx_imgs){
             return $this->fun_fail('征信报告需要上传');
         }
+        $sort_id_ = 1;
         if($old_imgs){
             foreach($old_imgs as $img_){
                 if(@file_get_contents('./upload_files/' . $file_. '/'. $f_info_['work_no'] . '/' . $img_)){
                     $img_insert_[] = array(
                         'fc_id'         => $fc_id,
                         'file_name'     => $img_,
-                        'add_time'      => time()
+                        'add_time'      => time(),
+                        'sort_id'       => $sort_id_++
                     );
                 }
             }
@@ -387,7 +392,8 @@ class Foreclosure_model extends MY_Model
                     $img_insert_[] = array(
                         'fc_id'         => $fc_id,
                         'file_name'     => $wx_img_,
-                        'add_time'      => time()
+                        'add_time'      => time(),
+                        'sort_id'       => $sort_id_++
                     );
                 }
             }
