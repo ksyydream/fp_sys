@@ -65,7 +65,7 @@
     <p class="pTxt"><span class="tips-icon"><img src="/assets/i/tips.png" alt=""></span>请保证上传图片边框完整，图片清晰。</p>
    </div>
       <div class="upid">
-        <a href="javascript:;" class="upload_click"><img src="/assets/i/id_upload.png" alt=""></a>
+        <a href="javascript:;" class="upload_click"><img src="{{$f_info.borrower_img_SFZ|default:'/assets/i/id_upload.png'}}" alt=""></a>
           <input type="hidden" value="" id="borrower_img_SFZ" name="borrower_img_SFZ">
       </div>
       {{if $f_info.is_mortgage == 1}}
@@ -74,7 +74,7 @@
     <p class="pTxt"><span class="tips-icon"><img src="/assets/i/tips.png" alt=""></span>请保证上传图片边框完整，图片清晰。</p>
    </div>
        <div class="upid">
-        <a href="javascript:;" class="upload_click"><img src="/assets/i/id_upload.png" alt=""></a>
+        <a href="javascript:;" class="upload_click"><img src="{{$f_info.borrower_spouse_img_SFZ|default:'/assets/i/id_upload.png'}}" alt=""></a>
            <input type="hidden" value="" id="borrower_spouse_img_SFZ" name="borrower_spouse_img_SFZ">
       </div>
       {{/if}}
