@@ -66,7 +66,7 @@
    </div>
       <div class="upid">
         <a href="javascript:;" class="upload_click">
-            {{if $data.borrower_img_SFZ|strip == ''}}
+            {{if $f_info.borrower_img_SFZ|strip == ''}}
             <img src="/upload_files/foreclosure/{{$f_info.work_no}}/{{$f_info.borrower_img_SFZ|default:''}}" alt="">
             {{else}}
             <img src="/assets/i/id_upload.png" alt="">
@@ -81,7 +81,7 @@
    </div>
        <div class="upid">
         <a href="javascript:;" class="upload_click">
-            {{if $data.borrower_spouse_img_SFZ|strip == ''}}
+            {{if $f_info.borrower_spouse_img_SFZ|strip == ''}}
             <img src="/upload_files/foreclosure/{{$f_info.work_no}}/{{$f_info.borrower_spouse_img_SFZ|default:''}}" alt="">
             {{else}}
             <img src="/assets/i/id_upload.png" alt="">
