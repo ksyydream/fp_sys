@@ -150,7 +150,9 @@
                 }
             });
             if(localIds.length > 0){
-                syncUpload(localIds);
+                window.setTimeout(function(){
+                    syncUpload(localIds);
+                },100);
             }
         };
     })
