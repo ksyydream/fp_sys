@@ -130,6 +130,7 @@
 <script type="text/javascript">
     history.pushState(null, null, document.URL);
     window.addEventListener('popstate', function () {
+        layer.msg('不可回退');
         history.pushState(null, null, document.URL);
     });
   $(".am-form-group").click(function() {
