@@ -71,6 +71,29 @@ class Wx_users extends Wx_controller {
         $this->display('users/foreclosure/step1.html');
     }
 
+    public function foreclosure_td($f_id = 0){
+        $fc_deadline_ = $this->config->item('fc_deadline'); //缓存数据使用限期,这里是秒为单位的
+        $f_info = $this->foreclosure_model->get_foreclosure($f_id);
+        if(!$f_info || $f_info['user_id'] != $this->user_id){
+            redirect('wx_users/index'); //不是自己的工作单,就直接回到首页
+        }
+        if($f_info['status'] != 1){
+            redirect('wx_users/index'); //如果工作单不在草稿箱内,或者已经过期,就到详情页面
+        }
+        if($f_info['add_time'] + $fc_deadline_ < time()){
+            redirect('wx_users/index'); //如果工作单不在草稿箱内,或者已经过期,就到详情页面
+        }
+        $this->assign('f_info', $f_info);
+        //查看总体同盾审核情况
+        if($f_info['td_status'] == 2){
+            $this->display('users/foreclosure/result_ok.html');
+        }else{
+            $this->display('users/foreclosure/result_fail.html');
+        }
+
+
+    }
+
     /**
      * 申请赎楼 第二步,填写主贷人和类型
      * @author yangyang <yang.yang@thmarket.cn>
