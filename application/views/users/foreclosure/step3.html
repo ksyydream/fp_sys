@@ -63,7 +63,7 @@
 <div class="am-main">
 
  
-  <form class="am-form am-form-horizontal">
+  <form id="save_form" class="am-form am-form-horizontal">
       <input type="hidden" id="fc_id" name="fc_id" value="{{$f_info.foreclosure_id}}">
     <p class="p-tit">借款信息</p>
      <div class="am-fast-estimate">
@@ -171,7 +171,7 @@
       </div>
       {{/if}}
 
-    <a class="am-btn am-btn-register" href="javascript:">下一步</a>
+    <a class="am-btn am-btn-register" id="save_btn" href="javascript:">下一步</a>
   </form>
 
 
@@ -220,7 +220,7 @@
         var bank_loan_type_ = {{$f_info.bank_loan_type}};
         var is_mortgage_ = {{$f_info.is_mortgage}};
         var borrow_money = $.trim($("#borrow_money").val());
-        var expect_use_time = $.trim($("#expect_use_time").val());
+        var expect_use_time = $.trim($("#my-start").val());
         var total_price = $.trim($("#total_price").val());
         var old_loan_balance = $.trim($("#old_loan_balance").val());
         var old_loan_setup = $.trim($("#old_loan_setup").val());
