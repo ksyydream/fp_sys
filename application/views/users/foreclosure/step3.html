@@ -213,6 +213,75 @@
             $("#radio_div").hide();
         }
     });
+
+    $("#save_btn").click(function(){
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
+        var borrow_money = $.trim($("#borrow_money").val());
+        var expect_use_time = $.trim($("#expect_use_time").val());
+        var total_price = $.trim($("#total_price").val());
+        var old_loan_balance = $.trim($("#old_loan_balance").val());
+        var old_loan_setup = $.trim($("#old_loan_setup").val());
+        var deposit = $.trim($("#deposit").val());
+        if(borrow_money == '' || parseFloat(borrow_money) == 0){
+            layer.close(index);
+            layer.msg('请填写借款金额');
+            return false;
+        }
+        if(expect_use_time == ''){
+            layer.close(index);
+            layer.msg('请完善预计用款时间');
+            return false;
+        }
+        if(total_price == '' || parseFloat(total_price) == 0){
+            layer.close(index);
+            layer.msg('请填写成交总价');
+            return false;
+        }
+        if(old_loan_balance == '' || parseFloat(old_loan_balance) == 0){
+            layer.close(index);
+            layer.msg('请填写老贷余额');
+            return false;
+        }
+        if(old_loan_setup == ''){
+            layer.close(index);
+            layer.msg('请完善老贷机构');
+            return false;
+        }
+        if(deposit == '' || parseFloat(deposit) == 0){
+            layer.close(index);
+            layer.msg('请填写已付定金/首付');
+            return false;
+        }
+        var form = document.getElementById('save_form');
+
+        var formdata = new FormData(form);
+        $.ajax({
+            type : "POST",
+            url : "/wx_users/foreclosure_s3",
+            data : formdata,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success : function(data) {
+                var return_ = JSON.parse(data)
+                if(return_.status == 1){
+                    var url = '/wx_users/foreclosure_s4/' + return_.result.foreclosure_id;
+                    window.location.replace(url);
+                }else{
+                    layer.close(index);
+                    layer.msg(return_.msg);
+                }
+                layer.close(index);
+            },
+            error:function(){
+                layer.close(index);
+                layer.msg('网络异常!');
+            }
+        });
+    })
 </script>
 </body>
 </html>
