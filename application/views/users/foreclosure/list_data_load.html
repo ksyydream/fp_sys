@@ -1,0 +1,31 @@
+{{if $list}}
+{{foreach from=$list item=item}}
+<div class="div-list-data">
+    <a herf="" class="data-list">
+        <ul class="d-l-content listid">
+            <li>
+                {{if $item.is_special == 1}}<div class="data-status specok"><i class="greenchannel"></i>绿色通道</div>{{/if}}
+                {{if $item.status == 1}}<div class="data-status">待提交</div>{{/if}}
+                {{if $item.status == 2}}<div class="data-status">待审核</div>{{/if}}
+                {{if $item.status == 3 || $item.status == 4}}<div class="data-status passok">已通过</div>{{/if}}
+                {{if $item.status == -1 || $item.status == -2}}<div class="data-status unpass">未通过</div>{{/if}}
+                <div class="data-span"><span>编号：</span>{{$item.work_no}}</div>
+            </li>
+        </ul>
+        <ul class="d-l-content">
+            <li><span>借款金额：</span>{{$item.borrow_money|default:"-"}}万</li>
+            <li><span>借款人：</span>{{$item.borrower_name|default:"-"}}</li>
+            <li><span>用款时间：</span>{{$f_info.expect_use_time|date_format:"%Y年%m月%d日"|default:"-"}}</li>
+        </ul>
+        <ul class="d-l-content leftday">
+            <li>{{if $item.status == 1}}{{$item.show_msg}}{{/if}}</li>
+        </ul>
+        <i class="am-icon-chevron"></i>
+    </a>
+    <div class="option-div">
+        <a href="" class="option-btn">编 辑</a>
+        <a href="" class="option-btn">查 看</a>
+    </div>
+</div>
+{{/foreach}}
+{{/if}}

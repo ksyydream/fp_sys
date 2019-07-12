@@ -218,4 +218,17 @@ class Wx_users extends Wx_controller {
         $this->assign('credit_img_list', $credit_img_list);
         $this->display('users/foreclosure/step6.html');
     }
+
+    //赎楼列表
+    public function foreclosure_list($status_type = 0){
+        $this->assign('status_type', $status_type);
+        $this->display('users/foreclosure/list1.html');
+    }
+
+    public function foreclosure_list_load(){
+        $res = $this->foreclosure_model->get_list4users();
+        //die(var_dump($res));
+        $this->assign('list', $res);
+        $this->display('users/foreclosure/list_data_load.html');
+    }
 }
