@@ -49,6 +49,25 @@ $(function(){
         $(this).val($(this).val().replace(/[^0-9Xx]/g, ''));
         $(this).val($(this).val().toUpperCase());
     }).css("ime-mode", "disabled"); //CSS设置输入法不可用
+
+    $(".js4float1").keyup(function () {
+        $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+        $(this).val($(this).val().replace(/\.{2,}/g, "."));
+        $(this).val($(this).val().replace(".","$#$").replace(/\./g,"").replace("$#$","."));
+        if(!/^[0-9]+(.[0-9]{0,1})?$/.test($(this).val())) {$(this).val($(this).val().replace(/^(\-)*(\d+)\.(\d).*$/,'$1$2.$3'));}
+
+    }).blur(function(){
+        $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+        $(this).val($(this).val().replace(/\.{2,}/g, "."));
+        $(this).val($(this).val().replace(".","$#$").replace(/\./g,"").replace("$#$","."));
+        if(!/^[0-9]+(.[0-9]{0,1})?$/.test($(this).val())) {$(this).val($(this).val().replace(/^(\-)*(\d+)\.(\d).*$/,'$1$2.$3'));}
+
+    }).bind("paste", function () {  //CTR+V事件处理
+        $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+        $(this).val($(this).val().replace(/\.{2,}/g, "."));
+        $(this).val($(this).val().replace(".","$#$").replace(/\./g,"").replace("$#$","."));
+        if(!/^[0-9]+(.[0-9]{0,1})?$/.test($(this).val())) {$(this).val($(this).val().replace(/^(\-)*(\d+)\.(\d).*$/,'$1$2.$3'));}
+    }).css("ime-mode", "disabled"); //CSS设置输入法不可用
 });
 
 

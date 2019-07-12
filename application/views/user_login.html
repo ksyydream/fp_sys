@@ -171,7 +171,8 @@
             success : function(data) {
                 var return_ = JSON.parse(data)
                 if(return_.status == 1){
-                    window.location.href= '/wx_users/index';
+                    var url = '/wx_users/index';
+                    window.location.replace(url);
                 }else{
                     layer.msg(return_.msg);
                 }
