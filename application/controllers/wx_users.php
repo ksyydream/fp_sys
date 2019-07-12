@@ -146,32 +146,16 @@ class Wx_users extends Wx_controller {
         if(IS_POST){
             $f_id = $this->input->post('fc_id');
             $this->check_foreclosure_edit($f_id); //检查权限
-            //$res = $this->foreclosure_model->edit_foreclosure4s2();
-            //$this->ajaxReturn($res);
+            $res = $this->foreclosure_model->foreclosure_s3();
+            $this->ajaxReturn($res);
         }
         $this->check_foreclosure_edit($f_id); //检查权限
         $f_info = $this->foreclosure_model->get_foreclosure($f_id);
+        if($f_info['bank_loan_type'] == 1){
+            //redirect('wx_users/foreclosure_s4/' . $f_id); //如果是一次性付款 不需要填写此页面
+        }
         $this->assign('f_info', $f_info);
         $this->display('users/foreclosure/step3.html');
-    }
-
-    /**
-     * 申请赎楼 贷款信息
-     * @author yangyang <yang.yang@thmarket.cn>
-     * @date 2019-07-12
-     */
-    public function foreclosure_s3_1($f_id = 0){
-
-        if(IS_POST){
-            $f_id = $this->input->post('fc_id');
-            $this->check_foreclosure_edit($f_id); //检查权限
-            //$res = $this->foreclosure_model->edit_foreclosure4s2();
-            //$this->ajaxReturn($res);
-        }
-        $this->check_foreclosure_edit($f_id); //检查权限
-        $f_info = $this->foreclosure_model->get_foreclosure($f_id);
-        $this->assign('f_info', $f_info);
-        $this->display('users/foreclosure/step3_1.html');
     }
 
     /**

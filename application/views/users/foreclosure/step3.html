@@ -126,15 +126,16 @@
       </div>
       </div>
     </div>
-  <div class="am-form-group" id="radio_div" {{if $f_info.is_repayment|default:1 == -1 }}style="display: none;"{{/if}}>
+  <div class="am-form-group" id="radio_div" {{if $f_info.is_repayment|default:1 == -1 }}style="display: none;"{{/if}} >
       <label class="am-u-sm-3 am-form-label">进入金额</label>
       <div class="am-u-sm-9">
        <input type="text" class="ip-txt ip-txt1 js4float1" id="repayment_money" name="repayment_money" value="{{$f_info.repayment_money|default:''}}" placeholder="请输入进入金额">
        <i class="am-es-i">万</i>
       </div>
     </div>
-         {{/if}}
- </div> 
+
+{{/if}}
+</div>
  <p class="p-tit">按揭信息</p>
       {{if $f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1}}
       <div class="am-fast-estimate">

@@ -152,6 +152,7 @@ class Foreclosure_model extends MY_Model
         return $this->fun_success('提交成功', $foreclosure_info);
     }
 
+    //完善买家信息
     public function edit_foreclosure4s2(){
         $fc_id = $this->input->post('fc_id');
         if(!$fc_id)
@@ -160,8 +161,7 @@ class Foreclosure_model extends MY_Model
             'buyer_name' => $this->input->post('buyer_name'),
             'buyer_code' => $this->input->post('buyer_code'),
             'bank_loan_type' => $this->input->post('bank_loan_type'),
-            'is_mortgage' => $this->input->post('is_mortgage'),
-            'user_modify_time' => time()
+            'is_mortgage' => $this->input->post('is_mortgage')
         );
         $where_ = array(
             'foreclosure_id' => $fc_id
@@ -197,6 +197,85 @@ class Foreclosure_model extends MY_Model
             return $this->fun_fail('操作失败!');
         }
 
+    }
+
+    //贷款信息
+    public function edit_foreclosure4s3(){
+        $fc_id = $this->input->post('fc_id');
+        if(!$fc_id)
+            return $this->fun_fail('工作单异常');
+        $f_info_ = $this->get_foreclosure($fc_id);
+        if(!$f_info_)
+            return $this->fun_fail('工作单异常');
+        if($f_info_['bank_loan_type'] == 1){
+            return $this->fun_fail('一次性付款,不需要维护此页面,请退出后重新维护');
+        }
+        $update_ = array(
+            'borrow_money' => $this->input->post('borrow_money'),
+            'expect_use_time' => $this->input->post('expect_use_time'),
+            'total_price' => $this->input->post('total_price'),
+            'old_loan_balance' => trim($this->input->post('old_loan_balance')),
+            'old_loan_setup' => trim($this->input->post('old_loan_setup')),
+            'deposit' => trim($this->input->post('deposit')),
+        );
+        $where_ = array(
+            'foreclosure_id' => $fc_id
+        );
+        $wx_class = $this->session->userdata('wx_class');
+        switch($wx_class){
+            case 'users':
+                $update_['user_modify_time'] = time();
+                break;
+            case 'members':
+                $update_['m_modify_time'] = time();
+                break;
+            default:
+                return $this->fun_fail('登录状态异常');
+        }
+
+
+        if(!$update_['borrow_money'] || !$update_['expect_use_time'] || !$update_['total_price'] || !$update_['old_loan_balance'] || !$update_['old_loan_setup'] || !$update_['deposit'])
+            return $this->fun_fail('信息不完善');
+
+        if($f_info_['bank_loan_type'] == 2 && $f_info_['is_mortgage'] == 1){
+            $update_['is_repayment'] = trim($this->input->post('is_repayment'));
+            switch($update_['is_repayment']){
+                case 1:
+                    $update_['repayment_money'] = trim($this->input->post('repayment_money'));
+                    if(!$update_['repayment_money']){
+                        return $this->fun_fail('请维护进入金额!');
+                    }
+                    break;
+                case -1:
+                    break;
+                default:
+                    return $this->fun_fail('请维护首付是否进入还款');
+            }
+            $update_['mortgage_bank'] = trim($this->input->post('mortgage_bank'));
+            if(!$update_['mortgage_bank']){
+                return $this->fun_fail('请维护买家按揭银行!');
+            }
+            $update_['mortgage_money'] = trim($this->input->post('mortgage_money'));
+            if(!$update_['mortgage_money']){
+                return $this->fun_fail('请维护买家按揭金额!');
+            }
+        }else{
+            $update_['expect_mortgage_bank'] = trim($this->input->post('expect_mortgage_bank'));
+            if(!$update_['expect_mortgage_bank']){
+                return $this->fun_fail('请维护买家预计按揭银行!');
+            }
+            $update_['expect_mortgage_money'] = trim($this->input->post('expect_mortgage_money'));
+            if(!$update_['expect_mortgage_money']){
+                return $this->fun_fail('请维护买家预计按揭金额!');
+            }
+        }
+        $res = $this->db->where($where_)->update('foreclosure', $update_);
+        if($res){
+            $foreclosure_info = $this->db->select('foreclosure_id,bank_loan_type')->from('foreclosure')->where($where_)->get()->row_array();
+            return $this->fun_success('操作成功', $foreclosure_info);
+        }else{
+            return $this->fun_fail('操作失败!');
+        }
     }
 
     //保存身份证照片
