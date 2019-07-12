@@ -185,7 +185,6 @@
 <script src="/assets/mobiscroll/js/mobiscroll_date.js"></script>
 <script src="/assets/mobiscroll/js/mobiscroll.js"></script>
 <script type="text/javascript">
-
     var currYear = (new Date()).getFullYear(); // 获取年
     var currMonth = (new Date()).getMonth(); // 获取月
     var currDay = (new Date()).getDate(); // 获取日
@@ -218,6 +217,8 @@
         var index = layer.load(1, {
             shade: [0.1,'#fff'] //0.1透明度的白色背景
         });
+        var bank_loan_type_ = {{$f_info.bank_loan_type}};
+        var is_mortgage_ = {{$f_info.is_mortgage}};
         var borrow_money = $.trim($("#borrow_money").val());
         var expect_use_time = $.trim($("#expect_use_time").val());
         var total_price = $.trim($("#total_price").val());
@@ -253,6 +254,50 @@
             layer.close(index);
             layer.msg('请填写已付定金/首付');
             return false;
+        }
+        if(bank_loan_type_ == 2 && is_mortgage_ == 1){
+            var is_repayment = $("input[name='is_repayment']:checked").val();
+            switch (is_repayment){
+                case '1':
+                    var repayment_money = $.trim($("#repayment_money").val());
+                    if(repayment_money == '' || parseFloat(repayment_money) == 0){
+                        layer.close(index);
+                        layer.msg('请完善进入金额');
+                        return false;
+                    }
+                    break;
+                case '-1':
+                    break;
+                default:
+                    layer.msg('请选择 首付是否进入还款');
+                    return false;
+            }
+            var mortgage_bank = $.trim($("#mortgage_bank").val());
+            var mortgage_money = $.trim($("#mortgage_money").val());
+            if(mortgage_bank == ''){
+                layer.close(index);
+                layer.msg('请完善买家按揭银行');
+                return false;
+            }
+            if(mortgage_money == '' || parseFloat(mortgage_money) == 0){
+                layer.close(index);
+                layer.msg('请完善买家按揭金额');
+                return false;
+            }
+        }else{
+            var expect_mortgage_bank = $.trim($("#expect_mortgage_bank").val());
+            var expect_mortgage_money = $.trim($("#expect_mortgage_money").val());
+            if(expect_mortgage_bank == ''){
+                layer.close(index);
+                layer.msg('请完善买家预计按揭银行');
+                return false;
+            }
+            if(expect_mortgage_money == '' || parseFloat(expect_mortgage_money) == 0){
+                layer.close(index);
+                layer.msg('请完善买家预计按揭金额');
+                return false;
+            }
+
         }
         var form = document.getElementById('save_form');
 
