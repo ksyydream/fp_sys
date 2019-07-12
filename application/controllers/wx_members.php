@@ -17,6 +17,7 @@ class Wx_members extends Wx_controller {
         parent::__construct();
         $this->load->model('wx_index_model');
         $this->load->model('wx_members_model');
+        $this->load->model('foreclosure_model');
         if($this->session->userdata('wx_class') != 'members' || !$this->session->userdata('wx_m_id') ){
             redirect('wx_index/logout');
         }
@@ -32,11 +33,22 @@ class Wx_members extends Wx_controller {
 
 
     public function index() {
-        echo 'Member';
+        redirect('wx_members/foreclosure_list');
         //$this->display('users/index.html');
     }
 
+//赎楼列表
+    public function foreclosure_list($status_type = 0){
+        $this->assign('status_type', $status_type);
+        $this->display('members/foreclosure/list1.html');
+    }
 
+    public function foreclosure_list_load(){
+        $res = $this->foreclosure_model->get_list4members();
+        //die(var_dump($res));
+        $this->assign('list', $res);
+        $this->display('members/foreclosure/list_data_load.html');
+    }
 
 
 }

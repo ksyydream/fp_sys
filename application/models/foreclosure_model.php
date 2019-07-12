@@ -547,4 +547,63 @@ class Foreclosure_model extends MY_Model
         }
         return $res;
     }
+
+    //获取赎楼列表信息 members专用
+    public function get_list4members(){
+        $m_id = $this->session->userdata('wx_m_id');
+        if(!$m_id)
+            return array();
+        //需要知道 管理员的级别
+        $member_info_ = $this->db->select()->from('members')->where('m_id', $m_id)->get()->row_array();
+        if(!$member_info_)
+            return array();
+        $page = $this->input->post('page') ? $this->input->post('page') : 1;
+        $limit_ = 5;
+        $status_type_ = $this->input->post('status_type') ? $this->input->post('status_type') : 0;
+        $this->db->select('fc.*');
+        $this->db->from('foreclosure fc');
+        if($member_info_['level'] == 3){
+            $this->db->where('fc.m_id', $m_id);
+        }
+        if($member_info_['level'] == 2){
+            $this->db->join('members m', 'm.m_id = fc.m_id', 'left');
+            $this->db->where("(fc.m_id = $m_id  or m.parent_id = $m_id)");
+        }
+
+        switch($status_type_){
+            case 1:
+                //草稿箱
+                $this->db->where('fc.status', 1);
+                break;
+            case 2:
+                //待审核
+                $this->db->where('fc.status', 2);
+                break;
+            case 3:
+                //审核通过
+                $this->db->where_in('fc.status', array(3, 4));
+                break;
+            case -1:
+                //审核失败 ,包括同盾审核失败 和 总监审核失败
+                $this->db->where_in('fc.status', array(-1, -2));
+                break;
+            default:
+                $this->db->where_in('fc.status', array(1, 2, 3, 4, -1, -2));
+        }
+        $this->db->limit($limit_, ($page - 1) * $limit_ );
+        $res = $this->db->order_by('add_time', 'desc')->get()->result_array();
+        $fc_deadline_ = $this->config->item('fc_deadline'); //缓存数据使用限期,这里是秒为单位的
+        foreach($res as $k_ => $item){
+            if($item['add_time'] + $fc_deadline_ < time()){
+                $res[$k_]['show_msg'] = '已过期';
+            }else{
+                $diff_ = $item['add_time'] + $fc_deadline_ - time();
+                $day_ = intval($diff_ / (60 * 60 * 24));
+                $remain = $diff_ % 86400;
+                $hours = intval($remain/3600);
+                $res[$k_]['show_msg'] = '<span>剩余天数：</span>' . $day_ . '天' . $hours . '小时';
+            }
+        }
+        return $res;
+    }
 }
