@@ -89,6 +89,15 @@ class Wx_index extends Wx_controller {
     }
 
     public function member_login(){
+        if(IS_POST){
+            $data = $this->input->post();
+            $this->wx_fail['msg'] = '信息丢失';
+            if(!$data) {
+                $this->ajaxReturn($this->wx_fail);
+            }
+            $res = $this->wx_index_model->member_login($data);
+            $this->ajaxReturn($res);
+        }
         $this->display('admin_login.html');
     }
 

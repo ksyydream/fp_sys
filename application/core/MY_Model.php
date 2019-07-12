@@ -483,9 +483,17 @@ class MY_Model extends CI_Model{
     }
 
     //将openid其他的登录状态清楚
-    public function delOpenidById($id, $openid){
-        $this->db->where(array('user_id <>' => $id, 'openid' => $openid))->update('users', array('openid' => ''));
-        $this->db->where(array('m_id <>' => $id, 'openid' => $openid))->update('members', array('openid' => ''));
+    public function delOpenidById($id, $openid, $type){
+        if($type == 'users'){
+            //意味着是user登录
+            $this->db->where(array('user_id <>' => $id, 'openid' => $openid))->update('users', array('openid' => ''));
+            $this->db->where(array('openid' => $openid))->update('members', array('openid' => ''));
+        }
+        if($type == 'members'){
+            //意味着是memeber登录
+            $this->db->where(array('openid' => $openid))->update('users', array('openid' => ''));
+            $this->db->where(array('m_id <>' => $id, 'openid' => $openid))->update('members', array('openid' => ''));
+        }
     }
 
     //存入user的session
