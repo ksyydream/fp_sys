@@ -205,11 +205,11 @@
     $('#my-start').mobiscroll($.extend(opt['datetime'], opt['default']));
 
     $(".radio_DBY_").click(function(){
-        var type_id = $("input[name='type_id']:checked").val();
+        var type_id = $("input[name='is_repayment']:checked").val();
         if(type_id == '1'){
             $("#radio_div").show();
         }
-        if(type_id == '2'){
+        if(type_id == '-1'){
             $("#radio_div").hide();
         }
     });
