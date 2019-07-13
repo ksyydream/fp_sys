@@ -18,10 +18,8 @@ class Wx_members_model extends MY_Model
         parent::__destruct();
     }
 
-    /**
-     * 用户登录检查
-     *
-     * @return boolean
-     */
+    public function get_member_info($m_id){
+        return $this->db->select()->from('members')->where('m_id', $m_id)->get()->row_array();
+    }
 
 }
