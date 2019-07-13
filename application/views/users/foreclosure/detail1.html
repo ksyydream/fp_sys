@@ -143,35 +143,35 @@
         <div class="am-form-group" data-value="0">
         <label class="am-u-sm-10 am-form-label">一次性付款</label>
         <div class="am-u-sm-2">
-            <span class="select-span {{if $f_info.bank_loan_type|default:1 == 1 }}select-ok{{/if}}"></span>
+            <span class="select-span {{if $f_info.bank_loan_type|default:0 == 1 }}select-ok{{/if}}"></span>
         </div>
       </div>
               <div class="am-form-group" data-value="1">
         <label class="am-u-sm-10 am-form-label">商业贷款</label>
         <div class="am-u-sm-2">
-              <span class="select-span {{if $f_info.bank_loan_type|default:1 == 2 }}select-ok{{/if}}"></span>
+              <span class="select-span {{if $f_info.bank_loan_type|default:0 == 2 }}select-ok{{/if}}"></span>
         </div>
       </div>
                <div class="am-form-group" data-value="0">
         <label class="am-u-sm-10 am-form-label">组合贷款（公积金+商业贷款）</label>
         <div class="am-u-sm-2">
-                <span class="select-span {{if $f_info.bank_loan_type|default:1 == 3 }}select-ok{{/if}}"></span>
+                <span class="select-span {{if $f_info.bank_loan_type|default:0 == 3 }}select-ok{{/if}}"></span>
         </div>
       </div>
      </div>
-     <div class="showbox" {{if $f_info.bank_loan_type|default:1 == 2 }} style="display:block" {{/if}}>
+     <div class="showbox" {{if $f_info.bank_loan_type|default:0 == 2 }} style="display:block" {{/if}}>
      <p class="p-tit">按揭情况</p>
        <div class="am-fast-estimate am-fast-select">
         <div class="am-form-group">
         <label class="am-u-sm-10 am-form-label">按揭已通过</label>
         <div class="am-u-sm-2">
-            <span class="select-span {{if $f_info.is_mortgage|default:1 == 1 }}select-ok{{/if}}"></span>
+            <span class="select-span {{if $f_info.is_mortgage|default:0 == 1 }}select-ok{{/if}}"></span>
         </div>
       </div>
               <div class="am-form-group">
         <label class="am-u-sm-10 am-form-label">按揭未通过</label>
         <div class="am-u-sm-2">
-              <span class="select-span {{if $f_info.is_mortgage|default:1 == -1 }}select-ok{{/if}}"></span>
+              <span class="select-span {{if $f_info.is_mortgage|default:0 == -1 }}select-ok{{/if}}"></span>
         </div>
       </div>
                
@@ -198,7 +198,7 @@
               </div>
           </div>
       </div>
-      {{if $f_info.bank_loan_type|default:1 == 2 || $f_info.bank_loan_type|default:1 == 3}}
+      {{if $f_info.bank_loan_type|default:0 == 2 || $f_info.bank_loan_type|default:0 == 3}}
       <p class="p-tit">老贷信息</p>
       <div class="am-fast-estimate">
           <div class="am-form-group">
@@ -224,12 +224,12 @@
               <label class="am-u-sm-3 am-form-label">首付是否进入还款</label>
               <div class="am-u-sm-9">
                   <p class="am-spec-input">
-                      {{if $f_info.is_repayment|default:-1 == 1 }}是{{/if}}
-                      {{if $f_info.is_repayment|default:-1 == -1 }}否{{/if}}
+                      {{if $f_info.is_repayment|default:0 == 1 }}是{{/if}}
+                      {{if $f_info.is_repayment|default:0 == -1 }}否{{/if}}
                   </p>
               </div>
           </div>
-          {{if $f_info.is_repayment|default:-1 == 1 }}
+          {{if $f_info.is_repayment|default:0 == 1 }}
           <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">进入金额</label>
               <div class="am-u-sm-9">
@@ -241,7 +241,7 @@
       </div>
       <p class="p-tit">按揭信息</p>
       <div class="am-fast-estimate">
-          {{if $f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1}}
+          {{if $f_info.bank_loan_type|default:0 == 2 && $f_info.is_mortgage|default:0 == 1}}
           <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">买家按揭银行</label>
               <div class="am-u-sm-9">
