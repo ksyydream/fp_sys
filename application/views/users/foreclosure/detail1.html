@@ -1,0 +1,291 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>借款人基本信息</title>
+  <meta name="description" content="借款人基本信息">
+  <meta name="keywords" content="index">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="icon" type="image/png" href="/assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+  <link rel="stylesheet" href="/assets/css/amazeui.css"/>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <script type="text/javascript">
+    (function() {
+        var rem, dpr, time, doc = window.document,
+        docEl = doc.documentElement,
+        viewport = doc.querySelector('meta[name="viewport"]'),
+        zoomScale,
+        zoomScaleNum;
+        if (viewport) {            
+            zoomScale = viewport.getAttribute("content").match(/initial\-scale=(["']?)([\d\.]+)\1?/);
+            if(zoomScale){
+              zoomScaleNum = parseFloat(zoomScale[2]);
+              dpr = parseInt(1 / zoomScaleNum);
+            }
+        }
+        if (!dpr && !zoomScaleNum) {
+            var os = (window.navigator.appVersion.match(/android/gi), window.navigator.appVersion.match(/iphone/gi)),
+            dpr = window.devicePixelRatio;
+            dpr = os ? dpr >= 3 ? 3 : dpr >= 2 ? 2 : 1 : 1;
+            zoomScaleNum = 1 / dpr;
+        }
+        window.addEventListener("resize",
+            function() {
+                clearTimeout(time);
+                time = setTimeout(changeRem, 300);
+            },false);
+      //改变基准rem
+        function changeRem(){
+            var docWidth = docEl.getBoundingClientRect().width;
+            if(docWidth / dpr > 540){
+              docWidth = 540 * dpr;
+            }
+            //rem字号以320下的16px为基线进行等比缩放
+            rem = docWidth/320 * 16;
+            docEl.style.fontSize = rem + "px";
+        }
+        changeRem();
+    })();
+  </script> 
+  
+</head>
+<body>
+<div class="am-main">
+
+ 
+  <form class="am-form am-form-horizontal">
+     <p class="p-tit">渠道信息</p>
+     <div class="am-fast-estimate">
+    <div class="am-form-group">
+        {{if $user_info.type_id == 1}}
+        <label class="am-u-sm-3 am-form-label">渠道公司</label>
+        {{/if}}
+        {{if $user_info.type_id == 2}}
+        <label class="am-u-sm-3 am-form-label">直客</label>
+        {{/if}}
+      <div class="am-u-sm-9">
+            {{if $user_info.type_id == 1}}
+                <p class="am-spec-input">{{$user_info.shop_name}}</p>
+          {{/if}}
+      </div>
+    </div>
+ </div>
+      <p class="p-tit">借款人基本信息</p>
+      <div class="am-fast-estimate">
+
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">姓名</label>
+              <div class="am-u-sm-9">
+
+                  <p class="am-spec-input">{{$f_info.borrower_name|default:''}}</p>
+              </div>
+          </div>
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">身份证号</label>
+              <div class="am-u-sm-9">
+                     <p class="am-spec-input">{{$f_info.borrower_code|default:''}}</p>
+              </div>
+          </div>
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">手机号码</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.borrower_mobile|default:''}}</p>
+              </div>
+          </div>
+      </div>
+      {{if $f_info.is_marriage|default:1 == -1 }}
+      <p class="p-tit">借款人配偶基本信息</p>
+      <div class="am-fast-estimate">
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">姓名</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.borrower_spouse_name|default:''}}</p>
+              </div>
+          </div>
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">身份证号</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.borrower_spouse_code|default:''}}</p>
+              </div>
+          </div>
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">手机号码</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.borrower_spouse_mobile|default:''}}</p>
+              </div>
+          </div>
+      </div>
+      {{/if}}
+    <p class="p-tit">买方（主贷人/主证人）基本信息</p>
+     <div class="am-fast-estimate">
+
+    <div class="am-form-group">
+      <label class="am-u-sm-3 am-form-label">姓名</label>
+      <div class="am-u-sm-9">
+         <p class="am-spec-input">{{$f_info.buyer_name|default:''}}</p>
+      </div>
+    </div>
+    <div class="am-form-group">
+      <label class="am-u-sm-3 am-form-label">身份证号</label>
+      <div class="am-u-sm-9">
+       <p class="am-spec-input">{{$f_info.buyer_code|default:''}}</p>
+      </div>
+    </div>
+ </div>
+      <p class="p-tit">贷款方式</p>
+
+     <div class="am-fast-estimate am-fast-select">
+        <div class="am-form-group" data-value="0">
+        <label class="am-u-sm-10 am-form-label">一次性付款</label>
+        <div class="am-u-sm-2">
+            <span class="select-span {{if $f_info.bank_loan_type|default:1 == 1 }}select-ok{{/if}}"></span>
+        </div>
+      </div>
+              <div class="am-form-group" data-value="1">
+        <label class="am-u-sm-10 am-form-label">商业贷款</label>
+        <div class="am-u-sm-2">
+              <span class="select-span {{if $f_info.bank_loan_type|default:1 == 2 }}select-ok{{/if}}"></span>
+        </div>
+      </div>
+               <div class="am-form-group" data-value="0">
+        <label class="am-u-sm-10 am-form-label">组合贷款（公积金+商业贷款）</label>
+        <div class="am-u-sm-2">
+                <span class="select-span {{if $f_info.bank_loan_type|default:1 == 3 }}select-ok{{/if}}"></span>
+        </div>
+      </div>
+     </div>
+     <div class="showbox" {{if $f_info.bank_loan_type|default:1 == 2 }} style="display:block" {{/if}}>
+     <p class="p-tit">按揭情况</p>
+       <div class="am-fast-estimate am-fast-select">
+        <div class="am-form-group">
+        <label class="am-u-sm-10 am-form-label">按揭已通过</label>
+        <div class="am-u-sm-2">
+            <span class="select-span {{if $f_info.is_mortgage|default:1 == 1 }}select-ok{{/if}}"></span>
+        </div>
+      </div>
+              <div class="am-form-group">
+        <label class="am-u-sm-10 am-form-label">按揭未通过</label>
+        <div class="am-u-sm-2">
+              <span class="select-span {{if $f_info.is_mortgage|default:1 == -1 }}select-ok{{/if}}"></span>
+        </div>
+      </div>
+               
+     </div>
+      <p class="p-tit">借款信息</p>
+      <div class="am-fast-estimate">
+
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">借款金额</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.borrow_money|default:'-'}}万</p>
+              </div>
+          </div>
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">预计用款时间</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.expect_use_time|default:''}}</p>
+              </div>
+          </div>
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">成交总价</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.total_price|default:'-'}}万</p>
+              </div>
+          </div>
+      </div>
+      {{if $f_info.bank_loan_type|default:1 == 2 || $f_info.bank_loan_type|default:1 == 3}}
+      <p class="p-tit">老贷信息</p>
+      <div class="am-fast-estimate">
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">老贷余额</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.old_loan_balance|default:'-'}}万</p>
+              </div>
+          </div>
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">老贷机构</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.old_loan_setup|default:''}}</p>
+              </div>
+          </div>
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">已付定金/首付</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.deposit|default:'-'}}万</p>
+              </div>
+          </div>
+          {{if $f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1}}
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">首付是否进入还款</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">
+                      {{if $f_info.is_repayment|default:-1 == 1 }}是{{/if}}
+                      {{if $f_info.is_repayment|default:-1 == -1 }}否{{/if}}
+                  </p>
+              </div>
+          </div>
+          {{if $f_info.is_repayment|default:-1 == 1 }}
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">进入金额</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.repayment_money|default:'-'}}万</p>
+              </div>
+          </div>
+          {{/if}}
+          {{/if}}
+      </div>
+      <p class="p-tit">按揭信息</p>
+      <div class="am-fast-estimate">
+          {{if $f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1}}
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">买家按揭银行</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.mortgage_bank|default:''}}</p>
+              </div>
+          </div>
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">买家按揭金额</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.mortgage_money|default:'-'}}万</p>
+              </div>
+          </div>
+
+          {{else}}
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">买家预计按揭银行</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.expect_mortgage_bank|default:''}}</p>
+              </div>
+          </div>
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">买家预计按揭金额</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.expect_mortgage_money|default:'-'}}万</p>
+              </div>
+          </div>
+          {{/if}}
+          </div>
+      {{/if}}
+</div>
+
+    <a class="am-btn am-btn-register" href="/wx_users/foreclosure_detail3/{{$f_info.foreclosure_id}}">下一页</a>
+  </form>
+
+{{include file='users/public/foot.html'}}
+</div>
+<script src="/assets/js/jquery-2.2.3.min.js"></script>
+<script src="/assets/js/amazeui.js"></script>
+<script src="/assets/js/animateBackground-plugin.js"></script>
+<script src="/assets/js/DBY_common.js?v2"></script>
+<script src="/assets/js/layer/layer.js"></script>
+<script type="text/javascript">
+
+
+</script>
+</body>
+</html>

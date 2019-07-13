@@ -231,4 +231,26 @@ class Wx_users extends Wx_controller {
         $this->assign('list', $res);
         $this->display('users/foreclosure/list_data_load.html');
     }
+
+    //赎楼详情页 1
+    public function foreclosure_detail1($f_id){
+        $f_info = $this->foreclosure_model->get_foreclosure($f_id);
+        if(!$f_info || $f_info['user_id'] != $this->user_id){
+            redirect('wx_users/index'); //不是自己的工作单,就直接回到首页
+        }
+        $this->assign('f_info', $f_info);
+        $this->assign('user_info', $this->user_info);
+        $this->display('users/foreclosure/detail1.html');
+    }
+
+    //赎楼详情页 2
+    public function foreclosure_detail3($f_id){
+        $f_info = $this->foreclosure_model->get_foreclosure($f_id);
+        if(!$f_info || $f_info['user_id'] != $this->user_id){
+            redirect('wx_users/index'); //不是自己的工作单,就直接回到首页
+        }
+        $this->assign('f_info', $f_info);
+        $this->assign('user_info', $this->user_info);
+        $this->display('users/foreclosure/detail3.html');
+    }
 }
