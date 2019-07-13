@@ -104,7 +104,7 @@ class Wx_members extends Wx_controller {
         $f_info = $this->foreclosure_model->get_foreclosure($f_id);
         $this->assign('f_info', $f_info);
         $this->assign('now_time', $f_info['now_time']);
-        $this->display('users/foreclosure/step_show.html');
+        $this->display('members/foreclosure/step_show.html');
     }
 
     /**
