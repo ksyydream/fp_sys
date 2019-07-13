@@ -1,7 +1,7 @@
 {{if $list}}
 {{foreach from=$list item=item}}
 <div class="div-list-data">
-    <a herf="/wx_members/foreclosure_detail1/{{item.foreclosure_id}}" class="data-list">
+    <a herf="/wx_members/foreclosure_detail1/{{$item.foreclosure_id}}" class="data-list">
         <ul class="d-l-content listid">
             <li>
                 {{if $item.is_special == 1}}<div class="data-status specok"><i class="greenchannel"></i>绿色通道</div>{{/if}}
@@ -23,8 +23,8 @@
         <i class="am-icon-chevron"></i>
     </a>
     <div class="option-div">
-        {{if $item.status == 2}}<a href="/wx_members/foreclosure_show/{{item.foreclosure_id}}" class="option-btn">编 辑</a>{{/if}}
-        <a href="/wx_members/foreclosure_detail1/{{item.foreclosure_id}}" class="option-btn">查 看</a>
+        {{if $item.status == 2}}<a href="/wx_members/foreclosure_show/{{$item.foreclosure_id}}" class="option-btn">编 辑</a>{{/if}}
+        <a href="/wx_members/foreclosure_detail1/{{$tem.foreclosure_id}}" class="option-btn">查 看</a>
     </div>
 </div>
 {{/foreach}}
