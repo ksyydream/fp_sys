@@ -1,181 +1,155 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>借款人基本信息</title>
-  <meta name="description" content="借款人基本信息">
-  <meta name="keywords" content="index">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="icon" type="image/png" href="/assets/i/favicon.png">
-  <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
-  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-  <link rel="stylesheet" href="/assets/css/amazeui.css"/>
-  <link rel="stylesheet" href="/assets/css/app.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>借款人基本信息</title>
+    <meta name="description" content="借款人基本信息">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="icon" type="image/png" href="/assets/i/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <link rel="stylesheet" href="/assets/css/amazeui.css"/>
+    <link rel="stylesheet" href="/assets/css/app.css">
     <link rel="stylesheet" href="/assets/mobiscroll/css/mobiscroll.css">
     <link rel="stylesheet" href="/assets/mobiscroll/css/mobiscroll_date.css">
     <style>
         * { touch-action: pan-y; }
     </style>
-  <script type="text/javascript">
-    (function() {
-        var rem, dpr, time, doc = window.document,
-        docEl = doc.documentElement,
-        viewport = doc.querySelector('meta[name="viewport"]'),
-        zoomScale,
-        zoomScaleNum;
-        if (viewport) {            
-            zoomScale = viewport.getAttribute("content").match(/initial\-scale=(["']?)([\d\.]+)\1?/);
-            if(zoomScale){
-              zoomScaleNum = parseFloat(zoomScale[2]);
-              dpr = parseInt(1 / zoomScaleNum);
+    <script type="text/javascript">
+        (function() {
+            var rem, dpr, time, doc = window.document,
+                    docEl = doc.documentElement,
+                    viewport = doc.querySelector('meta[name="viewport"]'),
+                    zoomScale,
+                    zoomScaleNum;
+            if (viewport) {
+                zoomScale = viewport.getAttribute("content").match(/initial\-scale=(["']?)([\d\.]+)\1?/);
+                if(zoomScale){
+                    zoomScaleNum = parseFloat(zoomScale[2]);
+                    dpr = parseInt(1 / zoomScaleNum);
+                }
             }
-        }
-        if (!dpr && !zoomScaleNum) {
-            var os = (window.navigator.appVersion.match(/android/gi), window.navigator.appVersion.match(/iphone/gi)),
-            dpr = window.devicePixelRatio;
-            dpr = os ? dpr >= 3 ? 3 : dpr >= 2 ? 2 : 1 : 1;
-            zoomScaleNum = 1 / dpr;
-        }
-        window.addEventListener("resize",
-            function() {
-                clearTimeout(time);
-                time = setTimeout(changeRem, 300);
-            },false);
-      //改变基准rem
-        function changeRem(){
-            var docWidth = docEl.getBoundingClientRect().width;
-            if(docWidth / dpr > 540){
-              docWidth = 540 * dpr;
+            if (!dpr && !zoomScaleNum) {
+                var os = (window.navigator.appVersion.match(/android/gi), window.navigator.appVersion.match(/iphone/gi)),
+                        dpr = window.devicePixelRatio;
+                dpr = os ? dpr >= 3 ? 3 : dpr >= 2 ? 2 : 1 : 1;
+                zoomScaleNum = 1 / dpr;
             }
-            //rem字号以320下的16px为基线进行等比缩放
-            rem = docWidth/320 * 16;
-            docEl.style.fontSize = rem + "px";
-        }
-        changeRem();
-    })();
-  </script> 
-  
+            window.addEventListener("resize",
+                    function() {
+                        clearTimeout(time);
+                        time = setTimeout(changeRem, 300);
+                    },false);
+            //改变基准rem
+            function changeRem(){
+                var docWidth = docEl.getBoundingClientRect().width;
+                if(docWidth / dpr > 540){
+                    docWidth = 540 * dpr;
+                }
+                //rem字号以320下的16px为基线进行等比缩放
+                rem = docWidth/320 * 16;
+                docEl.style.fontSize = rem + "px";
+            }
+            changeRem();
+        })();
+    </script>
+
 </head>
 <body>
 <div class="am-main">
 
- 
-  <form id="save_form" class="am-form am-form-horizontal">
-      <input type="hidden" id="fc_id" name="fc_id" value="{{$f_info.foreclosure_id}}">
-    <p class="p-tit">借款信息</p>
-     <div class="am-fast-estimate">
 
-    <div class="am-form-group">
-      <label class="am-u-sm-3 am-form-label">借款金额</label>
-      <div class="am-u-sm-9">
-       <input type="text" class="ip-txt ip-txt1 js4float1" id="borrow_money" name="borrow_money" value="{{$f_info.borrow_money|default:''}}" placeholder="请输入借款金额">
-       <i class="am-es-i">万</i>
-      </div>
-    </div>
-    <div class="am-form-group">
-      <label class="am-u-sm-3 am-form-label">预计用款时间</label>
-      <div class="am-u-sm-9">
-         <input type="text" class="ip-txt ip-txt1" id="my-start" name="expect_use_time" value='{{$f_info.expect_use_time|date_format:"%Y-%m-%d"|default:""}}' placeholder="点击设置时间">
-         <i class="am-icon-chevron"></i>
-      </div>
-    </div>
-        <div class="am-form-group">
-      <label class="am-u-sm-3 am-form-label">成交总价</label>
-      <div class="am-u-sm-9">
+    <form id="save_form" class="am-form am-form-horizontal">
+        <input type="hidden" id="fc_id" name="fc_id" value="{{$f_info.foreclosure_id}}">
+        <p class="p-tit">贷款方式</p>
 
-        <input type="text" class="ip-txt ip-txt1 js4float1" id="total_price" name="total_price" value="{{$f_info.total_price|default:''}}" placeholder="请输入成交总价">
-       <i class="am-es-i">万</i>
-      </div>
-    </div>
+        <div class="am-fast-estimate">
 
- </div>  <p class="p-tit">贷款方式</p>
+            <div class="am-form-group">
+                <label class="am-u-sm-3 am-form-label">老贷余额</label>
+                <div class="am-u-sm-9">
+                    <input type="text" class="ip-txt ip-txt1 js4float1" id="old_loan_balance" name="old_loan_balance" value="{{$f_info.old_loan_balance|default:''}}" placeholder="请输入老贷余额">
+                    <i class="am-es-i">万</i>
+                </div>
+            </div>
+            <div class="am-form-group">
+                <label class="am-u-sm-3 am-form-label">老贷机构</label>
+                <div class="am-u-sm-9">
+                    <input type="text" class="ip-txt" id="old_loan_setup" name="old_loan_setup" value="{{$f_info.old_loan_setup|default:''}}" placeholder="请输入老贷机构">
+                </div>
+            </div>
+            <div class="am-form-group">
+                <label class="am-u-sm-4 am-form-label">已付定金/首付</label>
+                <div class="am-u-sm-8">
+                    <input type="text" class="ip-txt ip-txt1 js4float1" id="deposit" name="deposit" value="{{$f_info.deposit|default:''}}" placeholder="请输入金额">
+                    <i class="am-es-i">万</i>
+                </div>
+            </div>
+            {{if $f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1}}
+            <div class="am-form-group">
+                <label class="am-u-sm-8 am-form-label">首付是否进入还款</label>
+                <div class="am-u-sm-4">
 
-     <div class="am-fast-estimate">
+                    <div class="radio-input">
+                        <label class="register-type-label"><input type="radio" class="radio_DBY_" value="1" name="is_repayment" {{if $f_info.is_repayment|default:1 == 1 }}checked{{/if}}>是</input></label>
+                        <label class="register-type-label"><input type="radio" class="radio_DBY_" value="-1" name="is_repayment" {{if $f_info.is_repayment|default:1 == -1 }}checked{{/if}}>否</input></label>
+                    </div>
+                </div>
+            </div>
+            <div class="am-form-group" id="radio_div" {{if $f_info.is_repayment|default:1 == -1 }}style="display: none;"{{/if}} >
+            <label class="am-u-sm-3 am-form-label">进入金额</label>
+            <div class="am-u-sm-9">
+                <input type="text" class="ip-txt ip-txt1 js4float1" id="repayment_money" name="repayment_money" value="{{$f_info.repayment_money|default:''}}" placeholder="请输入进入金额">
+                <i class="am-es-i">万</i>
+            </div>
+        </div>
 
-    <div class="am-form-group">
-      <label class="am-u-sm-3 am-form-label">老贷余额</label>
-      <div class="am-u-sm-9">
-       <input type="text" class="ip-txt ip-txt1 js4float1" id="old_loan_balance" name="old_loan_balance" value="{{$f_info.old_loan_balance|default:''}}" placeholder="请输入老贷余额">
-       <i class="am-es-i">万</i>
-      </div>
-    </div>
-    <div class="am-form-group">
-      <label class="am-u-sm-3 am-form-label">老贷机构</label>
-      <div class="am-u-sm-9">
-         <input type="text" class="ip-txt" id="old_loan_setup" name="old_loan_setup" value="{{$f_info.old_loan_setup|default:''}}" placeholder="请输入老贷机构">
-      </div>
-    </div>
-        <div class="am-form-group">
-      <label class="am-u-sm-4 am-form-label">已付定金/首付</label>
-      <div class="am-u-sm-8">
-        <input type="text" class="ip-txt ip-txt1 js4float1" id="deposit" name="deposit" value="{{$f_info.deposit|default:''}}" placeholder="请输入金额">
-       <i class="am-es-i">万</i>
-      </div>
-    </div>
-{{if $f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1}}
-        <div class="am-form-group">
-      <label class="am-u-sm-8 am-form-label">首付是否进入还款</label>
-      <div class="am-u-sm-4">
-         
-          <div class="radio-input">
-          <label class="register-type-label"><input type="radio" class="radio_DBY_" value="1" name="is_repayment" {{if $f_info.is_repayment|default:1 == 1 }}checked{{/if}}>是</input></label>
-          <label class="register-type-label"><input type="radio" class="radio_DBY_" value="-1" name="is_repayment" {{if $f_info.is_repayment|default:1 == -1 }}checked{{/if}}>否</input></label>
-      </div>
-      </div>
-    </div>
-  <div class="am-form-group" id="radio_div" {{if $f_info.is_repayment|default:1 == -1 }}style="display: none;"{{/if}} >
-      <label class="am-u-sm-3 am-form-label">进入金额</label>
-      <div class="am-u-sm-9">
-       <input type="text" class="ip-txt ip-txt1 js4float1" id="repayment_money" name="repayment_money" value="{{$f_info.repayment_money|default:''}}" placeholder="请输入进入金额">
-       <i class="am-es-i">万</i>
-      </div>
-    </div>
-
-{{/if}}
+        {{/if}}
 </div>
- <p class="p-tit">按揭信息</p>
-      {{if $f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1}}
-      <div class="am-fast-estimate">
-          <div class="am-form-group">
-              <label class="am-u-sm-4 am-form-label">买家按揭银行</label>
-              <div class="am-u-sm-8">
-                  <input type="text" class="ip-txt" id="mortgage_bank" name="mortgage_bank" value="{{$f_info.mortgage_bank|default:''}}" placeholder="请输入按揭银行">
-              </div>
-          </div>
-          <div class="am-form-group">
-              <label class="am-u-sm-4 am-form-label">买家按揭金额</label>
-              <div class="am-u-sm-8">
-                  <input type="number" class="ip-txt ip-txt1" id="mortgage_money" name="mortgage_money" value="{{$f_info.mortgage_money|default:''}}" placeholder="请输入按揭金额">
-                  <i class="am-es-i">万</i>
-              </div>
-          </div>
-      </div>
-      {{else}}
-      <div class="am-fast-estimate">
-          <div class="am-form-group">
-              <label class="am-u-sm-5 am-form-label">买家预计按揭银行</label>
-              <div class="am-u-sm-7">
-                  <input type="text" class="ip-txt" id="expect_mortgage_bank" name="expect_mortgage_bank" value="{{$f_info.expect_mortgage_bank|default:''}}" placeholder="请输入预计按揭银行">
-              </div>
-          </div>
-          <div class="am-form-group">
-              <label class="am-u-sm-5 am-form-label">买家预计按揭金额</label>
-              <div class="am-u-sm-7">
-                  <input type="text" class="ip-txt ip-txt1 js4float1" id="expect_mortgage_money" name="expect_mortgage_money" value="{{$f_info.expect_mortgage_money|default:''}}" placeholder="请输入预计按揭金额">
-                  <i class="am-es-i">万</i>
-              </div>
-          </div>
-      </div>
-      {{/if}}
+<p class="p-tit">按揭信息</p>
+{{if $f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1}}
+<div class="am-fast-estimate">
+    <div class="am-form-group">
+        <label class="am-u-sm-4 am-form-label">买家按揭银行</label>
+        <div class="am-u-sm-8">
+            <input type="text" class="ip-txt" id="mortgage_bank" name="mortgage_bank" value="{{$f_info.mortgage_bank|default:''}}" placeholder="请输入按揭银行">
+        </div>
+    </div>
+    <div class="am-form-group">
+        <label class="am-u-sm-4 am-form-label">买家按揭金额</label>
+        <div class="am-u-sm-8">
+            <input type="number" class="ip-txt ip-txt1" id="mortgage_money" name="mortgage_money" value="{{$f_info.mortgage_money|default:''}}" placeholder="请输入按揭金额">
+            <i class="am-es-i">万</i>
+        </div>
+    </div>
+</div>
+{{else}}
+<div class="am-fast-estimate">
+    <div class="am-form-group">
+        <label class="am-u-sm-5 am-form-label">买家预计按揭银行</label>
+        <div class="am-u-sm-7">
+            <input type="text" class="ip-txt" id="expect_mortgage_bank" name="expect_mortgage_bank" value="{{$f_info.expect_mortgage_bank|default:''}}" placeholder="请输入预计按揭银行">
+        </div>
+    </div>
+    <div class="am-form-group">
+        <label class="am-u-sm-5 am-form-label">买家预计按揭金额</label>
+        <div class="am-u-sm-7">
+            <input type="text" class="ip-txt ip-txt1 js4float1" id="expect_mortgage_money" name="expect_mortgage_money" value="{{$f_info.expect_mortgage_money|default:''}}" placeholder="请输入预计按揭金额">
+            <i class="am-es-i">万</i>
+        </div>
+    </div>
+</div>
+{{/if}}
 
-    <a class="am-btn am-btn-register" id="save_btn" href="javascript:">下一步</a>
-  </form>
+<a class="am-btn am-btn-register" id="save_btn" href="javascript:">下一步</a>
+</form>
 
 
-    {{include file='members/public/foot.html'}}
+{{include file='members/public/foot.html'}}
 </div>
 <script src="/assets/js/jquery-3.2.1.min.js"></script>
 <script src="/assets/js/amazeui.js"></script>
@@ -185,23 +159,6 @@
 <script src="/assets/mobiscroll/js/mobiscroll_date.js"></script>
 <script src="/assets/mobiscroll/js/mobiscroll.js"></script>
 <script type="text/javascript">
-    var currYear = (new Date()).getFullYear(); // 获取年
-    var currMonth = (new Date()).getMonth(); // 获取月
-    var currDay = (new Date()).getDate(); // 获取日
-    var opt={};
-    opt.default = {
-        preset: 'date', //日期
-        theme: 'android-ics light', //皮肤样式
-        display: 'modal', //显示方式
-        mode: 'scroller', //日期选择模式
-        dateFormat: 'yyyy-mm-dd',
-        lang: 'zh',
-        startDay: currDay,
-        startMonth: currMonth, // 开始月份
-        startYear: currYear, //开始年份
-        endYear: currYear + 1, //结束年份
-    };
-    $('#my-start').mobiscroll($.extend(opt['datetime'], opt['default']));
 
     $(".radio_DBY_").click(function(){
         var type_id = $("input[name='is_repayment']:checked").val();
@@ -219,27 +176,10 @@
         });
         var bank_loan_type_ = {{$f_info.bank_loan_type}};
         var is_mortgage_ = {{$f_info.is_mortgage}};
-        var borrow_money = $.trim($("#borrow_money").val());
-        var expect_use_time = $.trim($("#my-start").val());
-        var total_price = $.trim($("#total_price").val());
         var old_loan_balance = $.trim($("#old_loan_balance").val());
         var old_loan_setup = $.trim($("#old_loan_setup").val());
         var deposit = $.trim($("#deposit").val());
-        if(borrow_money == '' || parseFloat(borrow_money) == 0){
-            layer.close(index);
-            layer.msg('请填写借款金额');
-            return false;
-        }
-        if(expect_use_time == ''){
-            layer.close(index);
-            layer.msg('请完善预计用款时间');
-            return false;
-        }
-        if(total_price == '' || parseFloat(total_price) == 0){
-            layer.close(index);
-            layer.msg('请填写成交总价');
-            return false;
-        }
+
         if(old_loan_balance == '' || parseFloat(old_loan_balance) == 0){
             layer.close(index);
             layer.msg('请填写老贷余额');
