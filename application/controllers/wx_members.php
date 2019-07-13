@@ -53,7 +53,7 @@ class Wx_members extends Wx_controller {
     //检查 管理员 是否可以修改赎楼业务
     //只有总监可以修改和审核 , 也就是只有level是2的用户,并且是关联的总监才有权限
     private function check_foreclosure_edit($f_id = 0){
-        $fc_deadline_ = $this->config->item('fc_deadline'); //缓存数据使用限期,这里是秒为单位的
+        //$fc_deadline_ = $this->config->item('fc_deadline'); //缓存数据使用限期,这里是秒为单位的
         $f_info = $this->foreclosure_model->get_foreclosure($f_id);
         $m_info = $this->m_info;
         if(IS_POST){
@@ -123,7 +123,7 @@ class Wx_members extends Wx_controller {
         $this->check_foreclosure_edit($f_id); //检查权限
         $f_info = $this->foreclosure_model->get_foreclosure($f_id);
         $this->assign('f_info', $f_info);
-        $this->display('users/foreclosure/step2.html');
+        $this->display('members/foreclosure/step2.html');
     }
 
     /**
@@ -145,7 +145,7 @@ class Wx_members extends Wx_controller {
             //redirect('wx_users/foreclosure_s4/' . $f_id); //如果是一次性付款 不需要填写此页面
         }
         $this->assign('f_info', $f_info);
-        $this->display('users/foreclosure/step3.html');
+        $this->display('members/foreclosure/step3.html');
     }
 
     /**
@@ -164,7 +164,7 @@ class Wx_members extends Wx_controller {
         $f_info = $this->foreclosure_model->get_foreclosure($f_id);
         $this->buildWxData();
         $this->assign('f_info', $f_info);
-        $this->display('users/foreclosure/step4.html');
+        $this->display('members/foreclosure/step4.html');
     }
 
     /**
@@ -185,7 +185,7 @@ class Wx_members extends Wx_controller {
         $this->buildWxData();
         $this->assign('f_info', $f_info);
         $this->assign('property_img_list', $property_img_list);
-        $this->display('users/foreclosure/step5.html');
+        $this->display('members/foreclosure/step5.html');
     }
 
     /**
@@ -206,7 +206,7 @@ class Wx_members extends Wx_controller {
         $this->buildWxData();
         $this->assign('f_info', $f_info);
         $this->assign('credit_img_list', $credit_img_list);
-        $this->display('users/foreclosure/step6.html');
+        $this->display('members/foreclosure/step6.html');
     }
 
 
