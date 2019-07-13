@@ -227,13 +227,12 @@ class Wx_users extends Wx_controller {
 
     public function foreclosure_list_load(){
         $res = $this->foreclosure_model->get_list4users();
-        //die(var_dump($res));
         $this->assign('list', $res);
         $this->display('users/foreclosure/list_data_load.html');
     }
 
     //赎楼详情页 1
-    public function foreclosure_detail1($f_id){
+    public function foreclosure_detail1($f_id = 0){
         $f_info = $this->foreclosure_model->get_foreclosure($f_id);
         if(!$f_info || $f_info['user_id'] != $this->user_id){
             redirect('wx_users/index'); //不是自己的工作单,就直接回到首页
@@ -243,8 +242,8 @@ class Wx_users extends Wx_controller {
         $this->display('users/foreclosure/detail1.html');
     }
 
-    //赎楼详情页 2
-    public function foreclosure_detail3($f_id){
+    //赎楼详情页 身份证
+    public function foreclosure_detail3($f_id = 0){
         $f_info = $this->foreclosure_model->get_foreclosure($f_id);
         if(!$f_info || $f_info['user_id'] != $this->user_id){
             redirect('wx_users/index'); //不是自己的工作单,就直接回到首页
@@ -252,5 +251,33 @@ class Wx_users extends Wx_controller {
         $this->assign('f_info', $f_info);
         $this->assign('user_info', $this->user_info);
         $this->display('users/foreclosure/detail3.html');
+    }
+
+    //赎楼详情页 房产证
+    public function foreclosure_detail4($f_id = 0){
+        $f_info = $this->foreclosure_model->get_foreclosure($f_id);
+        if(!$f_info || $f_info['user_id'] != $this->user_id){
+            redirect('wx_users/index'); //不是自己的工作单,就直接回到首页
+        }
+        $property_img_list = $this->foreclosure_model->get_property_img($f_id);
+        //$this->buildWxData();
+        $this->assign('f_info', $f_info);
+        $this->assign('property_img_list', $property_img_list);
+        $this->assign('user_info', $this->user_info);
+        $this->display('users/foreclosure/detail4.html');
+    }
+
+    //赎楼详情页 房产证
+    public function foreclosure_detail5($f_id = 0){
+        $f_info = $this->foreclosure_model->get_foreclosure($f_id);
+        if(!$f_info || $f_info['user_id'] != $this->user_id){
+            redirect('wx_users/index'); //不是自己的工作单,就直接回到首页
+        }
+        $credit_img_list = $this->foreclosure_model->get_credit_img($f_id);
+        //$this->buildWxData();
+        $this->assign('f_info', $f_info);
+        $this->assign('credit_img_list', $credit_img_list);
+        $this->assign('user_info', $this->user_info);
+        $this->display('users/foreclosure/detail5.html');
     }
 }
