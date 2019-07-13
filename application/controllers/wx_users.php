@@ -106,6 +106,7 @@ class Wx_users extends Wx_controller {
         $this->check_foreclosure_edit($f_id); //检查权限
         $f_info = $this->foreclosure_model->get_foreclosure($f_id);
         $this->assign('f_info', $f_info);
+        $this->assign('now_time', $f_info['now_time']);
         $this->display('users/foreclosure/step_show.html');
     }
 
