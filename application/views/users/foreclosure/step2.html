@@ -14,6 +14,8 @@
   <meta name="apple-mobile-web-app-title" content="Amaze UI" />
   <link rel="stylesheet" href="/assets/css/amazeui.css"/>
   <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" href="/assets/mobiscroll/css/mobiscroll.css">
+    <link rel="stylesheet" href="/assets/mobiscroll/css/mobiscroll_date.css">
   <script type="text/javascript">
     (function() {
         var rem, dpr, time, doc = window.document,
@@ -117,7 +119,34 @@
                
      </div>
 </div>
-    <a class="am-btn am-btn-register" id="save_btn" href="javascript:">下一步</a>
+      <p class="p-tit">借款信息</p>
+      <div class="am-fast-estimate">
+
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">借款金额</label>
+              <div class="am-u-sm-9">
+                  <input type="text" class="ip-txt ip-txt1 js4float1" id="borrow_money" name="borrow_money" value="{{$f_info.borrow_money|default:''}}" placeholder="请输入借款金额">
+                  <i class="am-es-i">万</i>
+              </div>
+          </div>
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">预计用款时间</label>
+              <div class="am-u-sm-9">
+                  <input type="text" class="ip-txt ip-txt1" id="my-start" name="expect_use_time" value='{{$f_info.expect_use_time|date_format:"%Y-%m-%d"|default:""}}' placeholder="点击设置时间">
+                  <i class="am-icon-chevron"></i>
+              </div>
+          </div>
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">成交总价</label>
+              <div class="am-u-sm-9">
+
+                  <input type="text" class="ip-txt ip-txt1 js4float1" id="total_price" name="total_price" value="{{$f_info.total_price|default:''}}" placeholder="请输入成交总价">
+                  <i class="am-es-i">万</i>
+              </div>
+          </div>
+
+      </div>
+      <a class="am-btn am-btn-register" id="save_btn" href="javascript:">下一步</a>
   </form>
 
 </div>
@@ -127,12 +156,31 @@
 <script src="/assets/js/animateBackground-plugin.js"></script>
     <script src="/assets/js/DBY_common.js?v2"></script>
     <script src="/assets/js/layer/layer.js"></script>
+<script src="/assets/mobiscroll/js/mobiscroll_date.js"></script>
+<script src="/assets/mobiscroll/js/mobiscroll.js"></script>
 <script type="text/javascript">
     //history.pushState(null, null, document.URL);
     //window.addEventListener('popstate', function () {
     //    layer.msg('不可回退');
     //    history.pushState(null, null, document.URL);
     //});
+    var currYear = (new Date()).getFullYear(); // 获取年
+    var currMonth = (new Date()).getMonth(); // 获取月
+    var currDay = (new Date()).getDate(); // 获取日
+    var opt={};
+    opt.default = {
+        preset: 'date', //日期
+        theme: 'android-ics light', //皮肤样式
+        display: 'modal', //显示方式
+        mode: 'scroller', //日期选择模式
+        dateFormat: 'yyyy-mm-dd',
+        lang: 'zh',
+        startDay: currDay,
+        startMonth: currMonth, // 开始月份
+        startYear: currYear, //开始年份
+        endYear: currYear + 1, //结束年份
+    };
+    $('#my-start').mobiscroll($.extend(opt['datetime'], opt['default']));
   $(".am-form-group").click(function() {
     $(this).parent(".am-fast-select").find(".select-span").removeClass("select-ok");
       $(this).find(".select-span").addClass("select-ok");
@@ -158,7 +206,9 @@
 
       var buyer_name = $.trim($("#buyer_name").val());
       var buyer_code = $.trim($("#buyer_code").val());
-
+      var borrow_money = $.trim($("#borrow_money").val());
+      var expect_use_time = $.trim($("#my-start").val());
+      var total_price = $.trim($("#total_price").val());
       if(buyer_name == ''){
           layer.close(index);
           layer.msg('姓名不能为空');
@@ -187,8 +237,24 @@
               layer.msg('请选择贷款方式');
               return false;
       }
+      if(borrow_money == '' || parseFloat(borrow_money) == 0){
+          layer.close(index);
+          layer.msg('请填写借款金额');
+          return false;
+      }
+      if(expect_use_time == ''){
+          layer.close(index);
+          layer.msg('请完善预计用款时间');
+          return false;
+      }
+      if(total_price == '' || parseFloat(total_price) == 0){
+          layer.close(index);
+          layer.msg('请填写成交总价');
+          return false;
+      }
       $("#is_mortgage").val(is_mortgage);
       $("#bank_loan_type").val(bank_loan_type);
+
       var form = document.getElementById('save_form');
 
       var formdata = new FormData(form);

@@ -161,7 +161,10 @@ class Foreclosure_model extends MY_Model
             'buyer_name' => $this->input->post('buyer_name'),
             'buyer_code' => $this->input->post('buyer_code'),
             'bank_loan_type' => $this->input->post('bank_loan_type'),
-            'is_mortgage' => $this->input->post('is_mortgage')
+            'is_mortgage' => $this->input->post('is_mortgage'),
+            'borrow_money' => $this->input->post('borrow_money'),
+            'expect_use_time' => $this->input->post('expect_use_time'),
+            'total_price' => $this->input->post('total_price'),
         );
         $where_ = array(
             'foreclosure_id' => $fc_id
@@ -179,7 +182,7 @@ class Foreclosure_model extends MY_Model
         }
 
 
-        if(!$update_['buyer_name'] || !$update_['buyer_code'] || !$update_['bank_loan_type'] || !$update_['is_mortgage'])
+        if(!$update_['borrow_money'] || !$update_['expect_use_time'] || !$update_['total_price'] || !$update_['buyer_name'] || !$update_['buyer_code'] || !$update_['bank_loan_type'] || !$update_['is_mortgage'])
             return $this->fun_fail('信息不完善');
         if(!is_idcard($update_['buyer_code']))
             return $this->fun_fail('身份证号码不规范');
@@ -211,9 +214,6 @@ class Foreclosure_model extends MY_Model
             return $this->fun_fail('一次性付款,不需要维护此页面,请退出后重新维护');
         }
         $update_ = array(
-            'borrow_money' => $this->input->post('borrow_money'),
-            'expect_use_time' => $this->input->post('expect_use_time'),
-            'total_price' => $this->input->post('total_price'),
             'old_loan_balance' => trim($this->input->post('old_loan_balance')),
             'old_loan_setup' => trim($this->input->post('old_loan_setup')),
             'deposit' => trim($this->input->post('deposit')),
@@ -234,7 +234,7 @@ class Foreclosure_model extends MY_Model
         }
 
 
-        if(!$update_['borrow_money'] || !$update_['expect_use_time'] || !$update_['total_price'] || !$update_['old_loan_balance'] || !$update_['old_loan_setup'] || !$update_['deposit'])
+        if(!$update_['old_loan_balance'] || !$update_['old_loan_setup'] || !$update_['deposit'])
             return $this->fun_fail('信息不完善');
 
         if($f_info_['bank_loan_type'] == 2 && $f_info_['is_mortgage'] == 1){
