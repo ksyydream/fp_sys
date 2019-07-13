@@ -106,6 +106,19 @@ class Sms_model extends MY_Model
         if(!isset($ali_templateCode[$type])){
             return $this->fun_fail('请求类型不存在');
         }
+        //当$type=2时,也就是登录时判断下,账号是否存在
+        if($type == 2){
+            if($this->input->post('sms_class') == 'u'){
+                $check_info_ = $this->db->select()->from('users')->where('mobile', $mobile)->get()->row_array();
+                if(!$check_info_)
+                    return $this->fun_fail('账号不存在,请先注册!');
+            }
+            if($this->input->post('sms_class') == 'm'){
+                $check_info_ = $this->db->select()->from('members')->where('mobile', $mobile)->get()->row_array();
+                if(!$check_info_)
+                    return $this->fun_fail('账号不存在,请先注册!');
+            }
+        }
         $sms_log = $this->db->select('*')->from('sms_log')->where(array('mobile' => $mobile, 'status' => 1))->limit(1)->order_by('add_time','desc')->get()->row_array();
         if($sms_log){
             $sms_time_out = $this->config->item('sms_time_out');

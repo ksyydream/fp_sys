@@ -109,7 +109,7 @@
             url:'/wx_api/sendSms?t='+Math.random(),
             type:'get',
             dataType:'json',
-            data:{type:'2', mobile:mo},
+            data:{type:'2', mobile:mo, sms_class:'m'},
             success:function(res){
                 if(res.status==1){
                     timer();
