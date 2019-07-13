@@ -310,7 +310,7 @@ class Foreclosure_model extends MY_Model
                 return $this->fun_fail('请上传借款人身份证!');
             }
         }
-        if($f_info_['is_mortgage'] == 1){
+        if($f_info_['borrower_marriage'] == 1){
             if($borrower_spouse_img_SFZ = $this->input->post('borrower_spouse_img_SFZ')){
                 $update_['borrower_spouse_img_SFZ'] = $this->getmedia($borrower_spouse_img_SFZ, $f_info_['work_no'], $file_);
                 if(!@file_get_contents('./upload_files/' . $file_. '/'. $f_info_['work_no'] . '/' . $update_['borrower_spouse_img_SFZ'])){
