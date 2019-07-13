@@ -23,7 +23,7 @@ class Wx_controller extends MY_Controller
         if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
             $this->get_openid();
         }else{
-            $openid = 'oFzKgwbFEyC40jU6bS_HQ5sxM4X8';
+            $openid = 'xxx001';
             $this->session->set_userdata('openid', $openid);
         }
 
