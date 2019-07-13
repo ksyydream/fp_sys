@@ -63,7 +63,7 @@
     <p class="pTit">上传借款人身份证正面图片资料</p>
     <p class="pTxt"><span class="tips-icon"></span>请保证上传图片边框完整，图片清晰。</p>
    </div>
-      <div class="upid">
+      <div class="upid DBY_img_div">
         <a href="javascript:;" class="upload_click">
             {{if $f_info.borrower_img_SFZ|strip == ''}}
             <img src="/assets/i/id_upload.png" alt="">
@@ -76,7 +76,7 @@
     <p class="pTit">上传借款人配偶身份证正面图片资料</p>
     <p class="pTxt"><span class="tips-icon"></span>请保证上传图片边框完整，图片清晰。</p>
    </div>
-       <div class="upid">
+       <div class="upid DBY_img_div">
         <a href="javascript:;" class="upload_click">
             {{if $f_info.borrower_spouse_img_SFZ|strip == ''}}
             <img src="/assets/i/id_upload.png" alt="">
@@ -94,8 +94,37 @@
 <script src="/assets/js/animateBackground-plugin.js"></script>
 <script src="/assets/js/DBY_common.js?v2"></script>
 <script src="/assets/js/layer/layer.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script type="text/javascript">
+    function funcReadImgInfo(){
 
+        var imgs = [];
+
+        var imgObj = $(".DBY_img_div img");//这里改成相应的对象
+
+        for(var i=0; i<imgObj.length; i++){
+
+            imgs.push(imgObj.eq(i).attr('src'));
+
+            imgObj.eq(i).click(function(){
+
+                var nowImgurl = $(this).attr('src');
+
+                WeixinJSBridge.invoke("imagePreview",{
+
+                    "urls":imgs,
+
+                    "current":nowImgurl
+
+                });
+
+            });
+
+        }
+
+    }
+
+    funcReadImgInfo();
 
 </script>
 </body>

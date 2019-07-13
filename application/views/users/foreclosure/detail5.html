@@ -65,7 +65,7 @@
    </div>
      <div class="upload-credit">
          {{foreach from=$credit_img_list item=item}}
-         <div class="upid">
+         <div class="upid DBY_img_div">
              <a href="javascript:void(0)" class="upload_click"><img src="/upload_files/foreclosure/{{$f_info.work_no}}/{{$item.file_name}}" alt=""></a>
          </div>
          {{/foreach}}
@@ -79,9 +79,38 @@
 <script src="/assets/js/animateBackground-plugin.js"></script>
 <script src="/assets/js/DBY_common.js?v2"></script>
 <script src="/assets/js/layer/layer.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script type="text/javascript">
 
+    function funcReadImgInfo(){
 
+        var imgs = [];
+
+        var imgObj = $(".DBY_img_div img");//这里改成相应的对象
+
+        for(var i=0; i<imgObj.length; i++){
+
+            imgs.push(imgObj.eq(i).attr('src'));
+
+            imgObj.eq(i).click(function(){
+
+                var nowImgurl = $(this).attr('src');
+
+                WeixinJSBridge.invoke("imagePreview",{
+
+                    "urls":imgs,
+
+                    "current":nowImgurl
+
+                });
+
+            });
+
+        }
+
+    }
+
+    funcReadImgInfo();
 </script>
 </body>
 </html>
