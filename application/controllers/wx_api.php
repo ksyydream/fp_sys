@@ -32,6 +32,11 @@ class Wx_api extends CI_controller {
     }
 
     public function sendSms(){
+        if(!$this->session->userdata('openid')){
+            $this->return_success['msg'] = '成功!';
+            $this->ajaxReturn($this->return_success);
+        }
+
         $type = $this->input->get('type');
         $mobile = $this->input->get('mobile');
         if(!$mobile){
