@@ -175,7 +175,7 @@
   </form>
 
 
-    {{include file='users/public/foot.html'}}
+    {{include file='members/public/foot.html'}}
 </div>
 <script src="/assets/js/jquery-3.2.1.min.js"></script>
 <script src="/assets/js/amazeui.js"></script>
@@ -304,7 +304,7 @@
         var formdata = new FormData(form);
         $.ajax({
             type : "POST",
-            url : "/wx_users/foreclosure_s3",
+            url : "/wx_members/foreclosure_s3",
             data : formdata,
             async: false,
             cache: false,
@@ -313,7 +313,7 @@
             success : function(data) {
                 var return_ = JSON.parse(data)
                 if(return_.status == 1){
-                    var url = '/wx_users/foreclosure_s4/' + return_.result.foreclosure_id;
+                    var url = '/wx_members/foreclosure_s4/' + return_.result.foreclosure_id;
                     window.location.replace(url);
                 }else{
                     layer.close(index);

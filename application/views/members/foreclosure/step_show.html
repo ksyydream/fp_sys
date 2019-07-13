@@ -121,7 +121,7 @@
   </form>
 
 
-    {{include file='public/foot.html'}}
+    {{include file='members/public/foot.html'}}
 </div>
 <script src="/assets/js/jquery-2.2.3.min.js"></script>
 <script src="/assets/js/amazeui.js"></script>
@@ -132,7 +132,7 @@
 <script type="text/javascript">
 
     $("#save_btn").click(function(){
-        var url = '/wx_users/foreclosure_td/{{$f_info.foreclosure_id}}';
+        var url = '/wx_members/foreclosure_s2/{{$f_info.foreclosure_id}}';
         window.location.replace(url);
     })
 </script>

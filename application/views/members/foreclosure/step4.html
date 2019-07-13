@@ -92,7 +92,7 @@
       {{/if}}
        <a class="am-btn am-btn-register" id="save_btn" href="javascript:">下一步</a>
   </form>
-    {{include file='users/public/foot.html'}}
+    {{include file='members/public/foot.html'}}
 </div>
 <script src="/assets/js/jquery-2.2.3.min.js"></script>
 <script src="/assets/js/layer/layer.js"></script>
@@ -166,7 +166,7 @@
         var formdata = new FormData(form);
         $.ajax({
             type : "POST",
-            url : "/wx_users/foreclosure_s4",
+            url : "/wx_members/foreclosure_s4",
             data : formdata,
             async: false,
             cache: false,
@@ -175,7 +175,7 @@
             success : function(data) {
                 var return_ = JSON.parse(data)
                 if(return_.status == 1){
-                    var url = '/wx_users/foreclosure_s5/' + return_.result.foreclosure_id;
+                    var url = '/wx_members/foreclosure_s5/' + return_.result.foreclosure_id;
                     window.location.replace(url);
                 }else{
                     layer.close(index);
