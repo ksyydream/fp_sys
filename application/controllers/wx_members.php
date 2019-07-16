@@ -35,8 +35,20 @@ class Wx_members extends Wx_controller {
 
 
     public function index() {
-        redirect('wx_members/foreclosure_list');
-        //$this->display('users/index.html');
+        redirect('wx_members/person_info');
+        //$this->display('members/index.html');
+    }
+
+    public function person_info(){
+        $this->display('members/person_info.html');
+    }
+
+    public function create_RQimg(){
+        $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('appsecret')));
+        $access_token = $this->wxjssdk_th->wxgetAccessToken();
+        $img_url = $this->get_or_create_ticket($access_token, 'QR_STR_SCENE', $this->m_info['invite_code']);
+        $this->cismarty->assign('img_url',$img_url);
+        $this->cismarty->display('members/wx_QRimg.html');
     }
 
     //赎楼列表
