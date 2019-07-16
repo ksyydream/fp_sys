@@ -208,8 +208,7 @@ $("#save_btn").click(function(){
             layer.msg('网络异常!');
         }
     });
-
-    $('#doc-modal-1').on('close:modal:amui', function(){
+    $(document).on('close.modal.amui', '#doc-modal-1', function(e) {
         var url = '/wx_members/foreclosure_list'; //先返回首页,以后返回列表页
         window.location.replace(url);
     });
