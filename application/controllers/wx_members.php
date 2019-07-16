@@ -30,6 +30,7 @@ class Wx_members extends Wx_controller {
         if($this->m_info['status'] != 1){
             redirect('wx_index/logout');
         }
+        $this->assign('m_info', $this->m_info);
     }
 
 
@@ -210,6 +211,7 @@ class Wx_members extends Wx_controller {
         $this->display('members/foreclosure/step6.html');
     }
 
+    //赎楼详情页面 公共验证
     private function foreclosure_detail_common($f_id = 0){
         $f_info = $this->foreclosure_model->get_foreclosure($f_id);
         if(!$f_info){
@@ -223,6 +225,15 @@ class Wx_members extends Wx_controller {
         $manger_info = $this->wx_members_model->get_member_info($f_info['m_id']);
         if($f_info['m_id'] != $m_info['m_id'] && $manger_info['parent_id'] != $m_info['m_id']){
             redirect('wx_members/foreclosure_list'); //不是自己的工作单,就直接回到首页
+        }
+        //如果是审核页面detail6,则需要额外的验证
+        if($this->uri->segment(2) == 'foreclosure_detail6'){
+            if($m_info['level'] != 2){
+                redirect('wx_members/foreclosure_list'); //不是总监,就直接回到首页
+            }
+            if($f_info['status'] != 2){
+                redirect('wx_members/foreclosure_list'); //赎楼不是待审核,直接回到首页
+            }
         }
         return true;
     }
@@ -252,6 +263,14 @@ class Wx_members extends Wx_controller {
         $credit_img_list = $this->foreclosure_model->get_credit_img($f_id);
         $this->assign('credit_img_list', $credit_img_list);
         $this->display('members/foreclosure/detail5.html');
+    }
+
+    //赎楼审核页面
+    public function foreclosure_detail6($f_id = 0){
+        $this->foreclosure_detail_common($f_id);
+        $credit_img_list = $this->foreclosure_model->get_credit_img($f_id);
+        $this->assign('credit_img_list', $credit_img_list);
+        $this->display('members/foreclosure/detail6.html');
     }
 
 

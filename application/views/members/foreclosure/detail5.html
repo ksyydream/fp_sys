@@ -70,6 +70,9 @@
          </div>
          {{/foreach}}
      </div>
+      {{if $f_info.status == 2 && $m_info.level == 2}}
+      <a class="am-btn am-btn-register" href="/wx_members/foreclosure_detail6/{{$f_info.foreclosure_id}}">审核页面</a>
+      {{/if}}
        <a class="am-btn am-btn-register" href="/wx_members/index">回到首页</a>
   </form>
     {{include file='members/public/foot.html'}}
