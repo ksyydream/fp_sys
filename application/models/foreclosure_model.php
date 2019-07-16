@@ -680,7 +680,7 @@ class Foreclosure_model extends MY_Model
             'is_special' => 1,
             'special_time' => time()
         );
-        $this->db->where(array('foreclosure_id' => $f_id, 'status' => 2))->update('foreclosure', $update_);
+        $this->db->where(array('foreclosure_id' => $f_id, 'status' => -1))->update('foreclosure', $update_);
         return $this->fun_success('操作成功');
     }
 }
