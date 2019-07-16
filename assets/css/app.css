@@ -97,6 +97,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 
 .am-form .am-u-sm-9{ position: relative;}
 .am-form .am-icon-chevron{position: absolute;right:1rem;top:.8rem; width: .4rem;height: 1rem; background: url(../../assets/i/arrow3.png) no-repeat; background-size: 100% 100%;}
+.am-form .am-icon-chevron1{width: .5rem;}
 .am-show-btn{border-bottom:1px solid #e5e5e5; display: block; height: 2.3rem; line-height: 2.3rem; background:#fff;  color: #f6a726; font-size: 16px; width: 100%;}
 .am-show-btn-p{ position: relative;font-size: .8rem; text-align: center;}
 .am-show-btn-p:after{margin-left: .5rem; position: absolute;top:1rem; content: ""; width: .6rem;height: 1rem; background: url(../../assets/i/arrow2.png) no-repeat; background-size: 100%; display: inline-block;}
@@ -419,3 +420,15 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-btn-nopass-on{color: #e15616;border:1px solid #e15616;}
 .am-btn-nopass-on:before{background: url(../../assets/i/v_icon6.jpg) no-repeat;background-size: 100% 100%;}
 .close_btn{position: absolute; right:0;top:0; width:24px; height:24px;background: url(../../assets/i/delete.png) no-repeat;background-size: 100% 100%; top:8px; right:12px;}
+
+.up-zx{overflow: hidden;zoom:1;}
+.submit_ok{ width:20%;margin-left:40%;}.submit_ok img{width: 100%;}
+.confrim-submit-bd{overflow: hidden; margin: 1rem 8% 0;}
+.confrim-submit-bd .am-btn{ width:100px; height: 28px; display: block; font-size: .7rem;border:1px solid #d9d9d9; color: #d9d9d9; line-height: 28px; border-radius: 15px; padding:0;}
+.confrim-submit-bd .am-btn-ind{float: left; }.confrim-submit-bd .am-btn-list{float: right; }
+
+.info-pic{background: #fff; text-align: center;margin-bottom: 1rem;height: 150px;padding:1rem 0;}
+/*.info-pic-inner{margin: }*/
+.weixin-pic{width:60px; height: 60px; margin:0 auto .3rem;}.weixin-pic img{width: 100%;border-radius: 30px;}
+.weixin-nick,.weixin-adress{display: block;text-align: center; color: #333;}.weixin-adress{ font-size: .6rem; color: #666361;}
+.am-fast-estimate1{margin-bottom: .8rem;}
