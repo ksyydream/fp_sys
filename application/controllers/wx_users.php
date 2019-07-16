@@ -30,11 +30,16 @@ class Wx_users extends Wx_controller {
             redirect('wx_index/logout');
         }
         $this->assign('controller_name', 'wx_users');
+        $this->assign('user_info', $this->user_info);
     }
 
 
     public function index() {
         $this->display('users/index.html');
+    }
+
+    public function person_info(){
+        $this->display('users/user_info.html');
     }
 
     //检查用户是否可以修改赎楼业务
