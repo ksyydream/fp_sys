@@ -652,7 +652,31 @@ class Foreclosure_model extends MY_Model
                 return $this->fun_fail('请选择审核结果!');
         }
         $this->db->where(array('foreclosure_id' => $f_id, 'status' => 2))->update('foreclosure', $update_);
-        $this->wxpost('', '', $f_info['user_id'], $this->config->item('img_url_DBY') . '/wx_users/foreclosure_detail7/' . $f_id);
+        if($update_['status'] == 3){
+            $data_msg = array(
+                'first' => array(
+                    'value' => "赎楼工作单".$f_info['work_no']."审核通过!",
+                    'color' => '#FF0000'
+                ),
+                'keyword1' => array(
+                    'value' => '赎楼工作单',
+                    'color' => '#FF0000'
+                ),
+                'keyword2' => array(
+                    'value' => '审核通过',
+                    'color' => '#FF0000'
+                ),
+                'keyword3' => array(
+                    'value' => date('Y-m-d H:i:s'),
+                    'color' => '#FF0000'
+                ),
+                'remark' => array(
+                    'value' => '感谢您对我们工作的信任,请点击查看需要携带的资料!',
+                    'color' => '#FF0000'
+                )
+            );
+            $this->wxpost($this->config->item('WX_YY'), $data_msg, $f_info['user_id'], $this->config->item('img_url_DBY') . '/wx_users/foreclosure_detail7/' . $f_id);
+        }
         return $this->fun_success('审核成功', array('foreclosure_id' => $f_id));
     }
 
