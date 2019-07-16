@@ -654,4 +654,29 @@ class Foreclosure_model extends MY_Model
         $this->db->where(array('foreclosure_id' => $f_id, 'status' => 2))->update('foreclosure', $update_);
         return $this->fun_success('审核成功', array('foreclosure_id' => $f_id));
     }
+
+    public function foreclosure_special($m_info){
+        $f_id = $this->input->post('fc_id');
+        if(!$f_id)
+            return $this->fun_fail('此赎楼业务不存在!');
+        $f_info = $this->get_foreclosure($f_id);
+        if(!$f_info)
+            return $this->fun_fail('此赎楼业务不存在!');
+        if(!in_array($f_info['status'], array(-1)))
+            return $this->fun_fail('只有同盾审核失败的才可设置 绿色通道!');
+        if($m_info['level'] != 2)
+            return $this->fun_fail('只有总监可以审核!');
+        $this->load->model('wx_members_model');
+        $manger_info = $this->wx_members_model->get_member_info($f_info['m_id']);
+        if($f_info['m_id'] != $m_info['m_id'] && $manger_info['parent_id'] != $m_info['m_id']){
+            return $this->fun_fail('您无权限审核此赎楼业务!');
+        }
+        $update_ = array(
+            'status' => 1,
+            'is_special' => 1,
+            'special_time' => time()
+        );
+        $this->db->where(array('foreclosure_id' => $f_id, 'status' => 2))->update('foreclosure', $update_);
+        return $this->fun_success('操作成功');
+    }
 }

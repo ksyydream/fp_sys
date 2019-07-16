@@ -327,7 +327,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 
 .am-form .am-spec-txt{padding: 0; text-align: left; color:#26304e;}
 .am-btn-register{font-size:.8rem;margin:1rem auto; width: 16rem; background: #4c33ff; color:#fff; height: 2rem; border-radius: 1rem; display: block;}
-
+.am-btn-success{font-size:.8rem;margin:1rem auto; width: 16rem; background: #429842; color:#fff; height: 2rem; border-radius: 1rem; display: block;}
 .wid100 img{width: 100%;}
 
 .ind-btn{width: 80%; position: absolute; left:10%;top:13rem;}

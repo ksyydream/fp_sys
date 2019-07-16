@@ -273,10 +273,15 @@ class Wx_members extends Wx_controller {
         $this->display('members/foreclosure/detail6.html');
     }
 
+    //赎楼审核
     public function foreclosure_audit(){
         $res = $this->foreclosure_model->foreclosure_audit($this->m_info);
         $this->ajaxReturn($res);
     }
 
-
+    //赎楼 设置绿色通道
+    public function foreclosure_special(){
+        $res = $this->foreclosure_model->foreclosure_special($this->m_info);
+        $this->ajaxReturn($res);
+    }
 }
