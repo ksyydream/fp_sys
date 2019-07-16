@@ -671,6 +671,10 @@ class Foreclosure_model extends MY_Model
         if($f_info['m_id'] != $m_info['m_id'] && $manger_info['parent_id'] != $m_info['m_id']){
             return $this->fun_fail('您无权限审核此赎楼业务!');
         }
+        $fc_deadline_ = $this->config->item('fc_deadline'); //缓存数据使用限期,这里是秒为单位的
+        if($f_info['add_time'] + $fc_deadline_ < time()){
+            return $this->fun_fail('赎楼工作单 同盾审核时效已过期!'); //如果工作单不在草稿箱内,或者已经过期,就到详情页面
+        }
         $update_ = array(
             'status' => 1,
             'is_special' => 1,
