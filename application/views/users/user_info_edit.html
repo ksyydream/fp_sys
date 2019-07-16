@@ -14,6 +14,12 @@
   <meta name="apple-mobile-web-app-title" content="Amaze UI" />
   <link rel="stylesheet" href="/assets/css/amazeui.css"/>
   <link rel="stylesheet" href="/assets/css/app.css?v3">
+    <style>
+        /*地址选择*/
+        .picker .picker-panel .wheel-wrapper .wheel .wheel-scroll .wheel-item{font-size:14px;}
+        .picker .picker-panel .picker-choose .picker-title{line-height:20px !important;font-size:16px; font-weight:normal;}
+        .picker .picker-panel .picker-choose .cancel, .picker .picker-panel .picker-choose .confirm{top:0 !important;}
+    </style>
   <script type="text/javascript">
     (function() {
         var rem, dpr, time, doc = window.document,
@@ -69,10 +75,10 @@
         <!--   <p class="am-spec-input">北区房萧林路店</p> -->
       </div>
     </div>
-    <div class="am-form-group">
+    <div class="am-form-group" id="picker_div">
       <label class="am-u-sm-3 am-form-label">区域</label>
       <div class="am-u-sm-9">
-          <div class="am-u-sm-9 yzcode-div"><p class="am-spec-input am-spec-txt" id="picker"></p></div>
+          <div class="am-u-sm-9 yzcode-div"><p class="am-spec-input am-spec-txt" id="picker">{{$user_region.r1_name}} {{$user_region.r2_name}} {{$user_region.r3_name}} {{$user_region.r4_name}}</p></div>
           <input type="hidden" name="area_value" id="area_value" value="">
 
       </div>
