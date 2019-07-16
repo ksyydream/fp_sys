@@ -268,8 +268,8 @@ class Wx_members extends Wx_controller {
     //赎楼审核页面
     public function foreclosure_detail6($f_id = 0){
         $this->foreclosure_detail_common($f_id);
-        $credit_img_list = $this->foreclosure_model->get_credit_img($f_id);
-        $this->assign('credit_img_list', $credit_img_list);
+        $file_list = $this->foreclosure_model->get_file_list();
+        $this->assign('file_list', $file_list);
         $this->display('members/foreclosure/detail6.html');
     }
 

@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>借款信息</title>
+  <meta name="description" content="借款信息">
+  <meta name="keywords" content="index">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="icon" type="image/png" href="/assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+  <link rel="stylesheet" href="/assets/css/amazeui.css"/>
+  <link rel="stylesheet" href="/assets/css/app.css?v3">
+  <script type="text/javascript">
+    (function() {
+        var rem, dpr, time, doc = window.document,
+        docEl = doc.documentElement,
+        viewport = doc.querySelector('meta[name="viewport"]'),
+        zoomScale,
+        zoomScaleNum;
+        if (viewport) {            
+            zoomScale = viewport.getAttribute("content").match(/initial\-scale=(["']?)([\d\.]+)\1?/);
+            if(zoomScale){
+              zoomScaleNum = parseFloat(zoomScale[2]);
+              dpr = parseInt(1 / zoomScaleNum);
+            }
+        }
+        if (!dpr && !zoomScaleNum) {
+            var os = (window.navigator.appVersion.match(/android/gi), window.navigator.appVersion.match(/iphone/gi)),
+            dpr = window.devicePixelRatio;
+            dpr = os ? dpr >= 3 ? 3 : dpr >= 2 ? 2 : 1 : 1;
+            zoomScaleNum = 1 / dpr;
+        }
+        window.addEventListener("resize",
+            function() {
+                clearTimeout(time);
+                time = setTimeout(changeRem, 300);
+            },false);
+      //改变基准rem
+        function changeRem(){
+            var docWidth = docEl.getBoundingClientRect().width;
+            if(docWidth / dpr > 540){
+              docWidth = 540 * dpr;
+            }
+            //rem字号以320下的16px为基线进行等比缩放
+            rem = docWidth/320 * 16;
+            docEl.style.fontSize = rem + "px";
+        }
+        changeRem();
+    })();
+  </script> 
+  
+</head>
+<body>
+<div class="am-main"> 
+  <form class="am-form am-form-horizontal">
+      <span class="am-verify">审核结果</span>
+      <div class="verify-box">
+     
+       <div class="verify-btn">
+          <a href="javascript:void(0)" class="am-btn am-btn-verify am-btn-pass" data-value="1">审核通过</a><a href="javascript:void(0)" class="am-btn am-btn-verify am-btn-nopass" data-value="0"><em></em>审核不通过</a>
+       </div> 
+      </div>
+      <div id="file_list_div" style="display: none">
+          <span class="am-verify">准备资料清单</span>
+          <p class="p-tit">基本资料</p>
+          <div class="verify-box">
+              <div class="am-fast-estimate am-fast-select">
+                  {{foreach from=$file_list.type_1 item=item}}
+                  <div class="am-form-group" data-value="{{$item.id}}">
+                      <label class="am-u-sm-10 am-form-label">{{$item.file_name}}</label>
+                      <div class="am-u-sm-2 am-u-sm-list">
+                          <span class="select-span select-choose"></span>
+                      </div>
+                  </div>
+                  {{/foreach}}
+              </div>
+          </div>
+
+          <p class="p-tit">附加资料</p>
+          <div class="verify-box">
+              <div class="am-fast-estimate am-fast-select">
+                  {{foreach from=$file_list.type_2 item=item}}
+                  <div class="am-form-group" data-value="{{$item.id}}">
+                      <label class="am-u-sm-10 am-form-label">{{$item.file_name}}</label>
+                      <div class="am-u-sm-2 am-u-sm-list">
+                          <span class="select-span"></span>
+                      </div>
+                  </div>
+                  {{/foreach}}
+              </div>
+          </div>
+
+          <p class="p-tit">特殊资料</p>
+          <div class="verify-box">
+              <div class="am-fast-estimate am-fast-select">
+                  {{foreach from=$file_list.type_3 item=item}}
+                  <div class="am-form-group" data-value="{{$item.id}}">
+                      <label class="am-u-sm-10 am-form-label">{{$item.file_name}}</label>
+                      <div class="am-u-sm-2 am-u-sm-list">
+                          <span class="select-span"></span>
+                      </div>
+                  </div>
+                  {{/foreach}}
+              </div>
+          </div>
+      </div>
+
+       <a class="am-btn am-btn-register" href="javascript:" data-am-modal="{target: '#doc-modal-1'}">提交</a>
+  </form>
+    {{include file='members/public/foot.html'}}
+</div>
+
+<div class="am-modal am-modal-no-btn confrim-submit" tabindex="-1" id="doc-modal-1">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd"><div class="img100 submit_ok"><img src="/assets/i/ok.png"></div>
+      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+    </div>
+    <div class="am-modal-bd confrim-submit-bd">
+    <a href="" class="am-btn am-btn-ind">返回首页</a><a href="" class="am-btn am-btn-list">返回列表</a>
+    </div>
+  </div>
+</div>
+
+<script src="/assets/js/jquery-2.2.3.min.js"></script>
+<script src="/assets/js/amazeui.js"></script>
+<script src="/assets/js/animateBackground-plugin.js"></script>
+<script type="text/javascript">
+
+$(".verify-btn a").click(function(){
+   if($(this).attr("data-value")=="1"){
+    $(".am-btn-nopass").removeClass("am-btn-nopass-on");
+       $(this).addClass("am-btn-pass-on");
+       $("#file_list_div").show();
+   }
+   else if ($(this).attr("data-value")=="0" ){
+    $(".am-btn-pass").removeClass("am-btn-pass-on");
+       $(this).addClass("am-btn-nopass-on");
+       $("#file_list_div").hide();
+   }
+});
+
+  $(".am-form-group").click(function() {
+      if($(this).find(".select-span").hasClass("select-choose")){
+          $(this).find(".select-span").removeClass("select-choose");
+      }else{
+          $(this).find(".select-span").addClass("select-choose");
+      }
+      //$(this).find(".select-span").removeClass("select-choose");
+  })
+</script>
+</body>
+</html>

@@ -602,4 +602,13 @@ class Foreclosure_model extends MY_Model
         }
         return $res;
     }
+
+    public function get_file_list(){
+        $file_list = array();
+        $file_list['type_1'] = $this->db->from('file_list')->where(array('status' => 1, 'file_type' => 1, 'use_type' => 1))->get()->result_array();
+        $file_list['type_2'] = $this->db->from('file_list')->where(array('status' => 1, 'file_type' => 2, 'use_type' => 1))->get()->result_array();
+        $file_list['type_3'] = $this->db->from('file_list')->where(array('status' => 1, 'file_type' => 3, 'use_type' => 1))->get()->result_array();
+        return $file_list;
+
+    }
 }
