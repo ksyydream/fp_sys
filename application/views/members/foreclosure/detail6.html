@@ -56,13 +56,16 @@
 </head>
 <body>
 <div class="am-main"> 
-  <form class="am-form am-form-horizontal">
+  <form id="save_form" class="am-form am-form-horizontal">
+      <input type="hidden" id="fc_id" name="fc_id" value="{{$f_info.foreclosure_id}}">
+      <input type="hidden" id="status" name="status" value="">
+      <input type="hidden" id="selected_ids" name="selected_ids" value="">
       <span class="am-verify">审核结果</span>
       <div class="verify-box">
      
        <div class="verify-btn">
-          <a href="javascript:void(0)" class="am-btn am-btn-verify am-btn-pass" data-value="1">审核通过</a><a href="javascript:void(0)" class="am-btn am-btn-verify am-btn-nopass" data-value="0"><em></em>审核不通过</a>
-       </div> 
+          <a href="javascript:void(0)" class="am-btn am-btn-verify am-btn-pass" data-value="1">审核通过</a><a href="javascript:void(0)" class="am-btn am-btn-verify am-btn-nopass" data-value="-10"><em></em>审核不通过</a>
+       </div>
       </div>
       <div id="file_list_div" style="display: none">
           <span class="am-verify">准备资料清单</span>
@@ -73,7 +76,7 @@
                   <div class="am-form-group" data-value="{{$item.id}}">
                       <label class="am-u-sm-10 am-form-label">{{$item.file_name}}</label>
                       <div class="am-u-sm-2 am-u-sm-list">
-                          <span class="select-span select-choose"></span>
+                          <span class="select-span select-choose" data-value="{{$item.id}}"></span>
                       </div>
                   </div>
                   {{/foreach}}
@@ -87,7 +90,7 @@
                   <div class="am-form-group" data-value="{{$item.id}}">
                       <label class="am-u-sm-10 am-form-label">{{$item.file_name}}</label>
                       <div class="am-u-sm-2 am-u-sm-list">
-                          <span class="select-span"></span>
+                          <span class="select-span" data-value="{{$item.id}}"></span>
                       </div>
                   </div>
                   {{/foreach}}
@@ -101,7 +104,7 @@
                   <div class="am-form-group" data-value="{{$item.id}}">
                       <label class="am-u-sm-10 am-form-label">{{$item.file_name}}</label>
                       <div class="am-u-sm-2 am-u-sm-list">
-                          <span class="select-span"></span>
+                          <span class="select-span" data-value="{{$item.id}}"></span>
                       </div>
                   </div>
                   {{/foreach}}
@@ -109,7 +112,7 @@
           </div>
       </div>
 
-       <a class="am-btn am-btn-register" href="javascript:" data-am-modal="{target: '#doc-modal-1'}">提交</a>
+       <a class="am-btn am-btn-register" href="javascript:" id="save_btn">提交</a>
   </form>
     {{include file='members/public/foot.html'}}
 </div>
@@ -120,7 +123,7 @@
       <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
     </div>
     <div class="am-modal-bd confrim-submit-bd">
-    <a href="" class="am-btn am-btn-ind">返回首页</a><a href="" class="am-btn am-btn-list">返回列表</a>
+    <a href="/wx_members/person_info" class="am-btn am-btn-ind">返回首页</a><a href="/wx_members/foreclosure_list" class="am-btn am-btn-list">返回列表</a>
     </div>
   </div>
 </div>
@@ -128,6 +131,7 @@
 <script src="/assets/js/jquery-2.2.3.min.js"></script>
 <script src="/assets/js/amazeui.js"></script>
 <script src="/assets/js/animateBackground-plugin.js"></script>
+<script src="/assets/js/layer/layer.js"></script>
 <script type="text/javascript">
 
 $(".verify-btn a").click(function(){
@@ -135,11 +139,13 @@ $(".verify-btn a").click(function(){
     $(".am-btn-nopass").removeClass("am-btn-nopass-on");
        $(this).addClass("am-btn-pass-on");
        $("#file_list_div").show();
+       $("#status").val('3');
    }
-   else if ($(this).attr("data-value")=="0" ){
+   else if ($(this).attr("data-value")=="-1" ){
     $(".am-btn-pass").removeClass("am-btn-pass-on");
        $(this).addClass("am-btn-nopass-on");
        $("#file_list_div").hide();
+       $("#status").val('-1');
    }
 });
 
@@ -149,8 +155,65 @@ $(".verify-btn a").click(function(){
       }else{
           $(this).find(".select-span").addClass("select-choose");
       }
-      //$(this).find(".select-span").removeClass("select-choose");
   })
+
+$("#save_btn").click(function(){
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
+    var status = $("#status").val();
+    if(status == ""){
+        layer.close(index);
+        layer.msg('请选择审核结果');
+        return false;
+    }
+    if(status == '3'){
+        var sc_length = $("#save_form .select-choose").length;
+        if(sc_length <= 0){
+            layer.close(index);
+            layer.msg('请选择准备资料清单');
+            return false;
+        }
+    }
+    var selected_ids = '';
+    $('#save_form .select-choose').each(function(i){
+        selected_ids += $(this).data('value')+',';
+    });
+    if(selected_ids != ''){
+        $('input[name="selected_ids"]').val(selected_ids.substring(0,selected_ids.length-1));
+    }
+    var form = document.getElementById('save_form');
+
+    var formdata = new FormData(form);
+    $.ajax({
+        type : "POST",
+        url : "/wx_members/foreclosure_audit",
+        data : formdata,
+        async: false,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success : function(data) {
+            var return_ = JSON.parse(data)
+            if(return_.status == 1){
+                $('#doc-modal-1').modal()
+            }else{
+                layer.close(index);
+                layer.msg(return_.msg);
+            }
+            layer.close(index);
+        },
+        error:function(){
+            layer.close(index);
+            layer.msg('网络异常!');
+        }
+    });
+
+    $('#doc-modal-1').on('close:modal:amui', function(){
+        var url = '/wx_members/foreclosure_list'; //先返回首页,以后返回列表页
+        window.location.replace(url);
+    });
+})
 </script>
 </body>
 </html>

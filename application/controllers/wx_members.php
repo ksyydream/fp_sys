@@ -273,5 +273,10 @@ class Wx_members extends Wx_controller {
         $this->display('members/foreclosure/detail6.html');
     }
 
+    public function foreclosure_audit(){
+        $res = $this->foreclosure_model->foreclosure_audit($this->m_info);
+        $this->ajaxReturn($res);
+    }
+
 
 }

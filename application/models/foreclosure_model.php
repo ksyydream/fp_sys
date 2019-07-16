@@ -603,12 +603,55 @@ class Foreclosure_model extends MY_Model
         return $res;
     }
 
+    //获取赎楼 审核时选择的材料清单
     public function get_file_list(){
         $file_list = array();
         $file_list['type_1'] = $this->db->from('file_list')->where(array('status' => 1, 'file_type' => 1, 'use_type' => 1))->get()->result_array();
         $file_list['type_2'] = $this->db->from('file_list')->where(array('status' => 1, 'file_type' => 2, 'use_type' => 1))->get()->result_array();
         $file_list['type_3'] = $this->db->from('file_list')->where(array('status' => 1, 'file_type' => 3, 'use_type' => 1))->get()->result_array();
         return $file_list;
+    }
 
+    public function foreclosure_audit($m_info){
+        $f_id = $this->input->post('fc_id');
+        if(!$f_id)
+            return $this->fun_fail('此赎楼业务不存在!');
+        $f_info = $this->get_foreclosure($f_id);
+        if(!$f_info)
+            return $this->fun_fail('此赎楼业务不存在!');
+        if($f_info['status'] != 2)
+            return $this->fun_fail('此赎楼不可审核,或已被处理!');
+        if($m_info['level'] != 2)
+            return $this->fun_fail('只有总监可以审核!');
+        $this->load->model('wx_members_model');
+        $manger_info = $this->wx_members_model->get_member_info($f_info['m_id']);
+        if($f_info['m_id'] != $m_info['m_id'] && $manger_info['parent_id'] != $m_info['m_id']){
+            return $this->fun_fail('您无权限审核此赎楼业务!');
+        }
+        $update_ = array(
+            'status' => $this->input->post('status'),
+            'audit_time' => time(),
+            'audit_m_id' => $m_info['m_id']
+        );
+        switch ($update_['status']){
+            case 3:
+                $select_ids = $this->input->post('selected_ids');
+                if(!$select_ids)
+                    return $this->fun_fail('请选择准备资料清单!');
+                $select_ids_arr = explode(",", $select_ids);
+                $now_time = time();
+                $file_ = $this->db->select("id file_id, {$f_id} fc_id, {$now_time} add_time", false)->from('file_list')->where(array('use_type' => 1, 'status' => 1))->where_in('id', $select_ids_arr)->get()->result_array();
+                if(!$file_)
+                    return $this->fun_fail('请选择准备资料清单!!');
+                $this->db->where(array('fc_id' => $f_id))->delete('foreclosure_file_list');
+                $this->db->insert_batch('foreclosure_file_list', $file_);
+                break;
+            case -1:
+                break;
+            default:
+                return $this->fun_fail('请选择审核结果!');
+        }
+        $this->db->where(array('foreclosure_id' => $f_id, 'status' => 2))->update('foreclosure', $update_);
+        return $this->fun_success('审核成功', array('foreclosure_id' => $f_id));
     }
 }
