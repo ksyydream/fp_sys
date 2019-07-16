@@ -42,6 +42,15 @@ class Wx_users extends Wx_controller {
         $this->display('users/user_info.html');
     }
 
+    public function person_info_edit(){
+        $index_arr = $this->wx_index_model->new_region($this->user_info['district'], $this->user_info['twon']);
+        $this->assign('index_1', $index_arr['index_1']);
+        $this->assign('index_2', $index_arr['index_2']);
+        $this->assign('index_3', $index_arr['index_3']);
+        $this->assign('index_4', $index_arr['index_4']);
+        $this->display('users/user_info_edit.html');
+    }
+
     //检查用户是否可以修改赎楼业务
     private function check_foreclosure_edit($f_id = 0){
         $fc_deadline_ = $this->config->item('fc_deadline'); //缓存数据使用限期,这里是秒为单位的
