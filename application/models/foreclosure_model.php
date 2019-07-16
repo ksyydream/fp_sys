@@ -652,6 +652,7 @@ class Foreclosure_model extends MY_Model
                 return $this->fun_fail('请选择审核结果!');
         }
         $this->db->where(array('foreclosure_id' => $f_id, 'status' => 2))->update('foreclosure', $update_);
+        $this->wxpost('', '', $f_info['user_id'], $this->config->item('img_url_DBY') . '/wx_users/foreclosure_detail7/' . $f_id);
         return $this->fun_success('审核成功', array('foreclosure_id' => $f_id));
     }
 

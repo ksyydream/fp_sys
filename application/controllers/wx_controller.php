@@ -44,7 +44,7 @@ class Wx_controller extends MY_Controller
             }
         }
 
-        $this->assign('img_url_DBY', 'http://sys.ksls.com.cn');
+        $this->assign('img_url_DBY', $this->config->item('img_url_DBY'));
 
     }
 
