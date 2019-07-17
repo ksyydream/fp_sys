@@ -181,7 +181,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-cal-popup .am-popup-bd{padding:0;}
 .am-cal-popup .defined{padding:.5rem; background: #fff; font-size:.8rem;}
 .am-cal-popup .definedRate{ border:none;padding:.2rem;margin-left: 1rem;width:40%; text-align: right;}
-.am-cal-popup .definedRate,.am-cal-popup input[type=number]::focus{ outline:none;}
+.am-cal-popup .definedRate,.am-cal-popup input[type=number]:focus{ outline:none;}
 .am-cal-popup .rate-btn{border:1px solid #0e90d2; padding:.2rem .8em; margin-left: 1rem;border-radius: 5px;}
 .rate-tips{font-size: .6rem;margin:.5rem;}
 .ul-rate{background: #fff;}.ul-rate li{font-size: .7rem;padding:.5rem;line-height: 1.4rem; font-size:.9rem;border:1px solid #eee; position: relative;}
