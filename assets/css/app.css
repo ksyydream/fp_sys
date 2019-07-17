@@ -4,7 +4,7 @@ input::-webkit-input-placeholder{color:#c0c6cc;}
 input::-moz-placeholder{color:#c0c6cc;}
 input:-moz-placeholder{color:#c0c6cc;}
 input:-ms-input-placeholder{color:#c0c6cc;}
-body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:none;}p{margin:0;padding:0;}a{ color: #666361;}
+body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:none;}p{margin:0;padding:0;}a{ color: #666361;}
 .am-btn:hover,
 .am-btn:focus {
     color: #666361;
@@ -96,7 +96,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-form .am-imitate-select,.am-form .after-input,.am-form .am-loan-select{color:#666;}
 
 .am-form .am-u-sm-9{ position: relative;}
-.am-form .am-icon-chevron{position: absolute;right:1rem;top:.8rem; width: .4rem;height: 1rem; background: url(../../assets/i/arrow3.png) no-repeat; background-size: 100% 100%;}
+.am-form .am-icon-chevron{position: absolute;right:1rem;top:.7rem; width: .4rem;height: 1rem; background: url(../../assets/i/arrow3.png) no-repeat; background-size: 100% 100%;}
 .am-form .am-icon-chevron1{width: .5rem;}
 .am-show-btn{border-bottom:1px solid #e5e5e5; display: block; height: 2.3rem; line-height: 2.3rem; background:#fff;  color: #f6a726; font-size: 16px; width: 100%;}
 .am-show-btn-p{ position: relative;font-size: .8rem; text-align: center;}
@@ -181,7 +181,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .am-cal-popup .am-popup-bd{padding:0;}
 .am-cal-popup .defined{padding:.5rem; background: #fff; font-size:.8rem;}
 .am-cal-popup .definedRate{ border:none;padding:.2rem;margin-left: 1rem;width:40%; text-align: right;}
-.am-cal-popup .definedRate,.am-cal-popup input[type=number]:focus{ outline:none;}
+.am-cal-popup .definedRate,.am-cal-popup input[type=number]::focus{ outline:none;}
 .am-cal-popup .rate-btn{border:1px solid #0e90d2; padding:.2rem .8em; margin-left: 1rem;border-radius: 5px;}
 .rate-tips{font-size: .6rem;margin:.5rem;}
 .ul-rate{background: #fff;}.ul-rate li{font-size: .7rem;padding:.5rem;line-height: 1.4rem; font-size:.9rem;border:1px solid #eee; position: relative;}
@@ -317,7 +317,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 
 .am-main-login{background: #FFF;}
 /*注册*/
-.am-form .yzcode[type=number] {text-align: left;padding-left: .3rem;}
+.am-form .yzcode[type=text] {text-align: left;padding-left: .3rem;}
 .yzcode-div{padding: 0;}
 
 .am-form .yzcode-label{ float: left;}
@@ -326,8 +326,8 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .p-tit{margin:.5rem 1rem;font-size: .7rem; color: #848890;}
 
 .am-form .am-spec-txt{padding: 0; text-align: left; color:#26304e;}
-.am-btn-register{font-size:.8rem;margin:1rem auto; width: 16rem; background: #4c33ff; color:#fff; height: 2rem; border-radius: 1rem; display: block;}
-.am-btn-success{font-size:.8rem;margin:1rem auto; width: 16rem; background: #429842; color:#fff; height: 2rem; border-radius: 1rem; display: block;}
+.am-btn-register{font-size:.8rem;margin:1rem auto; width: 16rem; background: #4c33ff; color:#fff; height: 2.4rem; border-radius: 1.2rem; display: block;padding-top: .6rem;}
+
 .wid100 img{width: 100%;}
 
 .ind-btn{width: 80%; position: absolute; left:10%;top:13rem;}
@@ -352,7 +352,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 
 .copyright{text-align: center; color:#999; font-size: .5rem;}
 
-.register-type-label {font-weight: normal;font-size: .8rem;margin: 0 .15rem}.register-type{}
+.register-type-label {font-weight: normal;font-size: .8rem;margin: 0 .1rem}.register-type{}
 .radio-input{padding-top:.4rem; vertical-align:-2px;}
 
 .colorgreen{color:#65c4aa;}
@@ -395,7 +395,6 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .data-list li .passok{ color: #49b5a5;}
 .data-list li .specok{color:#068e65;}
 .data-list li .unpass{color:#f90b0b;}
-.data-list li .wait_submit{color:#D3DA56;}
 
 .data-list li .greenchannel{width:.8rem; height: .8rem;float: left; margin:.3rem .2rem 0 0;background: url(../../assets/i/greenchanel_icon.png) no-repeat; background-size: 100% 100%;}
 .nodata{width: 80%;margin: 1rem 10% 0;}
