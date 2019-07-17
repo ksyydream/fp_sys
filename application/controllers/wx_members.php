@@ -254,7 +254,7 @@ class Wx_members extends Wx_controller {
         $m_info = $this->m_info;
         $manger_info = $this->wx_members_model->get_member_info($f_info['m_id']);
         //如果是 财务 ,可以看所有
-        if($m_info['level'] == 4){
+        if($m_info['level'] == 4 || $m_info['level'] == 1){
 
         }else{
             if($f_info['m_id'] != $m_info['m_id'] && $manger_info['parent_id'] != $m_info['m_id']){
