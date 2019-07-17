@@ -47,6 +47,7 @@ class Wx_members extends Wx_controller {
         $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('appsecret')));
         $access_token = $this->wxjssdk_th->wxgetAccessToken();
         $img_url = $this->get_or_create_ticket($access_token, 'QR_STR_SCENE', $this->m_info['invite_code']);
+        $this->buildWxData();
         $this->assign('img_url',$img_url);
         $this->display('members/wx_qr_code.html');
     }
