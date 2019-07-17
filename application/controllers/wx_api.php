@@ -65,6 +65,7 @@ class Wx_api extends CI_controller {
     }
 
     public function test_wx_post(){
+        die('...');
         $data_msg = array(
             'first' => array(
                 'value' => "赎楼工作单审核通过!",
