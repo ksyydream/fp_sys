@@ -612,6 +612,20 @@ class Foreclosure_model extends MY_Model
         return $file_list;
     }
 
+    public function get_file_listbyFid($f_id = 0){
+        $file_list = array();
+        $file_list['type_1'] = $this->db->select('f.*')->from('file_list f')
+            ->join('foreclosure_file_list ff', 'f.id = ff.file_id', 'right')
+            ->where(array('ff.fc_id' => $f_id, 'f.file_type' => 1, 'f.use_type' => 1))->get()->result_array();
+        $file_list['type_2'] = $this->db->select('f.*')->from('file_list f')
+            ->join('foreclosure_file_list ff', 'f.id = ff.file_id', 'right')
+            ->where(array('ff.fc_id' => $f_id, 'f.file_type' => 2, 'f.use_type' => 1))->get()->result_array();
+        $file_list['type_3'] = $this->db->select('f.*')->from('file_list f')
+            ->join('foreclosure_file_list ff', 'f.id = ff.file_id', 'right')
+            ->where(array('ff.fc_id' => $f_id, 'f.file_type' => 3, 'f.use_type' => 1))->get()->result_array();
+        return $file_list;
+    }
+
     public function foreclosure_audit($m_info){
         $f_id = $this->input->post('fc_id');
         if(!$f_id)
