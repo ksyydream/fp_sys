@@ -395,6 +395,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]::focus{ outline:no
 .data-list li .passok{ color: #49b5a5;}
 .data-list li .specok{color:#068e65;}
 .data-list li .unpass{color:#f90b0b;}
+.data-list li .wait{color:yellow;}
 
 .data-list li .greenchannel{width:.8rem; height: .8rem;float: left; margin:.3rem .2rem 0 0;background: url(../../assets/i/greenchanel_icon.png) no-repeat; background-size: 100% 100%;}
 .nodata{width: 80%;margin: 1rem 10% 0;}
