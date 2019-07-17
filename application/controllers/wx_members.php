@@ -48,7 +48,7 @@ class Wx_members extends Wx_controller {
         $access_token = $this->wxjssdk_th->wxgetAccessToken();
         $img_url = $this->get_or_create_ticket($access_token, 'QR_STR_SCENE', $this->m_info['invite_code']);
         $this->cismarty->assign('img_url',$img_url);
-        $this->cismarty->display('members/wx_QRimg.html');
+        $this->cismarty->display('members/wx_qr_code.html');
     }
 
     //赎楼列表
