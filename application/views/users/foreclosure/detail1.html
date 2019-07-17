@@ -159,23 +159,25 @@
         </div>
       </div>
      </div>
-     <div class="showbox" {{if $f_info.bank_loan_type|default:0 == 2 }} style="display:block" {{/if}}>
-     <p class="p-tit">按揭情况</p>
-       <div class="am-fast-estimate am-fast-select">
-        <div class="am-form-group">
-        <label class="am-u-sm-10 am-form-label">按揭已通过</label>
-        <div class="am-u-sm-2">
-            <span class="select-span {{if $f_info.is_mortgage|default:0 == 1 }}select-ok{{/if}}"></span>
-        </div>
+      {{if $f_info.bank_loan_type|default:0 == 2 }}
+      <p class="p-tit">按揭情况</p>
+      <div class="am-fast-estimate am-fast-select">
+          <div class="am-form-group">
+              <label class="am-u-sm-10 am-form-label">按揭已通过</label>
+              <div class="am-u-sm-2">
+                  <span class="select-span {{if $f_info.is_mortgage|default:0 == 1 }}select-ok{{/if}}"></span>
+              </div>
+          </div>
+          <div class="am-form-group">
+              <label class="am-u-sm-10 am-form-label">按揭未通过</label>
+              <div class="am-u-sm-2">
+                  <span class="select-span {{if $f_info.is_mortgage|default:0 == -1 }}select-ok{{/if}}"></span>
+              </div>
+          </div>
+
       </div>
-              <div class="am-form-group">
-        <label class="am-u-sm-10 am-form-label">按揭未通过</label>
-        <div class="am-u-sm-2">
-              <span class="select-span {{if $f_info.is_mortgage|default:0 == -1 }}select-ok{{/if}}"></span>
-        </div>
-      </div>
-               
-     </div>
+      {{/if}}
+
       <p class="p-tit">借款信息</p>
       <div class="am-fast-estimate">
 
@@ -271,7 +273,7 @@
           {{/if}}
           </div>
       {{/if}}
-</div>
+
 
     <a class="am-btn am-btn-register" href="/wx_users/foreclosure_detail3/{{$f_info.foreclosure_id}}">下一页</a>
   </form>
