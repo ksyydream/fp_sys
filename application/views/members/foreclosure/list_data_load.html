@@ -24,6 +24,7 @@
     </a>
     <div class="option-div">
         {{if $item.status == 2}}<a href="/wx_members/foreclosure_show/{{$item.foreclosure_id}}" class="option-btn">编 辑</a>{{/if}}
+        {{if $item.status == 3 || $item.status == 4}}<a href="/wx_members/foreclosure_detail7/{{$item.foreclosure_id}}" class="option-btn">材料列表</a>{{/if}}
         <a href="/wx_members/foreclosure_detail1/{{$item.foreclosure_id}}" class="option-btn">查 看</a>
     </div>
 </div>

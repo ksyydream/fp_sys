@@ -311,7 +311,7 @@ class Wx_users extends Wx_controller {
         $this->display('users/foreclosure/detail5.html');
     }
 
-    //赎楼详情页 房产证
+    //赎楼详情页 材料列表
     public function foreclosure_detail7($f_id = 0){
         $f_info = $this->foreclosure_model->get_foreclosure($f_id);
         if(!$f_info || $f_info['user_id'] != $this->user_id){

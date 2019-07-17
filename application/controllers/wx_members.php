@@ -286,6 +286,14 @@ class Wx_members extends Wx_controller {
         $this->display('members/foreclosure/detail6.html');
     }
 
+    //赎楼详情页 材料列表
+    public function foreclosure_detail7($f_id = 0){
+        $this->foreclosure_detail_common($f_id);
+        $file_list = $this->foreclosure_model->get_file_listbyFid($f_id);
+        $this->assign('file_list', $file_list);
+        $this->display('members/foreclosure/detail7.html');
+    }
+
     //赎楼审核
     public function foreclosure_audit(){
         $res = $this->foreclosure_model->foreclosure_audit($this->m_info);
