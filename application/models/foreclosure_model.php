@@ -723,4 +723,24 @@ class Foreclosure_model extends MY_Model
         $this->db->where(array('foreclosure_id' => $f_id, 'status' => -1))->update('foreclosure', $update_);
         return $this->fun_success('操作成功');
     }
+
+    public function foreclosure_finish($m_info){
+        $f_id = $this->input->post('fc_id');
+        if(!$f_id)
+            return $this->fun_fail('此赎楼业务不存在!');
+        $f_info = $this->get_foreclosure($f_id);
+        if(!$f_info)
+            return $this->fun_fail('此赎楼业务不存在!');
+        if($f_info['status'] != 3)
+            return $this->fun_fail('此赎楼不可终审,或已被处理!');
+        if($m_info['level'] != 1)
+            return $this->fun_fail('只有总经理可以审核!');
+        $update_ = array(
+            'status' => 4,
+            'finish_time' => time(),
+            'finish_m_id' => $m_info['m_id']
+        );
+        $this->db->where(array('foreclosure_id' => $f_id, 'status' => 3))->update('foreclosure', $update_);
+        return $this->fun_success('终审成功', array('foreclosure_id' => $f_id));
+    }
 }
