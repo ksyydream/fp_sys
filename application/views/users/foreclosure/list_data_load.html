@@ -6,7 +6,7 @@
             <li>
                 {{if $item.is_special == 1}}<div class="data-status specok"><i class="greenchannel"></i>绿色通道</div>{{/if}}
                 {{if $item.status == 1}}<div class="data-status">待提交</div>{{/if}}
-                {{if $item.status == 2}}<div class="data-status wait">待审核</div>{{/if}}
+                {{if $item.status == 2}}<div class="data-status wait_submit">待审核</div>{{/if}}
                 {{if $item.status == 3}}<div class="data-status passok">已通过</div>{{/if}}
                 {{if $item.status == 4}}<div class="data-status passok">已结案</div>{{/if}}
                 {{if $item.status == -1}}<div class="data-status unpass">审核未通过</div>{{/if}}
