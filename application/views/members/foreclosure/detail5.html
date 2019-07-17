@@ -74,6 +74,9 @@
       {{if $f_info.status == 2 && $m_info.level == 2}}
       <a class="am-btn am-btn-register" href="/wx_members/foreclosure_detail6/{{$f_info.foreclosure_id}}">审核页面</a>
       {{/if}}
+      {{if $f_info.status == 3 && $m_info.level == 1}}
+      <a class="am-btn am-btn-register" id="finish_btn" href="javascript:">赎楼终审</a>
+      {{/if}}
       {{if in_array($f_info.status, [-1])  && $m_info.level == 2}}
       <a class="am-btn am-btn-success" id="save_btn" href="javascript:">绿色通道</a>
       {{/if}}
@@ -129,6 +132,40 @@
             $.ajax({
                 type : "POST",
                 url : "/wx_members/foreclosure_special",
+                data : formdata,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success : function(data) {
+                    var return_ = JSON.parse(data)
+                    if(return_.status == 1){
+                        var url = '/wx_members/foreclosure_list' ;
+                        window.location.replace(url);
+                    }else{
+                        layer.msg(return_.msg);
+                    }
+                },
+                error:function(){
+                    layer.msg('网络异常!');
+                }
+            });
+        }, function(){
+            layer.closeAll();
+        });
+
+    })
+
+    $("#finish_btn").click(function(){
+        layer.confirm('是否确认终审？', {
+            btn: ['确认','取消']
+        }, function(){
+            var form = document.getElementById('save_form');
+
+            var formdata = new FormData(form);
+            $.ajax({
+                type : "POST",
+                url : "/wx_members/foreclosure_finish",
                 data : formdata,
                 async: false,
                 cache: false,
