@@ -6,9 +6,11 @@
             <li>
                 {{if $item.is_special == 1}}<div class="data-status specok"><i class="greenchannel"></i>绿色通道</div>{{/if}}
                 {{if $item.status == 1}}<div class="data-status">待提交</div>{{/if}}
-                {{if $item.status == 2}}<div class="data-status">待审核</div>{{/if}}
-                {{if $item.status == 3 || $item.status == 4}}<div class="data-status passok">已通过</div>{{/if}}
-                {{if $item.status == -1 || $item.status == -2}}<div class="data-status unpass">未通过</div>{{/if}}
+                {{if $item.status == 2}}<div class="data-status wait_submit">待审核</div>{{/if}}
+                {{if $item.status == 3}}<div class="data-status passok">已通过</div>{{/if}}
+                {{if $item.status == 4}}<div class="data-status passok">已结案</div>{{/if}}
+                {{if $item.status == -1}}<div class="data-status unpass">审核未通过</div>{{/if}}
+                {{if $item.status == -2}}<div class="data-status unpass">同盾未通过</div>{{/if}}
                 <div class="data-span"><span>编号：</span>{{$item.work_no}}</div>
             </li>
         </ul>
@@ -24,6 +26,7 @@
     </a>
     <div class="option-div">
         {{if $item.status == 1}}<a href="/wx_users/foreclosure_show/{{$item.foreclosure_id}}" class="option-btn">编 辑</a>{{/if}}
+        {{if $item.status == 3 || $item.status == 4}}<a href="/wx_users/foreclosure_detail7/{{$item.foreclosure_id}}" class="option-btn">材料列表</a>{{/if}}
         <a href="/wx_users/foreclosure_detail1/{{$item.foreclosure_id}}" class="option-btn">查 看</a>
     </div>
 </div>

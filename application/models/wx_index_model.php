@@ -107,7 +107,7 @@ class Wx_index_model extends MY_Model
         return $this->fun_success('确认正确!');
     }
 
-    private function new_region($district, $twon=0){
+    public function new_region($district, $twon=0){
         $index_1 = 0;
         $index_2 = 0;
         $index_3 = 0;

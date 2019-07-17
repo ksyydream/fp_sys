@@ -30,12 +30,26 @@ class Wx_members extends Wx_controller {
         if($this->m_info['status'] != 1){
             redirect('wx_index/logout');
         }
+        $this->assign('m_info', $this->m_info);
     }
 
 
     public function index() {
-        redirect('wx_members/foreclosure_list');
-        //$this->display('users/index.html');
+        redirect('wx_members/person_info');
+        //$this->display('members/index.html');
+    }
+
+    public function person_info(){
+        $this->display('members/person_info.html');
+    }
+
+    public function create_RQimg(){
+        $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('appsecret')));
+        $access_token = $this->wxjssdk_th->wxgetAccessToken();
+        $img_url = $this->get_or_create_ticket($access_token, 'QR_STR_SCENE', $this->m_info['invite_code']);
+        $this->buildWxData();
+        $this->assign('img_url',$img_url);
+        $this->display('members/wx_qr_code.html');
     }
 
     //赎楼列表
@@ -210,6 +224,7 @@ class Wx_members extends Wx_controller {
         $this->display('members/foreclosure/step6.html');
     }
 
+    //赎楼详情页面 公共验证
     private function foreclosure_detail_common($f_id = 0){
         $f_info = $this->foreclosure_model->get_foreclosure($f_id);
         if(!$f_info){
@@ -223,6 +238,15 @@ class Wx_members extends Wx_controller {
         $manger_info = $this->wx_members_model->get_member_info($f_info['m_id']);
         if($f_info['m_id'] != $m_info['m_id'] && $manger_info['parent_id'] != $m_info['m_id']){
             redirect('wx_members/foreclosure_list'); //不是自己的工作单,就直接回到首页
+        }
+        //如果是审核页面detail6,则需要额外的验证
+        if($this->uri->segment(2) == 'foreclosure_detail6'){
+            if($m_info['level'] != 2){
+                redirect('wx_members/foreclosure_list'); //不是总监,就直接回到首页
+            }
+            if($f_info['status'] != 2){
+                redirect('wx_members/foreclosure_list'); //赎楼不是待审核,直接回到首页
+            }
         }
         return true;
     }
@@ -254,5 +278,31 @@ class Wx_members extends Wx_controller {
         $this->display('members/foreclosure/detail5.html');
     }
 
+    //赎楼审核页面
+    public function foreclosure_detail6($f_id = 0){
+        $this->foreclosure_detail_common($f_id);
+        $file_list = $this->foreclosure_model->get_file_list();
+        $this->assign('file_list', $file_list);
+        $this->display('members/foreclosure/detail6.html');
+    }
 
+    //赎楼详情页 材料列表
+    public function foreclosure_detail7($f_id = 0){
+        $this->foreclosure_detail_common($f_id);
+        $file_list = $this->foreclosure_model->get_file_listbyFid($f_id);
+        $this->assign('file_list', $file_list);
+        $this->display('members/foreclosure/detail7.html');
+    }
+
+    //赎楼审核
+    public function foreclosure_audit(){
+        $res = $this->foreclosure_model->foreclosure_audit($this->m_info);
+        $this->ajaxReturn($res);
+    }
+
+    //赎楼 设置绿色通道
+    public function foreclosure_special(){
+        $res = $this->foreclosure_model->foreclosure_special($this->m_info);
+        $this->ajaxReturn($res);
+    }
 }

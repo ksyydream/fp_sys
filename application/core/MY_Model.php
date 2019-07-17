@@ -293,12 +293,13 @@ class MY_Model extends CI_Model{
     }
 */
 
-    public function wxpost($template_id,$post_data,$user_id,$url='www.funmall.com.cn'){
-        $openid = $this->get_openid($user_id);
+    public function wxpost($template_id,$post_data,$user_id,$url_www='www.funmall.com.cn'){
+        $openid = $this->get_openidByUserid($user_id);
         if($openid == -1 || empty($openid)){
             return false;
         }
-        $access_token = $this->get_or_create_token();
+        $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('appsecret')));
+        $access_token = $this->wxjssdk_th->wxgetAccessToken();
         $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=".$access_token;//access_token改成你的有效值
 
         /*$data = array(
@@ -322,17 +323,14 @@ class MY_Model extends CI_Model{
         $template = array(
             'touser' => $openid,
             'template_id' => $template_id,
-            'url' => $url,
+            'url' => $url_www,
             'topcolor' => '#7B68EE',
             'data' => $post_data
         );
         $json_template = json_encode($template);
         $dataRes = $this->request_post($url, urldecode($json_template)); //这里执行post请求,并获取返回数据
-      /*  if($this->session->userdata('login_user_id')==24){
-            die(var_dump($dataRes));
-        }*/
-
-        if ($dataRes['errcode'] == 0) {
+        $res_ = json_decode($dataRes);
+        if ($res_->errcode == 0) {
             return true;
         } else {
             return false;
@@ -422,8 +420,8 @@ class MY_Model extends CI_Model{
         return $res;
     }
 
-    public function get_openid($user_id){
-        $row = $this->db->select()->from('user')->where('id',$user_id)->get()->row_array();
+    public function get_openidByUserid($user_id){
+        $row = $this->db->select()->from('users')->where('user_id',$user_id)->get()->row_array();
         if ($row){
             return $row['openid'];
         }else{

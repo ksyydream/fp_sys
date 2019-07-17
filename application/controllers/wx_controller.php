@@ -23,7 +23,7 @@ class Wx_controller extends MY_Controller
         if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
             $this->get_openid();
         }else{
-            $openid = 'xxx001';
+            $openid = 'oFzKgwXjgrBz0oQDFUHhuy6WoIaE';
             $this->session->set_userdata('openid', $openid);
         }
 
@@ -44,7 +44,7 @@ class Wx_controller extends MY_Controller
             }
         }
 
-        $this->assign('img_url_DBY', 'http://sys.ksls.com.cn');
+        $this->assign('img_url_DBY', $this->config->item('img_url_DBY'));
 
     }
 

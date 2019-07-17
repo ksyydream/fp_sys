@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>修改信息</title>
+  <meta name="description" content="修改信息">
+  <meta name="keywords" content="index">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="icon" type="image/png" href="/assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+  <link rel="stylesheet" href="/assets/css/amazeui.css"/>
+  <link rel="stylesheet" href="/assets/css/app.css?v3">
+    <style>
+        /*地址选择*/
+        .picker .picker-panel .wheel-wrapper .wheel .wheel-scroll .wheel-item{font-size:14px;}
+        .picker .picker-panel .picker-choose .picker-title{line-height:20px !important;font-size:16px; font-weight:normal;}
+        .picker .picker-panel .picker-choose .cancel, .picker .picker-panel .picker-choose .confirm{top:0 !important;}
+    </style>
+  <script type="text/javascript">
+    (function() {
+        var rem, dpr, time, doc = window.document,
+        docEl = doc.documentElement,
+        viewport = doc.querySelector('meta[name="viewport"]'),
+        zoomScale,
+        zoomScaleNum;
+        if (viewport) {            
+            zoomScale = viewport.getAttribute("content").match(/initial\-scale=(["']?)([\d\.]+)\1?/);
+            if(zoomScale){
+              zoomScaleNum = parseFloat(zoomScale[2]);
+              dpr = parseInt(1 / zoomScaleNum);
+            }
+        }
+        if (!dpr && !zoomScaleNum) {
+            var os = (window.navigator.appVersion.match(/android/gi), window.navigator.appVersion.match(/iphone/gi)),
+            dpr = window.devicePixelRatio;
+            dpr = os ? dpr >= 3 ? 3 : dpr >= 2 ? 2 : 1 : 1;
+            zoomScaleNum = 1 / dpr;
+        }
+        window.addEventListener("resize",
+            function() {
+                clearTimeout(time);
+                time = setTimeout(changeRem, 300);
+            },false);
+      //改变基准rem
+        function changeRem(){
+            var docWidth = docEl.getBoundingClientRect().width;
+            if(docWidth / dpr > 540){
+              docWidth = 540 * dpr;
+            }
+            //rem字号以320下的16px为基线进行等比缩放
+            rem = docWidth/320 * 16;
+            docEl.style.fontSize = rem + "px";
+        }
+        changeRem();
+    })();
+  </script> 
+  
+</head>
+<body>
+<div class="am-main">
+
+ 
+  <form id="save_form" class="am-form am-form-horizontal">
+    <p class="p-tit">修改门店信息</p>
+     <div class="am-fast-estimate">
+
+    <div class="am-form-group">
+      <label class="am-u-sm-3 am-form-label">门店名称</label>
+      <div class="am-u-sm-9">
+          <input type="text" class="ip-txt" id="shop_name" name="shop_name" value="{{$user_info.shop_name}}" placeholder="">
+        <!--   <p class="am-spec-input">北区房萧林路店</p> -->
+      </div>
+    </div>
+    <div class="am-form-group" id="picker_div">
+      <label class="am-u-sm-3 am-form-label">区域</label>
+      <div class="am-u-sm-9">
+          <div class="am-u-sm-9 yzcode-div"><p class="am-spec-input am-spec-txt" id="picker">{{$user_region.r1_name}} {{$user_region.r2_name}} {{$user_region.r3_name}} {{$user_region.r4_name}}</p></div>
+          <input type="hidden" name="area_value" id="area_value" value="">
+
+      </div>
+    </div>
+        <div class="am-form-group">
+      <label class="am-u-sm-3 am-form-label">详细地址</label>
+      <div class="am-u-sm-9">
+         <input type="text" class="ip-txt" id="address" name="address" value="{{$user_info.address}}" placeholder="">
+      </div>
+    </div>
+ </div>  
+
+    <a class="am-btn am-btn-register" id="save_btn" href="javascript:">保存修改</a>
+  </form>
+
+
+
+    {{include file='users/public/foot.html'}}
+</div>
+<script src="/assets/js/jquery-2.2.3.min.js"></script>
+<script src="/assets/js/amazeui.js"></script>
+<script src="/assets/js/animateBackground-plugin.js"></script>
+<script src="/assets/js/DBY_common.js?v2"></script>
+<script src="/assets/js/layer/layer.js"></script>
+
+<script type="text/javascript">
+    $("#save_btn").click(function(){
+        var shop_name = $.trim($("#shop_name").val());//获取门店名称
+        var areaVal = $("#area_value").val();//获取所在区域
+        var addressVal = $("#address").val();//获取详细地址
+        //详细地址验证
+        if(shop_name == ''){
+            layer.msg('请填写门店名称');
+            return false;
+        }
+        //所在区域验证
+        if(areaVal == ''){
+            layer.msg('请设置所在区域');
+            return false;
+        }
+        //详细地址验证
+        if(addressVal == ''){
+            layer.msg('请填写详细地址');
+            return false;
+        }
+        var form = document.getElementById('save_form');
+
+        var formdata = new FormData(form);
+        $.ajax({
+            type : "POST",
+            url : "/wx_users/person_info_edit",
+            data : formdata,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success : function(data) {
+                var return_ = JSON.parse(data)
+                if(return_.status == 1){
+                    var url = '/wx_users/person_info'; //先返回首页,以后返回列表页
+                    window.location.replace(url);
+                }else{
+                    layer.msg(return_.msg);
+                }
+            },
+            error:function(){
+                layer.msg('网络异常!');
+            }
+        });
+    })
+    var selectedIndex_old = [{{$index_1}}, {{$index_2}}, {{$index_3}}, {{$index_4}}]; /* 默认选中的地区 */
+    var selected_parent_old = [0, {{$user_info.province}}, {{$user_info.city}}, {{$user_info.district}}];
+</script>
+<script src="/assets/js/picker.min.js"></script>
+<script src="/assets/js/index.js?v2=2"></script>
+</body>
+</html>

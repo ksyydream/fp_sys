@@ -63,4 +63,31 @@ class Wx_api extends CI_controller {
         $res = $this->wx_index_model->check_region();
         $this->ajaxReturn($res);
     }
+
+    public function test_wx_post(){
+        die('...');
+        $data_msg = array(
+            'first' => array(
+                'value' => "赎楼工作单审核通过!",
+                'color' => '#FF0000'
+            ),
+            'keyword1' => array(
+                'value' => '赎楼工作单',
+                'color' => '#FF0000'
+            ),
+            'keyword2' => array(
+                'value' => '审核通过',
+                'color' => '#FF0000'
+            ),
+            'keyword3' => array(
+                'value' => date('Y-m-d H:i:s'),
+                'color' => '#FF0000'
+            ),
+            'remark' => array(
+                'value' => '感谢您对我们工作的信任,请点击查看需要携带的资料!',
+                'color' => '#FF0000'
+            )
+        );
+        $this->wx_index_model->wxpost($this->config->item('WX_YY'), $data_msg, 8, $this->config->item('img_url_DBY') . '/wx_users/foreclosure_detail7/' . '1');
+    }
 }

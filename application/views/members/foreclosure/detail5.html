@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
   <meta name="apple-mobile-web-app-title" content="Amaze UI" />
   <link rel="stylesheet" href="/assets/css/amazeui.css"/>
-  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/app.css?v2">
   <script type="text/javascript">
     (function() {
         var rem, dpr, time, doc = window.document,
@@ -58,7 +58,8 @@
 <div class="am-main">
 
  
-  <form class="am-form am-form-horizontal">
+  <form id="save_form" class="am-form am-form-horizontal">
+      <input type="hidden" id="fc_id" name="fc_id" value="{{$f_info.foreclosure_id}}">
       <div class="upload-page">
     <p class="pTit">上传借款人征信报告图片</p>
     <p class="pTxt"> <span class="tips-icon"></span>请保证上传图片边框完整，图片清晰。</p>
@@ -70,7 +71,13 @@
          </div>
          {{/foreach}}
      </div>
-       <a class="am-btn am-btn-register" href="/wx_members/index">回到首页</a>
+      {{if $f_info.status == 2 && $m_info.level == 2}}
+      <a class="am-btn am-btn-register" href="/wx_members/foreclosure_detail6/{{$f_info.foreclosure_id}}">审核页面</a>
+      {{/if}}
+      {{if in_array($f_info.status, [-1])  && $m_info.level == 2}}
+      <a class="am-btn am-btn-success" id="save_btn" href="javascript:">绿色通道</a>
+      {{/if}}
+       <a class="am-btn am-btn-register" href="/wx_members/foreclosure_list">回到列表</a>
   </form>
     {{include file='members/public/foot.html'}}
 </div>
@@ -111,6 +118,40 @@
     }
 
     funcReadImgInfo();
+
+    $("#save_btn").click(function(){
+        layer.confirm('是否确认设置绿色通道？', {
+            btn: ['确认','取消']
+        }, function(){
+            var form = document.getElementById('save_form');
+
+            var formdata = new FormData(form);
+            $.ajax({
+                type : "POST",
+                url : "/wx_members/foreclosure_special",
+                data : formdata,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success : function(data) {
+                    var return_ = JSON.parse(data)
+                    if(return_.status == 1){
+                        var url = '/wx_members/foreclosure_list' ;
+                        window.location.replace(url);
+                    }else{
+                        layer.msg(return_.msg);
+                    }
+                },
+                error:function(){
+                    layer.msg('网络异常!');
+                }
+            });
+        }, function(){
+            layer.closeAll();
+        });
+
+    })
 </script>
 </body>
 </html>

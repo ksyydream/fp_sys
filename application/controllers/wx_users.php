@@ -30,11 +30,33 @@ class Wx_users extends Wx_controller {
             redirect('wx_index/logout');
         }
         $this->assign('controller_name', 'wx_users');
+        $this->assign('user_info', $this->user_info);
     }
 
 
     public function index() {
         $this->display('users/index.html');
+    }
+
+    public function person_info(){
+        $this->display('users/user_info.html');
+    }
+
+    public function person_info_edit(){
+
+        if(IS_POST){
+            $res = $this->wx_users_model->person_info_edit();
+            $this->ajaxReturn($res);
+        }else{
+            $index_arr = $this->wx_index_model->new_region($this->user_info['district'], $this->user_info['twon']);
+            $this->assign('index_1', $index_arr['index_arr']['index_1']);
+            $this->assign('index_2', $index_arr['index_arr']['index_2']);
+            $this->assign('index_3', $index_arr['index_arr']['index_3']);
+            $this->assign('index_4', $index_arr['index_arr']['index_4']);
+            $user_info_ = $this->wx_users_model->get_user_info4region($this->user_id);
+            $this->assign('user_region', $user_info_);
+            $this->display('users/user_info_edit.html');
+        }
     }
 
     //检查用户是否可以修改赎楼业务
@@ -287,5 +309,18 @@ class Wx_users extends Wx_controller {
         $this->assign('credit_img_list', $credit_img_list);
         $this->assign('user_info', $this->user_info);
         $this->display('users/foreclosure/detail5.html');
+    }
+
+    //赎楼详情页 材料列表
+    public function foreclosure_detail7($f_id = 0){
+        $f_info = $this->foreclosure_model->get_foreclosure($f_id);
+        if(!$f_info || $f_info['user_id'] != $this->user_id){
+            redirect('wx_users/index'); //不是自己的工作单,就直接回到首页
+        }
+        $file_list = $this->foreclosure_model->get_file_listbyFid($f_id);
+        $this->assign('file_list', $file_list);
+        $this->assign('f_info', $f_info);
+        $this->assign('user_info', $this->user_info);
+        $this->display('users/foreclosure/detail7.html');
     }
 }
