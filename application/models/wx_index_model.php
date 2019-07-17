@@ -213,7 +213,7 @@ class Wx_index_model extends MY_Model
         $insert['mobile'] = $data['mobile'];
         $insert['rel_name'] = $data['rel_name'];
         //验证邀请码是否合法
-        $check_member_ = $this->db->from('members')->where(array('invite_code' => $data['invite_code']))->get()->row_array();
+        $check_member_ = $this->db->from('members')->where(array('invite_code' => $data['invite_code']))->where_in('level', array(2, 3))->get()->row_array();
         if(!$check_member_){
             return $this->fun_fail('邀请码不存在!');
         }
