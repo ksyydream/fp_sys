@@ -61,3 +61,49 @@
 </div>
 </body>
 </html>
+<script src="/assets/js/jquery-2.2.3.min.js"></script>
+<script src="/assets/js/amazeui.js"></script>
+<script src="/assets/js/animateBackground-plugin.js"></script>
+<script src="/assets/js/layer/layer.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script>
+  $(function(){
+
+    wx.config({
+      debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+      appId: '{$wxappId}', // 必填，公众号的唯一标识
+      timestamp: {$wxtimestamp}, // 必填，生成签名的时间戳
+      nonceStr: '{$wxnonceStr}', // 必填，生成签名的随机串
+      signature: '{$wxsignature}',// 必填，签名，见附录1
+      jsApiList: [ 'onMenuShareTimeline','checkJsApi', 'onMenuShareAppMessage', 'updateAppMessageShareData', 'updateTimelineShareData'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    });
+    wx.checkJsApi({
+      jsApiList: [
+        'onMenuShareTimeline', 'onMenuShareAppMessage', 'updateAppMessageShareData', 'updateTimelineShareData'
+      ],
+      success: function (res) {
+
+      }
+    });
+
+    wx.ready(function () {
+      wx.updateTimelineShareData({
+        title: '【房猫微站】您身边的专业金融服务！', // 分享标题
+        link: '{{$img_url_DBY}}/wx_index/register/?invite_code_temp={{$m_info.invite_code}}', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: '{{$img_url_DBY}}', // 分享图标
+        success: function () {
+
+        }
+      })
+      wx.updateAppMessageShareData({
+        title: '【房猫微站】您身边的专业金融服务！', // 分享标题
+        desc: '【房猫微站】您身边的专业金融服务！！', // 分享描述
+        link: '{{$img_url_DBY}}/wx_index/register/?invite_code_temp={{$m_info.invite_code}}', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: '{{$img_url_DBY}}', // 分享图标
+        success: function () {
+
+        }
+      });
+    })
+  })
+</script>
