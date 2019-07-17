@@ -76,34 +76,51 @@ class Wx_members extends Wx_controller {
                 $res = $this->foreclosure_model->fun_fail('工作单不存在!');
                 $this->ajaxReturn($res);
             }
-            if($m_info['level'] != 2){
-                $res = $this->foreclosure_model->fun_fail('只有总监级才有修改和审核权限!');
-                $this->ajaxReturn($res);
-            }
-            //获取直接对接 业务员的信息
-            $manger_info = $this->wx_members_model->get_member_info($f_info['m_id']);
-            if($f_info['m_id'] != $m_info['m_id'] && $manger_info['parent_id'] != $m_info['m_id']){
-                $res = $this->foreclosure_model->fun_fail('你没有权限修改,或审核此工作单!');
-                $this->ajaxReturn($res);
-            }
-            if($f_info['status'] != 2){
-                $res = $this->foreclosure_model->fun_fail('工作单已不再待审核内,不可修改!');
-                $this->ajaxReturn($res);
+            switch($f_info['status']){
+                case 2:
+                    if($m_info['level'] != 2){
+                        $res = $this->foreclosure_model->fun_fail('待审核时,只有总监级才有修改和审核权限!');
+                        $this->ajaxReturn($res);
+                    }
+                    //获取直接对接 业务员的信息
+                    $manger_info = $this->wx_members_model->get_member_info($f_info['m_id']);
+                    if($f_info['m_id'] != $m_info['m_id'] && $manger_info['parent_id'] != $m_info['m_id']){
+                        $res = $this->foreclosure_model->fun_fail('你没有权限修改,或审核此工作单!');
+                        $this->ajaxReturn($res);
+                    }
+                    break;
+                case 3:
+                    if($m_info['level'] != 1){
+                        $res = $this->foreclosure_model->fun_fail('审核通过时,只有总经理才有修改和审核权限!');
+                        $this->ajaxReturn($res);
+                    }
+                    break;
+                default:
+                    $res = $this->foreclosure_model->fun_fail('工作单已不可修改!');
+                    $this->ajaxReturn($res);
             }
         }else{
             if(!$f_info){
                 redirect('wx_members/foreclosure_list'); //不是自己的工作单,就直接回到首页
             }
-            if($m_info['level'] != 2){
-                redirect('wx_members/foreclosure_list'); //不是自己的工作单,就直接回到首页
-            }
-            //获取直接对接 业务员的信息
-            $manger_info = $this->wx_members_model->get_member_info($f_info['m_id']);
-            if($f_info['m_id'] != $m_info['m_id'] && $manger_info['parent_id'] != $m_info['m_id']){
-                redirect('wx_members/foreclosure_list'); //不是自己的工作单,就直接回到首页
-            }
-            if($f_info['status'] != 2){
-                redirect('wx_members/foreclosure_detail1/' . $f_id); ////如果工作单不是待审核,就到详情页面
+            switch($f_info['status']){
+                case 2:
+                    if($m_info['level'] != 2){
+                        redirect('wx_members/foreclosure_list'); //不是自己的工作单,就直接回到首页
+                    }
+                    //获取直接对接 业务员的信息
+                    $manger_info = $this->wx_members_model->get_member_info($f_info['m_id']);
+                    if($f_info['m_id'] != $m_info['m_id'] && $manger_info['parent_id'] != $m_info['m_id']){
+                        redirect('wx_members/foreclosure_list'); //不是自己的工作单,就直接回到首页
+                    }
+                    break;
+                case 3:
+                    if($m_info['level'] != 1){
+                        redirect('wx_members/foreclosure_list'); //不是自己的工作单,就直接回到首页
+                    }
+                    break;
+                default:
+                    redirect('wx_members/foreclosure_detail1/' . $f_id); ////如果工作单不是待审核,就到详情页面
             }
         }
         return true;
@@ -236,8 +253,13 @@ class Wx_members extends Wx_controller {
         //获取直接对接 业务员的信息
         $m_info = $this->m_info;
         $manger_info = $this->wx_members_model->get_member_info($f_info['m_id']);
-        if($f_info['m_id'] != $m_info['m_id'] && $manger_info['parent_id'] != $m_info['m_id']){
-            redirect('wx_members/foreclosure_list'); //不是自己的工作单,就直接回到首页
+        //如果是 财务 ,可以看所有
+        if($m_info['level'] == 4){
+
+        }else{
+            if($f_info['m_id'] != $m_info['m_id'] && $manger_info['parent_id'] != $m_info['m_id']){
+                redirect('wx_members/foreclosure_list'); //不是自己的工作单,就直接回到首页
+            }
         }
         //如果是审核页面detail6,则需要额外的验证
         if($this->uri->segment(2) == 'foreclosure_detail6'){
