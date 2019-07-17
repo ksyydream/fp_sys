@@ -45,7 +45,7 @@ class Wx_users extends Wx_controller {
     public function person_info_edit(){
 
         if(IS_POST){
-            $res = $this->foreclosure_model->person_info_edit();
+            $res = $this->wx_users_model->person_info_edit();
             $this->ajaxReturn($res);
         }else{
             $index_arr = $this->wx_index_model->new_region($this->user_info['district'], $this->user_info['twon']);
