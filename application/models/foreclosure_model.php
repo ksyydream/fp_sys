@@ -163,6 +163,7 @@ class Foreclosure_model extends MY_Model
             'bank_loan_type' => $this->input->post('bank_loan_type'),
             'is_mortgage' => $this->input->post('is_mortgage'),
             'borrow_money' => $this->input->post('borrow_money'),
+            'borrow_money_user' =>  $this->input->post('borrow_money'),   //备份原始
             'expect_use_time' => $this->input->post('expect_use_time'),
             'total_price' => $this->input->post('total_price'),
         );
