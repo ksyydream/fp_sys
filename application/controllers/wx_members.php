@@ -44,6 +44,7 @@ class Wx_members extends Wx_controller {
     }
 
     public function create_RQimg(){
+        die(var_dump('asd'));
         $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('appsecret')));
         $access_token = $this->wxjssdk_th->wxgetAccessToken();
         $img_url = $this->get_or_create_ticket($access_token, 'QR_STR_SCENE', $this->m_info['invite_code']);
