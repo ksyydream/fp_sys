@@ -329,7 +329,8 @@ class MY_Model extends CI_Model{
         );
         $json_template = json_encode($template);
         $dataRes = $this->request_post($url, urldecode($json_template)); //这里执行post请求,并获取返回数据
-        if ($dataRes->errcode == 0) {
+        $res_ = json_decode($dataRes);
+        if ($res_['errcode'] == 0) {
             return true;
         } else {
             return false;
