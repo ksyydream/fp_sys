@@ -105,7 +105,50 @@
 <script src="/assets/js/layer/layer.js"></script>
 
 <script type="text/javascript">
+    $("#save_btn").click(function(){
+        var shop_name = $.trim($("#shop_name").val());//获取门店名称
+        var areaVal = $("#area_value").val();//获取所在区域
+        var addressVal = $("#address").val();//获取详细地址
+        //详细地址验证
+        if(shop_name == ''){
+            layer.msg('请填写门店名称');
+            return false;
+        }
+        //所在区域验证
+        if(areaVal == ''){
+            layer.msg('请设置所在区域');
+            return false;
+        }
+        //详细地址验证
+        if(addressVal == ''){
+            layer.msg('请填写详细地址');
+            return false;
+        }
+        var form = document.getElementById('save_form');
 
+        var formdata = new FormData(form);
+        $.ajax({
+            type : "POST",
+            url : "/wx_users/person_info_edit",
+            data : formdata,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success : function(data) {
+                var return_ = JSON.parse(data)
+                if(return_.status == 1){
+                    var url = '/wx_users/person_info'; //先返回首页,以后返回列表页
+                    window.location.replace(url);
+                }else{
+                    layer.msg(return_.msg);
+                }
+            },
+            error:function(){
+                layer.msg('网络异常!');
+            }
+        });
+    })
     var selectedIndex_old = [{{$index_1}}, {{$index_2}}, {{$index_3}}, {{$index_4}}]; /* 默认选中的地区 */
     var selected_parent_old = [0, {{$user_info.province}}, {{$user_info.city}}, {{$user_info.district}}];
 </script>

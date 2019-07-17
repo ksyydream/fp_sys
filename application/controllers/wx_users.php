@@ -43,14 +43,20 @@ class Wx_users extends Wx_controller {
     }
 
     public function person_info_edit(){
-        $index_arr = $this->wx_index_model->new_region($this->user_info['district'], $this->user_info['twon']);
-        $this->assign('index_1', $index_arr['index_arr']['index_1']);
-        $this->assign('index_2', $index_arr['index_arr']['index_2']);
-        $this->assign('index_3', $index_arr['index_arr']['index_3']);
-        $this->assign('index_4', $index_arr['index_arr']['index_4']);
-        $user_info_ = $this->wx_users_model->get_user_info4region($this->user_id);
-        $this->assign('user_region', $user_info_);
-        $this->display('users/user_info_edit.html');
+
+        if(IS_POST){
+            $res = $this->foreclosure_model->person_info_edit();
+            $this->ajaxReturn($res);
+        }else{
+            $index_arr = $this->wx_index_model->new_region($this->user_info['district'], $this->user_info['twon']);
+            $this->assign('index_1', $index_arr['index_arr']['index_1']);
+            $this->assign('index_2', $index_arr['index_arr']['index_2']);
+            $this->assign('index_3', $index_arr['index_arr']['index_3']);
+            $this->assign('index_4', $index_arr['index_arr']['index_4']);
+            $user_info_ = $this->wx_users_model->get_user_info4region($this->user_id);
+            $this->assign('user_region', $user_info_);
+            $this->display('users/user_info_edit.html');
+        }
     }
 
     //检查用户是否可以修改赎楼业务
