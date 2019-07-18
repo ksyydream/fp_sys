@@ -80,7 +80,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 .am-form .am-userin-feedback:before{background-position:0 -92px;}
 
 .am-form input[type=button],.am-form input[type=text],.am-form input[type=number],.am-form .am-spec-input,.am-form select
-{padding:.6rem 0 .6rem .6rem;border:none;background:none;outline:none; text-align: right; width:100%;font-size: .8rem;}
+{padding:.65rem 0 .6rem .6rem;border:none;background:none;outline:none; text-align: right; width:100%;font-size: .8rem;}
 .am-form .am-spec-input{padding:0 0 0 .6rem; line-height: 2.3rem;}
 .am-form .am-spec-input .am-chooseradio1{margin-right: .5rem;}
 .am-form .ip-txt1[type=number],.am-form .ip-txt1[type=text]{float: left; width:92%;}
