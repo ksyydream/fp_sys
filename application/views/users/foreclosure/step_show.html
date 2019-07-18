@@ -67,8 +67,8 @@
       <label for="doc-ipt-3" class="am-u-sm-7 am-form-label">婚姻状况</label>
       <div class="am-u-sm-5">
               <div class="radio-input">
-          <label class="register-type-label"><input type="radio" disabled="disabled" class="radio_DBY_" value="1" name="is_marriage" {{if $f_info.is_marriage|default:1 == 1 }}checked{{/if}} checked>已婚</input></label>
-          <label class="register-type-label"><input type="radio" disabled="disabled" class="radio_DBY_" value="-1" name="is_marriage" {{if $f_info.is_marriage|default:1 == -1 }}checked{{/if}}>单身</input></label>
+          <label class="register-type-label"><input type="radio" disabled="disabled" class="radio_DBY_" value="1" name="borrower_marriage" {{if $f_info.borrower_marriage|default:1 == 1 }}checked{{/if}} checked>已婚</input></label>
+          <label class="register-type-label"><input type="radio" disabled="disabled" class="radio_DBY_" value="-1" name="borrower_marriage" {{if $f_info.borrower_marriage|default:1 == -1 }}checked{{/if}}>单身</input></label>
       </div>
       </div>
     </div>
@@ -92,7 +92,7 @@
       </div>
     </div>
  </div>
-      <div id="radio_div" {{if $f_info.is_marriage|default:1 == -1 }}style="display: none"{{/if}}>
+      <div id="radio_div" {{if $f_info.borrower_marriage|default:1 == -1 }}style="display: none"{{/if}}>
           <p class="p-tit">请填写借款人配偶基本信息</p>
 
           <div class="am-fast-estimate">

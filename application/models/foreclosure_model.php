@@ -45,7 +45,7 @@ class Foreclosure_model extends MY_Model
      */
     public function save_foreclosure($user_info){
         $insert_ = array(
-            'borrower_marriage' => $this->input->post('is_marriage'),
+            'borrower_marriage' => $this->input->post('borrower_marriage'),
             'borrower_name' => $this->input->post('borrower_name'),
             'borrower_code' => $this->input->post('borrower_code'),
             'borrower_mobile' => $this->input->post('borrower_mobile'),
@@ -537,12 +537,14 @@ class Foreclosure_model extends MY_Model
         $fc_deadline_ = $this->config->item('fc_deadline'); //缓存数据使用限期,这里是秒为单位的
         foreach($res as $k_ => $item){
             if($item['add_time'] + $fc_deadline_ < time()){
+                $res[$k_]['gq_flag'] = 1;   //过期标记位
                 $res[$k_]['show_msg'] = '已过期';
             }else{
                 $diff_ = $item['add_time'] + $fc_deadline_ - time();
                 $day_ = intval($diff_ / (60 * 60 * 24));
                 $remain = $diff_ % 86400;
                 $hours = intval($remain/3600);
+                $res[$k_]['gq_flag'] = -1;  //过期标记位
                 $res[$k_]['show_msg'] = '<span>剩余天数：</span>' . $day_ . '天' . $hours . '小时';
             }
         }
@@ -722,5 +724,25 @@ class Foreclosure_model extends MY_Model
         );
         $this->db->where(array('foreclosure_id' => $f_id, 'status' => -1))->update('foreclosure', $update_);
         return $this->fun_success('操作成功');
+    }
+
+    public function foreclosure_finish($m_info){
+        $f_id = $this->input->post('fc_id');
+        if(!$f_id)
+            return $this->fun_fail('此赎楼业务不存在!');
+        $f_info = $this->get_foreclosure($f_id);
+        if(!$f_info)
+            return $this->fun_fail('此赎楼业务不存在!');
+        if($f_info['status'] != 3)
+            return $this->fun_fail('此赎楼不可终审,或已被处理!');
+        if($m_info['level'] != 1)
+            return $this->fun_fail('只有总经理可以审核!');
+        $update_ = array(
+            'status' => 4,
+            'finish_time' => time(),
+            'finish_m_id' => $m_info['m_id']
+        );
+        $this->db->where(array('foreclosure_id' => $f_id, 'status' => 3))->update('foreclosure', $update_);
+        return $this->fun_success('终审成功', array('foreclosure_id' => $f_id));
     }
 }
