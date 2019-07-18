@@ -79,6 +79,16 @@
   </form>
     {{include file='users/public/foot.html'}}
 </div>
+<div class="am-modal am-modal-no-btn confrim-submit" tabindex="-1" id="doc-modal-1">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd"><div class="img100 submit_ok"><img src="/assets/i/ok.png"></div>
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd confrim-submit-bd">
+            <a href="/wx_users/person_info" class="am-btn am-btn-ind">返回首页</a><a href="/wx_users/foreclosure_list" class="am-btn am-btn-list">返回列表</a>
+        </div>
+    </div>
+</div>
 <script src="/assets/js/jquery-2.2.3.min.js"></script>
 <script src="/assets/js/layer/layer.js"></script>
 <script src="/assets/js/amazeui.js"></script>
@@ -175,8 +185,7 @@
             success : function(data) {
                 var return_ = JSON.parse(data)
                 if(return_.status == 1){
-                    var url = '/wx_users/index'; //先返回首页,以后返回列表页
-                    window.location.replace(url);
+                    $('#doc-modal-1').modal()
                 }else{
                     layer.close(index);
                     layer.msg(return_.msg);
@@ -189,6 +198,10 @@
             }
         });
     })
+    $(document).on('close.modal.amui', '#doc-modal-1', function(e) {
+        var url = '/wx_users/foreclosure_list'; //先返回首页,以后返回列表页
+        window.location.replace(url);
+    });
 </script>
 </body>
 </html>
