@@ -317,16 +317,17 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 
 .am-main-login{background: #FFF;}
 /*注册*/
-.am-form .yzcode[type=text] {text-align: left;padding-left: .3rem;}
+.am-form .yzcode[type=text] {text-align: left;padding-left: 0;}
 .yzcode-div{padding: 0;}
 
 .am-form .yzcode-label{ float: left;}
 .am-yzcode{font-size: .8rem; color: #e15616;padding: 0 .3rem;border-left: 1px solid #e7e8e9;height:2.3rem;line-height: 2.3rem; float: right; width: 33%;}
+.am-form-group .register-style{ float: left;}
 /*.am-form .am-form-label{margin:0;padding:0 0 0 ;font-weight: normal;  font-size: .8rem;color:#000;}*/
 .p-tit{margin:.5rem 1rem;font-size: .7rem; color: #848890;}
 
 .am-form .am-spec-txt{padding: 0; text-align: left; color:#26304e;}
-.am-btn-register{font-size:.8rem;margin:1rem auto; width: 16rem; background: #4c33ff; color:#fff; height: 2.4rem; border-radius: 1.2rem; display: block;padding-top: .6rem;}
+.am-btn-register{font-size:.8rem;margin:1rem auto; width: 16rem; background: #4c33ff; color:#fff; height: 2.3rem; border-radius: 1.2rem; display: block;padding-top: .6rem;}
 
 .wid100 img{width: 100%;}
 
@@ -352,8 +353,8 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 
 .copyright{text-align: center; color:#999; font-size: .5rem;}
 
-.register-type-label {font-weight: normal;font-size: .8rem;margin: 0 .1rem}.register-type{}
-.radio-input{padding-top:.4rem; vertical-align:-2px;}
+.register-type-label {font-weight: normal;font-size: .8rem;margin: 0 .5rem}.register-type{}
+.radio-input{padding-top:.5rem; vertical-align:-2px;}
 
 .colorgreen{color:#65c4aa;}
 
@@ -386,7 +387,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 .am-form-slides li{width:20%;float: left; display: block;text-align: center; height: 2rem;}.am-form-slides li a{width:100%;height: 2rem; display: block;}
 .am-form-slides .current{ color:#26304e;border-bottom: 2px solid #e15616;}.am-form-slides .current a{color:#26304e;}
 .data-list .d-l-content{margin: 0 1rem .3rem ; }
-.data-list .leftday{padding-bottom: 0;padding-top:.5rem;border-top: 1px solid #e5e9ed; color: #f91b21;height: 1.5rem;}
+.data-list .leftday{padding-bottom: 0;padding-top:.5rem;border-top: 1px solid #e5e9ed; color: #f91b21; height: 1.5rem;}
 .data-list .listid{border-bottom: 1px solid #e5e9ed;padding-bottom:.5rem;}
 .data-list li{ color: #000;}.data-list .leftday span,.data-list .leftday li{color:#f91b21;}
 
