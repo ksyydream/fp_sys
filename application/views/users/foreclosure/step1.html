@@ -66,8 +66,8 @@
       <label for="doc-ipt-3" class="am-u-sm-7 am-form-label">婚姻状况</label>
       <div class="am-u-sm-5">
               <div class="radio-input">
-          <label class="register-type-label"><input type="radio" class="radio_DBY_" value="1" name="is_marriage" checked>已婚</input></label>
-          <label class="register-type-label"><input type="radio" class="radio_DBY_" value="-1" name="is_marriage">单身</input></label>
+          <label class="register-type-label"><input type="radio" class="radio_DBY_" value="1" name="borrower_marriage" checked>已婚</input></label>
+          <label class="register-type-label"><input type="radio" class="radio_DBY_" value="-1" name="borrower_marriage">单身</input></label>
       </div>
       </div>
     </div>
@@ -130,7 +130,7 @@
 
 <script type="text/javascript">
     $(".radio_DBY_").click(function(){
-        var type_id = $("input[name='is_marriage']:checked").val();
+        var type_id = $("input[name='borrower_marriage']:checked").val();
         if(type_id == '1'){
             $("#radio_div").show();
         }
@@ -142,7 +142,7 @@
         var index = layer.load(1, {
             shade: [0.1,'#fff'] //0.1透明度的白色背景
         });
-        var type_id = $("input[name='is_marriage']:checked").val();
+        var type_id = $("input[name='borrower_marriage']:checked").val();
         var borrower_name = $.trim($("#borrower_name").val());
         var borrower_mobile = $.trim($("#borrower_mobile").val());
         var borrower_code = $.trim($("#borrower_code").val());

@@ -45,7 +45,7 @@ class Foreclosure_model extends MY_Model
      */
     public function save_foreclosure($user_info){
         $insert_ = array(
-            'borrower_marriage' => $this->input->post('is_marriage'),
+            'borrower_marriage' => $this->input->post('borrower_marriage'),
             'borrower_name' => $this->input->post('borrower_name'),
             'borrower_code' => $this->input->post('borrower_code'),
             'borrower_mobile' => $this->input->post('borrower_mobile'),
