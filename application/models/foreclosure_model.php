@@ -537,12 +537,14 @@ class Foreclosure_model extends MY_Model
         $fc_deadline_ = $this->config->item('fc_deadline'); //缓存数据使用限期,这里是秒为单位的
         foreach($res as $k_ => $item){
             if($item['add_time'] + $fc_deadline_ < time()){
+                $res[$k_]['gq_flag'] = 1;   //过期标记位
                 $res[$k_]['show_msg'] = '已过期';
             }else{
                 $diff_ = $item['add_time'] + $fc_deadline_ - time();
                 $day_ = intval($diff_ / (60 * 60 * 24));
                 $remain = $diff_ % 86400;
                 $hours = intval($remain/3600);
+                $res[$k_]['gq_flag'] = -1;  //过期标记位
                 $res[$k_]['show_msg'] = '<span>剩余天数：</span>' . $day_ . '天' . $hours . '小时';
             }
         }
