@@ -188,8 +188,8 @@
               </div>
           </div>
           <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">预计用款时间</label>
-              <div class="am-u-sm-9">
+              <label class="am-u-sm-4 am-form-label">预计用款时间</label>
+              <div class="am-u-sm-8">
                   <p class="am-spec-input">{{$f_info.expect_use_time|default:''}}</p>
               </div>
           </div>
@@ -216,15 +216,15 @@
               </div>
           </div>
           <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">已付定金/首付</label>
-              <div class="am-u-sm-9">
+              <label class="am-u-sm-4 am-form-label">已付定金/首付</label>
+              <div class="am-u-sm-8">
                   <p class="am-spec-input">{{$f_info.deposit|default:'-'}}万</p>
               </div>
           </div>
           {{if $f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1}}
           <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">首付是否进入还款</label>
-              <div class="am-u-sm-9">
+              <label class="am-u-sm-8 am-form-label">首付是否进入还款</label>
+              <div class="register-style">
                   <p class="am-spec-input">
                       {{if $f_info.is_repayment|default:0 == 1 }}是{{/if}}
                       {{if $f_info.is_repayment|default:0 == -1 }}否{{/if}}
@@ -245,28 +245,28 @@
       <div class="am-fast-estimate">
           {{if $f_info.bank_loan_type|default:0 == 2 && $f_info.is_mortgage|default:0 == 1}}
           <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">买家按揭银行</label>
-              <div class="am-u-sm-9">
+              <label class="am-u-sm-4 am-form-label">买家按揭银行</label>
+              <div class="am-u-sm-8">
                   <p class="am-spec-input">{{$f_info.mortgage_bank|default:''}}</p>
               </div>
           </div>
           <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">买家按揭金额</label>
-              <div class="am-u-sm-9">
+              <label class="am-u-sm-4 am-form-label">买家按揭金额</label>
+              <div class="am-u-sm-8">
                   <p class="am-spec-input">{{$f_info.mortgage_money|default:'-'}}万</p>
               </div>
           </div>
 
           {{else}}
           <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">买家预计按揭银行</label>
-              <div class="am-u-sm-9">
+              <label class="am-u-sm-5 am-form-label">买家预计按揭银行</label>
+              <div class="am-u-sm-7">
                   <p class="am-spec-input">{{$f_info.expect_mortgage_bank|default:''}}</p>
               </div>
           </div>
           <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">买家预计按揭金额</label>
-              <div class="am-u-sm-9">
+              <label class="am-u-sm-5 am-form-label">买家预计按揭金额</label>
+              <div class="am-u-sm-7">
                   <p class="am-spec-input">{{$f_info.expect_mortgage_money|default:'-'}}万</p>
               </div>
           </div>
