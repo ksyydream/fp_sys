@@ -81,9 +81,16 @@ class Wx_users extends Wx_controller {
             if(!$f_info || $f_info['user_id'] != $this->user_id){
                 redirect('wx_users/index'); //不是自己的工作单,就直接回到首页
             }
-            if($f_info['status'] != 1){
-                redirect('wx_users/foreclosure_detail1/' . $f_id); //如果工作单不在草稿箱内,或者已经过期,就到详情页面
+            if($this->uri->segment(2) == 'foreclosure_td'){
+                if(!in_array($f_info['status'], array(1, -1))){
+                    redirect('wx_users/foreclosure_detail1/' . $f_id); //如果工作单不在草稿箱内,或者已经过期,就到详情页面
+                }
+            }else{
+                if($f_info['status'] != 1){
+                    redirect('wx_users/foreclosure_detail1/' . $f_id); //如果工作单不在草稿箱内,或者已经过期,就到详情页面
+                }
             }
+
             if($f_info['add_time'] + $fc_deadline_ < time()){
                 redirect('wx_users/foreclosure_detail1/' . $f_id); //如果工作单不在草稿箱内,或者已经过期,就到详情页面
             }
