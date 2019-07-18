@@ -257,42 +257,6 @@ class MY_Model extends CI_Model{
     	return file_get_contents($url, false, $context);
     }
 
-
-    /**
-    public function get_access_token() {
-        $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.APP_ID.'&secret='.APP_SECRET;
-        $response = file_get_contents($url);
-        return json_decode($response)->access_token;
-    }
-
-    public function get_or_create_token() {
-
-        $this->db->from('token');
-        $this->db->where('app_id', APP_ID);
-        $this->db->where('app_secret', APP_SECRET);
-        $data_token = $this->db->get()->row_array();
-        if(empty($data_token)) {
-            $data = array(
-                'app_id' => APP_ID,
-                'app_secret' => APP_SECRET,
-                'token' => $this->get_access_token(),
-                'created' => time()
-            );
-            $this->db->insert('token', $data);
-            return $data['token'];
-        } else {
-            $interval = time() - intval($data_token['created']);
-            if($interval / 60 / 60 > 1) {
-                $data_token['token'] = $this->get_access_token();
-                $data_token['created'] = time();
-                $this->db->where('id', $data_token['id']);
-                $this->db->update('token', $data_token);
-            }
-            return $data_token['token'];
-        }
-    }
-*/
-
     public function wxpost($template_id,$post_data,$user_id,$url_www='www.funmall.com.cn'){
         $openid = $this->get_openidByUserid($user_id);
         if($openid == -1 || empty($openid)){
@@ -337,74 +301,6 @@ class MY_Model extends CI_Model{
         }
 
     }
-
-/**
-    public function get_token($app,$appsecret){
-        $this->db->from('token');
-        $this->db->where('app_id', $app);
-        $this->db->where('app_secret', $appsecret);
-        $data_token = $this->db->get()->row_array();
-        if(empty($data_token)) {
-            $data = array(
-                'app_id' => $app,
-                'app_secret' => $appsecret,
-                'token' => $this->get_access($app,$appsecret),
-                'created' => time()
-            );
-            $this->db->insert('token', $data);
-            return $data['token'];
-        } else {
-            $interval = time() - intval($data_token['created']);
-            if($interval / 60 / 60 > 1) {
-                $data_token['token'] = $this->get_access($app,$appsecret);
-                $data_token['created'] = time();
-                $this->db->where('id', $data_token['id']);
-                $this->db->update('token', $data_token);
-            }
-            return $data_token['token'];
-        }
-    }
-
-    public function get_ticket($app,$appsecret){
-        $this->db->from('wx_ticket');
-        $this->db->where('app_id', $app);
-        $this->db->where('app_secret', $appsecret);
-        $data_token = $this->db->get()->row_array();
-        if(empty($data_token)) {
-            $data = array(
-                'app_id' => $app,
-                'app_secret' => $appsecret,
-                'ticket' => $this->get_apiticket($app,$appsecret),
-                'created' => time()
-            );
-            $this->db->insert('wx_ticket', $data);
-            return $data['ticket'];
-        } else {
-            $interval = time() - intval($data_token['created']);
-            if($interval / 60 / 60 > 1) {
-                $data_token['ticket'] = $this->get_apiticket($app,$appsecret);
-                $data_token['created'] = time();
-                $this->db->where('id', $data_token['id']);
-                $this->db->update('wx_ticket', $data_token);
-            }
-            return $data_token['ticket'];
-        }
-    }
-
-    public function get_access($app,$appsecret) {
-        $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$app.'&secret='.$appsecret;
-        $response = file_get_contents($url);
-        return json_decode($response)->access_token;
-    }
-
-    public function get_apiticket($app,$appsecret){
-        $accessToken = $this->get_token($app,$appsecret);
-        $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
-        $res = json_decode($this->wxhttpGet($url));
-        $ticket = $res->ticket;
-        return $ticket;
-    }
-*/
 
     private function wxhttpGet($url) {
         $curl = curl_init();
