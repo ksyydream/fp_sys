@@ -401,7 +401,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 
 .div-list-data{position: relative; height: 175px; background: #fff; margin-bottom: 1rem;}
 .option-div{ position: absolute; bottom: .5rem; right:.5rem;}
-.option-btn{ color: #5d5b5a; display: block; border:1px solid #ccccce; width:70px; height:28px;text-align: center;border-radius: 15px; float: left; margin-right: .5rem; }
+.option-btn{ color: #5d5b5a; display: block; border:1px solid #ccccce; width:80px; height:28px;text-align: center;border-radius: 15px; float: left; margin-right: .5rem; }
 
 .upload-credit{overflow: hidden;zoom:1;}
 
