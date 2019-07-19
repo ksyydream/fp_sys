@@ -15,9 +15,9 @@
             </li>
         </ul>
         <ul class="d-l-content">
-            <li><span>借款金额：</span>{{$item.borrow_money|default:"-"}}万</li>
+            {{if $item.status != -1}}<li><span>借款金额：</span>{{$item.borrow_money|default:"-"}}万</li>{{/if}}
             <li><span>借款人：</span>{{$item.borrower_name|default:"-"}}</li>
-            <li><span>用款时间：</span>{{$item.expect_use_time|default:"-"}}</li>
+            {{if $item.status != -1}}<li><span>用款时间：</span>{{$item.expect_use_time|default:"-"}}</li>{{/if}}
         </ul>
         <ul class="d-l-content leftday">
             <li>{{if $item.status == 1}}{{$item.show_msg}}{{/if}}</li>
