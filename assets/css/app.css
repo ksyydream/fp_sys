@@ -71,7 +71,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 
 .am-form .am-form-group{margin:0 0 0 1rem;border-bottom: 1px solid #e5e5e5; }
 .am-form .am-form-group-borbno{border:none;}
-.am-form .am-form-group:last-child{border:none;}
+.am-form .am-form-group:last-child{border:none;}.am-form .user-list .am-form-group{border-bottom: 1px solid #e5e5e5;}
 .am-form .am-form-label{margin:0;padding:0;font-weight: normal; height:2.3rem;line-height: 2.3rem; font-size: .8rem;color:#26304e;}
 .am-form .am-userin-label:before{margin: .68rem .2rem 0 0;width: 20px; height: 20px; float: left; content: ""; background: url(../../assets/i/info.svg) no-repeat;}
 .am-form .am-userin-tel:before{background-position:0 -23px;}
