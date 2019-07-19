@@ -289,8 +289,12 @@
       {{/if}}
 
 
+      {{if $f_info.status != -1}}
+      <a class="am-btn am-btn-register" href="/wx_users/foreclosure_detail3/{{$f_info.foreclosure_id}}">下一页</a>
+      {{else}}
+      <a class="am-btn am-btn-register" href="/wx_users/foreclosure_list">回到列表</a>
+      {{/if}}
 
-    <a class="am-btn am-btn-register" href="/wx_users/foreclosure_detail3/{{$f_info.foreclosure_id}}">下一页</a>
   </form>
 
 {{include file='users/public/foot.html'}}
