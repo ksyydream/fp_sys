@@ -1,7 +1,7 @@
 {{if $list}}
 {{foreach from=$list item=item}}
 <div class="div-list-data">
-    <a herf="/wx_users/foreclosure_show/{{$item.foreclosure_id}}" class="data-list">
+    <div class="data-list">
         <ul class="d-l-content listid">
             <li>
                 {{if $item.is_special == 1}}<div class="data-status specok"><i class="greenchannel"></i>绿色通道</div>{{/if}}
@@ -14,16 +14,16 @@
                 <div class="data-span"><span>编号：</span>{{$item.work_no}}</div>
             </li>
         </ul>
-        <ul class="d-l-content">
-            <li><span>借款金额：</span>{{$item.borrow_money|default:"-"}}万</li>
-            <li><span>借款人：</span>{{$item.borrower_name|default:"-"}}</li>
-            <li><span>用款时间：</span>{{$item.expect_use_time|default:"-"}}</li>
-        </ul>
+        <div class="d-l-content">
+            <a herf="/wx_users/foreclosure_show/{{$item.foreclosure_id}}"><p><span>借款金额：</span>{{$item.borrow_money|default:"-"}}万</p>
+            <p><span>借款人：</span>{{$item.borrower_name|default:"-"}}</p>
+            <p><span>用款时间：</span>{{$item.expect_use_time|default:"-"}}</p></a>
+        </div>
         <ul class="d-l-content leftday">
             <li>{{if $item.status == 1}}{{$item.show_msg}}{{/if}}</li>
         </ul>
         <i class="am-icon-chevron"></i>
-    </a>
+    </div>
     <div class="option-div">
         {{if $item.status == 1 && $item.gq_flag == -1}}<a href="/wx_users/foreclosure_show/{{$item.foreclosure_id}}" class="option-btn">编 辑</a>{{/if}}
         {{if $item.status == 3 || $item.status == 4}}<a href="/wx_users/foreclosure_detail7/{{$item.foreclosure_id}}" class="option-btn">材料列表</a>{{/if}}
