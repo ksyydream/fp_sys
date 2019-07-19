@@ -15,9 +15,11 @@
             </li>
         </ul>
         <div class="d-l-content">
-            <a herf="/wx_users/foreclosure_show/{{$item.foreclosure_id}}"><p><span>借款金额：</span>{{$item.borrow_money|default:"-"}}万</p>
-            <p><span>借款人：</span>{{$item.borrower_name|default:"-"}}</p>
-            <p><span>用款时间：</span>{{$item.expect_use_time|default:"-"}}</p></a>
+            <a herf="/wx_users/foreclosure_show/{{$item.foreclosure_id}}">
+                {{if $item.status != -1}}<p><span>借款金额：</span>{{$item.borrow_money|default:"-"}}万</p>{{/if}}
+                <p><span>借款人：</span>{{$item.borrower_name|default:"-"}}</p>
+                {{if $item.status != -1}}<p><span>用款时间：</span>{{$item.expect_use_time|default:"-"}}</p>{{/if}}
+            </a>
         </div>
         <ul class="d-l-content leftday">
             <li>{{if $item.status == 1}}{{$item.show_msg}}{{/if}}</li>
