@@ -1,7 +1,7 @@
 {{if $list}}
 {{foreach from=$list item=item}}
 <div class="div-list-data">
-    <a herf="/wx_members/foreclosure_detail1/{{$item.foreclosure_id}}" class="data-list">
+    <div  class="data-list">
         <ul class="d-l-content listid">
             <li>
                 {{if $item.is_special == 1}}<div class="data-status specok"><i class="greenchannel"></i>绿色通道</div>{{/if}}
@@ -14,18 +14,18 @@
                 <div class="data-span"><span>编号：</span>{{$item.work_no}}</div>
             </li>
         </ul>
-        <ul class="d-l-content">
-            {{if $item.status != -1}}<li><span>借款金额：</span>{{$item.borrow_money|default:"-"}}万</li>{{/if}}
-            <li><span>借款人：</span>{{$item.borrower_name|default:"-"}}</li>
-            {{if $item.status != -1}}<li><span>用款时间：</span>{{$item.expect_use_time|default:"-"}}</li>{{/if}}
-            <li><span>进件人：</span>{{$item.us_rel_name_|default:""}}</li>
-            <li><span>进件人联系方式：</span>{{$item.us_mobile_|default:""}}</li>
-        </ul>
+        <div class="d-l-content">
+            <a herf="/wx_members/foreclosure_detail1/{{$item.foreclosure_id}}">{if $item.status != -1}}<p><span>借款金额：</span>{{$item.borrow_money|default:"-"}}万</p>{{/if}}
+            <p><span>借款人：</span>{{$item.borrower_name|default:"-"}}</p>
+            {{if $item.status != -1}}<p><span>用款时间：</span>{{$item.expect_use_time|default:"-"}}</p>{{/if}}
+            <p><span>进件人：</span>{{$item.us_rel_name_|default:""}}</p>
+            <p><span>进件人联系方式：</span>{{$item.us_mobile_|default:""}}</p></a>
+        </div>
         <ul class="d-l-content leftday">
             <li>{{if $item.status == 1}}{{$item.show_msg}}{{/if}}</li>
         </ul>
         <i class="am-icon-chevron"></i>
-    </a>
+    </div>
     <div class="option-div">
         {{if $item.status == 2 && $m_info.level == 2}}<a href="/wx_members/foreclosure_show/{{$item.foreclosure_id}}" class="option-btn">编 辑</a>{{/if}}
         {{if $item.status == 3 && $m_info.level == 1}}<a href="/wx_members/foreclosure_show/{{$item.foreclosure_id}}" class="option-btn">编 辑</a>{{/if}}
