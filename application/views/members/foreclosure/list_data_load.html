@@ -9,8 +9,8 @@
                 {{if $item.status == 2}}<div class="data-status wait_submit">待审核</div>{{/if}}
                 {{if $item.status == 3}}<div class="data-status passok">已通过</div>{{/if}}
                 {{if $item.status == 4}}<div class="data-status passok">终审通过</div>{{/if}}
-                {{if $item.status == -1}}<div class="data-status unpass">审核未通过</div>{{/if}}
-                {{if $item.status == -2}}<div class="data-status unpass">同盾未通过</div>{{/if}}
+                {{if $item.status == -1}}<div class="data-status unpass">同盾未通过</div>{{/if}}
+                {{if $item.status == -2}}<div class="data-status unpass">审核未通过</div>{{/if}}
                 <div class="data-span"><span>编号：</span>{{$item.work_no}}</div>
             </li>
         </ul>
@@ -18,6 +18,8 @@
             <li><span>借款金额：</span>{{$item.borrow_money|default:"-"}}万</li>
             <li><span>借款人：</span>{{$item.borrower_name|default:"-"}}</li>
             <li><span>用款时间：</span>{{$item.expect_use_time|default:"-"}}</li>
+            <li><span>进件人：</span>{{$item.us_rel_name_|default:""}}</li>
+            <li><span>进件人联系方式：</span>{{$item.us_mobile_|default:""}}</li>
         </ul>
         <ul class="d-l-content leftday">
             <li>{{if $item.status == 1}}{{$item.show_msg}}{{/if}}</li>

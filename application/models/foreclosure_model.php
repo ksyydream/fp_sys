@@ -563,8 +563,9 @@ class Foreclosure_model extends MY_Model
         $page = $this->input->post('page') ? $this->input->post('page') : 1;
         $limit_ = 5;
         $status_type_ = $this->input->post('status_type') ? $this->input->post('status_type') : 0;
-        $this->db->select('fc.*');
+        $this->db->select('fc.*, us.mobile us_mobile_, us.rel_name us_rel_name_');
         $this->db->from('foreclosure fc');
+        $this->db->join('users us', 'fc.user_id = us.user_id', 'left');
         if($member_info_['level'] == 3){
             $this->db->where('fc.m_id', $m_id);
         }
@@ -590,7 +591,7 @@ class Foreclosure_model extends MY_Model
                 $this->db->where_in('fc.status', array(2, 3, 4, -1, -2));
         }
         $this->db->limit($limit_, ($page - 1) * $limit_ );
-        $res = $this->db->order_by('add_time', 'desc')->get()->result_array();
+        $res = $this->db->order_by('fc.submit_time', 'desc')->get()->result_array();
         $fc_deadline_ = $this->config->item('fc_deadline'); //缓存数据使用限期,这里是秒为单位的
         foreach($res as $k_ => $item){
             if($item['add_time'] + $fc_deadline_ < time()){

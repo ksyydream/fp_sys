@@ -59,6 +59,18 @@
 
  
   <form class="am-form am-form-horizontal">
+      <div class="am-fast-estimate">
+          <div class="am-form-group">
+
+              <label class="am-u-sm-3 am-form-label">编号</label>
+
+              <div class="am-u-sm-9">
+
+                  <p class="am-spec-input">{{$f_info.work_no|default:''}}</p>
+
+              </div>
+          </div>
+      </div>
      <p class="p-tit">渠道信息</p>
      <div class="am-fast-estimate">
     <div class="am-form-group">
@@ -75,6 +87,27 @@
       </div>
     </div>
  </div>
+      <p class="p-tit">进件人信息</p>
+      <div class="am-fast-estimate">
+          <div class="am-form-group">
+
+              <label class="am-u-sm-3 am-form-label">进件人</label>
+
+              <div class="am-u-sm-9">
+
+                  <p class="am-spec-input">{{$user_info.rel_name}}</p>
+
+              </div>
+
+              <label class="am-u-sm-3 am-form-label">联系方式</label>
+
+              <div class="am-u-sm-9">
+
+                  <p class="am-spec-input">{{$user_info.mobile}}</p>
+
+              </div>
+          </div>
+      </div>
       <p class="p-tit">借款人基本信息</p>
       <div class="am-fast-estimate">
 
