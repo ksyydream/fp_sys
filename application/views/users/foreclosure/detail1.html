@@ -133,44 +133,45 @@
           </div>
       </div>
       {{/if}}
-    <p class="p-tit">买方（主贷人/主证人）基本信息</p>
-     <div class="am-fast-estimate">
+      {{if $f_info.status != -1}}
+      <p class="p-tit">买方（主贷人/主证人）基本信息</p>
+      <div class="am-fast-estimate">
 
-    <div class="am-form-group">
-      <label class="am-u-sm-3 am-form-label">姓名</label>
-      <div class="am-u-sm-9">
-         <p class="am-spec-input">{{$f_info.buyer_name|default:''}}</p>
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">姓名</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.buyer_name|default:''}}</p>
+              </div>
+          </div>
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">身份证号</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.buyer_code|default:''}}</p>
+              </div>
+          </div>
       </div>
-    </div>
-    <div class="am-form-group">
-      <label class="am-u-sm-3 am-form-label">身份证号</label>
-      <div class="am-u-sm-9">
-       <p class="am-spec-input">{{$f_info.buyer_code|default:''}}</p>
-      </div>
-    </div>
- </div>
       <p class="p-tit">贷款方式</p>
 
-     <div class="am-fast-estimate am-fast-select">
-        <div class="am-form-group" data-value="0">
-        <label class="am-u-sm-10 am-form-label">一次性付款</label>
-        <div class="am-u-sm-2">
-            <span class="select-span {{if $f_info.bank_loan_type|default:0 == 1 }}select-ok{{/if}}"></span>
-        </div>
+      <div class="am-fast-estimate am-fast-select">
+          <div class="am-form-group" data-value="0">
+              <label class="am-u-sm-10 am-form-label">一次性付款</label>
+              <div class="am-u-sm-2">
+                  <span class="select-span {{if $f_info.bank_loan_type|default:0 == 1 }}select-ok{{/if}}"></span>
+              </div>
+          </div>
+          <div class="am-form-group" data-value="1">
+              <label class="am-u-sm-10 am-form-label">商业贷款</label>
+              <div class="am-u-sm-2">
+                  <span class="select-span {{if $f_info.bank_loan_type|default:0 == 2 }}select-ok{{/if}}"></span>
+              </div>
+          </div>
+          <div class="am-form-group" data-value="0">
+              <label class="am-u-sm-10 am-form-label">组合贷款（公积金+商业贷款）</label>
+              <div class="am-u-sm-2">
+                  <span class="select-span {{if $f_info.bank_loan_type|default:0 == 3 }}select-ok{{/if}}"></span>
+              </div>
+          </div>
       </div>
-              <div class="am-form-group" data-value="1">
-        <label class="am-u-sm-10 am-form-label">商业贷款</label>
-        <div class="am-u-sm-2">
-              <span class="select-span {{if $f_info.bank_loan_type|default:0 == 2 }}select-ok{{/if}}"></span>
-        </div>
-      </div>
-               <div class="am-form-group" data-value="0">
-        <label class="am-u-sm-10 am-form-label">组合贷款（公积金+商业贷款）</label>
-        <div class="am-u-sm-2">
-                <span class="select-span {{if $f_info.bank_loan_type|default:0 == 3 }}select-ok{{/if}}"></span>
-        </div>
-      </div>
-     </div>
       {{if $f_info.bank_loan_type|default:0 == 2 }}
       <p class="p-tit">按揭情况</p>
       <div class="am-fast-estimate am-fast-select">
@@ -283,11 +284,17 @@
               </div>
           </div>
           {{/if}}
-          </div>
+      </div>
+      {{/if}}
       {{/if}}
 
 
-    <a class="am-btn am-btn-register" href="/wx_users/foreclosure_detail3/{{$f_info.foreclosure_id}}">下一页</a>
+      {{if $f_info.status != -1}}
+      <a class="am-btn am-btn-register" href="/wx_users/foreclosure_detail3/{{$f_info.foreclosure_id}}">下一页</a>
+      {{else}}
+      <a class="am-btn am-btn-register" href="/wx_users/foreclosure_list">回到列表</a>
+      {{/if}}
+
   </form>
 
 {{include file='users/public/foot.html'}}

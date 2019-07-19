@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
   <meta name="apple-mobile-web-app-title" content="Amaze UI" />
   <link rel="stylesheet" href="/assets/css/amazeui.css"/>
-  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/app.css?v3">
   <script type="text/javascript">
     (function() {
         var rem, dpr, time, doc = window.document,
@@ -58,7 +58,8 @@
 <div class="am-main">
 
  
-  <form class="am-form am-form-horizontal">
+  <form  id="save_form"  class="am-form am-form-horizontal">
+      <input type="hidden" id="fc_id" name="fc_id" value="{{$f_info.foreclosure_id}}">
       <div class="am-fast-estimate">
           <div class="am-form-group">
 
@@ -155,44 +156,46 @@
           </div>
       </div>
       {{/if}}
-    <p class="p-tit">买方（主贷人/主证人）基本信息</p>
-     <div class="am-fast-estimate">
 
-    <div class="am-form-group">
-      <label class="am-u-sm-3 am-form-label">姓名</label>
-      <div class="am-u-sm-9">
-         <p class="am-spec-input">{{$f_info.buyer_name|default:''}}</p>
+      {{if $f_info.status != -1}}
+      <p class="p-tit">买方（主贷人/主证人）基本信息</p>
+      <div class="am-fast-estimate">
+
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">姓名</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.buyer_name|default:''}}</p>
+              </div>
+          </div>
+          <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">身份证号</label>
+              <div class="am-u-sm-9">
+                  <p class="am-spec-input">{{$f_info.buyer_code|default:''}}</p>
+              </div>
+          </div>
       </div>
-    </div>
-    <div class="am-form-group">
-      <label class="am-u-sm-3 am-form-label">身份证号</label>
-      <div class="am-u-sm-9">
-       <p class="am-spec-input">{{$f_info.buyer_code|default:''}}</p>
-      </div>
-    </div>
- </div>
       <p class="p-tit">贷款方式</p>
 
-     <div class="am-fast-estimate am-fast-select">
-        <div class="am-form-group" data-value="0">
-        <label class="am-u-sm-10 am-form-label">一次性付款</label>
-        <div class="am-u-sm-2">
-            <span class="select-span {{if $f_info.bank_loan_type|default:0 == 1 }}select-ok{{/if}}"></span>
-        </div>
+      <div class="am-fast-estimate am-fast-select">
+          <div class="am-form-group" data-value="0">
+              <label class="am-u-sm-10 am-form-label">一次性付款</label>
+              <div class="am-u-sm-2">
+                  <span class="select-span {{if $f_info.bank_loan_type|default:0 == 1 }}select-ok{{/if}}"></span>
+              </div>
+          </div>
+          <div class="am-form-group" data-value="1">
+              <label class="am-u-sm-10 am-form-label">商业贷款</label>
+              <div class="am-u-sm-2">
+                  <span class="select-span {{if $f_info.bank_loan_type|default:0 == 2 }}select-ok{{/if}}"></span>
+              </div>
+          </div>
+          <div class="am-form-group" data-value="0">
+              <label class="am-u-sm-10 am-form-label">组合贷款（公积金+商业贷款）</label>
+              <div class="am-u-sm-2">
+                  <span class="select-span {{if $f_info.bank_loan_type|default:0 == 3 }}select-ok{{/if}}"></span>
+              </div>
+          </div>
       </div>
-              <div class="am-form-group" data-value="1">
-        <label class="am-u-sm-10 am-form-label">商业贷款</label>
-        <div class="am-u-sm-2">
-              <span class="select-span {{if $f_info.bank_loan_type|default:0 == 2 }}select-ok{{/if}}"></span>
-        </div>
-      </div>
-               <div class="am-form-group" data-value="0">
-        <label class="am-u-sm-10 am-form-label">组合贷款（公积金+商业贷款）</label>
-        <div class="am-u-sm-2">
-                <span class="select-span {{if $f_info.bank_loan_type|default:0 == 3 }}select-ok{{/if}}"></span>
-        </div>
-      </div>
-     </div>
       {{if $f_info.bank_loan_type|default:0 == 2 }}
       <p class="p-tit">按揭情况</p>
       <div class="am-fast-estimate am-fast-select">
@@ -304,11 +307,20 @@
               </div>
           </div>
           {{/if}}
-          </div>
+      </div>
+      {{/if}}
       {{/if}}
 
 
-    <a class="am-btn am-btn-register" href="/wx_members/foreclosure_detail3/{{$f_info.foreclosure_id}}">下一页</a>
+      {{if $f_info.status != -1}}
+      <a class="am-btn am-btn-register" href="/wx_members/foreclosure_detail3/{{$f_info.foreclosure_id}}">下一页</a>
+      {{else}}
+      {{if $m_info.level == 2}}
+      <a class="am-btn am-btn-success" id="save_btn" href="javascript:">绿色通道</a>
+      {{/if}}
+      <a class="am-btn am-btn-register" href="/wx_members/foreclosure_list">回到列表</a>
+      {{/if}}
+
   </form>
 
 {{include file='members/public/foot.html'}}
@@ -319,7 +331,39 @@
 <script src="/assets/js/DBY_common.js?v2"></script>
 <script src="/assets/js/layer/layer.js"></script>
 <script type="text/javascript">
+    $("#save_btn").click(function(){
+        layer.confirm('是否确认设置绿色通道？', {
+            btn: ['确认','取消']
+        }, function(){
+            var form = document.getElementById('save_form');
 
+            var formdata = new FormData(form);
+            $.ajax({
+                type : "POST",
+                url : "/wx_members/foreclosure_special",
+                data : formdata,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success : function(data) {
+                    var return_ = JSON.parse(data)
+                    if(return_.status == 1){
+                        var url = '/wx_members/foreclosure_list' ;
+                        window.location.replace(url);
+                    }else{
+                        layer.msg(return_.msg);
+                    }
+                },
+                error:function(){
+                    layer.msg('网络异常!');
+                }
+            });
+        }, function(){
+            layer.closeAll();
+        });
+
+    })
 
 </script>
 </body>
