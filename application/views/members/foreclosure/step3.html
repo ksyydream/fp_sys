@@ -12,8 +12,8 @@
     <link rel="icon" type="image/png" href="/assets/i/favicon.png">
     <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
     <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-    <link rel="stylesheet" href="/assets/css/amazeui.css"/>
-    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" href="/assets/css/amazeui.css?time=20190722"/>
+    <link rel="stylesheet" href="/assets/css/app.css?time=20190722">
     <link rel="stylesheet" href="/assets/mobiscroll/css/mobiscroll.css">
     <link rel="stylesheet" href="/assets/mobiscroll/css/mobiscroll_date.css">
     <style>
@@ -91,13 +91,10 @@
             </div>
             {{if $f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1}}
             <div class="am-form-group">
-                <label class="am-u-sm-8 am-form-label">首付是否进入还款</label>
-                <div class="am-u-sm-4">
-
-                    <div class="radio-input">
-                        <label class="register-type-label"><input type="radio" class="radio_DBY_" value="1" name="is_repayment" {{if $f_info.is_repayment|default:1 == 1 }}checked{{/if}}>是</input></label>
-                        <label class="register-type-label"><input type="radio" class="radio_DBY_" value="-1" name="is_repayment" {{if $f_info.is_repayment|default:1 == -1 }}checked{{/if}}>否</input></label>
-                    </div>
+                <label class="am-u-sm-6 am-form-label">首付是否进入还款</label>
+                <div class="am-u-sm-6 radio-input">
+                    <label class="register-type-label"><input type="radio" class="radio_DBY_" value="-1" name="is_repayment" {{if $f_info.is_repayment|default:1 == -1 }}checked{{/if}}>否</input></label>
+                    <label class="register-type-label"><input type="radio" class="radio_DBY_" value="1" name="is_repayment" {{if $f_info.is_repayment|default:1 == 1 }}checked{{/if}}>是</input></label>
                 </div>
             </div>
             <div class="am-form-group" id="radio_div" {{if $f_info.is_repayment|default:1 == -1 }}style="display: none;"{{/if}} >

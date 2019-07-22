@@ -12,7 +12,7 @@
   <link rel="icon" type="image/png" href="/assets/i/favicon.png">
   <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
   <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-  <link rel="stylesheet" href="/assets/css/amazeui.css"/>
+  <link rel="stylesheet" href="/assets/css/amazeui.css?time=20190722"/>
   <link rel="stylesheet" href="/assets/css/app.css?v3">
   <script type="text/javascript">
     (function() {
@@ -252,15 +252,15 @@
               </div>
           </div>
           <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">已付定金/首付</label>
-              <div class="am-u-sm-9">
+              <label class="am-u-sm-4 am-form-label">已付定金/首付</label>
+              <div class="am-u-sm-8">
                   <p class="am-spec-input">{{$f_info.deposit|default:'-'}}万</p>
               </div>
           </div>
           {{if $f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1}}
           <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">首付是否进入还款</label>
-              <div class="am-u-sm-9">
+              <label class="am-u-sm-6 am-form-label">首付是否进入还款</label>
+              <div class="am-u-sm-6">
                   <p class="am-spec-input">
                       {{if $f_info.is_repayment|default:0 == 1 }}是{{/if}}
                       {{if $f_info.is_repayment|default:0 == -1 }}否{{/if}}
@@ -316,11 +316,14 @@
       <a class="am-btn am-btn-register" href="/wx_members/foreclosure_detail3/{{$f_info.foreclosure_id}}">下一页</a>
       {{else}}
       {{if $m_info.level == 2}}
-      <a class="am-btn am-btn-success" id="save_btn" href="javascript:">绿色通道</a>
+      <div class="am-accu-btns">
+          <div class="am-u-sm-12 am-u-sm-centered">
+          <a class="am-btn am-fleft" id="save_btn" href="javascript:">绿色通道</a>
+          {{/if}}
+          <a class="am-btn am-btn1 am-btn-register" href="/wx_members/foreclosure_list">回到列表</a>
+          </div>
+      </div>
       {{/if}}
-      <a class="am-btn am-btn-register" href="/wx_members/foreclosure_list">回到列表</a>
-      {{/if}}
-
   </form>
 
 {{include file='members/public/foot.html'}}

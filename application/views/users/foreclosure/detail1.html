@@ -12,7 +12,7 @@
   <link rel="icon" type="image/png" href="/assets/i/favicon.png">
   <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
   <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-  <link rel="stylesheet" href="/assets/css/amazeui.css"/>
+  <link rel="stylesheet" href="/assets/css/amazeui.css?time=20190722"/>
   <link rel="stylesheet" href="/assets/css/app.css">
   <script type="text/javascript">
     (function() {
@@ -236,8 +236,8 @@
           </div>
           {{if $f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1}}
           <div class="am-form-group">
-              <label class="am-u-sm-8 am-form-label">首付是否进入还款</label>
-              <div class="register-style">
+              <label class="am-u-sm-6 am-form-label">首付是否进入还款</label>
+              <div class="am-u-sm-6">
                   <p class="am-spec-input">
                       {{if $f_info.is_repayment|default:0 == 1 }}是{{/if}}
                       {{if $f_info.is_repayment|default:0 == -1 }}否{{/if}}
